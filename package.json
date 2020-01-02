@@ -1,0 +1,52 @@
+{
+  "name": "musicbox",
+  "version": "1.0.0",
+  "description": "The Musicbox Frontend",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "start": "webpack-dev-server --mode development --hot --open",
+    "tsc": "tsc --noEmit",
+    "tsc:watch": "npm run tsc -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/go-between/musicbox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/go-between/musicbox/issues"
+  },
+  "homepage": "https://github.com/go-between/musicbox#readme",
+  "devDependencies": {
+    "@babel/cli": "7.7.7",
+    "@babel/core": "7.7.7",
+    "@babel/plugin-proposal-class-properties": "7.7.4",
+    "@babel/plugin-proposal-numeric-separator": "7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "7.7.7",
+    "@babel/preset-env": "7.7.7",
+    "@babel/preset-react": "7.7.4",
+    "@babel/preset-typescript": "7.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "@typescript-eslint/parser": "^2.14.0",
+    "babel-loader": "8.0.6",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.19.1",
+    "typescript": "3.7.4",
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.10.1"
+  },
+  "dependencies": {
+    "@types/react": "16.9.17",
+    "@types/react-dom": "16.9.4",
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
+  }
+}
