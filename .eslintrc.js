@@ -13,13 +13,16 @@ module.exports = {
       jsx: true, // Allows for the parsing of JSX
     },
   },
-  plugins: ['react-hooks'],
+  plugins: [
+    'react-hooks',
+  ],
   env: {
     es6: true,
     browser: true,
     node: true,
   },
   rules: {
+    "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/explicit-function-return-type": [
