@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+
 import { AuthContext } from './App'
 
 type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
@@ -23,6 +25,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState('')
+  const history = useHistory()
 
   const attemptLogin = (setToken?: (token: string) => void) => () => {
     if (!setToken) {
@@ -34,8 +37,11 @@ const Login: React.FC = () => {
       if (response.status !== 200) {
         return setErrors('Invalid email or password')
       }
-
-      response.json().then(body => setToken(body.access_token))
+      response.json().then(body => {
+        setToken(body.access_token)
+        localStorage.setItem('musicbox-token', body.access_token)
+        history.push('/')
+      })
     })
   }
 
