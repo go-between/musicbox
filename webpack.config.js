@@ -1,7 +1,9 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
 const url = require('url');
+
+const Dotenv = require("dotenv-webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -10,10 +12,14 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 module.exports = {
   devtool: 'inline-source-map',
+  devServer: {
+    historyApiFallback: true,
+  },
   entry: './src/index',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: 'app.bundle.js',
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json']
@@ -27,6 +33,7 @@ module.exports = {
     }],
   },
   plugins: [
+    new Dotenv({ path: './.env' }),
     new HtmlWebpackPlugin({
       inject: true,
       template: resolveApp('public/index.html')
