@@ -1,7 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
-import Login from './Login'
 import { AuthContext } from './App'
+import Login from './Login'
+import Home from './Home'
 
 const Router: React.FC = () => {
   return (
@@ -23,6 +24,16 @@ const Router: React.FC = () => {
             </BrowserRouter>
           )
         }
+
+        return (
+          <BrowserRouter>
+            <Switch>
+              <Route path="/home">
+                <Home />
+              </Route>
+            </Switch>
+          </BrowserRouter>
+        )
       }}
     </AuthContext.Consumer>
   )

@@ -40,7 +40,7 @@ const Login: React.FC = () => {
       response.json().then(body => {
         setToken(body.access_token)
         localStorage.setItem('musicbox-token', body.access_token)
-        history.push('/')
+        history.push('/home')
       })
     })
   }
