@@ -20,10 +20,10 @@ const TEAM_ACTIVATE = gql`
   }
 `
 
-const Team: React.FC<Team & { isActive: boolean }> = ({ id, name, isActive }) => {
+const Team: React.FC<Team & { active: boolean }> = ({ id, name, active }) => {
   const [teamActivate] = useMutation(TEAM_ACTIVATE)
 
-  if (isActive) {
+  if (active) {
     return (
       <li>
         <b>{name}</b>
@@ -32,7 +32,7 @@ const Team: React.FC<Team & { isActive: boolean }> = ({ id, name, isActive }) =>
   }
 
   const onClick = (): ReturnType<typeof teamActivate> =>
-    teamActivate({ variables: { teamId: id }, refetchQueries: ['userQuery'] })
+    teamActivate({ variables: { teamId: id }, refetchQueries: ['UserQuery', 'RoomsQuery'] })
   return (
     <li>
       {name}
@@ -45,7 +45,7 @@ const TeamSelector: React.FC<Props> = ({ teams, activeTeam }) => {
   return (
     <ul>
       {teams.map(t => (
-        <Team key={t.id} id={t.id} name={t.name} isActive={t.id === activeTeam} />
+        <Team key={t.id} id={t.id} name={t.name} active={t.id === activeTeam} />
       ))}
     </ul>
   )
