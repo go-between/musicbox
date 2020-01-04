@@ -2,6 +2,7 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
+import RoomSelector from './components/RoomSelector'
 import TeamSelector from './components/TeamSelector'
 
 type UserQuery = {
@@ -19,7 +20,7 @@ type UserQuery = {
   }
 }
 const USER_QUERY = gql`
-  query userQuery {
+  query UserQuery {
     user {
       id
       email
@@ -49,7 +50,12 @@ const Home: React.FC = () => {
     return <p>Error</p>
   }
 
-  return <TeamSelector teams={data.user.teams} activeTeam={data.user.activeTeam?.id} />
+  return (
+    <>
+      <TeamSelector teams={data.user.teams} activeTeam={data.user.activeTeam?.id} />
+      {data.user.activeTeam?.id && <RoomSelector activeRoom={data.user.activeRoom?.id} />}
+    </>
+  )
 }
 
 export default Home

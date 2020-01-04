@@ -1,8 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { AuthContext } from './App'
+
 import Login from './Login'
 import Home from './Home'
+import Room from './Room'
 
 const Router: React.FC = () => {
   return (
@@ -30,6 +32,9 @@ const Router: React.FC = () => {
             <Switch>
               <Route path="/home">
                 <Home />
+              </Route>
+              <Route path="/room">
+                <Room />
               </Route>
             </Switch>
           </BrowserRouter>
