@@ -3,6 +3,9 @@ import gql from 'graphql-tag'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
 
+import { RoomType } from '../lib/apiTypes'
+type RoomProps = Pick<RoomType, 'id' | 'name'>
+
 const ROOMS_QUERY = gql`
   query RoomsQuery {
     rooms {
@@ -12,12 +15,8 @@ const ROOMS_QUERY = gql`
   }
 `
 
-type Room = {
-  id: string
-  name: string
-}
 type RoomsQuery = {
-  rooms: Room[]
+  rooms: RoomProps[]
 }
 
 const ROOM_ACTIVATE = gql`
@@ -28,23 +27,13 @@ const ROOM_ACTIVATE = gql`
   }
 `
 
-const Room: React.FC<Room & { active: boolean }> = ({ id, name, active }) => {
-  const history = useHistory()
-  const [roomActivate] = useMutation(ROOM_ACTIVATE, { onCompleted: () => history.push('/room') })
-
-  if (active) {
-    return (
-      <li>
-        <b>{name}</b> (currently active)
-      </li>
-    )
-  }
-
-  const onClick = (): ReturnType<typeof roomActivate> => roomActivate({ variables: { roomId: id } })
+const Room: React.FC<RoomProps & { active: boolean }> = ({ id, name, active }) => {
+  const { push } = useHistory()
+  const onClick = (): ReturnType<typeof push> => push(`/room/${id}`)
 
   return (
     <li>
-      {name} (currently active)
+      {name} {active && "(currently active)"}
       <button onClick={onClick}>Join</button>
     </li>
   )

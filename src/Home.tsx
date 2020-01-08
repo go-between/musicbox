@@ -5,19 +5,10 @@ import { useQuery } from '@apollo/react-hooks'
 import RoomSelector from './components/RoomSelector'
 import TeamSelector from './components/TeamSelector'
 
+import { UserType } from './lib/apiTypes'
+
 type UserQuery = {
-  user: {
-    id: string
-    email: string
-    name: string
-    activeRoom: {
-      id: string
-    } | null
-    activeTeam: {
-      id: string
-    } | null
-    teams: Array<{ id: string; name: string }>
-  }
+  user: UserType
 }
 const USER_QUERY = gql`
   query UserQuery {
