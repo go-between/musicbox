@@ -5,6 +5,10 @@
         "@babel/react"
     ],
     "plugins": [
+        [
+            "@babel/plugin-transform-runtime",
+            { "regenerator": true }
+        ],
         "@babel/proposal-class-properties",
         "@babel/proposal-object-rest-spread",
         "@babel/plugin-proposal-optional-chaining",

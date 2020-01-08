@@ -33,9 +33,15 @@ const Router: React.FC = () => {
               <Route path="/home">
                 <Home />
               </Route>
-              <Route path="/room">
+              <Route path="/room/:id">
                 <Room />
               </Route>
+
+              <Redirect
+                to={{
+                  pathname: '/home',
+                }}
+              />
             </Switch>
           </BrowserRouter>
         )
