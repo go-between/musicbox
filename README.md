@@ -14,7 +14,9 @@ We are not currently using Docker for this project, so you'll have to install so
 
 1. `nvm use`
 2. `npm install`
-3. `npm start`
+3. `cp .env.template .env`
+  - Replace any ENV variables that need replacing.
+4. `npm start`
 
 Now your dev server should be up and running.  It opens a tab for you automatically!  It hot-reloads!
 
