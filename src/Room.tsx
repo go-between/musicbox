@@ -3,8 +3,8 @@ import gql from 'graphql-tag'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
-import { WebsocketContext } from './App'
-import { UserType } from './lib/apiTypes'
+import { WebsocketContext } from 'App'
+import { UserType } from 'lib/apiTypes'
 
 const ROOM_ACTIVATE = gql`
   mutation RoomActivate($roomId: ID!) {

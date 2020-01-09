@@ -1,6 +1,6 @@
 import { channels, DataMessage, Message, Options, Subscriptions } from './types'
 
-import { RoomType } from '../apiTypes'
+import { RoomType } from 'lib/apiTypes'
 
 export const awaitWebsocket = (token: string): Promise<WebSocket> => {
   return new Promise((resolve, reject) => {

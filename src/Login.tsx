@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { AuthContext } from './App'
+import { AuthContext } from 'App'
 
 type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
 const setFromEvent: SetFromEvent = changeFn => ev => changeFn(ev.target.value)

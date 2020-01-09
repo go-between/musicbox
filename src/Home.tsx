@@ -2,10 +2,10 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
-import RoomSelector from './components/RoomSelector'
-import TeamSelector from './components/TeamSelector'
+import RoomSelector from 'components/RoomSelector'
+import TeamSelector from 'components/TeamSelector'
 
-import { UserType } from './lib/apiTypes'
+import { UserType } from 'lib/apiTypes'
 
 type UserQuery = {
   user: UserType

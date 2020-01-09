@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
-import Router from './Router'
+import Router from 'Router'
 
-import { Client, awaitWebsocket } from './lib/WebsocketClient/client'
+import { Client, awaitWebsocket } from 'lib/WebsocketClient/client'
 
 type AuthContext = {
   token: string

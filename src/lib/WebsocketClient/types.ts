@@ -1,4 +1,4 @@
-import { RoomType } from '../apiTypes'
+import { RoomType } from 'lib/apiTypes'
 
 // Channels
 export const QUEUES_CHANNEL = 'QueuesChannel'

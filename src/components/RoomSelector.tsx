@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
 
-import { RoomType } from '../lib/apiTypes'
+import { RoomType } from 'lib/apiTypes'
 type RoomProps = Pick<RoomType, 'id' | 'name'>
 
 const ROOMS_QUERY = gql`
