@@ -26,17 +26,17 @@ const App: React.FC = () => {
   })
 
   useEffect(() => {
-    if(!token) {
+    if (!token) {
       return
     }
 
-    awaitWebsocket(token).then((websocket) => {
+    awaitWebsocket(token).then(websocket => {
       const socketClient = new Client(websocket, { debug: true })
       socketClient.bind()
 
       setWebsocketClient(socketClient)
     })
-  }, [token]);
+  }, [token])
 
   return (
     <ApolloProvider client={apolloClient}>
