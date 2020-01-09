@@ -1,14 +1,11 @@
-import { RoomType } from '../apiTypes'
+import { RoomType } from 'lib/apiTypes'
 
 // Channels
 export const QUEUES_CHANNEL = 'QueuesChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
 export const USERS_CHANNEL = 'UsersChannel'
 
-export type Channel =
-  | typeof QUEUES_CHANNEL
-  | typeof NOW_PLAYING_CHANNEL
-  | typeof USERS_CHANNEL
+export type Channel = typeof QUEUES_CHANNEL | typeof NOW_PLAYING_CHANNEL | typeof USERS_CHANNEL
 
 export type Channels = {
   QUEUES_CHANNEL: typeof QUEUES_CHANNEL
@@ -39,10 +36,7 @@ type RejectSubscription = {
   type: 'reject_subscription'
 }
 
-type SystemMessage =
-  | Ping
-  | ConfirmSubscription
-  | RejectSubscription
+type SystemMessage = Ping | ConfirmSubscription | RejectSubscription
 
 type WebsocketMessage<T, K> = {
   messageType: T
@@ -55,12 +49,9 @@ type WebsocketMessage<T, K> = {
   type: undefined
 }
 
-export type DataMessage =
-  | WebsocketMessage<typeof USERS_CHANNEL, { room: RoomType }>
+export type DataMessage = WebsocketMessage<typeof USERS_CHANNEL, { room: RoomType }>
 
-export type Message =
-  | SystemMessage
-  | DataMessage
+export type Message = SystemMessage | DataMessage
 
 // Data
 export type Subscriptions = {

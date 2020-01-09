@@ -1,9 +1,9 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import { useMutation, useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
 
-import { RoomType } from '../lib/apiTypes'
+import { RoomType } from 'lib/apiTypes'
 type RoomProps = Pick<RoomType, 'id' | 'name'>
 
 const ROOMS_QUERY = gql`
@@ -19,21 +19,13 @@ type RoomsQuery = {
   rooms: RoomProps[]
 }
 
-const ROOM_ACTIVATE = gql`
-  mutation RoomActivate($roomId: ID!) {
-    roomActivate(input: { roomId: $roomId }) {
-      errors
-    }
-  }
-`
-
 const Room: React.FC<RoomProps & { active: boolean }> = ({ id, name, active }) => {
   const { push } = useHistory()
   const onClick = (): ReturnType<typeof push> => push(`/room/${id}`)
 
   return (
     <li>
-      {name} {active && "(currently active)"}
+      {name} {active && '(currently active)'}
       <button onClick={onClick}>Join</button>
     </li>
   )

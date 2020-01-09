@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import gql from 'graphql-tag'
-import { useMutation, useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
-import { WebsocketContext } from './App'
-import { UserType } from './lib/apiTypes'
+import { WebsocketContext } from 'App'
+import { UserType } from 'lib/apiTypes'
 
 const ROOM_ACTIVATE = gql`
   mutation RoomActivate($roomId: ID!) {
@@ -23,20 +23,24 @@ const Room: React.FC = () => {
 
   useEffect(() => {
     roomActivate({ variables: { roomId: id } })
-  }, [id])
+  }, [id, roomActivate])
 
   useEffect(() => {
-    if(!active || !websocket) {
+    if (!active || !websocket) {
       return
     }
 
-    return websocket.subscribeToUsers((room) => setUsers(room.users))
-  }, [active])
+    return websocket.subscribeToUsers(room => setUsers(room.users))
+  }, [active, websocket])
 
   return (
     <>
       <p>users</p>
-      <ul>{users.map(u => <li key={u.id}>{u.email}</li>)}</ul>
+      <ul>
+        {users.map(u => (
+          <li key={u.id}>{u.email}</li>
+        ))}
+      </ul>
     </>
   )
 }
