@@ -12,11 +12,14 @@
 
 We are not currently using Docker for this project, so you'll have to install some things yourself.  Do like:
 
-1. `nvm use`
-2. `npm install`
-3. `cp .env.template .env`
-  - Replace any ENV variables that need replacing.
-4. `npm start`
+1. Ensure you're using the correct node version
+    > nvm use
+2. Install packages
+    > npm install
+3. Copy the env template (replace any ENV variables that need replacing)
+    > cp .env.template .env
+4. Start the dev server
+    > npm start
 
 Now your dev server should be up and running.  It opens a tab for you automatically!  It hot-reloads!
 
