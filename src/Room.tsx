@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import gql from 'graphql-tag'
-import { useMutation, useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
 import { WebsocketContext } from 'App'
