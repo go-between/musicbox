@@ -4,6 +4,7 @@ import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
 import { RoomType } from 'lib/apiTypes'
+import Library from 'Library'
 import Users from './Users'
 
 const ROOM_ACTIVATE = gql`
@@ -63,7 +64,10 @@ const Room: React.FC = () => {
       <p>
         Room Name: <strong>{data?.room.name}</strong>
       </p>
+      <p>Users In Room</p>
       <Users initialUsers={data?.room.users || []} />
+      <p>Songs In Library</p>
+      <Library />
     </>
   )
 }
