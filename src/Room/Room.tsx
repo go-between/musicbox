@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 
 import { RoomType } from 'lib/apiTypes'
 import Library from 'Library'
+import YoutubeSearch from 'YoutubeSearch'
 import Users from './Users'
 
 const ROOM_ACTIVATE = gql`
@@ -68,6 +69,8 @@ const Room: React.FC = () => {
       <Users initialUsers={data?.room.users || []} />
       <p>Songs In Library</p>
       <Library />
+      <p>Search</p>
+      <YoutubeSearch />
     </>
   )
 }
