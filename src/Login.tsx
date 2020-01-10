@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
 
 type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
 const setFromEvent: SetFromEvent = changeFn => ev => changeFn(ev.target.value)
 
 const request = (email: string, password: string): Promise<Response> => {
-  const url = `${process.env.API_HOST}/api/v1/oauth/token`
+  const url = `${API_HOST}/api/v1/oauth/token`
   const formData = new URLSearchParams()
   formData.append('username', email)
   formData.append('password', password)

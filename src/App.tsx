@@ -4,6 +4,7 @@ import ApolloClient from 'apollo-boost'
 import Router from 'Router'
 
 import { Client, awaitWebsocket } from 'lib/WebsocketClient/client'
+import { API_HOST } from 'lib/constants'
 
 type AuthContext = {
   token: string
@@ -19,7 +20,7 @@ const App: React.FC = () => {
   const [websocketClient, setWebsocketClient] = useState()
 
   const apolloClient = new ApolloClient({
-    uri: `${process.env.API_HOST}/api/v1/graphql`,
+    uri: `${API_HOST}/api/v1/graphql`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
