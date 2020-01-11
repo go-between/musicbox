@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { SongType } from 'lib/apiTypes'
 
 const SONGS_QUERY = gql`
-  query Songs {
+  query SongsQuery {
     songs {
       id
       name
