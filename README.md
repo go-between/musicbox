@@ -27,7 +27,7 @@ Now your dev server should be up and running.  It opens a tab for you automatica
 
 - `npm start`
   - Runs the hot-reload development server
-- `npm tsc`
+- `npm tsc` (or just `tsc` for newer versions)
   - Runs the typescript compiler.  Note that we're using [Babel](https://babeljs.io/) to transpile typescript to javascript, so there's **no type checking at runtime**.  This is both good and bad because your dev server will not explode if you make a type error while developing -- but you'll want to run this occassionally to make sure everything is hunky-dory!
 - `npm run lint:fix`
   - Runs [ESLint](https://eslint.org/), including [Prettier](https://prettier.io/). Attempts to correct any errors you make.
