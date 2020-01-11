@@ -1,12 +1,13 @@
 import { channels, DataMessage, Message, Options, Subscriptions } from './types'
 
+import { WEBSOCKET_HOST } from 'lib/constants'
 import { RoomType } from 'lib/apiTypes'
 
 export const awaitWebsocket = (token: string): Promise<WebSocket> => {
   return new Promise((resolve, reject) => {
     const formData = new URLSearchParams()
     formData.append('token', token)
-    const socket = new WebSocket(`${process.env.WS_HOST}?${formData.toString()}`)
+    const socket = new WebSocket(`${WEBSOCKET_HOST}?${formData.toString()}`)
 
     socket.onopen = () => resolve(socket)
     socket.onerror = () => reject(socket)

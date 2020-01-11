@@ -2,6 +2,18 @@ export type RoomType = {
   id: string
   name: string
   users: UserType[]
+  currentRecord: RoomPlaylistRecordType
+}
+
+export type RoomPlaylistRecordType = {
+  playedAt: string
+  song: SongType
+}
+
+export type SongType = {
+  id: string
+  name: string
+  youtubeId: string
 }
 
 export type TeamType = {
