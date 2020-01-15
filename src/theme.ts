@@ -1,4 +1,20 @@
 const colors = {
+  accent: '#718096', // a contrast color for emphasizing UI
+  background: '#F7FAFC', // body background color
+  text: '#2D3748', // body color
+  muted: '#E2E8F0', // a gray or subdued color for decorative purposes
+  primary: 'rgba(4, 87, 91, 1)', // primary button and link color
+  secondary: 'rgba(4, 87, 91, .8)', // secondary color - can be used for hover states
+  modes: {
+    dark: {
+      text: '#fff',
+      background: '#000',
+      primary: '#0cf',
+      secondary: '#f0e',
+      gray: '#222',
+      lightgray: '#111',      
+    }
+  }, 
   black: '#232323',
   blue: '#3182CE',
   blueDark: '#2C5282',
@@ -30,12 +46,6 @@ const colors = {
   yellow: '#ffc58b',
   yellowLight: '#fceddf',
   yellowDark: '#594430',
-  accent: '#718096', // a contrast color for emphasizing UI
-  background: '#F7FAFC', // body background color
-  text: '#2D3748', // body color
-  muted: '#E2E8F0', // a gray or subdued color for decorative purposes
-  primary: 'rgba(4, 87, 91, 1)', // primary button and link color
-  secondary: 'rgba(4, 87, 91, .8)', // secondary color - can be used for hover states
 }
 
 export default {
