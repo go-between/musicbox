@@ -47,7 +47,7 @@ const App: React.FC = () => {
         <WebsocketContext.Provider value={websocketClient}>
           <ThemeProvider theme={theme}>
             <Router />
-          </ThemeProvider>,
+          </ThemeProvider>
         </WebsocketContext.Provider>
       </AuthContext.Provider>
     </ApolloProvider>

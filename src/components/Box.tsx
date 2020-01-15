@@ -45,18 +45,7 @@ const Box = styled('div')<Props>(
     margin: 0,
     minWidth: 0,
   },
-  compose(
-    background,
-    border,
-    boxShadow,
-    color,
-    flexbox,
-    layout,
-    position,
-    typography,
-    space,
-    variant
-  )
+  compose(background, border, boxShadow, color, flexbox, layout, position, typography, space, variant),
 )
 
 export default Box
