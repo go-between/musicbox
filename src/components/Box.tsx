@@ -25,10 +25,11 @@ import {
   VariantArgs,
 } from 'styled-system'
 
+type ColorPropsHack = Omit<ColorProps, 'color'> & { color?: string }
 type Props = BackgroundProps &
   BorderProps &
   BoxShadowProps &
-  ColorProps &
+  ColorPropsHack &
   FlexboxProps &
   FlexProps &
   FlexWrapProps &
@@ -44,18 +45,7 @@ const Box = styled('div')<Props>(
     margin: 0,
     minWidth: 0,
   },
-  compose(
-    background,
-    border,
-    boxShadow,
-    color,
-    flexbox,
-    layout,
-    position,
-    typography,
-    space,
-    variant
-  )
+  compose(background, border, boxShadow, color, flexbox, layout, position, typography, space, variant),
 )
 
 export default Box
