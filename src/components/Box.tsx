@@ -25,10 +25,11 @@ import {
   VariantArgs,
 } from 'styled-system'
 
+type ColorPropsHack = Omit<ColorProps, 'color'> & { color?: string }
 type Props = BackgroundProps &
   BorderProps &
   BoxShadowProps &
-  ColorProps &
+  ColorPropsHack &
   FlexboxProps &
   FlexProps &
   FlexWrapProps &
