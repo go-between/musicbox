@@ -8,6 +8,8 @@ import Library from 'Library'
 import YoutubeSearch from 'YoutubeSearch'
 import Users from './Users'
 
+import Box from '../components/Box'
+
 const ROOM_ACTIVATE = gql`
   mutation RoomActivate($roomId: ID!) {
     roomActivate(input: { roomId: $roomId }) {
@@ -61,7 +63,7 @@ const Room: React.FC = () => {
   }
 
   return (
-    <>
+    <Box>
       <p>
         Room Name: <strong>{data?.room.name}</strong>
       </p>
@@ -71,7 +73,7 @@ const Room: React.FC = () => {
       <Library />
       <p>Search</p>
       <YoutubeSearch />
-    </>
+    </Box>
   )
 }
 
