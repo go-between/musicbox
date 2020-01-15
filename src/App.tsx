@@ -82,7 +82,7 @@ const App: React.FC = () => {
                 const next = mode === 'dark' ? 'light' : 'dark'
                 setMode(next)
               }}
-            >click me</button>            
+            >toggle color mode</button>            
           </ThemeProvider>
         </WebsocketContext.Provider>
       </AuthContext.Provider>
