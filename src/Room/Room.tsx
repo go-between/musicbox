@@ -63,7 +63,7 @@ const Room: React.FC = () => {
   }
 
   return (
-    <Box bg="blue">
+    <Box bg="navy">
       <p>
         Room Name: <strong>{data?.room.name}</strong>
       </p>

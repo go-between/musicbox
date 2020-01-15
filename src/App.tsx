@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect } from 'react'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 import Router from 'Router'
+import { ThemeProvider } from 'emotion-theming'
+import theme from 'theme'
 
 import { Client, awaitWebsocket } from 'lib/WebsocketClient/client'
 import { API_HOST } from 'lib/constants'
@@ -43,7 +45,9 @@ const App: React.FC = () => {
     <ApolloProvider client={apolloClient}>
       <AuthContext.Provider value={{ token, setToken }}>
         <WebsocketContext.Provider value={websocketClient}>
-          <Router />
+          <ThemeProvider theme={theme}>
+            <Router />
+          </ThemeProvider>,
         </WebsocketContext.Provider>
       </AuthContext.Provider>
     </ApolloProvider>
