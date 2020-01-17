@@ -52,19 +52,16 @@ const Login: React.FC = () => {
     <AuthContext.Consumer>
       {({ setToken }) => {
         return (
-          <Box 
-            is='form'
-            p={4}
-          >
+          <Box is="form" p={4}>
             <Box>
               <input type="text" value={email} onChange={setFromEvent(setEmail)} />
-            </Box>                    
+            </Box>
             <Box>
               <input type="text" value={password} onChange={setFromEvent(setPassword)} />
             </Box>
             <Box>
               <button onClick={attemptLogin(setToken)}>Click</button>
-            </Box>            
+            </Box>
             <Box>{errors}</Box>
           </Box>
         )
