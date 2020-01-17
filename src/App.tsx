@@ -3,6 +3,8 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 import Router from 'Router'
 import { ThemeProvider } from 'emotion-theming'
+import { Global } from '@emotion/core'
+import css from '@styled-system/css'
 import theme from 'theme'
 
 import { Client, awaitWebsocket } from 'lib/WebsocketClient/client'
@@ -46,6 +48,14 @@ const App: React.FC = () => {
       <AuthContext.Provider value={{ token, setToken }}>
         <WebsocketContext.Provider value={websocketClient}>
           <ThemeProvider theme={theme}>
+            <Global
+              styles={css({
+                body: {
+                  color: 'text',
+                  bg: 'background',
+                },
+              })}
+            />
             <Router />
           </ThemeProvider>
         </WebsocketContext.Provider>

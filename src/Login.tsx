@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
 
+import Box from './components/Box'
+
 type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
 const setFromEvent: SetFromEvent = changeFn => ev => changeFn(ev.target.value)
 
@@ -50,12 +52,18 @@ const Login: React.FC = () => {
     <AuthContext.Consumer>
       {({ setToken }) => {
         return (
-          <>
-            <input type="text" value={email} onChange={setFromEvent(setEmail)} />
-            <input type="text" value={password} onChange={setFromEvent(setPassword)} />
-            <button onClick={attemptLogin(setToken)}>Click</button>
-            <p>{errors}</p>
-          </>
+          <Box is="form" p={4}>
+            <Box>
+              <input type="text" value={email} onChange={setFromEvent(setEmail)} />
+            </Box>
+            <Box>
+              <input type="text" value={password} onChange={setFromEvent(setPassword)} />
+            </Box>
+            <Box>
+              <button onClick={attemptLogin(setToken)}>Click</button>
+            </Box>
+            <Box>{errors}</Box>
+          </Box>
         )
       }}
     </AuthContext.Consumer>
