@@ -6,6 +6,7 @@ export type RoomType = {
 }
 
 export type RoomPlaylistRecordType = {
+  id?: string
   playedAt: string
   song: SongType
 }

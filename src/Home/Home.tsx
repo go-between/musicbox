@@ -21,6 +21,7 @@ const USER_QUERY = gql`
       }
       activeTeam {
         id
+        name
       }
       teams {
         id
@@ -43,7 +44,11 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <p>Your Teams</p>
       <TeamSelector teams={data.user.teams} activeTeam={data.user.activeTeam?.id} />
+      <p>
+        Rooms for team: <i>{data.user.activeTeam?.name}</i>
+      </p>
       {data.user.activeTeam?.id && <RoomSelector activeRoom={data.user.activeRoom?.id} />}
     </>
   )

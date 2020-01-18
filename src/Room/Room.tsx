@@ -4,7 +4,7 @@ import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
 import { RoomType } from 'lib/apiTypes'
-import Library from 'Library'
+import PlaylistManagement from 'PlaylistManagement'
 import YoutubeSearch from 'YoutubeSearch'
 import Users from './Users'
 
@@ -69,8 +69,9 @@ const Room: React.FC = () => {
       </p>
       <p>Users In Room</p>
       <Users initialUsers={data?.room.users || []} />
-      <p>Songs In Library</p>
-      <Library />
+
+      <p>Playlist Management</p>
+      <PlaylistManagement />
       <p>Search</p>
       <YoutubeSearch />
     </Box>
