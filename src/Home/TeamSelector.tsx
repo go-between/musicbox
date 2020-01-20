@@ -1,6 +1,7 @@
 import React from 'react'
-import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
+
+import { TEAM_ACTIVATE } from './graphql'
 
 type Team = {
   id: string
@@ -8,17 +9,9 @@ type Team = {
 }
 
 type Props = {
-  teams: Array<{ id: string; name: string }>
+  teams: Team[]
   activeTeam?: string
 }
-
-const TEAM_ACTIVATE = gql`
-  mutation TeamActivate($teamId: ID!) {
-    teamActivate(input: { teamId: $teamId }) {
-      errors
-    }
-  }
-`
 
 const Team: React.FC<Team & { active: boolean }> = ({ id, name, active }) => {
   const [teamActivate] = useMutation(TEAM_ACTIVATE)
