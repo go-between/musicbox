@@ -1,7 +1,14 @@
-import { channels, DataMessage, Message, Options, Subscriptions } from './types'
+import {
+  channels,
+  DataMessage,
+  Message,
+  Options,
+  RoomPlaylistMessage,
+  Subscriptions,
+  UserChannelMessage,
+} from './types'
 
 import { WEBSOCKET_HOST } from 'lib/constants'
-import { RoomType } from 'lib/apiTypes'
 
 export const awaitWebsocket = (token: string): Promise<WebSocket> => {
   return new Promise((resolve, reject) => {
@@ -16,7 +23,8 @@ export const awaitWebsocket = (token: string): Promise<WebSocket> => {
 
 export class Client {
   private debug: boolean
-  private userSubscription: (room: RoomType) => void = () => ({})
+  private roomPlaylistSubscription: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void = () => ({})
+  private userSubscription: (room: UserChannelMessage['room']) => void = () => ({})
   private websocket: WebSocket
 
   constructor(websocket: WebSocket, options: Options) {
@@ -31,7 +39,16 @@ export class Client {
     }
   }
 
-  public subscribeToUsers = (callback: (room: RoomType) => void): (() => void) => {
+  public subscribeToRoomPlaylist = (
+    callback: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void,
+  ): (() => void) => {
+    this.send(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
+    console.log(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
+    this.roomPlaylistSubscription = callback
+    return () => this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
+  }
+
+  public subscribeToUsers = (callback: (room: UserChannelMessage['room']) => void): (() => void) => {
     this.send(this.generateSubscription(channels.USERS_CHANNEL, {}))
     this.userSubscription = callback
     return () => this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
@@ -66,6 +83,10 @@ export class Client {
     this.log(websocketMessage)
 
     switch (websocketMessage.messageType) {
+      case channels.ROOM_PLAYLIST_CHANNEL:
+        const roomPlaylist = websocketMessage.message.data.roomPlaylist
+        this.roomPlaylistSubscription(roomPlaylist)
+        return
       case channels.USERS_CHANNEL:
         const room = websocketMessage.message.data.room
         this.userSubscription(room)
