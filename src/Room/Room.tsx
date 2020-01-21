@@ -39,13 +39,7 @@ const Room: React.FC = () => {
   }
 
   return (
-    <Box 
-      bg="red" 
-      sx={{
-        borderRadius: 4,
-        px: 4, 
-        py:4,       
-    }}>
+    <Box>
       <p>
         Room Name: <strong>{data?.room.name}</strong>
       </p>

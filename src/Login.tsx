@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button, Box } from 'rebass'
-import {
-  Label,
-  Input,
-  Select,
-  Textarea,
-  Radio,
-  Checkbox,
-} from '@rebass/forms'
+import { Label, Input, Select, Textarea, Radio, Checkbox } from '@rebass/forms'
 
 import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
@@ -75,11 +68,11 @@ const Login: React.FC = () => {
           >
             <Box as="form">
               <Box mb={4}>
-                <Label htmlFor='name'>Email</Label>
+                <Label htmlFor="name">Email</Label>
                 <Input type="text" value={email} onChange={setFromEvent(setEmail)} />
               </Box>
               <Box mb={4}>
-                <Label htmlFor='password'>Password</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input type="text" value={password} onChange={setFromEvent(setPassword)} />
               </Box>
               <Box>

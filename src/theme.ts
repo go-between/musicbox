@@ -57,7 +57,7 @@ export default {
       fontWeight: '600',
       px: 3,
       py: 2,
-    }
+    },
   },
   colors,
   colorStyles: {
