@@ -28,5 +28,4 @@ export type UserType = {
   name: string
   activeRoom?: RoomType
   activeTeam?: TeamType
-  teams: TeamType[]
 }

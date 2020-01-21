@@ -3,12 +3,13 @@ import gql from 'graphql-tag'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
+import Box from 'components/Box'
 import { RoomType } from 'lib/apiTypes'
 import PlaylistManagement from 'PlaylistManagement'
 import YoutubeSearch from 'YoutubeSearch'
-import Users from './Users'
+import RoomPlaylist from 'RoomPlaylist'
 
-import Box from '../components/Box'
+import Users from './Users'
 
 const ROOM_ACTIVATE = gql`
   mutation RoomActivate($roomId: ID!) {
@@ -62,6 +63,10 @@ const Room: React.FC = () => {
     return <p>Loading</p>
   }
 
+  if (!id) {
+    return <></>
+  }
+
   return (
     <Box>
       <p>
@@ -72,6 +77,8 @@ const Room: React.FC = () => {
 
       <p>Playlist Management</p>
       <PlaylistManagement />
+      <p>Playlist For Room</p>
+      <RoomPlaylist roomId={id} />
       <p>Search</p>
       <YoutubeSearch />
     </Box>

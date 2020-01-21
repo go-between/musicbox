@@ -1,31 +1,35 @@
-import { RoomType } from 'lib/apiTypes'
-
 // Channels
-export const QUEUES_CHANNEL = 'QueuesChannel'
+export const ROOM_PLAYLIST_CHANNEL = 'RoomPlaylistChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
 export const USERS_CHANNEL = 'UsersChannel'
 
-export type Channel = typeof QUEUES_CHANNEL | typeof NOW_PLAYING_CHANNEL | typeof USERS_CHANNEL
+export type Channel = typeof ROOM_PLAYLIST_CHANNEL | typeof NOW_PLAYING_CHANNEL | typeof USERS_CHANNEL
 
 export type Channels = {
-  QUEUES_CHANNEL: typeof QUEUES_CHANNEL
+  ROOM_PLAYLIST_CHANNEL: typeof ROOM_PLAYLIST_CHANNEL
   NOW_PLAYING_CHANNEL: typeof NOW_PLAYING_CHANNEL
   USERS_CHANNEL: typeof USERS_CHANNEL
 }
 
 export const channels: Channels = {
-  QUEUES_CHANNEL,
+  ROOM_PLAYLIST_CHANNEL,
   NOW_PLAYING_CHANNEL,
   USERS_CHANNEL,
 }
 
+export type Subscriptions = {
+  [ROOM_PLAYLIST_CHANNEL]: {}
+  [NOW_PLAYING_CHANNEL]: {}
+  [USERS_CHANNEL]: {}
+}
+
+// Message Types
 type Ping = {
   identifier: undefined
   message: number
   type: 'ping'
 }
 
-// Message Types
 type ConfirmSubscription = {
   identifier: { channel: Channel }
   type: 'confirm_subscription'
@@ -49,16 +53,40 @@ type WebsocketMessage<T, K> = {
   type: undefined
 }
 
-export type DataMessage = WebsocketMessage<typeof USERS_CHANNEL, { room: RoomType }>
+export type DataMessage =
+  | WebsocketMessage<typeof USERS_CHANNEL, UserChannelMessage>
+  | WebsocketMessage<typeof ROOM_PLAYLIST_CHANNEL, RoomPlaylistMessage>
 
 export type Message = SystemMessage | DataMessage
 
-// Data
-export type Subscriptions = {
-  [QUEUES_CHANNEL]: {}
-  [NOW_PLAYING_CHANNEL]: {}
-  [USERS_CHANNEL]: {}
+// Message Data
+type UserForUserChannel = {
+  id: string
+  name: string
+  email: string
 }
 
+export type UserChannelMessage = {
+  room: {
+    users: UserForUserChannel[]
+  }
+}
+
+type RecordForRoomPlaylist = {
+  id: string
+  order: number
+  song: {
+    id: string
+    name: string
+  }
+  user: {
+    email: string
+    name: string
+  }
+}
+
+export type RoomPlaylistMessage = {
+  roomPlaylist: RecordForRoomPlaylist[]
+}
 // Utilities
 export type Options = { debug: boolean }
