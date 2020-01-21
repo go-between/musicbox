@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import gql from 'graphql-tag'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
+import { Box } from 'rebass'
 
 import { RoomType } from 'lib/apiTypes'
 import Library from 'Library'
 import YoutubeSearch from 'YoutubeSearch'
 import Users from './Users'
-
-import Box from '../components/Box'
 
 const ROOM_ACTIVATE = gql`
   mutation RoomActivate($roomId: ID!) {
@@ -63,7 +62,13 @@ const Room: React.FC = () => {
   }
 
   return (
-    <Box>
+    <Box 
+      bg="red" 
+      sx={{
+        borderRadius: 4,
+        px: 4, 
+        py:4,       
+    }}>
       <p>
         Room Name: <strong>{data?.room.name}</strong>
       </p>

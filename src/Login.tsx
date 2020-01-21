@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { Box } from 'rebass'
 
 import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
-
-import Box from './components/Box'
 
 type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
 const setFromEvent: SetFromEvent = changeFn => ev => changeFn(ev.target.value)
