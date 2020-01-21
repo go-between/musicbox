@@ -1,7 +1,6 @@
 import gql from 'graphql-tag'
 
 // Queries & Mutations
-
 export type RoomsQuery = {
   data: {
     rooms: Room[]
@@ -59,7 +58,7 @@ type Room = {
   name: string
 }
 
-type Team = {
+export type Team = {
   id: string
   name: string
 }

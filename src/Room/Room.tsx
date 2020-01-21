@@ -1,47 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import gql from 'graphql-tag'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
 import Box from 'components/Box'
-import { RoomType } from 'lib/apiTypes'
 import PlaylistManagement from 'PlaylistManagement'
 import YoutubeSearch from 'YoutubeSearch'
 import RoomPlaylist from 'RoomPlaylist'
 
+import { ROOM_ACTIVATE, ROOMS_QUERY, RoomsQuery } from './graphql'
 import Users from './Users'
 
-const ROOM_ACTIVATE = gql`
-  mutation RoomActivate($roomId: ID!) {
-    roomActivate(input: { roomId: $roomId }) {
-      errors
-    }
-  }
-`
-type RoomsQuery = {
-  room: RoomType
-}
-const ROOMS_QUERY = gql`
-  query RoomsQuery($id: ID!) {
-    room(id: $id) {
-      currentRecord {
-        playedAt
-        song {
-          name
-          youtubeId
-        }
-      }
-      name
-      users {
-        id
-        name
-        email
-      }
-    }
-  }
-`
 const Room: React.FC = () => {
   const { id } = useParams()
+
   const [active, setActive] = useState(false)
   const [roomActivate] = useMutation(ROOM_ACTIVATE, { onCompleted: () => setActive(true) })
 
@@ -49,7 +20,7 @@ const Room: React.FC = () => {
     roomActivate({ variables: { roomId: id } })
   }, [id, roomActivate])
 
-  const [loadUsers, { data }] = useLazyQuery<RoomsQuery>(ROOMS_QUERY, { variables: { id } })
+  const [loadUsers, { data }] = useLazyQuery<RoomsQuery['data'], RoomsQuery['vars']>(ROOMS_QUERY, { variables: { id } })
 
   useEffect(() => {
     if (!active) {
@@ -59,12 +30,12 @@ const Room: React.FC = () => {
     loadUsers()
   }, [active, loadUsers])
 
-  if (!active) {
-    return <p>Loading</p>
-  }
-
   if (!id) {
     return <></>
+  }
+
+  if (!active) {
+    return <p>Loading</p>
   }
 
   return (

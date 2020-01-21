@@ -43,7 +43,6 @@ export class Client {
     callback: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void,
   ): (() => void) => {
     this.send(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
-    console.log(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
     this.roomPlaylistSubscription = callback
     return () => this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
   }

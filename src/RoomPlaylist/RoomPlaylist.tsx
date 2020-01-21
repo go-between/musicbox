@@ -28,7 +28,7 @@ const RoomPlaylist: React.FC<Props> = ({ roomId }) => {
     if (!websocket) {
       return
     }
-    console.log('HI!', websocket)
+
     return websocket.subscribeToRoomPlaylist(roomPlaylist => {
       setPlaylistRecords(roomPlaylist)
     })

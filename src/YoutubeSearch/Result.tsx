@@ -1,22 +1,14 @@
 import React from 'react'
-import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 
+import { SONG_CREATE, SongCreateMutation } from './graphql'
 import { ParsedResult } from './types'
-
-const SONG_CREATE = gql`
-  mutation SongCreate($youtubeId: ID!) {
-    songCreate(input: { youtubeId: $youtubeId }) {
-      errors
-    }
-  }
-`
 
 type Props = {
   result: ParsedResult
 }
 const Result: React.FC<Props> = ({ result }) => {
-  const [teamActivate] = useMutation(SONG_CREATE)
+  const [teamActivate] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE)
 
   const onClick = (): void => {
     teamActivate({ variables: { youtubeId: result.id }, refetchQueries: ['SongsQuery'] })

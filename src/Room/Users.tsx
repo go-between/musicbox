@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import { WebsocketContext } from 'App'
-import { UserType } from 'lib/apiTypes'
+import { User } from './graphql'
 
 type Props = {
-  initialUsers: UserType[]
+  initialUsers: User[]
 }
 const Users: React.FC<Props> = ({ initialUsers }) => {
-  const [users, setUsers] = useState<UserType[]>([])
+  const [users, setUsers] = useState<User[]>([])
 
   const websocket = useContext(WebsocketContext)
 
