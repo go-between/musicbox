@@ -1,25 +1,15 @@
 import React from 'react'
-import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
 
-import { RoomType } from 'lib/apiTypes'
-type RoomProps = Pick<RoomType, 'id' | 'name'>
+import { ROOMS_QUERY, RoomsQuery } from './graphql'
 
-const ROOMS_QUERY = gql`
-  query RoomsQuery {
-    rooms {
-      id
-      name
-    }
-  }
-`
-
-type RoomsQuery = {
-  rooms: RoomProps[]
+type RoomProps = {
+  active: boolean
+  id: string
+  name: string
 }
-
-const Room: React.FC<RoomProps & { active: boolean }> = ({ id, name, active }) => {
+const Room: React.FC<RoomProps> = ({ id, name, active }) => {
   const { push } = useHistory()
   const onClick = (): ReturnType<typeof push> => push(`/room/${id}`)
 
@@ -35,7 +25,7 @@ type Props = {
   activeRoom?: string
 }
 const RoomSelector: React.FC<Props> = ({ activeRoom }) => {
-  const { loading, error, data } = useQuery<RoomsQuery>(ROOMS_QUERY)
+  const { loading, error, data } = useQuery<RoomsQuery['data']>(ROOMS_QUERY)
 
   if (loading) {
     return <p>Loading</p>
