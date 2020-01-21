@@ -4,12 +4,11 @@ import { useHistory } from 'react-router-dom'
 
 import { ROOMS_QUERY, RoomsQuery } from './graphql'
 
-type Room = {
+type RoomProps = {
+  active: boolean
   id: string
   name: string
 }
-
-type RoomProps = Room & { active: boolean }
 const Room: React.FC<RoomProps> = ({ id, name, active }) => {
   const { push } = useHistory()
   const onClick = (): ReturnType<typeof push> => push(`/room/${id}`)
