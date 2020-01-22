@@ -3,8 +3,9 @@ const colors = {
   background: '#F7FAFC', // body background color
   text: '#1A202C', // body color
   muted: '#E2E8F0', // a gray or subdued color for decorative purposes
-  primary: 'rgba(4, 87, 91, 1)', // primary button and link color
-  secondary: 'rgba(4, 87, 91, .8)', // secondary color - can be used for hover states
+  formBorder: '#CBD5E0',
+  primary: '#5A67D8', // primary button and link color
+  secondary: '', // secondary color - can be used for hover states
   modes: {
     dark: {
       text: '#fff',
@@ -22,9 +23,6 @@ const colors = {
   green: '#38A169',
   greenDark: '#276749',
   greenLight: '#F0FFF4',
-  hatchGreen: '#63bab0',
-  hatchGreenDark: '#04575b',
-  hatchGreenLight: '#ebfcfa',
   grayLight: '#dfdfdf',
   gray: '#999999',
   grayDark: '#666666',
@@ -51,6 +49,16 @@ const colors = {
 export default {
   borders: [0, '1px solid', '2px solid'],
   breakpoints: ['960px', '1200px', '1400px'],
+  buttons: {
+    primary: {
+      color: 'white',
+      bg: 'primary',
+      fontSize: 3,
+      fontWeight: '600',
+      px: 3,
+      py: 2,
+    },
+  },
   colors,
   colorStyles: {
     danger: {
@@ -74,13 +82,33 @@ export default {
   fonts: {
     sans:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";',
-    serif: 'Georgia, Cambria, "Times New Roman", Times, serif;',
+    serif: 'Inter, Georgia, Cambria, "Times New Roman", Times, serif;',
     mono: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
   },
   fontWeights: {
     light: 300,
     normal: 400,
     bold: 600,
+  },
+  forms: {
+    input: {
+      borderRadius: 4,
+      color: 'formBorder',
+      p: 2,
+    },
+    select: {
+      borderRadius: 9999,
+    },
+    textarea: {},
+    label: {
+      color: 'text',
+      fontSize: 1,
+      fontWeight: 'bold',
+      mb: 1,
+      textTransform: 'uppercase',
+    },
+    radio: {},
+    checkbox: {},
   },
   lineHeight: '1.5',
   listTypes: ['none', 'disc'],

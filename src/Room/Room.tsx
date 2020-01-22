@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
+import { Box } from 'rebass'
 
-import Box from 'components/Box'
 import PlaylistManagement from 'PlaylistManagement'
 import YoutubeSearch from 'YoutubeSearch'
 import RoomPlaylist from 'RoomPlaylist'
