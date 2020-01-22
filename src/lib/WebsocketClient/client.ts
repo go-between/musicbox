@@ -3,6 +3,7 @@ import {
   DataMessage,
   Message,
   Options,
+  NowPlayingChannelMessage,
   RoomPlaylistMessage,
   Subscriptions,
   UserChannelMessage,
@@ -23,6 +24,7 @@ export const awaitWebsocket = (token: string): Promise<WebSocket> => {
 
 export class Client {
   private debug: boolean
+  private nowPlayingSubscription: (currentRecord: NowPlayingChannelMessage['room']) => void = () => ({})
   private roomPlaylistSubscription: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void = () => ({})
   private userSubscription: (room: UserChannelMessage['room']) => void = () => ({})
   private websocket: WebSocket
@@ -37,6 +39,14 @@ export class Client {
     this.websocket.onmessage = (event: MessageEvent) => {
       this.parse(event)
     }
+  }
+
+  public subscribeToNowPlaying = (
+    callback: (currentRecord: NowPlayingChannelMessage['room']) => void,
+  ): (() => void) => {
+    this.send(this.generateSubscription(channels.NOW_PLAYING_CHANNEL, {}))
+    this.nowPlayingSubscription = callback
+    return () => this.send(this.generateUnsubscription(channels.NOW_PLAYING_CHANNEL))
   }
 
   public subscribeToRoomPlaylist = (
@@ -82,6 +92,10 @@ export class Client {
     this.log(websocketMessage)
 
     switch (websocketMessage.messageType) {
+      case channels.NOW_PLAYING_CHANNEL:
+        const currentRecord = websocketMessage.message.data.room
+        this.nowPlayingSubscription(currentRecord)
+        return
       case channels.ROOM_PLAYLIST_CHANNEL:
         const roomPlaylist = websocketMessage.message.data.roomPlaylist
         this.roomPlaylistSubscription(roomPlaylist)
