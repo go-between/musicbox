@@ -3,9 +3,10 @@ import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
 import Box from 'components/Box'
+import Player from 'Player'
 import PlaylistManagement from 'PlaylistManagement'
-import YoutubeSearch from 'YoutubeSearch'
 import RoomPlaylist from 'RoomPlaylist'
+import YoutubeSearch from 'YoutubeSearch'
 
 import { ROOM_ACTIVATE, RoomActivate, Room as RoomType } from './graphql'
 import Users from './Users'
@@ -47,6 +48,8 @@ const Room: React.FC = () => {
       <PlaylistManagement />
       <p>Playlist For Room</p>
       <RoomPlaylist roomId={id} />
+      <p>Player</p>
+      <Player currentRecord={room.currentRecord} />
       <p>Search</p>
       <YoutubeSearch />
     </Box>
