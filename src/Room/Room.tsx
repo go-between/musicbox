@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
+import { Box } from 'rebass'
 
 import Box from 'components/Box'
 import Player from 'Player'
