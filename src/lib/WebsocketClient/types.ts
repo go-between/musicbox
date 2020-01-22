@@ -54,12 +54,24 @@ type WebsocketMessage<T, K> = {
 }
 
 export type DataMessage =
-  | WebsocketMessage<typeof USERS_CHANNEL, UserChannelMessage>
+  | WebsocketMessage<typeof NOW_PLAYING_CHANNEL, NowPlayingChannelMessage>
   | WebsocketMessage<typeof ROOM_PLAYLIST_CHANNEL, RoomPlaylistMessage>
+  | WebsocketMessage<typeof USERS_CHANNEL, UserChannelMessage>
 
 export type Message = SystemMessage | DataMessage
 
 // Message Data
+export type NowPlayingChannelMessage = {
+  room: {
+    currentRecord: {
+      playedAt: string
+      song: {
+        name: string
+        youtubeId: string
+      }
+    }
+  }
+}
 type UserForUserChannel = {
   id: string
   name: string
