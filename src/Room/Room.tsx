@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 
 import Box from 'components/Box'
@@ -7,44 +7,41 @@ import PlaylistManagement from 'PlaylistManagement'
 import YoutubeSearch from 'YoutubeSearch'
 import RoomPlaylist from 'RoomPlaylist'
 
-import { ROOM_ACTIVATE, ROOMS_QUERY, RoomsQuery } from './graphql'
+import { ROOM_ACTIVATE, RoomActivate, Room as RoomType } from './graphql'
 import Users from './Users'
 
 const Room: React.FC = () => {
   const { id } = useParams()
 
-  const [active, setActive] = useState(false)
-  const [roomActivate] = useMutation(ROOM_ACTIVATE, { onCompleted: () => setActive(true) })
+  const [room, setRoom] = useState<Partial<RoomType>>({})
+  const [roomActivate, { data, loading }] = useMutation<RoomActivate['data'], RoomActivate['vars']>(ROOM_ACTIVATE)
 
   useEffect(() => {
-    roomActivate({ variables: { roomId: id } })
-  }, [id, roomActivate])
-
-  const [loadUsers, { data }] = useLazyQuery<RoomsQuery['data'], RoomsQuery['vars']>(ROOMS_QUERY, { variables: { id } })
-
-  useEffect(() => {
-    if (!active) {
+    if (!id) {
       return
     }
 
-    loadUsers()
-  }, [active, loadUsers])
+    roomActivate({ variables: { roomId: id } })
+  }, [id, roomActivate])
 
-  if (!id) {
-    return <></>
-  }
+  useEffect(() => {
+    if (!data) {
+      return
+    }
+    setRoom(data.roomActivate.room)
+  }, [data])
 
-  if (!active) {
+  if (!id || !room || loading) {
     return <p>Loading</p>
   }
 
   return (
     <Box>
       <p>
-        Room Name: <strong>{data?.room.name}</strong>
+        Room Name: <strong>{room.name}</strong>
       </p>
       <p>Users In Room</p>
-      <Users initialUsers={data?.room.users || []} />
+      <Users initialUsers={room.users || []} />
 
       <p>Playlist Management</p>
       <PlaylistManagement />
