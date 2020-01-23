@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button, Box } from 'rebass'
-import { Label, Input, Select, Textarea, Radio, Checkbox } from '@rebass/forms'
+import { Label, Input } from '@rebass/forms'
 
 import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
