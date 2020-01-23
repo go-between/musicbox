@@ -5,7 +5,7 @@ const colors = {
   muted: '#E2E8F0', // a gray or subdued color for decorative purposes
   formBorder: '#CBD5E0',
   primary: '#5A67D8', // primary button and link color
-  secondary: '', // secondary color - can be used for hover states
+  secondary: '#4C51BF', // secondary color - can be used for hover states
   modes: {
     dark: {
       text: '#fff',
@@ -51,12 +51,16 @@ export default {
   breakpoints: ['960px', '1200px', '1400px'],
   buttons: {
     primary: {
-      color: 'white',
       bg: 'primary',
+      boxShadow: 'base',
+      color: 'white',
+      cursor: 'pointer',
       fontSize: 3,
       fontWeight: '600',
-      px: 3,
-      py: 2,
+      p: '12px',
+      '&:hover': {
+        bg: 'secondary',
+      },
     },
   },
   colors,
@@ -93,8 +97,13 @@ export default {
   forms: {
     input: {
       borderRadius: 4,
-      color: 'formBorder',
+      borderColor: 'formBorder',
+      color: 'text',
       p: 2,
+      '&:focus': {
+        borderColor: 'primary',
+        boxShadow: 'outline',
+      },
     },
     select: {
       borderRadius: 9999,
