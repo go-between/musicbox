@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button, Box } from 'rebass'
 import { Label, Input } from '@rebass/forms'
@@ -30,7 +30,10 @@ const Login: React.FC = () => {
   const [errors, setErrors] = useState('')
   const history = useHistory()
 
-  const attemptLogin = (setToken?: (token: string) => void) => () => {
+  const { setToken } = useContext(AuthContext)
+
+  const attemptLogin = (ev: React.FormEvent): void => {
+    ev.preventDefault()
     if (!setToken) {
       return
     }
@@ -49,49 +52,43 @@ const Login: React.FC = () => {
   }
 
   return (
-    <AuthContext.Consumer>
-      {({ setToken }) => {
-        return (
-          <Box
-            sx={{
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: 'gray200',
-              borderRadius: 2,
-              boxShadow: 'xl',
-              maxWidth: 400,
-              mx: 'auto',
-              my: 5,
-            }}
-            bg="white"
-            p={4}
-          >
-            <Box as="form">
-              <Box mb={4}>
-                <Label htmlFor="name">Email</Label>
-                <Input type="text" value={email} onChange={setFromEvent(setEmail)} />
-              </Box>
-              <Box mb={4}>
-                <Label htmlFor="password">Password</Label>
-                <Input type="password" value={password} onChange={setFromEvent(setPassword)} />
-              </Box>
-              <Box>
-                <Button
-                  onClick={attemptLogin(setToken)}
-                  sx={{
-                    textAlign: 'center',
-                    width: '100%',
-                  }}
-                >
-                  Log In
-                </Button>
-              </Box>
-              <Box>{errors}</Box>
-            </Box>
-          </Box>
-        )
+    <Box
+      sx={{
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: 'gray200',
+        borderRadius: 2,
+        boxShadow: 'xl',
+        maxWidth: 400,
+        mx: 'auto',
+        my: 5,
       }}
-    </AuthContext.Consumer>
+      bg="white"
+      p={4}
+    >
+      <Box as="form">
+        <Box mb={4}>
+          <Label htmlFor="name">Email</Label>
+          <Input type="text" value={email} onChange={setFromEvent(setEmail)} />
+        </Box>
+        <Box mb={4}>
+          <Label htmlFor="password">Password</Label>
+          <Input type="password" value={password} onChange={setFromEvent(setPassword)} />
+        </Box>
+        <Box>
+          <Button
+            onClick={attemptLogin}
+            sx={{
+              textAlign: 'center',
+              width: '100%',
+            }}
+          >
+            Log In
+          </Button>
+        </Box>
+        <Box>{errors}</Box>
+      </Box>
+    </Box>
   )
 }
 export default Login
