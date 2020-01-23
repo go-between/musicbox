@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Button, Box } from 'rebass'
-import { Label, Input, Select, Textarea, Radio, Checkbox } from '@rebass/forms'
+import { ArrowRight } from 'react-feather'
+import { Button, Box, Flex, Text } from 'rebass'
+import { Label, Input } from '@rebass/forms'
 
 import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
@@ -56,10 +57,10 @@ const Login: React.FC = () => {
             sx={{
               borderWidth: '1px',
               borderStyle: 'solid',
-              borderColor: 'gray300',
+              borderColor: 'gray200',
               borderRadius: 2,
-              boxShadow: 'md',
-              maxWidth: 512,
+              boxShadow: 'xl',
+              maxWidth: 400,
               mx: 'auto',
               my: 5,
             }}
@@ -73,10 +74,18 @@ const Login: React.FC = () => {
               </Box>
               <Box mb={4}>
                 <Label htmlFor="password">Password</Label>
-                <Input type="text" value={password} onChange={setFromEvent(setPassword)} />
+                <Input type="password" value={password} onChange={setFromEvent(setPassword)} />
               </Box>
               <Box>
-                <Button onClick={attemptLogin(setToken)}>Log in</Button>
+                <Button
+                  onClick={attemptLogin(setToken)}
+                  sx={{
+                    textAlign: 'center',
+                    width: '100%',
+                  }}
+                >
+                  Log In
+                </Button>
               </Box>
               <Box>{errors}</Box>
             </Box>
