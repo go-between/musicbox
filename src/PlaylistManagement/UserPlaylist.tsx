@@ -1,15 +1,19 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
-import { ROOM_PLAYLIST_FOR_USER_QUERY, RoomPlaylistForUserQuery } from './graphql'
-import { PlaylistManagementContext } from './PlaylistManagement'
+import { StateAction } from 'lib/types'
+import { ROOM_PLAYLIST_FOR_USER_QUERY, RoomPlaylistRecord, RoomPlaylistForUserQuery } from './graphql'
 
-const UserPlaylist: React.FC = () => {
+type Props = {
+  roomPlaylistRecords: RoomPlaylistRecord[]
+  setRoomPlaylistRecords: StateAction<RoomPlaylistRecord[]>
+}
+
+const UserPlaylist: React.FC<Props> = ({ roomPlaylistRecords, setRoomPlaylistRecords }) => {
   const { data, loading } = useQuery<RoomPlaylistForUserQuery['data']>(ROOM_PLAYLIST_FOR_USER_QUERY)
-  const { roomPlaylistRecords, setRoomPlaylistRecords } = useContext(PlaylistManagementContext)
 
   useEffect(() => {
-    if (!data || !setRoomPlaylistRecords) {
+    if (!data) {
       return
     }
 

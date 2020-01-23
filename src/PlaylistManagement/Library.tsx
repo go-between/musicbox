@@ -1,13 +1,15 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
-import { PlaylistManagementContext } from './PlaylistManagement'
-import { SONGS_QUERY, OrderedRecord, SongsQuery } from './graphql'
+import { RoomPlaylistRecordsReorder } from './PlaylistManagement'
+import { SONGS_QUERY, OrderedRecord, RoomPlaylistRecord, SongsQuery } from './graphql'
 
-const Library: React.FC = () => {
+type Props = {
+  roomPlaylistRecordsReorder: RoomPlaylistRecordsReorder[0]
+  roomPlaylistRecords: RoomPlaylistRecord[]
+}
+const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistRecords }) => {
   const { data, loading } = useQuery<SongsQuery['data']>(SONGS_QUERY)
-
-  const { roomPlaylistRecordsReorder, roomPlaylistRecords } = useContext(PlaylistManagementContext)
 
   if (loading) {
     return <p>Loading...</p>
@@ -15,10 +17,6 @@ const Library: React.FC = () => {
 
   const songs = data?.songs.map(s => {
     const addSong = (): void => {
-      if (!roomPlaylistRecordsReorder || !roomPlaylistRecords) {
-        return
-      }
-
       const orderedRecords: OrderedRecord[] = roomPlaylistRecords.map(record => ({
         roomPlaylistRecordId: record.id,
         songId: record.song.id,
