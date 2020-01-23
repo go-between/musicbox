@@ -30,7 +30,11 @@ const PlaylistManagement: React.FC = () => {
       <p>Quick add from library</p>
       <Library roomPlaylistRecordsReorder={roomPlaylistRecordsReorder} roomPlaylistRecords={roomPlaylistRecords} />
       <p>Songs enqueued by me</p>
-      <UserPlaylist roomPlaylistRecords={roomPlaylistRecords} setRoomPlaylistRecords={setRoomPlaylistRecords} />
+      <UserPlaylist
+        roomPlaylistRecordsReorder={roomPlaylistRecordsReorder}
+        roomPlaylistRecords={roomPlaylistRecords}
+        setRoomPlaylistRecords={setRoomPlaylistRecords}
+      />
     </>
   )
 }
