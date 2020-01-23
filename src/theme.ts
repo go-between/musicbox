@@ -59,8 +59,8 @@ export default {
       fontWeight: '600',
       p: '12px',
       '&:hover': {
-        bg: 'secondary'
-      }
+        bg: 'secondary',
+      },
     },
   },
   colors,
@@ -100,10 +100,10 @@ export default {
       borderColor: 'formBorder',
       color: 'text',
       p: 2,
-      '&:focus':{
+      '&:focus': {
         borderColor: 'primary',
-        boxShadow: 'outline'
-      }
+        boxShadow: 'outline',
+      },
     },
     select: {
       borderRadius: 9999,

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { ArrowRight } from 'react-feather'
-import { Button, Box, Flex, Text } from 'rebass'
+import { Button, Box } from 'rebass'
 import { Label, Input } from '@rebass/forms'
 
 import { API_HOST } from 'lib/constants'
