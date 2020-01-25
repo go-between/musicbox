@@ -1,6 +1,48 @@
 import gql from 'graphql-tag'
 
 // Queries & Mutations
+export type MessagesQuery = {
+  data: {
+    messages: Message[]
+  }
+  vars: {
+    from: string
+  }
+}
+
+export const MESSAGES_QUERY = gql`
+  query Messages($from: DateTime) {
+    messages(from: $from) {
+      id
+      createdAt
+      message
+      roomPlaylistRecord {
+        song {
+          name
+        }
+      }
+      user {
+        name
+      }
+    }
+  }
+`
+
+export type MessageCreate = {
+  data: {}
+  vars: {
+    message: string
+  }
+}
+
+export const MESSAGE_CREATE = gql`
+  mutation MessageCreate($message: String!) {
+    messageCreate(input: { message: $message }) {
+      errors
+    }
+  }
+`
+
 export type RoomActivate = {
   data: {
     roomActivate: {
@@ -35,6 +77,19 @@ export const ROOM_ACTIVATE = gql`
 `
 
 // Entities
+export type Message = {
+  id: string
+  createdAt: string
+  message: string
+  roomPlaylistRecord: {
+    song: {
+      name: string
+    }
+  } | null
+  user: {
+    name: string
+  }
+}
 export type Room = {
   currentRecord: {
     playedAt: string
