@@ -5,10 +5,7 @@ import { MESSAGE_CREATE, MessageCreate } from './graphql'
 
 const MessageEntry: React.FC = () => {
   const [message, setMessage] = useState<string>('')
-  const [messageCreate] = useMutation<
-    MessageCreate['data'],
-    MessageCreate['vars']
-  >(MESSAGE_CREATE)
+  const [messageCreate] = useMutation<MessageCreate['data'], MessageCreate['vars']>(MESSAGE_CREATE)
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     setMessage(ev.target.value)
@@ -19,8 +16,8 @@ const MessageEntry: React.FC = () => {
       return
     }
 
-    if (ev.key === "Enter") {
-      messageCreate({variables: { message }})
+    if (ev.key === 'Enter') {
+      messageCreate({ variables: { message } })
       setMessage('')
     }
   }
