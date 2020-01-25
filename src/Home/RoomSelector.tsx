@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
+import { Box, Button, Flex } from 'rebass'
 
 import { ROOMS_QUERY, RoomsQuery } from './graphql'
 
@@ -14,10 +15,25 @@ const Room: React.FC<RoomProps> = ({ id, name, active }) => {
   const onClick = (): ReturnType<typeof push> => push(`/room/${id}`)
 
   return (
-    <li>
+    <Flex
+      as="li"
+      alignItems="center"
+      sx={{
+        listStyle: 'none',
+        py: 2,
+      }}
+    >
       {name} {active && '(currently active)'}
-      <button onClick={onClick}>Join</button>
-    </li>
+      <Button
+        onClick={onClick}
+        mx={2}
+        px={2}
+        py={1}
+        fontSize={1}
+      >
+        Join
+      </Button>
+    </Flex>
   )
 }
 
@@ -36,11 +52,17 @@ const RoomSelector: React.FC<Props> = ({ activeRoom }) => {
   }
 
   return (
-    <ul>
+    <Box
+      as="ul"
+      sx={{
+        m: 0,
+        p: 0,
+      }}
+    >
       {data.rooms.map(r => (
         <Room key={r.id} active={r.id === activeRoom} {...r} />
       ))}
-    </ul>
+    </Box>
   )
 }
 

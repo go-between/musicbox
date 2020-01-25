@@ -37,6 +37,9 @@ const colors = {
   gray900: '#1A202C',
   offBlack: '#484848',
   offWhite: '#f7f7f7',
+  indigo100: '#EBF4FF',
+  indigo200: '#C3DAFE',
+  indigo800: '#434190',
   red: '#E53E3E',
   redDark: '#C53030',
   redLight: '#FFF5F5',
@@ -84,10 +87,9 @@ export default {
   },
   fontSizes: [10, 12, 14, 16, 18, 20, 24, 32, 48, 64, 72, 96],
   fonts: {
-    sans:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";',
-    serif: 'Inter, Georgia, Cambria, "Times New Roman", Times, serif;',
-    mono: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+    body: 'inter, system-ui, sans-serif',
+    heading: 'inherit',
+    monospace: 'Menlo, monospace',
   },
   fontWeights: {
     light: 300,
@@ -104,6 +106,10 @@ export default {
         borderColor: 'primary',
         boxShadow: 'outline',
       },
+    },
+    heading: {
+      color: 'gray800',
+      fontWeight: 800,
     },
     select: {
       borderRadius: 9999,
