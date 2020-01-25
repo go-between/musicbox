@@ -1,13 +1,26 @@
-import React, { useContext } from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import React from 'react'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 
-import { PlaylistManagementContext } from './PlaylistManagement'
-import { SONGS_QUERY, OrderedRecord, SongsQuery } from './graphql'
+import { RoomPlaylistRecordsReorder } from './PlaylistManagement'
+import {
+  SONGS_QUERY,
+  USER_LIBRARY_RECORD_DELETE_MUTATION,
+  OrderedRecord,
+  RoomPlaylistRecord,
+  SongsQuery,
+  UserLibraryRecordDeleteMutation,
+} from './graphql'
 
-const Library: React.FC = () => {
+type Props = {
+  roomPlaylistRecordsReorder: RoomPlaylistRecordsReorder[0]
+  roomPlaylistRecords: RoomPlaylistRecord[]
+}
+const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistRecords }) => {
   const { data, loading } = useQuery<SongsQuery['data']>(SONGS_QUERY)
-
-  const { roomPlaylistRecordsReorder, roomPlaylistRecords } = useContext(PlaylistManagementContext)
+  const [userLibraryRecordDelete] = useMutation<
+    UserLibraryRecordDeleteMutation['data'],
+    UserLibraryRecordDeleteMutation['vars']
+  >(USER_LIBRARY_RECORD_DELETE_MUTATION, { refetchQueries: ['SongsQuery'] })
 
   if (loading) {
     return <p>Loading...</p>
@@ -15,10 +28,6 @@ const Library: React.FC = () => {
 
   const songs = data?.songs.map(s => {
     const addSong = (): void => {
-      if (!roomPlaylistRecordsReorder || !roomPlaylistRecords) {
-        return
-      }
-
       const orderedRecords: OrderedRecord[] = roomPlaylistRecords.map(record => ({
         roomPlaylistRecordId: record.id,
         songId: record.song.id,
@@ -28,9 +37,14 @@ const Library: React.FC = () => {
 
       roomPlaylistRecordsReorder({ variables: { orderedRecords } })
     }
+
+    const deleteSong = (): void => {
+      userLibraryRecordDelete({ variables: { id: s.id } })
+    }
     return (
       <li key={s.id}>
-        {s.name} <button onClick={addSong}>Add</button>{' '}
+        {s.name} <button onClick={addSong}>Enqueue</button>
+        <button onClick={deleteSong}>Delete from Library</button>{' '}
       </li>
     )
   })
