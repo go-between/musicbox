@@ -23,12 +23,14 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Box mt={4}>
-        <Heading as="h2" mb={3} fontSize={[4,6]}>Your Teams</Heading>
+        <Heading as="h2" mb={3} fontSize={[4, 6]}>
+          Your Teams
+        </Heading>
       </Box>
 
       <TeamSelector teams={data.user.teams} activeTeam={data.user.activeTeam?.id} />
 
-      <Heading as="h2" mb={3} fontSize={[4,6]}>
+      <Heading as="h2" mb={3} fontSize={[4, 6]}>
         Available Rooms
         {/* <i>{data.user.activeTeam?.name}</i> */}
       </Heading>

@@ -24,13 +24,7 @@ const Room: React.FC<RoomProps> = ({ id, name, active }) => {
       }}
     >
       {name} {active && '(currently active)'}
-      <Button
-        onClick={onClick}
-        mx={2}
-        px={2}
-        py={1}
-        fontSize={1}
-      >
+      <Button onClick={onClick} mx={2} px={2} py={1} fontSize={1}>
         Join
       </Button>
     </Flex>

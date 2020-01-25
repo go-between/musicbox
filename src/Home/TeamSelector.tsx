@@ -17,7 +17,7 @@ const Team: React.FC<TeamProps> = ({ id, name, active }) => {
     return (
       <Box
         sx={{
-          px: 3
+          px: 3,
         }}
       >
         <Box
@@ -31,7 +31,9 @@ const Team: React.FC<TeamProps> = ({ id, name, active }) => {
             p: 4,
           }}
         >
-          <Text fontSize={3} fontWeight="bold">{name}</Text>
+          <Text fontSize={3} fontWeight="bold">
+            {name}
+          </Text>
         </Box>
       </Box>
     )
@@ -45,7 +47,7 @@ const Team: React.FC<TeamProps> = ({ id, name, active }) => {
       sx={{
         cursor: 'pointer',
         px: 3,
-        py: [3,0],
+        py: [3, 0],
       }}
     >
       <Box
@@ -57,10 +59,10 @@ const Team: React.FC<TeamProps> = ({ id, name, active }) => {
           bg: 'white',
           p: 4,
           '&:hover': {
-            borderColor:'primary',
+            borderColor: 'primary',
             boxShadow: 'md',
-            bg: 'indigo100'
-          }
+            bg: 'indigo100',
+          },
         }}
       >
         <Text fontSize={3}>{name}</Text>

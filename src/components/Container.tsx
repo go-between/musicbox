@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from 'rebass'
 
-const Container = (props : any) =>
+const Container = (props: any) => (
   <Box
     {...props}
     sx={{
@@ -10,5 +10,6 @@ const Container = (props : any) =>
       px: 3,
     }}
   />
+)
 
-  export default Container
+export default Container
