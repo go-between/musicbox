@@ -1,25 +1,33 @@
 // Channels
-export const ROOM_PLAYLIST_CHANNEL = 'RoomPlaylistChannel'
+export const MESSAGE_CHANNEL = 'MessageChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
+export const ROOM_PLAYLIST_CHANNEL = 'RoomPlaylistChannel'
 export const USERS_CHANNEL = 'UsersChannel'
 
-export type Channel = typeof ROOM_PLAYLIST_CHANNEL | typeof NOW_PLAYING_CHANNEL | typeof USERS_CHANNEL
+export type Channel =
+  | typeof MESSAGE_CHANNEL
+  | typeof NOW_PLAYING_CHANNEL
+  | typeof ROOM_PLAYLIST_CHANNEL
+  | typeof USERS_CHANNEL
 
 export type Channels = {
-  ROOM_PLAYLIST_CHANNEL: typeof ROOM_PLAYLIST_CHANNEL
+  MESSAGE_CHANNEL: typeof MESSAGE_CHANNEL
   NOW_PLAYING_CHANNEL: typeof NOW_PLAYING_CHANNEL
+  ROOM_PLAYLIST_CHANNEL: typeof ROOM_PLAYLIST_CHANNEL
   USERS_CHANNEL: typeof USERS_CHANNEL
 }
 
 export const channels: Channels = {
-  ROOM_PLAYLIST_CHANNEL,
+  MESSAGE_CHANNEL,
   NOW_PLAYING_CHANNEL,
+  ROOM_PLAYLIST_CHANNEL,
   USERS_CHANNEL,
 }
 
 export type Subscriptions = {
-  [ROOM_PLAYLIST_CHANNEL]: {}
+  [MESSAGE_CHANNEL]: {}
   [NOW_PLAYING_CHANNEL]: {}
+  [ROOM_PLAYLIST_CHANNEL]: {}
   [USERS_CHANNEL]: {}
 }
 
@@ -54,6 +62,7 @@ type WebsocketMessage<T, K> = {
 }
 
 export type DataMessage =
+  | WebsocketMessage<typeof MESSAGE_CHANNEL, MessageChannelMessage>
   | WebsocketMessage<typeof NOW_PLAYING_CHANNEL, NowPlayingChannelMessage>
   | WebsocketMessage<typeof ROOM_PLAYLIST_CHANNEL, RoomPlaylistMessage>
   | WebsocketMessage<typeof USERS_CHANNEL, UserChannelMessage>
@@ -61,6 +70,22 @@ export type DataMessage =
 export type Message = SystemMessage | DataMessage
 
 // Message Data
+export type MessageChannelMessage = {
+  message: {
+    id: string
+    createdAt: string
+    message: string
+    roomPlaylistRecord: {
+      song: {
+        name: string
+      }
+    } | null
+    user: {
+      name: string
+    }
+  }
+}
+
 export type NowPlayingChannelMessage = {
   room: {
     currentRecord: {
@@ -70,17 +95,6 @@ export type NowPlayingChannelMessage = {
         youtubeId: string
       }
     }
-  }
-}
-type UserForUserChannel = {
-  id: string
-  name: string
-  email: string
-}
-
-export type UserChannelMessage = {
-  room: {
-    users: UserForUserChannel[]
   }
 }
 
@@ -99,6 +113,18 @@ type RecordForRoomPlaylist = {
 
 export type RoomPlaylistMessage = {
   roomPlaylist: RecordForRoomPlaylist[]
+}
+
+type UserForUserChannel = {
+  id: string
+  name: string
+  email: string
+}
+
+export type UserChannelMessage = {
+  room: {
+    users: UserForUserChannel[]
+  }
 }
 // Utilities
 export type Options = { debug: boolean }
