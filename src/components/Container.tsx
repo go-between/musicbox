@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from 'rebass'
 
-const Container: React.FC = ({children}) => (
+const Container: React.FC = ({ children }) => (
   <Box
     sx={{
       maxWidth: '1024px',
