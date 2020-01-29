@@ -9,6 +9,8 @@ import RoomPlaylist from 'RoomPlaylist'
 import YoutubeSearch from 'YoutubeSearch'
 
 import { ROOM_ACTIVATE, RoomActivate, Room as RoomType } from './graphql'
+import MessageEntry from './MessageEntry'
+import Messages from './Messages'
 import Users from './Users'
 
 const Room: React.FC = () => {
@@ -50,6 +52,9 @@ const Room: React.FC = () => {
       <RoomPlaylist roomId={id} />
       <p>Player</p>
       <Player currentRecord={room.currentRecord} />
+      <p>Chat</p>
+      <MessageEntry />
+      <Messages />
       <p>Search</p>
       <YoutubeSearch />
     </Box>

@@ -58,6 +58,20 @@ export type SongsQuery = {
   }
 }
 
+export type UserLibraryRecordDeleteMutation = {
+  data: {}
+  vars: {
+    id: string
+  }
+}
+export const USER_LIBRARY_RECORD_DELETE_MUTATION = gql`
+  mutation UserLibraryRecordDelete($id: ID!) {
+    userLibraryRecordDelete(input: { id: $id }) {
+      errors
+    }
+  }
+`
+
 // Entities
 export type OrderedRecord = {
   roomPlaylistRecordId?: string
