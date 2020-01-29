@@ -1,5 +1,6 @@
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
+import { Box, Flex, Text } from 'rebass'
 
 import { TEAM_ACTIVATE } from './graphql'
 
@@ -13,19 +14,59 @@ const Team: React.FC<TeamProps> = ({ id, name, active }) => {
 
   if (active) {
     return (
-      <li>
-        <b>{name}</b>
-      </li>
+      <Box
+        sx={{
+          px: 3,
+        }}
+      >
+        <Box
+          sx={{
+            border: '1px solid',
+            borderColor: 'primary',
+            borderRadius: 4,
+            boxShadow: 'md',
+            bg: 'indigo100',
+            color: 'indigo800',
+            p: 4,
+          }}
+        >
+          <Text fontSize={3} fontWeight="bold">
+            {name}
+          </Text>
+        </Box>
+      </Box>
     )
   }
 
   const onClick = (): ReturnType<typeof teamActivate> =>
     teamActivate({ variables: { teamId: id }, refetchQueries: ['UserQuery', 'RoomsQuery'] })
   return (
-    <li>
-      {name}
-      <button onClick={onClick}>Activate</button>
-    </li>
+    <Box
+      onClick={onClick}
+      sx={{
+        cursor: 'pointer',
+        px: 3,
+        py: [3, 0],
+      }}
+    >
+      <Box
+        sx={{
+          border: '1px solid',
+          borderColor: 'gray500',
+          borderRadius: 4,
+          boxShadow: 'base',
+          bg: 'white',
+          p: 4,
+          '&:hover': {
+            borderColor: 'primary',
+            boxShadow: 'md',
+            bg: 'indigo100',
+          },
+        }}
+      >
+        <Text fontSize={3}>{name}</Text>
+      </Box>
+    </Box>
   )
 }
 
@@ -35,11 +76,11 @@ type Props = {
 }
 const TeamSelector: React.FC<Props> = ({ teams, activeTeam }) => {
   return (
-    <ul>
+    <Flex mx={-3} pb={4} flexDirection={['column', 'row']}>
       {teams.map(t => (
         <Team key={t.id} id={t.id} name={t.name} active={t.id === activeTeam} />
       ))}
-    </ul>
+    </Flex>
   )
 }
 
