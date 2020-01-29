@@ -1,9 +1,8 @@
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { Box, Button, Flex, Text } from 'rebass'
+import { Box, Flex, Text } from 'rebass'
 
 import { TEAM_ACTIVATE } from './graphql'
-import { fontWeight } from 'styled-system'
 
 type TeamProps = {
   active: boolean

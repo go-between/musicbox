@@ -5,7 +5,6 @@ import { Box, Heading } from 'rebass'
 import { USER_QUERY, UserQuery } from './graphql'
 import RoomSelector from './RoomSelector'
 import TeamSelector from './TeamSelector'
-import { from } from 'apollo-boost'
 
 import Container from '../components/Container'
 
