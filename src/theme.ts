@@ -1,20 +1,29 @@
 const colors = {
-  accent: '#718096', // a contrast color for emphasizing UI
-  background: '#F7FAFC', // body background color
-  text: '#1A202C', // body color
-  muted: '#E2E8F0', // a gray or subdued color for decorative purposes
+  accent: '#2D3748', // a contrast color for emphasizing UI
+  background: '#1A202C', // body background color
+  text: '#EDF2F7', // body color
+  muted: '#4A5568', // a gray or subdued color for decorative purposes
   formBorder: '#CBD5E0',
   primary: '#5A67D8', // primary button and link color
   secondary: '#4C51BF', // secondary color - can be used for hover states
   modes: {
-    dark: {
-      text: '#fff',
-      background: '#000',
-      primary: '#0cf',
-      secondary: '#f0e',
-      gray: '#222',
-      lightgray: '#111',
+    light: {
+      accent: '#718096',
+      background: '#F7FAFC',
+      text: '#1A202C',
+      muted: '#E2E8F0',
+      formBorder: '#CBD5E0',
+      primary: '#5A67D8',
+      secondary: '#4C51BF',
     },
+    // dark: {
+    //   text: '#fff',
+    //   background: '#000',
+    //   primary: '#0cf',
+    //   secondary: '#f0e',
+    //   gray: '#222',
+    //   lightgray: '#111',
+    // },
   },
   black: '#232323',
   blue: '#3182CE',
@@ -98,17 +107,19 @@ export default {
   },
   forms: {
     input: {
+      bg: 'background',
       borderRadius: 4,
-      borderColor: 'formBorder',
+      borderColor: 'transparent',
+      boxShadow: 'base',
       color: 'text',
       p: 2,
       '&:focus': {
-        borderColor: 'primary',
-        boxShadow: 'outline',
+        outline: 'none'
       },
+
     },
     heading: {
-      color: 'gray800',
+      color: 'text',
       fontWeight: 800,
     },
     select: {
@@ -119,7 +130,7 @@ export default {
       color: 'text',
       fontSize: 1,
       fontWeight: 'bold',
-      mb: 1,
+      mb: 2,
       textTransform: 'uppercase',
     },
     radio: {},

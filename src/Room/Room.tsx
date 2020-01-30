@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
-import { Box } from 'rebass'
+import { Box, Flex, Heading, Text } from 'rebass'
 
 import Player from 'Player'
 import PlaylistManagement from 'PlaylistManagement'
@@ -12,6 +12,9 @@ import { ROOM_ACTIVATE, RoomActivate, Room as RoomType } from './graphql'
 import MessageEntry from './MessageEntry'
 import Messages from './Messages'
 import Users from './Users'
+
+import Container from '../components/Container'
+import { fontSize } from 'styled-system'
 
 const Room: React.FC = () => {
   const { id } = useParams()
@@ -39,24 +42,79 @@ const Room: React.FC = () => {
   }
 
   return (
-    <Box>
-      <p>
-        Room Name: <strong>{room.name}</strong>
-      </p>
-      <p>Users In Room</p>
-      <Users initialUsers={room.users || []} />
+    <Box
+      sx={{
+        mx: 'auto',
+        p: 4,
+      }}
+    >
+      <Flex
+        alignItems="top"
+      >
+        <Box width="25%">
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 4,
+            }}
+          >
+            Room Name
+            <Text
+              sx={{
+                color: 'gray700',
+                fontWeight: '400',
+                fontSize: 3
+              }}
+            >
+              {room.name}
+            </Text>
+          </Heading>
 
-      <p>Playlist Management</p>
-      <PlaylistManagement />
-      <p>Playlist For Room</p>
-      <RoomPlaylist roomId={id} />
-      <p>Player</p>
-      <Player currentRecord={room.currentRecord} />
-      <p>Chat</p>
-      <MessageEntry />
-      <Messages />
-      <p>Search</p>
-      <YoutubeSearch />
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 4,
+            }}
+          >
+            Active Users
+            <Text
+              sx={{
+                color: 'gray700',
+                fontWeight: '400',
+                fontSize: 3
+              }}
+            >
+              <Users initialUsers={room.users || []} />
+            </Text>
+          </Heading>
+
+          <Box>
+
+
+            <p>Search</p>
+            <YoutubeSearch />
+            <p>Playlist Management</p>
+            <PlaylistManagement />
+          </Box>
+        </Box>
+
+        <Box width="50%">
+          <Box
+            sx={{
+              height: '400px'
+            }}
+          >
+            <Player currentRecord={room.currentRecord} />
+            <p>Playlist For Room</p>
+            <RoomPlaylist roomId={id} />
+          </Box>
+        </Box>
+
+        <Box width="25%">
+          <Messages />
+          <MessageEntry />
+        </Box>
+      </Flex>
     </Box>
   )
 }

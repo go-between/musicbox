@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Button, Box } from 'rebass'
+import { Button, Box, Flex, Heading } from 'rebass'
 import { Label, Input } from '@rebass/forms'
+import { Lock, Mail } from 'react-feather'
 
 import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
@@ -52,43 +53,89 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Box
-      sx={{
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: 'gray200',
-        borderRadius: 2,
-        boxShadow: 'xl',
-        maxWidth: 400,
-        mx: 'auto',
-        my: 5,
-      }}
-      bg="white"
-      p={4}
-    >
-      <Box as="form">
-        <Box mb={4}>
-          <Label htmlFor="name">Email</Label>
-          <Input type="text" value={email} onChange={setFromEvent(setEmail)} />
-        </Box>
-        <Box mb={4}>
-          <Label htmlFor="password">Password</Label>
-          <Input type="password" value={password} onChange={setFromEvent(setPassword)} />
-        </Box>
-        <Box>
-          <Button
-            onClick={attemptLogin}
-            sx={{
-              textAlign: 'center',
-              width: '100%',
-            }}
-          >
-            Log In
-          </Button>
-        </Box>
-        <Box>{errors}</Box>
+    <>
+      <Box
+        py={4}
+      >
+        <Heading
+          sx={{
+            fontWeight: '800',
+            fontSize: 5,
+            textAlign: 'center',
+          }}
+        >
+          MusicBox</Heading>
       </Box>
-    </Box>
+      <Box
+        sx={{
+          // borderWidth: '1px',
+          // borderStyle: 'solid',
+          // borderColor: 'gray200',
+          borderRadius: 4,
+          boxShadow: 'xl',
+          maxWidth: 400,
+          mx: 'auto',
+        }}
+        bg="accent"
+        p={4}
+      >
+        <Box as="form">
+          <Box mb={4}>
+            <Label htmlFor="name">Email</Label>
+            <Box
+              sx={{
+                alignItems: 'center',
+                bg: 'background',
+                borderRadius: 4,
+                display: 'flex',
+                px: 2,
+                py: 1,
+                '&:focus-within': {
+                  boxShadow: 'outline'
+                }
+              }}
+            >
+              <Mail color="#4A5568" size={20} />
+              <Input type="text" value={email} onChange={setFromEvent(setEmail)} />
+            </Box>
+
+          </Box>
+
+          <Box mb={4}>
+            <Label htmlFor="password">Password</Label>
+            <Box
+              sx={{
+                alignItems: 'center',
+                bg: 'background',
+                borderRadius: 4,
+                display: 'flex',
+                px: 2,
+                py: 1,
+                '&:focus-within': {
+                  boxShadow: 'outline'
+                }
+              }}
+            >
+              <Lock color="#4A5568" size={20} />
+              <Input type="password" value={password} onChange={setFromEvent(setPassword)} />
+            </Box>
+
+          </Box>
+          <Box>
+            <Button
+              onClick={attemptLogin}
+              sx={{
+                textAlign: 'center',
+                width: '100%',
+              }}
+            >
+              Log In
+            </Button>
+          </Box>
+          <Box>{errors}</Box>
+        </Box>
+      </Box>
+    </>
   )
 }
 export default Login
