@@ -14,7 +14,7 @@ import Messages from './Messages'
 import Users from './Users'
 
 import Container from '../components/Container'
-import { fontSize } from 'styled-system'
+import { fontSize, position, overflow } from 'styled-system'
 
 const Room: React.FC = () => {
   const { id } = useParams()
@@ -45,13 +45,26 @@ const Room: React.FC = () => {
     <Box
       sx={{
         mx: 'auto',
-        p: 4,
+        position: 'relative'
       }}
     >
       <Flex
+        bg="background"
         alignItems="top"
+        sx={{
+          minHeight: '100vh',
+        }}
       >
-        <Box width="25%">
+        <Box
+          as="aside"
+          bg="accent"
+          width="25%"
+          sx={{
+            height: '100vh',
+            position: 'static',
+            overflow: 'hidden',
+          }}
+        >
           <Heading
             sx={{
               fontSize: '3',
@@ -61,7 +74,7 @@ const Room: React.FC = () => {
             Room Name
             <Text
               sx={{
-                color: 'gray700',
+                color: 'text',
                 fontWeight: '400',
                 fontSize: 3
               }}
@@ -70,7 +83,29 @@ const Room: React.FC = () => {
             </Text>
           </Heading>
 
-          <Heading
+          <Box>
+            <p>Search</p>
+            <YoutubeSearch />
+            <p>Playlist Management</p>
+            <PlaylistManagement />
+          </Box>
+        </Box>
+
+        <Box
+          bg="red"
+          width="50%"
+        >
+          <Box
+            as="main"
+            sx={{
+              height: '400px',
+              p: 4,
+            }}
+          >
+            <Player currentRecord={room.currentRecord} />
+            <p>Playlist For Room</p>
+            <RoomPlaylist roomId={id} />
+            <Heading
             sx={{
               fontSize: '3',
               pb: 4,
@@ -79,7 +114,7 @@ const Room: React.FC = () => {
             Active Users
             <Text
               sx={{
-                color: 'gray700',
+                color: 'text',
                 fontWeight: '400',
                 fontSize: 3
               }}
@@ -87,30 +122,24 @@ const Room: React.FC = () => {
               <Users initialUsers={room.users || []} />
             </Text>
           </Heading>
-
-          <Box>
-
-
-            <p>Search</p>
-            <YoutubeSearch />
-            <p>Playlist Management</p>
-            <PlaylistManagement />
           </Box>
         </Box>
 
-        <Box width="50%">
-          <Box
-            sx={{
-              height: '400px'
-            }}
-          >
-            <Player currentRecord={room.currentRecord} />
-            <p>Playlist For Room</p>
-            <RoomPlaylist roomId={id} />
-          </Box>
-        </Box>
-
-        <Box width="25%">
+        <Box
+          bg="background"
+          color="text"
+          width="25%"
+          sx={{
+            borderLeft: '1px solid',
+            borderColor: 'muted',
+            display: 'flex',
+            flexDirection: 'column',
+            maxHeight: '100vh',
+            overflow: 'scroll',
+            p: 4,
+            position: 'static',
+          }}
+        >
           <Messages />
           <MessageEntry />
         </Box>

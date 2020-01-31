@@ -25,8 +25,8 @@ const Team: React.FC<TeamProps> = ({ id, name, active }) => {
             borderColor: 'primary',
             borderRadius: 4,
             boxShadow: 'md',
-            bg: 'indigo100',
-            color: 'indigo800',
+            bg: 'accent',
+            color: 'text',
             p: 4,
           }}
         >
@@ -52,15 +52,13 @@ const Team: React.FC<TeamProps> = ({ id, name, active }) => {
       <Box
         sx={{
           border: '1px solid',
-          borderColor: 'gray500',
+          borderColor: 'primary',
           borderRadius: 4,
-          boxShadow: 'base',
-          bg: 'white',
+          boxShadow: 'md',
+          bg: 'accent',
           p: 4,
           '&:hover': {
             borderColor: 'primary',
-            boxShadow: 'md',
-            bg: 'indigo100',
           },
         }}
       >

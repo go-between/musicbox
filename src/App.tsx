@@ -53,6 +53,7 @@ const App: React.FC = () => {
                 body: {
                   color: 'text',
                   bg: 'background',
+                  m: 0,
                 },
               })}
             />
