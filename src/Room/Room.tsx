@@ -128,7 +128,7 @@ const Room: React.FC = () => {
             <Box
               sx={{
                 height: '400px',
-                mb: 4
+                mb: 4,
               }}
             >
               <Player currentRecord={room.currentRecord} />
