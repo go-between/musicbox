@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { Box, Flex } from 'rebass'
+import { Box } from 'rebass'
 import { Plus } from 'react-feather'
 
 import { SONG_CREATE, SongCreateMutation } from './graphql'
@@ -44,7 +44,7 @@ const Result: React.FC<Props> = ({ result }) => {
           mx: 1,
           '&:hover': {
             bg: 'muted',
-          }
+          },
         }}
       >
         <Plus size={18} />

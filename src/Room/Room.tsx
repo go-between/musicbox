@@ -43,7 +43,7 @@ const Room: React.FC = () => {
     <Box
       sx={{
         mx: 'auto',
-        position: 'relative'
+        position: 'relative',
       }}
     >
       <Flex
@@ -74,14 +74,13 @@ const Room: React.FC = () => {
             <YoutubeSearch />
           </Box>
 
-
           <PlaylistManagement />
         </Box>
 
         <Box
           sx={{
-            backgroundImage: 'linear-gradient(#1A202C, #293142)',
-            width: ['33%', '50%']
+            // backgroundImage: 'linear-gradient(#1A202C, #293142)',
+            width: ['33%', '50%'],
           }}
         >
           <Box
@@ -102,7 +101,7 @@ const Room: React.FC = () => {
                 sx={{
                   color: 'text',
                   fontWeight: '400',
-                  fontSize: 3
+                  fontSize: 3,
                 }}
               >
                 {room.name}
@@ -120,7 +119,7 @@ const Room: React.FC = () => {
                 sx={{
                   color: 'text',
                   fontWeight: '400',
-                  fontSize: 3
+                  fontSize: 3,
                 }}
               >
                 <Users initialUsers={room.users || []} />
@@ -130,7 +129,6 @@ const Room: React.FC = () => {
             <Box mb={4}>
               <Player currentRecord={room.currentRecord} />
             </Box>
-
 
             <Flex
               sx={{
@@ -154,7 +152,7 @@ const Room: React.FC = () => {
                   fontWeight: '800',
                   mx: 2,
                   letterSpacing: '1.4px',
-                  textTransform: 'uppercase'
+                  textTransform: 'uppercase',
                 }}
               >
                 Room Playlist

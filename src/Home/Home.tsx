@@ -14,14 +14,12 @@ const Home: React.FC = () => {
 
   if (loading) {
     return (
-      <Flex
-        alignItems="center"
-      >
+      <Flex alignItems="center">
         <Box
           bg="accent"
           p={4}
           sx={{
-            borderRadius: 4
+            borderRadius: 4,
           }}
         >
           <Loader />

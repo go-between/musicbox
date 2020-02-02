@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation, MutationTuple } from '@apollo/react-hooks'
 import { Box, Flex, Text } from 'rebass'
-// import { Label } from '@rebass/forms'
 import { Inbox, List } from 'react-feather'
 
 import Library from './Library'
 import UserPlaylist from './UserPlaylist'
 
 import { ROOM_PLAYLIST_RECORDS_REORDER, RoomPlaylistRecord, RoomPlaylistRecordsReorderMutation } from './graphql'
-import { fontSize } from 'styled-system'
 
 export type RoomPlaylistRecordsReorder = MutationTuple<
   RoomPlaylistRecordsReorderMutation['data'],
@@ -53,7 +51,7 @@ const PlaylistManagement: React.FC = () => {
             fontWeight: '800',
             mx: 2,
             letterSpacing: '1.4px',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }}
         >
           Library
@@ -63,7 +61,6 @@ const PlaylistManagement: React.FC = () => {
       <Box pb={4}>
         <Library roomPlaylistRecordsReorder={roomPlaylistRecordsReorder} roomPlaylistRecords={roomPlaylistRecords} />
       </Box>
-
 
       <Flex
         sx={{
@@ -86,7 +83,7 @@ const PlaylistManagement: React.FC = () => {
             fontSize: '2',
             fontWeight: '800',
             letterSpacing: '1.4px',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }}
         >
           My Queue

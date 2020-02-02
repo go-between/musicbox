@@ -52,12 +52,10 @@ const Messages: React.FC = () => {
       <Box
         key={message.id}
         sx={{
-          pb: 3
+          pb: 3,
         }}
       >
-        <Flex
-          alignItems="top"
-        >
+        <Flex alignItems="top">
           <Box>
             <Box
               sx={{
@@ -68,7 +66,7 @@ const Messages: React.FC = () => {
                 fontSize: 2,
                 height: '20px',
                 p: 3,
-                width: '20px'
+                width: '20px',
               }}
             />
           </Box>
@@ -82,33 +80,20 @@ const Messages: React.FC = () => {
               }}
             >
               {message.user.name}
-              {/* {withSong} */}
-              <Box
-                as="span"
-                color="#CBD5E0"
-                fontSize={1}
-                px={2}
-              >
+              {withSong}
+              <Box as="span" color="#CBD5E0" fontSize={1} px={2}>
                 {displayDate}
               </Box>
             </Text>
 
-            <Text
-              fontSize={2}
-            >
-              {message.message}
-            </Text>
+            <Text fontSize={2}>{message.message}</Text>
           </Box>
         </Flex>
       </Box>
     )
   })
 
-  return (
-    <Box>
-      {messageLines}
-    </Box>
-  )
+  return <Box>{messageLines}</Box>
 }
 
 export default Messages

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Button, Box, Flex, Heading } from 'rebass'
+import { Button, Box, Heading } from 'rebass'
 import { Label, Input } from '@rebass/forms'
 import { Lock, Mail } from 'react-feather'
 
@@ -54,9 +54,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Box
-        py={4}
-      >
+      <Box py={4}>
         <Heading
           sx={{
             fontWeight: '800',
@@ -64,7 +62,8 @@ const Login: React.FC = () => {
             textAlign: 'center',
           }}
         >
-          MusicBox</Heading>
+          MusicBox
+        </Heading>
       </Box>
       <Box
         sx={{
@@ -91,14 +90,13 @@ const Login: React.FC = () => {
                 px: 2,
                 py: 1,
                 '&:focus-within': {
-                  boxShadow: 'outline'
-                }
+                  boxShadow: 'outline',
+                },
               }}
             >
               <Mail color="#4A5568" size={20} />
               <Input type="text" value={email} onChange={setFromEvent(setEmail)} />
             </Box>
-
           </Box>
 
           <Box mb={4}>
@@ -112,14 +110,13 @@ const Login: React.FC = () => {
                 px: 2,
                 py: 1,
                 '&:focus-within': {
-                  boxShadow: 'outline'
-                }
+                  boxShadow: 'outline',
+                },
               }}
             >
               <Lock color="#4A5568" size={20} />
               <Input type="password" value={password} onChange={setFromEvent(setPassword)} />
             </Box>
-
           </Box>
           <Box>
             <Button

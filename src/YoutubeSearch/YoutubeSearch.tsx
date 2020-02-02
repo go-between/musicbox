@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
-import { Box, Flex, Text } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { Input } from '@rebass/forms'
 import { Search } from 'react-feather'
 
 import { ParsedResult, Results } from './types'
 import { deserialize, search } from './search'
 import Result from './Result'
-import { border, borderRadius } from 'styled-system'
 
 const YoutubeSearch: React.FC = () => {
   const [query, setQuery] = useState('')
@@ -80,7 +79,7 @@ const YoutubeSearch: React.FC = () => {
         as="ul"
         sx={{
           m: 0,
-          p: 0
+          p: 0,
         }}
       >
         {resultElements}

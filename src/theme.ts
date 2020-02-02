@@ -117,9 +117,8 @@ export default {
       color: 'text',
       p: 2,
       '&:focus': {
-        outline: 'none'
+        outline: 'none',
       },
-
     },
     heading: {
       color: 'text',

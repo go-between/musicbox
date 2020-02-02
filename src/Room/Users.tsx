@@ -39,12 +39,12 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
         <Box as="li" key={u.id}>
           <Text
             sx={{
-              fontWeight: '400'
+              fontWeight: '400',
             }}
           >
             {u.name}-{u.email}
           </Text>
-           {/* ({u.id}) */}
+          {/* ({u.id}) */}
         </Box>
       ))}
     </Box>

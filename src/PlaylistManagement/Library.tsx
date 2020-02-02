@@ -86,7 +86,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
               mx: 1,
               '&:hover': {
                 bg: 'muted',
-              }
+              },
             }}
           >
             <Plus size={18} />
@@ -104,7 +104,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
               mx: 1,
               '&:hover': {
                 bg: 'muted',
-              }
+              },
             }}
           >
             <X size={18} />

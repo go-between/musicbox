@@ -82,7 +82,7 @@ const UserPlaylist: React.FC<Props> = ({ roomPlaylistRecords, roomPlaylistRecord
             mx: 1,
             '&:hover': {
               bg: 'muted',
-            }
+            },
           }}
         >
           <X size={18} />
