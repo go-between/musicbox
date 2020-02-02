@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
+import { Box } from 'rebass'
+import { Input, Label } from '@rebass/forms'
 
 import { MESSAGE_CREATE, MessageCreate } from './graphql'
 
@@ -23,10 +25,20 @@ const MessageEntry: React.FC = () => {
   }
 
   return (
-    <>
-      <p>Type Away and Hit Enter</p>
-      <input type="text" onChange={onChange} onKeyPress={onKeyPress} value={message} />
-    </>
+    <Box
+      sx={{
+        bg: 'accent',
+        borderRadius: 4,
+        border: '1px solid',
+        borderColor: 'muted',
+        p: 3,
+      }}
+    >
+      <Label>Type Away and Hit Enter</Label>
+      <Box>
+        <Input type="text" onChange={onChange} onKeyPress={onKeyPress} value={message} />
+      </Box>
+    </Box>
   )
 }
 

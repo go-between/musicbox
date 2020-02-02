@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 import { Box, Flex, Heading, Text } from 'rebass'
+import { Speaker } from 'react-feather'
 
 import Player from 'Player'
 import PlaylistManagement from 'PlaylistManagement'
@@ -12,9 +13,6 @@ import { ROOM_ACTIVATE, RoomActivate, Room as RoomType } from './graphql'
 import MessageEntry from './MessageEntry'
 import Messages from './Messages'
 import Users from './Users'
-
-import Container from '../components/Container'
-import { fontSize, position, overflow } from 'styled-system'
 
 const Room: React.FC = () => {
   const { id } = useParams()
@@ -57,43 +55,34 @@ const Room: React.FC = () => {
       >
         <Box
           as="aside"
-          bg="accent"
-          width="25%"
           sx={{
+            bg: 'background',
+            borderRight: '1px solid',
+            borderColor: 'muted',
             height: '100vh',
-            position: 'static',
             overflow: 'hidden',
+            position: 'static',
+            p: 4,
+            width: ['33%', '25%'],
           }}
         >
-          <Heading
+          <Box
             sx={{
-              fontSize: '3',
-              pb: 4,
+              mb: 4,
             }}
           >
-            Room Name
-            <Text
-              sx={{
-                color: 'text',
-                fontWeight: '400',
-                fontSize: 3
-              }}
-            >
-              {room.name}
-            </Text>
-          </Heading>
-
-          <Box>
-            <p>Search</p>
             <YoutubeSearch />
-            <p>Playlist Management</p>
-            <PlaylistManagement />
           </Box>
+
+
+          <PlaylistManagement />
         </Box>
 
         <Box
-          bg="red"
-          width="50%"
+          sx={{
+            backgroundImage: 'linear-gradient(#1A202C, #293142)',
+            width: ['33%', '50%']
+          }}
         >
           <Box
             as="main"
@@ -102,42 +91,92 @@ const Room: React.FC = () => {
               p: 4,
             }}
           >
-            <Player currentRecord={room.currentRecord} />
-            <p>Playlist For Room</p>
-            <RoomPlaylist roomId={id} />
             <Heading
-            sx={{
-              fontSize: '3',
-              pb: 4,
-            }}
-          >
-            Active Users
-            <Text
               sx={{
-                color: 'text',
-                fontWeight: '400',
-                fontSize: 3
+                fontSize: '3',
+                pb: 4,
               }}
             >
-              <Users initialUsers={room.users || []} />
-            </Text>
-          </Heading>
+              Room Name
+              <Text
+                sx={{
+                  color: 'text',
+                  fontWeight: '400',
+                  fontSize: 3
+                }}
+              >
+                {room.name}
+              </Text>
+            </Heading>
+
+            <Heading
+              sx={{
+                fontSize: '3',
+                pb: 4,
+              }}
+            >
+              Active Users
+              <Text
+                sx={{
+                  color: 'text',
+                  fontWeight: '400',
+                  fontSize: 3
+                }}
+              >
+                <Users initialUsers={room.users || []} />
+              </Text>
+            </Heading>
+
+            <Box mb={4}>
+              <Player currentRecord={room.currentRecord} />
+            </Box>
+
+
+            <Flex
+              sx={{
+                alignItems: 'center',
+                pb: 2,
+              }}
+            >
+              <Flex
+                sx={{
+                  alignItems: 'center',
+                  color: 'gray600',
+                }}
+              >
+                <Speaker size={20} />
+              </Flex>
+
+              <Text
+                as="span"
+                sx={{
+                  fontSize: '2',
+                  fontWeight: '800',
+                  mx: 2,
+                  letterSpacing: '1.4px',
+                  textTransform: 'uppercase'
+                }}
+              >
+                Room Playlist
+              </Text>
+            </Flex>
+            <RoomPlaylist roomId={id} />
           </Box>
         </Box>
 
         <Box
           bg="background"
-          color="text"
-          width="25%"
           sx={{
             borderLeft: '1px solid',
             borderColor: 'muted',
+            color: 'text',
             display: 'flex',
             flexDirection: 'column',
             maxHeight: '100vh',
             overflow: 'scroll',
             p: 4,
             position: 'static',
+            width: ['33%', '25%'],
           }}
         >
           <Messages />

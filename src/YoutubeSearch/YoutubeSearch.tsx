@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
+import { Box, Flex, Text } from 'rebass'
+import { Input } from '@rebass/forms'
+import { Search } from 'react-feather'
 
 import { ParsedResult, Results } from './types'
 import { deserialize, search } from './search'
 import Result from './Result'
+import { border, borderRadius } from 'styled-system'
 
 const YoutubeSearch: React.FC = () => {
   const [query, setQuery] = useState('')
@@ -31,15 +35,56 @@ const YoutubeSearch: React.FC = () => {
   }
 
   const resultElements = results.map(result => (
-    <li key={result.id}>
+    <Box
+      as="li"
+      key={result.id}
+      sx={{
+        alignItems: 'center',
+        borderBottom: '1px solid',
+        borderColor: 'muted',
+        display: 'flex',
+        justifyContent: 'space-between',
+        listStyle: 'none',
+        mx: 0,
+        my: 3,
+        pb: 3,
+      }}
+    >
       <Result result={result} />
-    </li>
+    </Box>
   ))
 
   return (
     <>
-      <input type="text" value={query} onChange={onChange} />
-      <ul>{resultElements}</ul>
+      <Flex
+        sx={{
+          alignItems: 'center',
+          bg: 'accent',
+          borderRadius: 4,
+          py: 1,
+          px: 2,
+        }}
+      >
+        <Search />
+        <Input
+          type="text"
+          value={query}
+          onChange={onChange}
+          sx={{
+            bg: 'accent',
+          }}
+        />
+      </Flex>
+
+      <Box
+        as="ul"
+        sx={{
+          m: 0,
+          p: 0
+        }}
+      >
+        {resultElements}
+      </Box>
     </>
   )
 }

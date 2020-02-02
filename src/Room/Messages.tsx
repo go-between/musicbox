@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import moment from 'moment'
 import { Box, Flex, Text } from 'rebass'
-import { User } from 'react-feather'
 
 import { WebsocketContext } from 'App'
 
@@ -63,15 +62,15 @@ const Messages: React.FC = () => {
             <Box
               sx={{
                 alignItems: 'center',
-                bg: 'accent',
+                bg: 'indigo700',
                 borderRadius: '100%',
                 display: 'flex',
                 fontSize: 2,
-                p: 2,
+                height: '20px',
+                p: 3,
+                width: '20px'
               }}
-            >
-              <User size={16} />
-            </Box>
+            />
           </Box>
 
           <Box mx={2}>
