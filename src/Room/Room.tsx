@@ -86,7 +86,6 @@ const Room: React.FC = () => {
           <Box
             as="main"
             sx={{
-              height: '400px',
               p: 4,
             }}
           >
@@ -126,7 +125,12 @@ const Room: React.FC = () => {
               </Text>
             </Heading>
 
-            <Box mb={4}>
+            <Box
+              sx={{
+                height: '400px',
+                mb: 4
+              }}
+            >
               <Player currentRecord={room.currentRecord} />
             </Box>
 
