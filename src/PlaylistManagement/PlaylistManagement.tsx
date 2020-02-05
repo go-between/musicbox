@@ -7,6 +7,7 @@ import Library from './Library'
 import UserPlaylist from './UserPlaylist'
 
 import { ROOM_PLAYLIST_RECORDS_REORDER, RoomPlaylistRecord, RoomPlaylistRecordsReorderMutation } from './graphql'
+import { overflow } from 'styled-system'
 
 export type RoomPlaylistRecordsReorder = MutationTuple<
   RoomPlaylistRecordsReorderMutation['data'],
@@ -29,71 +30,86 @@ const PlaylistManagement: React.FC = () => {
 
   return (
     <>
-      <Flex
+      <Box
         sx={{
-          alignItems: 'center',
-          pb: 2,
+          flex: '1 0 auto',
+          height: '40%',
+          overflowY: 'scroll',
+          mb: 5,
         }}
       >
         <Flex
           sx={{
             alignItems: 'center',
-            color: 'gray600',
+            pb: 2,
           }}
         >
-          <Inbox size={20} />
+          <Flex
+            sx={{
+              alignItems: 'center',
+              color: 'gray600',
+            }}
+          >
+            <Inbox size={20} />
+          </Flex>
+
+          <Text
+            as="span"
+            sx={{
+              fontSize: '2',
+              fontWeight: '800',
+              mx: 2,
+              letterSpacing: '1.4px',
+              textTransform: 'uppercase',
+            }}
+          >
+            Library
+          </Text>
         </Flex>
 
-        <Text
-          as="span"
-          sx={{
-            fontSize: '2',
-            fontWeight: '800',
-            mx: 2,
-            letterSpacing: '1.4px',
-            textTransform: 'uppercase',
-          }}
-        >
-          Library
-        </Text>
-      </Flex>
-
-      <Box pb={4}>
         <Library roomPlaylistRecordsReorder={roomPlaylistRecordsReorder} roomPlaylistRecords={roomPlaylistRecords} />
       </Box>
 
-      <Flex
+      <Box
         sx={{
-          alignItems: 'center',
-          pb: 2,
+          flex: '1 0 auto',
+          height: '40%',
+          overflowY: 'scroll',
         }}
       >
         <Flex
           sx={{
             alignItems: 'center',
-            color: 'gray600',
+            pb: 2,
           }}
         >
-          <List size={20} />
+          <Flex
+            sx={{
+              alignItems: 'center',
+              color: 'gray600',
+            }}
+          >
+            <List size={20} />
+          </Flex>
+          <Text
+            as="span"
+            sx={{
+              mx: 2,
+              fontSize: '2',
+              fontWeight: '800',
+              letterSpacing: '1.4px',
+              textTransform: 'uppercase',
+            }}
+          >
+            My Queue
+          </Text>
         </Flex>
-        <Text
-          as="span"
-          sx={{
-            mx: 2,
-            fontSize: '2',
-            fontWeight: '800',
-            letterSpacing: '1.4px',
-            textTransform: 'uppercase',
-          }}
-        >
-          My Queue
-        </Text>
-      </Flex>
-      <UserPlaylist
-        roomPlaylistRecordsReorder={roomPlaylistRecordsReorder}
-        roomPlaylistRecords={roomPlaylistRecords}
-        setRoomPlaylistRecords={setRoomPlaylistRecords}
-      />
+        <UserPlaylist
+          roomPlaylistRecordsReorder={roomPlaylistRecordsReorder}
+          roomPlaylistRecords={roomPlaylistRecords}
+          setRoomPlaylistRecords={setRoomPlaylistRecords}
+        />
+      </Box>
     </>
   )
 }

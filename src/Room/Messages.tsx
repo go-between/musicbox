@@ -93,7 +93,15 @@ const Messages: React.FC = () => {
     )
   })
 
-  return <Box>{messageLines}</Box>
+  return (
+    <Box
+      sx={{
+        overflowY: 'scroll'
+      }}
+    >
+      {messageLines}
+    </Box>
+  )
 }
 
 export default Messages

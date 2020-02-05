@@ -72,7 +72,11 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
           {s.name}
         </Box>
 
-        <Flex>
+        <Flex
+          sx={{
+            minWidth: 'auto'
+          }}
+        >
           <Box
             onClick={addSong}
             sx={{
@@ -82,6 +86,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
               color: 'text',
               cursor: 'pointer',
               display: 'flex',
+              justifyContent: 'center',
               p: 1,
               mx: 1,
               '&:hover': {
@@ -91,6 +96,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
           >
             <Plus size={18} />
           </Box>
+
           <Box
             onClick={deleteSong}
             sx={{
@@ -100,6 +106,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
               color: 'text',
               cursor: 'pointer',
               display: 'flex',
+              justifyContent: 'center',
               p: 1,
               mx: 1,
               '&:hover': {
@@ -119,6 +126,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
       sx={{
         m: 0,
         p: 0,
+        overflowY: 'scroll'
       }}
     >
       {songs}

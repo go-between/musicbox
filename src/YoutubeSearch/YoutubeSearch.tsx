@@ -54,7 +54,7 @@ const YoutubeSearch: React.FC = () => {
   ))
 
   return (
-    <>
+    <Box>
       <Flex
         sx={{
           alignItems: 'center',
@@ -62,6 +62,7 @@ const YoutubeSearch: React.FC = () => {
           borderRadius: 4,
           py: 1,
           px: 2,
+          mb: 4,
         }}
       >
         <Search />
@@ -71,6 +72,7 @@ const YoutubeSearch: React.FC = () => {
           onChange={onChange}
           sx={{
             bg: 'accent',
+            boxShadow: 'none',
           }}
         />
       </Flex>
@@ -84,7 +86,7 @@ const YoutubeSearch: React.FC = () => {
       >
         {resultElements}
       </Box>
-    </>
+    </Box>
   )
 }
 
