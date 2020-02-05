@@ -96,7 +96,7 @@ const Messages: React.FC = () => {
   return (
     <Box
       sx={{
-        overflowY: 'scroll'
+        overflowY: 'scroll',
       }}
     >
       {messageLines}

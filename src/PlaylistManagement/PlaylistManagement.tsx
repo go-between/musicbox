@@ -7,7 +7,6 @@ import Library from './Library'
 import UserPlaylist from './UserPlaylist'
 
 import { ROOM_PLAYLIST_RECORDS_REORDER, RoomPlaylistRecord, RoomPlaylistRecordsReorderMutation } from './graphql'
-import { overflow } from 'styled-system'
 
 export type RoomPlaylistRecordsReorder = MutationTuple<
   RoomPlaylistRecordsReorderMutation['data'],

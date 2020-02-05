@@ -74,7 +74,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
 
         <Flex
           sx={{
-            minWidth: 'auto'
+            minWidth: 'auto',
           }}
         >
           <Box
@@ -126,7 +126,7 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
       sx={{
         m: 0,
         p: 0,
-        overflowY: 'scroll'
+        overflowY: 'scroll',
       }}
     >
       {songs}

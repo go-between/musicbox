@@ -43,7 +43,7 @@ const Room: React.FC = () => {
     <Flex
       sx={{
         alignItems: 'top',
-        bg:'background',
+        bg: 'background',
         minHeight: '100vh',
         mx: 'auto',
         position: 'relative',
@@ -127,7 +127,7 @@ const Room: React.FC = () => {
 
         <Box
           sx={{
-            overflowY: 'scroll'
+            overflowY: 'scroll',
           }}
         >
           <Flex
@@ -163,7 +163,7 @@ const Room: React.FC = () => {
       </Flex>
 
       <Flex
-        as='aside'
+        as="aside"
         sx={{
           borderLeft: '1px solid',
           borderColor: 'muted',
