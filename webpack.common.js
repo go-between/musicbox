@@ -3,6 +3,7 @@ const fs = require('fs');
 const url = require('url');
 
 const Dotenv = require("dotenv-webpack");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Make sure any symlinks in the project folder are resolved:
@@ -35,6 +36,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv({ path: './.env' }),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
       template: resolveApp('public/index.html')
