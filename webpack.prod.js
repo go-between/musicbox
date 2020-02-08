@@ -1,12 +1,16 @@
 const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const webpack = require('webpack');
 
-const Dotenv = require("dotenv-webpack");
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
   plugins: [
-    new Dotenv({ path: './.env.prod' }),
+    new webpack.DefinePlugin({
+      'process.env.API_HOST': JSON.stringify(process.env.API_HOST),
+      'process.env.YOUTUBE_KEY': JSON.stringify(process.env.YOUTUBE_KEY),
+      'process.env.WEBSOCKET_HOST': JSON.stringify(process.env.WEBSOCKET_HOST),
+    }),
   ]
 });

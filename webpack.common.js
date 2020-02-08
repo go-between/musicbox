@@ -35,7 +35,6 @@ module.exports = {
     }],
   },
   plugins: [
-    new Dotenv({ path: './.env' }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
