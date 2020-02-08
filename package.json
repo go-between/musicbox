@@ -74,6 +74,7 @@
     "react-router-dom": "^5.1.2",
     "rebass": "^4.0.7",
     "styled-system": "^5.1.4",
-    "use-debounce": "^3.3.0"
+    "use-debounce": "^3.3.0",
+    "webpack-merge": "^4.2.2"
   }
 }
