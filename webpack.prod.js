@@ -8,9 +8,9 @@ module.exports = merge(common, {
   devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.API_HOST': `${process.env.API_HOST}`,
-      'process.env.YOUTUBE_KEY': `${process.env.YOUTUBE_KEY}`,
-      'process.env.WEBSOCKET_HOST': `${process.env.WEBSOCKET_HOST}`,
+      'process.env.API_HOST': JSON.stringify(process.env.API_HOST),
+      'process.env.YOUTUBE_KEY': JSON.stringify(process.env.YOUTUBE_KEY),
+      'process.env.WEBSOCKET_HOST': JSON.stringify(process.env.WEBSOCKET_HOST),
     }),
   ]
 });
