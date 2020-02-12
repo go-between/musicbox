@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { Box, Heading } from 'rebass'
+import { Box, Heading, Flex } from 'rebass'
+import { Loader } from 'react-feather'
 
 import { USER_QUERY, UserQuery } from './graphql'
 import RoomSelector from './RoomSelector'
@@ -12,7 +13,19 @@ const Home: React.FC = () => {
   const { loading, error, data } = useQuery<UserQuery['data']>(USER_QUERY)
 
   if (loading) {
-    return <p>Loading</p>
+    return (
+      <Flex alignItems="center">
+        <Box
+          bg="accent"
+          p={4}
+          sx={{
+            borderRadius: 4,
+          }}
+        >
+          <Loader />
+        </Box>
+      </Flex>
+    )
   }
 
   if (!data || error) {

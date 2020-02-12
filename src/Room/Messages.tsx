@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import moment from 'moment'
+import { Box, Flex, Text } from 'rebass'
 
 import { WebsocketContext } from 'App'
 
@@ -24,7 +25,7 @@ const Messages: React.FC = () => {
       return
     }
 
-    const newMessages = [...messages, newMessage].sort((prev, next) => (prev.createdAt > next.createdAt ? 0 : 1))
+    const newMessages = [...messages, newMessage].sort((prev, next) => (prev.createdAt > next.createdAt ? 1 : 0))
     setMessages(newMessages)
     setNewMessage(null)
   }, [messages, newMessage])
@@ -48,22 +49,58 @@ const Messages: React.FC = () => {
     const withSong = message.roomPlaylistRecord && <i>during {message.roomPlaylistRecord.song.name}</i>
     const displayDate = moment(message.createdAt).format('ddd h:mm a')
     return (
-      <div key={message.id}>
-        <p>
-          <strong>
-            {message.user.name} said {withSong} at {displayDate}
-          </strong>
-        </p>
-        <p>{message.message}</p>
-      </div>
+      <Box
+        key={message.id}
+        sx={{
+          pb: 3,
+        }}
+      >
+        <Flex alignItems="top">
+          <Box>
+            <Box
+              sx={{
+                alignItems: 'center',
+                bg: 'indigo700',
+                borderRadius: '100%',
+                display: 'flex',
+                fontSize: 2,
+                height: '20px',
+                p: 3,
+                width: '20px',
+              }}
+            />
+          </Box>
+
+          <Box mx={2}>
+            <Text
+              sx={{
+                fontSize: 2,
+                fontWeight: '800',
+                pb: 1,
+              }}
+            >
+              {message.user.name}
+              {withSong}
+              <Box as="span" color="#CBD5E0" fontSize={1} px={2}>
+                {displayDate}
+              </Box>
+            </Text>
+
+            <Text fontSize={2}>{message.message}</Text>
+          </Box>
+        </Flex>
+      </Box>
     )
   })
 
   return (
-    <>
-      <p>Chat History</p>
+    <Box
+      sx={{
+        overflowY: 'scroll',
+      }}
+    >
       {messageLines}
-    </>
+    </Box>
   )
 }
 

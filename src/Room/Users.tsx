@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Box, Text } from 'rebass'
 
 import { WebsocketContext } from 'App'
 import { User } from './graphql'
@@ -26,16 +27,27 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
   }, [initialUsers])
 
   return (
-    <>
-      <p>users</p>
-      <ul>
-        {users.map(u => (
-          <li key={u.id}>
-            {u.name} ({u.email} {u.id})
-          </li>
-        ))}
-      </ul>
-    </>
+    <Box
+      as="ul"
+      sx={{
+        listStyle: 'none',
+        m: 0,
+        p: 0,
+      }}
+    >
+      {users.map(u => (
+        <Box as="li" key={u.id}>
+          <Text
+            sx={{
+              fontWeight: '400',
+            }}
+          >
+            {u.name}-{u.email}
+          </Text>
+          {/* ({u.id}) */}
+        </Box>
+      ))}
+    </Box>
   )
 }
 

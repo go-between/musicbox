@@ -1,5 +1,7 @@
 import React from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import { Box, Flex } from 'rebass'
+import { Plus, X } from 'react-feather'
 
 import { RoomPlaylistRecordsReorder } from './PlaylistManagement'
 import {
@@ -42,13 +44,94 @@ const Library: React.FC<Props> = ({ roomPlaylistRecordsReorder, roomPlaylistReco
       userLibraryRecordDelete({ variables: { id: s.id } })
     }
     return (
-      <li key={s.id}>
-        {s.name} <button onClick={addSong}>Enqueue</button>
-        <button onClick={deleteSong}>Delete from Library</button>{' '}
-      </li>
+      <Box
+        as="li"
+        key={s.id}
+        sx={{
+          alignItems: 'center',
+          borderBottom: '1px solid',
+          borderColor: 'muted',
+          display: 'flex',
+          justifyContent: 'space-between',
+          listStyle: 'none',
+          mx: 0,
+          my: 3,
+          pb: 3,
+        }}
+      >
+        <Box
+          as="span"
+          sx={{
+            fontSize: 1,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            mr: 2,
+          }}
+        >
+          {s.name}
+        </Box>
+
+        <Flex
+          sx={{
+            minWidth: 'auto',
+          }}
+        >
+          <Box
+            onClick={addSong}
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'center',
+              p: 1,
+              mx: 1,
+              '&:hover': {
+                bg: 'muted',
+              },
+            }}
+          >
+            <Plus size={18} />
+          </Box>
+
+          <Box
+            onClick={deleteSong}
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'center',
+              p: 1,
+              mx: 1,
+              '&:hover': {
+                bg: 'muted',
+              },
+            }}
+          >
+            <X size={18} />
+          </Box>
+        </Flex>
+      </Box>
     )
   })
-  return <ul>{songs}</ul>
+  return (
+    <Box
+      as="ul"
+      sx={{
+        m: 0,
+        p: 0,
+        overflowY: 'scroll',
+      }}
+    >
+      {songs}
+    </Box>
+  )
 }
 
 export default Library
