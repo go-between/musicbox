@@ -18,10 +18,7 @@ export type TeamCreate = {
 }
 export const TEAM_CREATE = gql`
   mutation TeamCreate($teamOwner: TeamOwnerInputObject!, $teamName: String!) {
-    teamCreate(input:{
-      teamOwner: $teamOwner,
-      teamName: $teamName
-    }) {
+    teamCreate(input: { teamOwner: $teamOwner, teamName: $teamName }) {
       accessToken
       errors
     }

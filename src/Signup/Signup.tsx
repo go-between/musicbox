@@ -22,11 +22,12 @@ const Signup: React.FC = () => {
   const { setToken } = useContext(AuthContext)
   const history = useHistory()
 
-  const [teamCreate, { data, loading }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)
+  // const [teamCreate, { data, loading }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)
+  const [teamCreate, { data }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)
 
   const attemptSignup = (ev: React.FormEvent): void => {
     ev.preventDefault()
-    teamCreate({variables: {teamName: team, teamOwner: {name, email, password}}})
+    teamCreate({ variables: { teamName: team, teamOwner: { name, email, password } } })
   }
 
   useEffect(() => {
@@ -35,16 +36,16 @@ const Signup: React.FC = () => {
     }
     setErrors(data.teamCreate.errors)
 
-    if(!!data.teamCreate.accessToken) {
+    if (!!data.teamCreate.accessToken) {
       setToken(data.teamCreate.accessToken)
       localStorage.setItem('musicbox-token', data.teamCreate.accessToken)
       history.push('/home')
     }
-  }, [data])
+  }, [data, history, setToken])
 
   return (
     <Container>
-      <Box bg="accent" p={4} my={4} sx={{borderRadius: 4}}>
+      <Box bg="accent" p={4} my={4} sx={{ borderRadius: 4 }}>
         <Box pb={4}>
           <Label>Team</Label>
           <Input value={team} onChange={setFromEvent(setTeam)} />
