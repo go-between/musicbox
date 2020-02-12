@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { AuthContext } from 'App'
 
+import Signup from 'Signup'
 import Login from 'Login'
 import Home from 'Home'
 import Room from 'Room'
@@ -17,6 +18,10 @@ const Router: React.FC = () => {
                 <Route path="/login">
                   <Login />
                 </Route>
+                <Route path="/signup">
+                  <Signup />
+                </Route>
+
                 <Redirect
                   to={{
                     pathname: '/login',
@@ -35,6 +40,9 @@ const Router: React.FC = () => {
               </Route>
               <Route path="/room/:id">
                 <Room />
+              </Route>
+              <Route path="/signup">
+                <Signup />
               </Route>
 
               <Redirect
