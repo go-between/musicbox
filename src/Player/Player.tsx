@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
-import moment from 'moment'
-import ReactPlayer from 'react-player'
 
 import { WebsocketContext } from 'App'
+
+import PlayerPrimitive from './PlayerPrimitive'
 
 type Record = {
   playedAt: string
@@ -15,8 +15,8 @@ type Props = {
   currentRecord?: Record
 }
 const Player: React.FC<Props> = ({ currentRecord }) => {
-  const [player, setPlayer] = useState<ReactPlayer>()
   const [record, setRecord] = useState<Record>()
+  const [volume, setVolume] = useState(1)
 
   useEffect(() => {
     setRecord(currentRecord)
@@ -33,31 +33,19 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     })
   }, [websocket])
 
-  useEffect(() => {
-    if (!record || !player) {
-      return
-    }
-    const now = moment()
-    const offset = moment.duration(now.diff(record.playedAt))
-
-    player.seekTo(offset.as('seconds'))
-  }, [player, record])
-
   if (!record) {
     return <p>Nothing Playing!</p>
   }
 
-  const setRefFromPlayer = (player: ReactPlayer): void => setPlayer(player)
+  const changeVolume = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+    setVolume(parseFloat(ev.currentTarget.value))
+  }
+
   return (
-    <ReactPlayer
-      ref={setRefFromPlayer}
-      url={`https://www.youtube.com/watch?v=${record.song.youtubeId}`}
-      controls={true}
-      playing={true}
-      volume={0}
-      height="100%"
-      width="100%"
-    />
+    <>
+      <PlayerPrimitive playedAt={record.playedAt} youtubeId={record.song.youtubeId} volume={volume} />
+      <input onChange={changeVolume} type="range" min="0" max="1" step=".01" />
+    </>
   )
 }
 
