@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Box } from 'rebass'
+import { Label, Slider } from '@rebass/forms'
 
 import { WebsocketContext } from 'App'
 
@@ -17,7 +18,7 @@ type Props = {
 }
 const Player: React.FC<Props> = ({ currentRecord }) => {
   const [record, setRecord] = useState<Record>()
-  const [volume, setVolume] = useState(1)
+  const [volume, setVolume] = useState(100)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     setProgress(opts.played * 100)
   }
   const changeVolume = (ev: React.ChangeEvent<HTMLInputElement>): void => {
-    setVolume(parseFloat(ev.currentTarget.value))
+    setVolume(parseInt(ev.currentTarget.value, 10))
   }
 
   return (
@@ -57,7 +58,8 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
       <Box width="100%" height="6px">
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
-      <input onChange={changeVolume} type="range" min="0" max="1" step=".01" />
+      <Label>Volume</Label>
+      <Slider onChange={changeVolume} value={volume} />
     </>
   )
 }

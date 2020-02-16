@@ -30,7 +30,7 @@ const PlayerPrimitive: React.FC<Props> = ({ changeProgress, playedAt, youtubeId,
       ref={setRefFromPlayer}
       url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
       playing={true}
-      volume={volume}
+      volume={volume / 100.0}
       height="100%"
       width="100%"
       style={{ pointerEvents: 'none' }}
