@@ -32,6 +32,7 @@ const PlayerPrimitive: React.FC<Props> = ({ playedAt, youtubeId, volume }) => {
       volume={volume}
       height="100%"
       width="100%"
+      style={{ pointerEvents: 'none' }}
     />
   )
 }
