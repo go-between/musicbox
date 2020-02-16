@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { Box } from 'rebass'
 
 import { WebsocketContext } from 'App'
 
@@ -17,6 +18,7 @@ type Props = {
 const Player: React.FC<Props> = ({ currentRecord }) => {
   const [record, setRecord] = useState<Record>()
   const [volume, setVolume] = useState(1)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     setRecord(currentRecord)
@@ -37,13 +39,24 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     return <p>Nothing Playing!</p>
   }
 
+  const changeProgress = (opts: { played: number }): void => {
+    setProgress(opts.played * 100)
+  }
   const changeVolume = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     setVolume(parseFloat(ev.currentTarget.value))
   }
 
   return (
     <>
-      <PlayerPrimitive playedAt={record.playedAt} youtubeId={record.song.youtubeId} volume={volume} />
+      <PlayerPrimitive
+        changeProgress={changeProgress}
+        playedAt={record.playedAt}
+        youtubeId={record.song.youtubeId}
+        volume={volume}
+      />
+      <Box width="100%" height="6px">
+        <Box width={`${progress}%`} height="100%" bg="text" />
+      </Box>
       <input onChange={changeVolume} type="range" min="0" max="1" step=".01" />
     </>
   )
