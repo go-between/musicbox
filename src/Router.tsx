@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { AuthContext } from 'App'
 
@@ -8,53 +8,50 @@ import Home from 'Home'
 import Room from 'Room'
 
 const Router: React.FC = () => {
+  const { token } = useContext(AuthContext)
+  const commonRoutes = [
+    <Route key="login" path="/login">
+      <Login />
+    </Route>,
+
+    <Route key="signup" path="/signup">
+      <Signup />
+    </Route>,
+  ]
+
+  if (!token) {
+    return (
+      <BrowserRouter>
+        <Switch>
+          {commonRoutes}
+          <Redirect
+            to={{
+              pathname: '/login',
+            }}
+          />
+        </Switch>
+      </BrowserRouter>
+    )
+  }
+
   return (
-    <AuthContext.Consumer>
-      {({ token }) => {
-        if (!token) {
-          return (
-            <BrowserRouter>
-              <Switch>
-                <Route path="/login">
-                  <Login />
-                </Route>
-                <Route path="/signup">
-                  <Signup />
-                </Route>
+    <BrowserRouter>
+      <Switch>
+        {commonRoutes}
+        <Route path="/home">
+          <Home />
+        </Route>
+        <Route path="/room/:id">
+          <Room />
+        </Route>
 
-                <Redirect
-                  to={{
-                    pathname: '/login',
-                  }}
-                />
-              </Switch>
-            </BrowserRouter>
-          )
-        }
-
-        return (
-          <BrowserRouter>
-            <Switch>
-              <Route path="/home">
-                <Home />
-              </Route>
-              <Route path="/room/:id">
-                <Room />
-              </Route>
-              <Route path="/signup">
-                <Signup />
-              </Route>
-
-              <Redirect
-                to={{
-                  pathname: '/home',
-                }}
-              />
-            </Switch>
-          </BrowserRouter>
-        )
-      }}
-    </AuthContext.Consumer>
+        <Redirect
+          to={{
+            pathname: '/home',
+          }}
+        />
+      </Switch>
+    </BrowserRouter>
   )
 }
 

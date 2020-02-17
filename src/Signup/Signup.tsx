@@ -9,7 +9,6 @@ import { AuthContext } from 'App'
 
 import { TEAM_CREATE, TeamCreate } from './graphql'
 
-// TODO: move to lib and perhaps rename?
 type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
 const setFromEvent: SetFromEvent = changeFn => ev => changeFn(ev.target.value)
 
@@ -22,7 +21,6 @@ const Signup: React.FC = () => {
   const { setToken } = useContext(AuthContext)
   const history = useHistory()
 
-  // const [teamCreate, { data, loading }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)
   const [teamCreate, { data }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)
 
   const attemptSignup = (ev: React.FormEvent): void => {
