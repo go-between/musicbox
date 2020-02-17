@@ -97,8 +97,6 @@ export class Client {
   }
 
   private notify: (websocketMessage: DataMessage) => void = websocketMessage => {
-    this.log(websocketMessage)
-
     switch (websocketMessage.messageType) {
       case channels.MESSAGE_CHANNEL:
         const message = websocketMessage.message.data.message
@@ -126,17 +124,21 @@ export class Client {
     }
 
     const parsedData: Message = data
-    this.log(parsedData.type, parsedData)
-
     switch (parsedData.type) {
       case 'ping':
         return
       case 'confirm_subscription':
+        this.log(parsedData.type, parsedData)
         return
       case 'reject_subscription':
+        this.log(parsedData.type, parsedData)
         return
       case undefined:
+        this.log(parsedData.identifier.channel, parsedData)
         this.notify({ messageType: parsedData.identifier.channel, ...parsedData })
+        return
+      default:
+        this.log('unknown message', parsedData)
         return
     }
   }
