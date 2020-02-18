@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react'
-import moment from 'moment'
-import ReactPlayer from 'react-player'
+import { Box } from 'rebass'
+import { Label, Slider } from '@rebass/forms'
 
 import { WebsocketContext } from 'App'
+
+import PlayerPrimitive from './PlayerPrimitive'
 
 type Record = {
   playedAt: string
@@ -15,8 +17,9 @@ type Props = {
   currentRecord?: Record
 }
 const Player: React.FC<Props> = ({ currentRecord }) => {
-  const [player, setPlayer] = useState<ReactPlayer>()
   const [record, setRecord] = useState<Record>()
+  const [volume, setVolume] = useState(100)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     setRecord(currentRecord)
@@ -33,30 +36,31 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     })
   }, [websocket])
 
-  useEffect(() => {
-    if (!record || !player) {
-      return
-    }
-    const now = moment()
-    const offset = moment.duration(now.diff(record.playedAt))
-
-    player.seekTo(offset.as('seconds'))
-  }, [player, record])
-
   if (!record) {
     return <p>Nothing Playing!</p>
   }
 
-  const setRefFromPlayer = (player: ReactPlayer): void => setPlayer(player)
+  const changeProgress = (opts: { played: number }): void => {
+    setProgress(opts.played * 100)
+  }
+  const changeVolume = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+    setVolume(parseInt(ev.currentTarget.value, 10))
+  }
+
   return (
-    <ReactPlayer
-      ref={setRefFromPlayer}
-      url={`https://www.youtube.com/watch?v=${record.song.youtubeId}`}
-      controls={true}
-      playing={true}
-      height="100%"
-      width="100%"
-    />
+    <>
+      <PlayerPrimitive
+        changeProgress={changeProgress}
+        playedAt={record.playedAt}
+        youtubeId={record.song.youtubeId}
+        volume={volume}
+      />
+      <Box width="100%" height="6px">
+        <Box width={`${progress}%`} height="100%" bg="text" />
+      </Box>
+      <Label>Volume</Label>
+      <Slider onChange={changeVolume} value={volume} />
+    </>
   )
 }
 

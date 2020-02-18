@@ -4,14 +4,11 @@ import { useMutation } from '@apollo/react-hooks'
 import { Box, Button } from 'rebass'
 import { Input, Label } from '@rebass/forms'
 
+import { setString } from 'lib/setters'
 import Container from 'components/Container'
 import { AuthContext } from 'App'
 
 import { TEAM_CREATE, TeamCreate } from './graphql'
-
-// TODO: move to lib and perhaps rename?
-type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
-const setFromEvent: SetFromEvent = changeFn => ev => changeFn(ev.target.value)
 
 const Signup: React.FC = () => {
   const [team, setTeam] = useState('')
@@ -22,7 +19,6 @@ const Signup: React.FC = () => {
   const { setToken } = useContext(AuthContext)
   const history = useHistory()
 
-  // const [teamCreate, { data, loading }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)
   const [teamCreate, { data }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)
 
   const attemptSignup = (ev: React.FormEvent): void => {
@@ -48,22 +44,22 @@ const Signup: React.FC = () => {
       <Box bg="accent" p={4} my={4} sx={{ borderRadius: 4 }}>
         <Box pb={4}>
           <Label>Team</Label>
-          <Input value={team} onChange={setFromEvent(setTeam)} />
+          <Input value={team} onChange={setString(setTeam)} />
         </Box>
 
         <Box pb={4}>
           <Label>Name</Label>
-          <Input value={name} onChange={setFromEvent(setName)} />
+          <Input value={name} onChange={setString(setName)} />
         </Box>
 
         <Box pb={4}>
           <Label>Email</Label>
-          <Input value={email} onChange={setFromEvent(setEmail)} />
+          <Input value={email} onChange={setString(setEmail)} />
         </Box>
 
         <Box pb={4}>
           <Label>Password</Label>
-          <Input value={password} onChange={setFromEvent(setPassword)} />
+          <Input value={password} onChange={setString(setPassword)} />
         </Box>
 
         <Box pb={4}>

@@ -46,7 +46,6 @@ const Home: React.FC = () => {
       <Heading as="h2" mb={3} fontSize={[4, 6]}>
         <UserHome />
         Available Rooms
-        {/* <i>{data.user.activeTeam?.name}</i> */}
       </Heading>
       {data.user.activeTeam?.id && <RoomSelector activeRoom={data.user.activeRoom?.id} />}
     </Container>
