@@ -36,7 +36,7 @@ const MessageEntry: React.FC = () => {
     >
       <Label>Type Away and Hit Enter</Label>
       <Box>
-        <Input type="text" onChange={onChange} onKeyPress={onKeyPress} value={message} />
+        <Input type="text" onChange={onChange} placeholder="Message the room" onKeyPress={onKeyPress} value={message} />
       </Box>
     </Box>
   )

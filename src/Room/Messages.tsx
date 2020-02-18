@@ -28,6 +28,13 @@ const Messages: React.FC = () => {
     const newMessages = [...messages, newMessage].sort((prev, next) => (prev.createdAt > next.createdAt ? 1 : 0))
     setMessages(newMessages)
     setNewMessage(null)
+    // TODO: revist this and see if there's a more elegant way to do this without using setTimeout
+    const chat = document.getElementById('chat')
+    setTimeout(() => {
+      if (chat) {
+        chat.scrollTop = chat.scrollHeight
+      }
+    }, 100)
   }, [messages, newMessage])
 
   const websocket = useContext(WebsocketContext)
@@ -56,7 +63,11 @@ const Messages: React.FC = () => {
         }}
       >
         <Flex alignItems="top">
-          <Box>
+          <Box
+            sx={{
+              minWidth: 'auto',
+            }}
+          >
             <Box
               sx={{
                 alignItems: 'center',
@@ -95,6 +106,7 @@ const Messages: React.FC = () => {
 
   return (
     <Box
+      id="chat"
       sx={{
         overflowY: 'scroll',
       }}

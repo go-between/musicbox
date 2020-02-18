@@ -65,9 +65,6 @@ const Login: React.FC = () => {
       </Box>
       <Box
         sx={{
-          // borderWidth: '1px',
-          // borderStyle: 'solid',
-          // borderColor: 'gray200',
           borderRadius: 4,
           boxShadow: 'xl',
           maxWidth: 400,
@@ -93,7 +90,7 @@ const Login: React.FC = () => {
               }}
             >
               <Mail color="#4A5568" size={20} />
-              <Input type="text" value={email} onChange={setString(setEmail)} />
+              <Input type="text" value={email} onChange={setString(setEmail)} placeholder="e.g. jamcity@musicbox.fm" />
             </Box>
           </Box>
 
