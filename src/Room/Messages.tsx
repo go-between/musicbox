@@ -34,7 +34,7 @@ const Messages: React.FC = () => {
       if (chat) {
         chat.scrollTop = chat.scrollHeight
       }
-    }, 100);
+    }, 100)
   }, [messages, newMessage])
 
   const websocket = useContext(WebsocketContext)
@@ -65,7 +65,7 @@ const Messages: React.FC = () => {
         <Flex alignItems="top">
           <Box
             sx={{
-              minWidth: 'auto'
+              minWidth: 'auto',
             }}
           >
             <Box

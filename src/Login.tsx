@@ -92,7 +92,12 @@ const Login: React.FC = () => {
               }}
             >
               <Mail color="#4A5568" size={20} />
-              <Input type="text" value={email} onChange={setFromEvent(setEmail)} placeholder="e.g. jamcity@musicbox.fm" />
+              <Input
+                type="text"
+                value={email}
+                onChange={setFromEvent(setEmail)}
+                placeholder="e.g. jamcity@musicbox.fm"
+              />
             </Box>
           </Box>
 

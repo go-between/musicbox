@@ -1,5 +1,3 @@
-import { fontSize } from "styled-system"
-
 const colors = {
   accent: '#2D3748', // a contrast color for emphasizing UI
   background: '#1A202C', // body background color
@@ -123,7 +121,7 @@ export default {
       '&::placeholder': {
         color: '#E2E8F0',
         fontSize: 2,
-      }
+      },
     },
     heading: {
       color: 'text',
