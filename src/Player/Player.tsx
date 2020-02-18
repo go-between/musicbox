@@ -54,7 +54,6 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
       url={`https://www.youtube.com/watch?v=${record.song.youtubeId}`}
       controls={true}
       playing={true}
-      volume={0}
       height="100%"
       width="100%"
     />

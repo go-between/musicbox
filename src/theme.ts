@@ -1,3 +1,5 @@
+import { fontSize } from "styled-system"
+
 const colors = {
   accent: '#2D3748', // a contrast color for emphasizing UI
   background: '#1A202C', // body background color
@@ -113,12 +115,15 @@ export default {
       bg: 'background',
       borderRadius: 4,
       borderColor: 'transparent',
-      boxShadow: 'base',
       color: 'text',
       p: 2,
       '&:focus': {
         outline: 'none',
       },
+      '&::placeholder': {
+        color: '#E2E8F0',
+        fontSize: 2,
+      }
     },
     heading: {
       color: 'text',
