@@ -1,6 +1,29 @@
 import gql from 'graphql-tag'
 
 // Queries & Mutations
+export type RoomCreate = {
+  data: {
+    roomCreate: {
+      room: Room
+    }
+  }
+  vars: {
+    name: string
+  }
+}
+
+export const ROOM_CREATE = gql`
+  mutation RoomCreate($name: String!) {
+    roomCreate(input: { name: $name }) {
+      room {
+        id
+        name
+      }
+      errors
+    }
+  }
+`
+
 export type RoomsQuery = {
   data: {
     rooms: Room[]

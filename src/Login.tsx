@@ -4,11 +4,9 @@ import { Button, Box, Heading } from 'rebass'
 import { Label, Input } from '@rebass/forms'
 import { Lock, Mail } from 'react-feather'
 
+import { setString } from 'lib/setters'
 import { API_HOST } from 'lib/constants'
 import { AuthContext } from 'App'
-
-type SetFromEvent = (changeFn: (v: string) => void) => (ev: React.ChangeEvent<HTMLInputElement>) => void
-const setFromEvent: SetFromEvent = changeFn => ev => changeFn(ev.target.value)
 
 const request = (email: string, password: string): Promise<Response> => {
   const url = `${API_HOST}/api/v1/oauth/token`
@@ -95,7 +93,7 @@ const Login: React.FC = () => {
               }}
             >
               <Mail color="#4A5568" size={20} />
-              <Input type="text" value={email} onChange={setFromEvent(setEmail)} />
+              <Input type="text" value={email} onChange={setString(setEmail)} />
             </Box>
           </Box>
 
@@ -115,7 +113,7 @@ const Login: React.FC = () => {
               }}
             >
               <Lock color="#4A5568" size={20} />
-              <Input type="password" value={password} onChange={setFromEvent(setPassword)} />
+              <Input type="password" value={password} onChange={setString(setPassword)} />
             </Box>
           </Box>
           <Box>
