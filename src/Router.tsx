@@ -2,14 +2,20 @@ import React, { useContext } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { AuthContext } from 'App'
 
-import Signup from 'Signup'
-import Login from 'Login'
 import Home from 'Home'
+import Invitation from 'Invitation'
+import Invitations from 'Invitations'
+import Login from 'Login'
 import Room from 'Room'
+import Signup from 'Signup'
 
 const Router: React.FC = () => {
   const { token } = useContext(AuthContext)
   const commonRoutes = [
+    <Route key="invitation" path="/invitation">
+      <Invitation />
+    </Route>,
+
     <Route key="login" path="/login">
       <Login />
     </Route>,
@@ -43,6 +49,9 @@ const Router: React.FC = () => {
         </Route>
         <Route path="/room/:id">
           <Room />
+        </Route>
+        <Route path="/invitations">
+          <Invitations />
         </Route>
 
         <Redirect
