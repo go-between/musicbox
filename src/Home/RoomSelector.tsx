@@ -76,10 +76,22 @@ const RoomSelector: React.FC<Props> = ({ activeRoom }) => {
           }}
         ></Flex>
       </Box>
-      <Box width={[1 / 4]}>
+      <Box
+        sx={{
+          borderRadius: 4,
+          boxShadow: 'xl',
+          maxWidth: '50%',
+        }}
+        bg="accent"
+        p={4}
+      >
         <Label>Create a New Room</Label>
-        <Input value={roomName} onChange={setString(setRoomName)} />
-        <Button onClick={createRoom}>Create</Button>
+        <Flex>
+          <Input value={roomName} onChange={setString(setRoomName)} />
+          <Box px={2}>
+            <Button onClick={createRoom}>Create</Button>
+          </Box>
+        </Flex>
       </Box>
     </>
   )

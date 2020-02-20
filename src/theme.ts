@@ -72,7 +72,9 @@ export default {
       cursor: 'pointer',
       fontSize: 3,
       fontWeight: '600',
-      p: '12px',
+      lineHeight: '1.5',
+      px: 3,
+      py: 2,
       '&:hover': {
         bg: 'secondary',
       },

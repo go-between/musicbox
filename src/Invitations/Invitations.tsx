@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { Box, Button } from 'rebass'
+import { Box, Button, Heading } from 'rebass'
 import { Label, Input } from '@rebass/forms'
+import { Mail, User } from 'react-feather'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 
 import { setString } from 'lib/setters'
 
 import { INVITATION_CREATE, INVITATIONS_QUERY, InvitationCreate, InvitationsQuery, Invitation } from './graphql'
+
+import Container from '../components/Container'
 
 const InvitationPartial: React.FC<Invitation> = ({ email, name, invitationState }) => {
   const [resentInvitation, setResentInvitation] = useState(false)
@@ -49,22 +52,71 @@ const Invitations: React.FC = () => {
   }
 
   return (
-    <Box>
-      <Box>
-        <Label>My Invitations</Label>
+    <Container>
+      <Box mt={4}>
+        <Heading as="h2" mb={3} fontSize={[4, 6]}>
+          New Invitations
+        </Heading>
+      </Box>
+
+      <Box
+        sx={{
+          borderRadius: 4,
+          boxShadow: 'xl',
+          maxWidth: 400,
+        }}
+        bg="accent"
+        p={4}
+      >
         <Box as="ul">
           {data.invitations.map(i => (
             <InvitationPartial key={i.email} {...i} />
           ))}
         </Box>
-        <Label>Send New Invitation</Label>
-        <Label>Name</Label>
-        <Input value={name} onChange={setString(setName)} />
-        <Label>Email</Label>
-        <Input value={email} onChange={setString(setEmail)} />
-        <Button onClick={sendInvitation}>Send!</Button>
+
+        <Box mb={4}>
+          <Label htmlFor="name">Name</Label>
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'background',
+              borderRadius: 4,
+              display: 'flex',
+              px: 2,
+              py: 1,
+              '&:focus-within': {
+                boxShadow: 'outline',
+              },
+            }}
+          >
+            <User color="#4A5568" size={20} />
+            <Input value={name} onChange={setString(setName)} />
+          </Box>
+        </Box>
+
+        <Box mb={4}>
+          <Label htmlFor="email">Email</Label>
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'background',
+              borderRadius: 4,
+              display: 'flex',
+              px: 2,
+              py: 1,
+              '&:focus-within': {
+                boxShadow: 'outline',
+              },
+            }}
+          >
+            <Mail color="#4A5568" size={20} />
+            <Input value={email} onChange={setString(setEmail)} />
+          </Box>
+        </Box>
+
+        <Button onClick={sendInvitation}>Send Invite</Button>
       </Box>
-    </Box>
+    </Container>
   )
 }
 
