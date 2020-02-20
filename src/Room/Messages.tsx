@@ -53,7 +53,7 @@ const Messages: React.FC = () => {
   }
 
   const messageLines = messages.map(message => {
-    const withSong = message.roomPlaylistRecord && <i>during {message.roomPlaylistRecord.song.name}</i>
+    const withSong = message.roomPlaylistRecord && <i> during {message.roomPlaylistRecord.song.name}</i>
     const displayDate = moment(message.createdAt).format('ddd h:mm a')
     return (
       <Box
