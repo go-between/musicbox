@@ -18,6 +18,13 @@ const Messages: React.FC = () => {
     }
 
     setMessages(data.messages)
+    // TODO: this needs to be cleaned up, I'm just duplicating what we're doing below on setMessages
+    const chat = document.getElementById('chat')
+    setTimeout(() => {
+      if (chat) {
+        chat.scrollTop = chat.scrollHeight
+      }
+    }, 100)
   }, [data])
 
   useEffect(() => {
