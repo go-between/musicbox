@@ -7,18 +7,13 @@ import { WebsocketContext } from 'App'
 
 import { MESSAGES_QUERY, MessagesQuery, Message } from './graphql'
 
-const zeroPad = (n, w) => {
-  while(n.toString().length<w) n = '0' + n;
-  return n;
-}
-
 const FFFFFF_IN_DEC = 16777215
-const getUserColor = name => {
+const getUserColor = (name: string) => {
   let nums = ''
-  for(var i=0; i<name.length; i++) {
-    nums += zeroPad(name.charCodeAt(i), 3);
+  for(var i=0; i < name.length; i++) {
+    nums += name.charCodeAt(i)
   }
-  return `#${(nums % FFFFFF_IN_DEC).toString(16)}`
+  return `#${(parseInt(nums, 10) % FFFFFF_IN_DEC).toString(16)}`
 }
 
 const Messages: React.FC = () => {
