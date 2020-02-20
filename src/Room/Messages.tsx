@@ -8,9 +8,9 @@ import { WebsocketContext } from 'App'
 import { MESSAGES_QUERY, MessagesQuery, Message } from './graphql'
 
 const FFFFFF_IN_DEC = 16777215
-const getUserColor = (name: string) => {
+const getUserColor = (name: string): string => {
   let nums = ''
-  for(var i=0; i < name.length; i++) {
+  for (let i = 0; i < name.length; i++) {
     nums += name.charCodeAt(i)
   }
   return `#${(parseInt(nums, 10) % FFFFFF_IN_DEC).toString(16)}`
@@ -99,7 +99,9 @@ const Messages: React.FC = () => {
                 pb: 1,
               }}
             >
-              <Box as="span" color={getUserColor(message.user.name)} >{message.user.name}</Box>
+              <Box as="span" color={getUserColor(message.user.name)}>
+                {message.user.name}
+              </Box>
               {withSong}
               <Box as="span" color="#CBD5E0" fontSize={1} px={2}>
                 {displayDate}
