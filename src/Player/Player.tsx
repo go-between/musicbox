@@ -48,19 +48,32 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
   }
 
   return (
-    <>
-      <PlayerPrimitive
-        changeProgress={changeProgress}
-        playedAt={record.playedAt}
-        youtubeId={record.song.youtubeId}
-        volume={volume}
-      />
+    <Box
+      sx={{
+        mb: 3,
+      }}
+    >
+      <Box
+        sx={{
+          height: '300px'
+        }}
+      >
+        <PlayerPrimitive
+          changeProgress={changeProgress}
+          playedAt={record.playedAt}
+          youtubeId={record.song.youtubeId}
+          volume={volume}
+        />
+      </Box>
       <Box width="100%" height="6px">
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
-      <Label>Volume</Label>
-      <Slider onChange={changeVolume} value={volume} />
-    </>
+
+      <Box mb={4}>
+        <Label>Volume</Label>
+        <Slider onChange={changeVolume} value={volume} />
+      </Box>
+    </Box>
   )
 }
 
