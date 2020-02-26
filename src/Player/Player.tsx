@@ -55,7 +55,7 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     >
       <Box
         sx={{
-          height: '300px'
+          height: '300px',
         }}
       >
         <PlayerPrimitive

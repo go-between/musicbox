@@ -106,43 +106,43 @@ const Room: React.FC = () => {
           width: ['100%', '600px'],
         }}
       >
-         <Box>
-           <Heading
-             sx={{
-               fontSize: '3',
-               pb: 4,
-             }}
-           >
-             Room Name
-             <Text
-               sx={{
-                 color: 'text',
-                 fontWeight: '400',
-                 fontSize: 3,
-               }}
-             >
-               {room.name}
-             </Text>
-           </Heading>
+        <Box>
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 4,
+            }}
+          >
+            Room Name
+            <Text
+              sx={{
+                color: 'text',
+                fontWeight: '400',
+                fontSize: 3,
+              }}
+            >
+              {room.name}
+            </Text>
+          </Heading>
 
-           <Heading
-             sx={{
-               fontSize: '3',
-               pb: 4,
-             }}
-           >
-             Active Users
-             <Text
-               sx={{
-                 color: 'text',
-                 fontWeight: '400',
-                 fontSize: 3,
-               }}
-             >
-               <Users initialUsers={room.users || []} />
-             </Text>
-           </Heading>
-         </Box>
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 4,
+            }}
+          >
+            Active Users
+            <Text
+              sx={{
+                color: 'text',
+                fontWeight: '400',
+                fontSize: 3,
+              }}
+            >
+              <Users initialUsers={room.users || []} />
+            </Text>
+          </Heading>
+        </Box>
         <Box
           sx={{
             overflowY: 'scroll',
