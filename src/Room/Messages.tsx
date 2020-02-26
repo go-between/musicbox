@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import Gravatar from 'react-gravatar'
 import { useQuery } from '@apollo/react-hooks'
 import moment from 'moment'
 import { Box, Flex, Text } from 'rebass'
@@ -6,15 +7,6 @@ import { Box, Flex, Text } from 'rebass'
 import { WebsocketContext } from 'App'
 
 import { MESSAGES_QUERY, MessagesQuery, Message } from './graphql'
-
-const FFFFFF_IN_DEC = 16777215
-const getUserColor = (name: string): string => {
-  let nums = ''
-  for (let i = 0; i < name.length; i++) {
-    nums += name.charCodeAt(i)
-  }
-  return `#${(parseInt(nums, 10) % FFFFFF_IN_DEC).toString(16)}`
-}
 
 const Messages: React.FC = () => {
   const { data, loading } = useQuery<MessagesQuery['data'], MessagesQuery['vars']>(MESSAGES_QUERY)
@@ -71,6 +63,7 @@ const Messages: React.FC = () => {
   const messageLines = messages.map(message => {
     const withSong = message.roomPlaylistRecord && <i> during {message.roomPlaylistRecord.song.name}</i>
     const displayDate = moment(message.createdAt).format('ddd h:mm a')
+
     return (
       <Box
         key={message.id}
@@ -84,18 +77,7 @@ const Messages: React.FC = () => {
               minWidth: 'auto',
             }}
           >
-            <Box
-              sx={{
-                alignItems: 'center',
-                bg: getUserColor(message.user.name),
-                borderRadius: '100%',
-                display: 'flex',
-                fontSize: 2,
-                height: '20px',
-                p: 3,
-                width: '20px',
-              }}
-            />
+            <Gravatar email={message.user.email} size={32} style={{ borderRadius: '100%' }} />
           </Box>
 
           <Box

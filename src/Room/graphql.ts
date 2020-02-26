@@ -22,6 +22,7 @@ export const MESSAGES_QUERY = gql`
         }
       }
       user {
+        email
         name
       }
     }
@@ -87,6 +88,7 @@ export type Message = {
     }
   } | null
   user: {
+    email: string
     name: string
   }
 }

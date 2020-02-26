@@ -81,6 +81,7 @@ export type MessageChannelMessage = {
       }
     } | null
     user: {
+      email: string
       name: string
     }
   }
