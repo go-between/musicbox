@@ -87,7 +87,7 @@ const Messages: React.FC = () => {
             <Box
               sx={{
                 alignItems: 'center',
-                bg: 'indigo700',
+                bg: getUserColor(message.user.name),
                 borderRadius: '100%',
                 display: 'flex',
                 fontSize: 2,
@@ -98,19 +98,27 @@ const Messages: React.FC = () => {
             />
           </Box>
 
-          <Box mx={2}>
+          <Box
+            sx={{
+              hyphens: 'auto',
+              overflowWrap: 'break-word',
+              wordBreak: 'break-word',
+              wordWrap: 'break-word',
+            }}
+            mx={2}
+          >
             <Text
               sx={{
                 fontSize: 2,
                 fontWeight: '800',
-                pb: 1,
+                pb: 0,
               }}
             >
-              <Box as="span" color={getUserColor(message.user.name)}>
+              <Box as="span" color="text">
                 {message.user.name}
               </Box>
               {withSong}
-              <Box as="span" color="#CBD5E0" fontSize={1} px={2}>
+              <Box as="span" color="#A0AEC0" fontSize={1} px={2}>
                 {displayDate}
               </Box>
             </Text>

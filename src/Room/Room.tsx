@@ -44,6 +44,7 @@ const Room: React.FC = () => {
       sx={{
         alignItems: 'top',
         bg: 'background',
+        flexDirection: ['column', 'row'],
         minHeight: '100vh',
         mx: 'auto',
         position: 'relative',
@@ -56,12 +57,11 @@ const Room: React.FC = () => {
           borderRight: '1px solid',
           borderColor: 'muted',
           flexDirection: 'column',
-          flex: '1',
           height: '100vh',
           justifyContent: 'space-between',
           overflow: 'hidden',
           p: 4,
-          width: ['33%', '25%'],
+          width: ['100%', '600px'],
         }}
       >
         <YoutubeSearch />
@@ -73,9 +73,37 @@ const Room: React.FC = () => {
         sx={{
           flexDirection: 'column',
           height: '100vh',
-          justifyContent: 'space-between',
           p: 4,
-          width: ['33%', '50%'],
+          width: '100%',
+        }}
+      >
+        <Player currentRecord={room.currentRecord} />
+        <Flex
+          sx={{
+            color: 'text',
+            flexDirection: 'column',
+            height: '100vh',
+            justifyContent: 'flex-end',
+            overflow: 'scroll',
+          }}
+        >
+          <Messages />
+          <MessageEntry />
+        </Flex>
+      </Flex>
+
+      <Flex
+        as="aside"
+        sx={{
+          borderLeft: '1px solid',
+          borderColor: 'muted',
+          color: 'text',
+          flexDirection: 'column',
+          height: '100vh',
+          justifyContent: 'flex-start',
+          overflow: 'scroll',
+          p: 4,
+          width: ['100%', '600px'],
         }}
       >
         <Box>
@@ -115,16 +143,6 @@ const Room: React.FC = () => {
             </Text>
           </Heading>
         </Box>
-
-        <Box
-          sx={{
-            height: '60%',
-            mb: 4,
-          }}
-        >
-          <Player currentRecord={room.currentRecord} />
-        </Box>
-
         <Box
           sx={{
             overflowY: 'scroll',
@@ -160,24 +178,6 @@ const Room: React.FC = () => {
           </Flex>
           <RoomPlaylist roomId={id} />
         </Box>
-      </Flex>
-
-      <Flex
-        as="aside"
-        sx={{
-          borderLeft: '1px solid',
-          borderColor: 'muted',
-          color: 'text',
-          flexDirection: 'column',
-          height: '100vh',
-          justifyContent: 'flex-end',
-          overflow: 'scroll',
-          p: 4,
-          width: ['33%', '25%'],
-        }}
-      >
-        <Messages />
-        <MessageEntry />
       </Flex>
     </Flex>
   )
