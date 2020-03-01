@@ -18,7 +18,7 @@ type Props = {
 }
 const Player: React.FC<Props> = ({ currentRecord }) => {
   const [record, setRecord] = useState<Record>()
-  const [volume, setVolume] = useState(100)
+  const [volume, setVolume] = useState(0)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
