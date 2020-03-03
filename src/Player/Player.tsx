@@ -3,6 +3,7 @@ import { Box } from 'rebass'
 import { Label, Slider } from '@rebass/forms'
 
 import { WebsocketContext } from 'App'
+import { PlaylistRecordContext } from 'Room'
 
 import PlayerPrimitive from './PlayerPrimitive'
 
@@ -26,6 +27,7 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
   }, [currentRecord])
 
   const websocket = useContext(WebsocketContext)
+  const { deleteRecord } = useContext(PlaylistRecordContext)
   useEffect(() => {
     if (!websocket) {
       return
@@ -33,8 +35,11 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
 
     return websocket.subscribeToNowPlaying(nowPlaying => {
       setRecord(nowPlaying.currentRecord)
+      if (!!nowPlaying.currentRecord) {
+        deleteRecord(nowPlaying.currentRecord.id, { persist: false })
+      }
     })
-  }, [websocket])
+  }, [deleteRecord, websocket])
 
   if (!record) {
     return <p>Nothing Playing!</p>

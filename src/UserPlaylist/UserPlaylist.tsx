@@ -15,7 +15,7 @@ const UserPlaylist: React.FC = () => {
     if (!data) {
       return
     }
-    console.log('loadPlaylist', data)
+
     setPlaylistRecords(data.roomPlaylistForUser)
   }, [data, setPlaylistRecords])
 
@@ -24,7 +24,7 @@ const UserPlaylist: React.FC = () => {
   }
 
   const records = playlistRecords.map(record => {
-    const removeRecord = (): void => deleteRecord(record.id)
+    const removeRecord = (): void => deleteRecord(record.id, { persist: true })
     return (
       <Box
         as="li"

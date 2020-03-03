@@ -10,7 +10,7 @@ import {
 
 type PlaylistRecordContext = {
   addRecord: (songId: string) => void
-  deleteRecord: (recordId: string) => void
+  deleteRecord: (recordId: string, options: { persist: boolean }) => void
   playlistRecords: RoomPlaylistRecord[]
   playlistRecordsReorder: (options: { variables: { orderedRecords: OrderedRecord[] } }) => void
   setPlaylistRecords: (records: RoomPlaylistRecord[]) => void
@@ -19,8 +19,8 @@ export const PlaylistRecordContext = createContext<PlaylistRecordContext>({
   addRecord: (songId: string) => {
     console.log('addRecord must be redefined', songId)
   },
-  deleteRecord: (recordId: string) => {
-    console.log('deleteRecord must be redefined', recordId)
+  deleteRecord: (recordId: string, options: { persist: boolean }) => {
+    console.log('deleteRecord must be redefined', recordId, options)
   },
   playlistRecords: [],
   playlistRecordsReorder: () => {
@@ -53,15 +53,19 @@ const PlaylistRecordContextProvider: React.FC = ({ children }) => {
     playlistRecordsReorder({ variables: { orderedRecords } })
   }
 
-  const deleteRecord = (recordId: string): void => {
-    const orderedRecords = playlistRecords
-      .filter(r => r.id !== recordId)
-      .map(record => ({
+  const deleteRecord = (recordId: string, options: { persist: boolean }): void => {
+    const remainingRecords = playlistRecords.filter(r => r.id !== recordId)
+
+    if (options.persist) {
+      const orderedRecords = remainingRecords.map(record => ({
         roomPlaylistRecordId: record.id,
         songId: record.song.id,
       }))
 
-    playlistRecordsReorder({ variables: { orderedRecords } })
+      playlistRecordsReorder({ variables: { orderedRecords } })
+    } else {
+      setPlaylistRecords(remainingRecords)
+    }
   }
 
   return (

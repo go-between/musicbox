@@ -89,7 +89,8 @@ export type MessageChannelMessage = {
 
 export type NowPlayingChannelMessage = {
   room: {
-    currentRecord: {
+    currentRecord?: {
+      id: string
       playedAt: string
       song: {
         name: string

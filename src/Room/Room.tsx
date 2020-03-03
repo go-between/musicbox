@@ -66,8 +66,28 @@ const Room: React.FC = () => {
             width: ['100%', '600px'],
           }}
         >
-          <QuickAdd />
-          <UserPlaylist />
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 1,
+            }}
+          >
+            Quick Add
+          </Heading>
+          <Flex mb={4} sx={{ height: '50%', overflowY: 'scroll' }}>
+            <QuickAdd />
+          </Flex>
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 1,
+            }}
+          >
+            My Songs
+          </Heading>
+          <Flex sx={{ height: '50%', overflowY: 'scroll' }}>
+            <UserPlaylist />
+          </Flex>
         </Flex>
 
         <Flex
