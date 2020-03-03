@@ -2,7 +2,13 @@ import gql from 'graphql-tag'
 
 // Queries & Mutations
 export type SongCreateMutation = {
-  data: {}
+  data: {
+    songCreate: {
+      song: {
+        id: string
+      }
+    }
+  }
   vars: {
     youtubeId: string
   }
@@ -10,6 +16,9 @@ export type SongCreateMutation = {
 export const SONG_CREATE = gql`
   mutation SongCreate($youtubeId: ID!) {
     songCreate(input: { youtubeId: $youtubeId }) {
+      song {
+        id
+      }
       errors
     }
   }

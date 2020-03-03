@@ -7,6 +7,7 @@ import { Search } from 'react-feather'
 import { setString } from 'lib/setters'
 
 import LibraryResults from './LibraryResults'
+import YoutubeSearch from './YoutubeSearch'
 
 export const QuickAdd: React.FC = () => {
   const [query, setQuery] = useState('')
@@ -37,6 +38,7 @@ export const QuickAdd: React.FC = () => {
       </Flex>
 
       <LibraryResults query={debouncedQuery} />
+      <YoutubeSearch query={debouncedQuery} />
     </Box>
   )
 }
