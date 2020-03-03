@@ -1,45 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { X } from 'react-feather'
 
-import { StateAction } from 'lib/types'
-import { RoomPlaylistRecordsReorder } from './PlaylistManagement'
-import { ROOM_PLAYLIST_FOR_USER_QUERY, RoomPlaylistRecord, RoomPlaylistForUserQuery } from './graphql'
+import { PlaylistRecordContext } from 'Room'
 
-type Props = {
-  roomPlaylistRecords: RoomPlaylistRecord[]
-  roomPlaylistRecordsReorder: RoomPlaylistRecordsReorder[0]
-  setRoomPlaylistRecords: StateAction<RoomPlaylistRecord[]>
-}
+import { ROOM_PLAYLIST_FOR_USER_QUERY, RoomPlaylistForUserQuery } from './graphql'
 
-const UserPlaylist: React.FC<Props> = ({ roomPlaylistRecords, roomPlaylistRecordsReorder, setRoomPlaylistRecords }) => {
+const UserPlaylist: React.FC = () => {
   const { data, loading } = useQuery<RoomPlaylistForUserQuery['data']>(ROOM_PLAYLIST_FOR_USER_QUERY)
+  const { deleteRecord, playlistRecords, setPlaylistRecords } = useContext(PlaylistRecordContext)
 
   useEffect(() => {
     if (!data) {
       return
     }
 
-    setRoomPlaylistRecords(data.roomPlaylistForUser)
-  }, [data, setRoomPlaylistRecords])
+    setPlaylistRecords(data.roomPlaylistForUser)
+  }, [data, setPlaylistRecords])
 
   if (loading) {
     return <p>Loading...</p>
   }
 
-  const remove = (id: string) => (): void => {
-    const orderedRecords = roomPlaylistRecords
-      .filter(r => r.id !== id)
-      .map(record => ({
-        roomPlaylistRecordId: record.id,
-        songId: record.song.id,
-      }))
-
-    roomPlaylistRecordsReorder({ variables: { orderedRecords } })
-  }
-
-  const records = roomPlaylistRecords?.map(record => {
+  const records = playlistRecords.map(record => {
+    const removeRecord = (): void => deleteRecord(record.id, { persist: true })
     return (
       <Box
         as="li"
@@ -70,7 +55,7 @@ const UserPlaylist: React.FC<Props> = ({ roomPlaylistRecords, roomPlaylistRecord
         </Box>
 
         <Box
-          onClick={remove(record.id)}
+          onClick={removeRecord}
           sx={{
             alignItems: 'center',
             bg: 'accent',

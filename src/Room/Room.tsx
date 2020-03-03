@@ -5,13 +5,14 @@ import { Box, Flex, Heading, Text } from 'rebass'
 import { Speaker } from 'react-feather'
 
 import Player from 'Player'
-import PlaylistManagement from 'PlaylistManagement'
+import QuickAdd from 'QuickAdd'
 import RoomPlaylist from 'RoomPlaylist'
-import YoutubeSearch from 'YoutubeSearch'
+import UserPlaylist from 'UserPlaylist'
 
 import { ROOM_ACTIVATE, RoomActivate, Room as RoomType } from './graphql'
 import MessageEntry from './MessageEntry'
 import Messages from './Messages'
+import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
 import Users from './Users'
 
 const Room: React.FC = () => {
@@ -40,146 +41,168 @@ const Room: React.FC = () => {
   }
 
   return (
-    <Flex
-      sx={{
-        alignItems: 'top',
-        bg: 'background',
-        flexDirection: ['column', 'row'],
-        minHeight: '100vh',
-        mx: 'auto',
-        position: 'relative',
-      }}
-    >
+    <PlaylistRecordContextProvider>
       <Flex
-        as="aside"
         sx={{
+          alignItems: 'top',
           bg: 'background',
-          borderRight: '1px solid',
-          borderColor: 'muted',
-          flexDirection: 'column',
-          height: '100vh',
-          justifyContent: 'space-between',
-          overflow: 'hidden',
-          p: 4,
-          width: ['100%', '600px'],
+          flexDirection: ['column', 'row'],
+          minHeight: '100vh',
+          mx: 'auto',
+          position: 'relative',
         }}
       >
-        <YoutubeSearch />
-        <PlaylistManagement />
-      </Flex>
-
-      <Flex
-        as="main"
-        sx={{
-          flexDirection: 'column',
-          height: '100vh',
-          p: 4,
-          width: '100%',
-        }}
-      >
-        <Player currentRecord={room.currentRecord} />
         <Flex
+          as="aside"
           sx={{
+            bg: 'background',
+            borderRight: '1px solid',
+            borderColor: 'muted',
+            flexDirection: 'column',
+            height: '100vh',
+            justifyContent: 'space-between',
+            overflow: 'hidden',
+            p: 4,
+            width: ['100%', '600px'],
+          }}
+        >
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 1,
+            }}
+          >
+            Quick Add
+          </Heading>
+          <Flex mb={4} sx={{ height: '50%', overflowY: 'scroll' }}>
+            <QuickAdd />
+          </Flex>
+          <Heading
+            sx={{
+              fontSize: '3',
+              pb: 1,
+            }}
+          >
+            My Songs
+          </Heading>
+          <Flex sx={{ height: '50%', overflowY: 'scroll' }}>
+            <UserPlaylist />
+          </Flex>
+        </Flex>
+
+        <Flex
+          as="main"
+          sx={{
+            flexDirection: 'column',
+            height: '100vh',
+            p: 4,
+            width: '100%',
+          }}
+        >
+          <Player currentRecord={room.currentRecord} />
+          <Flex
+            sx={{
+              color: 'text',
+              flexDirection: 'column',
+              height: '100vh',
+              justifyContent: 'flex-end',
+              overflow: 'scroll',
+            }}
+          >
+            <Messages />
+            <MessageEntry />
+          </Flex>
+        </Flex>
+
+        <Flex
+          as="aside"
+          sx={{
+            borderLeft: '1px solid',
+            borderColor: 'muted',
             color: 'text',
             flexDirection: 'column',
             height: '100vh',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             overflow: 'scroll',
+            p: 4,
+            width: ['100%', '600px'],
           }}
         >
-          <Messages />
-          <MessageEntry />
-        </Flex>
-      </Flex>
-
-      <Flex
-        as="aside"
-        sx={{
-          borderLeft: '1px solid',
-          borderColor: 'muted',
-          color: 'text',
-          flexDirection: 'column',
-          height: '100vh',
-          justifyContent: 'flex-start',
-          overflow: 'scroll',
-          p: 4,
-          width: ['100%', '600px'],
-        }}
-      >
-        <Box>
-          <Heading
-            sx={{
-              fontSize: '3',
-              pb: 4,
-            }}
-          >
-            Room Name
-            <Text
+          <Box>
+            <Heading
               sx={{
-                color: 'text',
-                fontWeight: '400',
-                fontSize: 3,
+                fontSize: '3',
+                pb: 4,
               }}
             >
-              {room.name}
-            </Text>
-          </Heading>
+              Room Name
+              <Text
+                sx={{
+                  color: 'text',
+                  fontWeight: '400',
+                  fontSize: 3,
+                }}
+              >
+                {room.name}
+              </Text>
+            </Heading>
 
-          <Heading
-            sx={{
-              fontSize: '3',
-              pb: 4,
-            }}
-          >
-            Active Users
-            <Text
+            <Heading
               sx={{
-                color: 'text',
-                fontWeight: '400',
-                fontSize: 3,
+                fontSize: '3',
+                pb: 4,
               }}
             >
-              <Users initialUsers={room.users || []} />
-            </Text>
-          </Heading>
-        </Box>
-        <Box
-          sx={{
-            overflowY: 'scroll',
-          }}
-        >
-          <Flex
+              Active Users
+              <Text
+                sx={{
+                  color: 'text',
+                  fontWeight: '400',
+                  fontSize: 3,
+                }}
+              >
+                <Users initialUsers={room.users || []} />
+              </Text>
+            </Heading>
+          </Box>
+          <Box
             sx={{
-              alignItems: 'center',
-              pb: 2,
+              overflowY: 'scroll',
             }}
           >
             <Flex
               sx={{
                 alignItems: 'center',
-                color: 'gray600',
+                pb: 2,
               }}
             >
-              <Speaker size={20} />
-            </Flex>
+              <Flex
+                sx={{
+                  alignItems: 'center',
+                  color: 'gray600',
+                }}
+              >
+                <Speaker size={20} />
+              </Flex>
 
-            <Text
-              as="span"
-              sx={{
-                fontSize: '2',
-                fontWeight: '800',
-                mx: 2,
-                letterSpacing: '1.4px',
-                textTransform: 'uppercase',
-              }}
-            >
-              Room Playlist
-            </Text>
-          </Flex>
-          <RoomPlaylist roomId={id} />
-        </Box>
+              <Text
+                as="span"
+                sx={{
+                  fontSize: '2',
+                  fontWeight: '800',
+                  mx: 2,
+                  letterSpacing: '1.4px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                Room Playlist
+              </Text>
+            </Flex>
+            <RoomPlaylist roomId={id} />
+          </Box>
+        </Flex>
       </Flex>
-    </Flex>
+    </PlaylistRecordContextProvider>
   )
 }
 

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
+
+import { PlaylistRecordContext } from 'Room'
 
 import { SONG_CREATE, SongCreateMutation } from './graphql'
 import { ParsedResult } from './types'
@@ -9,11 +11,17 @@ import { ParsedResult } from './types'
 type Props = {
   result: ParsedResult
 }
-const Result: React.FC<Props> = ({ result }) => {
-  const [teamActivate] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE)
+const YoutubeResult: React.FC<Props> = ({ result }) => {
+  const { addRecord } = useContext(PlaylistRecordContext)
+  const enqueueSong = (data: { songCreate: { song: { id: string } } }): void => {
+    addRecord(data.songCreate.song.id)
+  }
+  const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
+    onCompleted: enqueueSong,
+  })
 
   const onClick = (): void => {
-    teamActivate({ variables: { youtubeId: result.id }, refetchQueries: ['SongsQuery'] })
+    createSong({ variables: { youtubeId: result.id } })
   }
 
   return (
@@ -53,4 +61,4 @@ const Result: React.FC<Props> = ({ result }) => {
   )
 }
 
-export default Result
+export default YoutubeResult
