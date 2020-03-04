@@ -58,11 +58,8 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
         mb: 3,
       }}
     >
-      <Box
-        sx={{
-          height: '300px',
-        }}
-      >
+      <Box>
+        {record.song.name}
         <PlayerPrimitive
           changeProgress={changeProgress}
           playedAt={record.playedAt}
