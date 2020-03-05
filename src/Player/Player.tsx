@@ -38,7 +38,6 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     }
 
     return websocket.subscribeToNowPlaying(nowPlaying => {
-      console.log(nowPlaying)
       setRecord(nowPlaying.currentRecord)
       if (!!nowPlaying.currentRecord) {
         deleteRecord(nowPlaying.currentRecord.id, { persist: false })
