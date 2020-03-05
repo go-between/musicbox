@@ -88,6 +88,7 @@ const RoomPlaylist: React.FC<Props> = ({ roomId }) => {
   })
   return (
     <Box
+      width="100%"
       as="ul"
       sx={{
         m: 0,

@@ -58,11 +58,16 @@ export const ROOM_ACTIVATE = gql`
   mutation RoomActivate($roomId: ID!) {
     roomActivate(input: { roomId: $roomId }) {
       room {
+        id
         currentRecord {
           playedAt
           song {
             name
             youtubeId
+          }
+          user {
+            name
+            email
           }
         }
         name
@@ -125,11 +130,16 @@ export type OrderedRecord = {
 }
 
 export type Room = {
+  id: string
   currentRecord: {
     playedAt: string
     song: {
       name: string
       youtubeId: string
+    }
+    user: {
+      name: string
+      email: string
     }
   }
   name: string

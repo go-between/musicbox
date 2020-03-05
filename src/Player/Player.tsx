@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Box } from 'rebass'
+import { Box, Text } from 'rebass'
 import { Label, Slider } from '@rebass/forms'
 
 import { WebsocketContext } from 'App'
@@ -12,6 +12,10 @@ type Record = {
   song: {
     name: string
     youtubeId: string
+  }
+  user: {
+    name: string
+    email: string
   }
 }
 type Props = {
@@ -34,6 +38,7 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     }
 
     return websocket.subscribeToNowPlaying(nowPlaying => {
+      console.log(nowPlaying)
       setRecord(nowPlaying.currentRecord)
       if (!!nowPlaying.currentRecord) {
         deleteRecord(nowPlaying.currentRecord.id, { persist: false })
@@ -54,12 +59,15 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
 
   return (
     <Box
+      width="100%"
       sx={{
         mb: 3,
       }}
     >
-      <Box>
-        {record.song.name}
+      <Box width="100%">
+        <Text>
+          {record.song.name} by {record.user.name}
+        </Text>
         <PlayerPrimitive
           changeProgress={changeProgress}
           playedAt={record.playedAt}
