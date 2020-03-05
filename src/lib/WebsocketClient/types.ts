@@ -96,6 +96,10 @@ export type NowPlayingChannelMessage = {
         name: string
         youtubeId: string
       }
+      user: {
+        name: string
+        email: string
+      }
     }
   }
 }
