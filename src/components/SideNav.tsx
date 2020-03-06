@@ -67,9 +67,9 @@ export const SideNav: React.FC = () => {
             fontWeight: '800',
             letterSpacing: '.025rem',
             mb: 3,
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }}
-          color='Text'
+          color="Text"
         >
           Settings
         </Heading>

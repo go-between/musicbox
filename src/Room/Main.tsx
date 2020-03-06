@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Box, Flex, Heading, Text } from 'rebass'
+import { Button, Box, Flex, Heading } from 'rebass'
 
 import Player from 'Player'
 import QuickAdd from 'QuickAdd'
@@ -26,7 +26,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
       <QuickAdd />
       <Heading
         sx={{
-          fontSize: [3,4,5]
+          fontSize: [3, 4, 5],
         }}
       >
         {room.name}
@@ -49,8 +49,8 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
                 pointerEvents: 'none',
               },
               ':hover': {
-                bg: 'accent'
-              }
+                bg: 'accent',
+              },
             }}
           >
             User Playlist
@@ -69,8 +69,8 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
                 pointerEvents: 'none',
               },
               ':hover': {
-                bg: 'accent'
-              }
+                bg: 'accent',
+              },
             }}
           >
             Room Playlist
@@ -80,7 +80,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
 
       <Flex
         sx={{
-          overflowY: 'scroll'
+          overflowY: 'scroll',
         }}
         flexDirection="column"
       >

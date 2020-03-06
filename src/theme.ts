@@ -82,7 +82,7 @@ export default {
     transparent: {
       bg: 'transparent',
       border: 'transparent',
-    }
+    },
   },
   colors,
   colorStyles: {

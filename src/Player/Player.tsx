@@ -64,10 +64,7 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
       }}
     >
       <Box width="100%">
-        <Text
-          fontSize={[2,3]}
-          mb={3}
-        >
+        <Text fontSize={[2, 3]} mb={3}>
           {record.song.name} by {record.user.name}
         </Text>
 
