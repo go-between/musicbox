@@ -79,6 +79,10 @@ export default {
         bg: 'secondary',
       },
     },
+    transparent: {
+      bg: 'transparent',
+      border: 'transparent',
+    }
   },
   colors,
   colorStyles: {

@@ -60,13 +60,17 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     <Box
       width="100%"
       sx={{
-        mb: 3,
+        mb: 4,
       }}
     >
       <Box width="100%">
-        <Text>
+        <Text
+          fontSize={[2,3]}
+          mb={3}
+        >
           {record.song.name} by {record.user.name}
         </Text>
+
         <PlayerPrimitive
           changeProgress={changeProgress}
           playedAt={record.playedAt}
@@ -74,11 +78,12 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
           volume={volume}
         />
       </Box>
-      <Box width="100%" height="6px">
+
+      <Box width="100%" height="6px" mb={4}>
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
 
-      <Box mb={4}>
+      <Box>
         <Label>Volume</Label>
         <Slider onChange={changeVolume} value={volume} />
       </Box>

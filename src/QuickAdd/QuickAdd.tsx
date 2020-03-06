@@ -37,7 +37,7 @@ export const QuickAdd: React.FC = () => {
           mb: 4,
         }}
       >
-        <Flex bg="accent" width="100%" mr={2} py={1} px={2} alignItems="center">
+        <Flex sx={{borderRadius: 4,}} bg="accent" width="100%" mr={2} py={1} px={2} alignItems="center">
           <Search />
           <Input
             type="text"
@@ -49,12 +49,12 @@ export const QuickAdd: React.FC = () => {
             }}
           />
         </Flex>
-        <Select defaultValue="library" width="200px" sx={{ borderRadius: 4 }} onChange={setString(setSearchSelection)}>
+        <Select defaultValue="library" width="200px" sx={{ borderRadius: 4, py: 2 }} onChange={setString(setSearchSelection)}>
           <option value="library">My Library</option>
           <option value="youtube">Youtube</option>
         </Select>
       </Flex>
-      <Box sx={{ position: 'absolute', left: 0, right: 0, backgroundColor: 'background' }}>
+      <Box sx={{ position: 'absolute', left: 0, right: 0, bg: 'background' }}>
         <Results query={debouncedQuery} selection={searchSelection} />
       </Box>
     </Box>
