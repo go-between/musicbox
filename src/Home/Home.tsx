@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box, Heading, Flex } from 'rebass'
-import { Home as UserHome, Loader, Users } from 'react-feather'
+import { Cast, Loader, Users } from 'react-feather'
 
 import { USER_QUERY, UserQuery } from './graphql'
 import RoomSelector from './RoomSelector'
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
       <TeamSelector teams={data.user.teams} activeTeam={data.user.activeTeam?.id} />
 
       <Heading as="h2" mb={3} fontSize={[4, 6]}>
-        <UserHome />
+        <Cast />
         Available Rooms
       </Heading>
       {data.user.activeTeam?.id && <RoomSelector activeRoom={data.user.activeRoom?.id} />}

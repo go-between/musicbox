@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Box, Flex, Text } from 'rebass'
+import { Button, Box, Flex, Heading } from 'rebass'
 
 import Player from 'Player'
 import QuickAdd from 'QuickAdd'
@@ -23,38 +23,67 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         width: '60%',
       }}
     >
-      <Text as="h1">{room.name}</Text>
       <QuickAdd />
-      <Flex height="500px">
-        <Player currentRecord={room.currentRecord} />
-      </Flex>
+      <Heading
+        sx={{
+          fontSize: [3, 4, 5],
+        }}
+      >
+        {room.name}
+      </Heading>
 
-      <Flex flexDirection="column">
-        <Flex justifyContent="space-between">
+      <Box minHeight={['auto', 'auto', '500px']}>
+        <Player currentRecord={room.currentRecord} />
+      </Box>
+
+      <Flex flexDirection="row">
+        <Box mr={3}>
           <Button
             disabled={tab === 'userPlaylist'}
             onClick={selectUserPlaylist}
+            variant="transparent"
             sx={{
+              bg: tab === 'roomPlaylist' ? 'transparent' : 'accent',
+              cursor: 'pointer',
               ':disabled': {
                 pointerEvents: 'none',
+              },
+              ':hover': {
+                bg: 'accent',
               },
             }}
           >
             User Playlist
           </Button>
+        </Box>
+
+        <Box>
           <Button
             disabled={tab === 'roomPlaylist'}
             onClick={selectRoomPlaylist}
+            variant="transparent"
             sx={{
+              bg: tab === 'roomPlaylist' ? 'accent' : 'transparent',
+              cursor: 'pointer',
               ':disabled': {
                 pointerEvents: 'none',
+              },
+              ':hover': {
+                bg: 'accent',
               },
             }}
           >
             Room Playlist
           </Button>
-        </Flex>
+        </Box>
+      </Flex>
 
+      <Flex
+        sx={{
+          overflowY: 'scroll',
+        }}
+        flexDirection="column"
+      >
         <Box display={tab === 'userPlaylist' ? 'block' : 'none'}>
           <UserPlaylist />
         </Box>
