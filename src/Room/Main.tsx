@@ -18,7 +18,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
       as="main"
       sx={{
         flexDirection: 'column',
-        justifyContent: 'space-between',
         height: '100vh',
         p: 4,
         width: '60%',
@@ -40,7 +39,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           overflowY: 'scroll',
         }}
       >
-        <Box maxHeight="400px">
+        <Box>
           <Player currentRecord={room.currentRecord} />
         </Box>
 
