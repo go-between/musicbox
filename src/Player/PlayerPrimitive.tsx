@@ -31,7 +31,7 @@ const PlayerPrimitive: React.FC<Props> = ({ changeProgress, playedAt, youtubeId,
       url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
       playing={true}
       volume={volume / 100.0}
-      height="400px"
+      height="auto"
       width="100%"
       style={{ pointerEvents: 'none' }}
       onProgress={changeProgress}
