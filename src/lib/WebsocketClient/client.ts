@@ -28,16 +28,16 @@ export class Client {
   private websocket: WebSocket | null = null
 
   private messageMessages: Array<MessageChannelMessage['message']> = []
-  private messageSubscription?: (message: MessageChannelMessage['message']) => void
+  private messageSubscription: ((message: MessageChannelMessage['message']) => void) | null = null
 
   private nowPlayingMessages: Array<NowPlayingChannelMessage['room']> = []
-  private nowPlayingSubscription?: (currentRecord: NowPlayingChannelMessage['room']) => void
+  private nowPlayingSubscription: ((currentRecord: NowPlayingChannelMessage['room']) => void) | null = null
 
   private roomPlaylistMessages: Array<RoomPlaylistMessage['roomPlaylist']> = []
-  private roomPlaylistSubscription?: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void
+  private roomPlaylistSubscription: ((roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void) | null = null
 
   private userMessages: Array<UserChannelMessage['room']> = []
-  private userSubscription?: (room: UserChannelMessage['room']) => void
+  private userSubscription: ((room: UserChannelMessage['room']) => void) | null = null
 
   constructor(options: Options) {
     this.debug = options.debug
@@ -66,28 +66,36 @@ export class Client {
     this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
   }
 
-  public subscribeToMessage = (callback: (currentRecord: MessageChannelMessage['message']) => void): void => {
+  public subscribeToMessage = (callback: (currentRecord: MessageChannelMessage['message']) => void): (() => void) => {
     this.messageSubscription = callback
     this.messageMessages.forEach(this.messageSubscription)
     this.messageMessages = []
+    return () => (this.messageSubscription = null)
   }
 
-  public subscribeToNowPlaying = (callback: (currentRecord: NowPlayingChannelMessage['room']) => void): void => {
+  public subscribeToNowPlaying = (
+    callback: (currentRecord: NowPlayingChannelMessage['room']) => void,
+  ): (() => void) => {
     this.nowPlayingSubscription = callback
     this.nowPlayingMessages.forEach(this.nowPlayingSubscription)
     this.nowPlayingMessages = []
+    return () => (this.nowPlayingSubscription = null)
   }
 
-  public subscribeToRoomPlaylist = (callback: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void): void => {
+  public subscribeToRoomPlaylist = (
+    callback: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void,
+  ): (() => void) => {
     this.roomPlaylistSubscription = callback
     this.roomPlaylistMessages.forEach(this.roomPlaylistSubscription)
     this.roomPlaylistMessages = []
+    return () => (this.roomPlaylistSubscription = null)
   }
 
-  public subscribeToUsers = (callback: (room: UserChannelMessage['room']) => void): void => {
+  public subscribeToUsers = (callback: (room: UserChannelMessage['room']) => void): (() => void) => {
     this.userSubscription = callback
     this.userMessages.forEach(this.userSubscription)
     this.userMessages = []
+    return () => (this.userSubscription = null)
   }
 
   private error: (event: Event) => void = event => {
