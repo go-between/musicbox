@@ -13,10 +13,6 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
   const websocket = useContext(WebsocketContext)
 
   useEffect(() => {
-    if (!websocket) {
-      return
-    }
-
     return websocket.subscribeToUsers(room => {
       setUsers(room.users)
     })

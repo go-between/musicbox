@@ -25,50 +25,77 @@ export const awaitWebsocket = (token: string): Promise<WebSocket> => {
 
 export class Client {
   private debug: boolean
-  private messageSubscription: (message: MessageChannelMessage['message']) => void = () => ({})
-  private nowPlayingSubscription: (currentRecord: NowPlayingChannelMessage['room']) => void = () => ({})
-  private roomPlaylistSubscription: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void = () => ({})
-  private userSubscription: (room: UserChannelMessage['room']) => void = () => ({})
-  private websocket: WebSocket
+  private websocket: WebSocket | null = null
 
-  constructor(websocket: WebSocket, options: Options) {
+  private messageMessages: Array<MessageChannelMessage['message']> = []
+  private messageSubscription: ((message: MessageChannelMessage['message']) => void) | null = null
+
+  private nowPlayingMessages: Array<NowPlayingChannelMessage['room']> = []
+  private nowPlayingSubscription: ((currentRecord: NowPlayingChannelMessage['room']) => void) | null = null
+
+  private roomPlaylistMessages: Array<RoomPlaylistMessage['roomPlaylist']> = []
+  private roomPlaylistSubscription: ((roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void) | null = null
+
+  private userMessages: Array<UserChannelMessage['room']> = []
+  private userSubscription: ((room: UserChannelMessage['room']) => void) | null = null
+
+  constructor(options: Options) {
     this.debug = options.debug
-    this.websocket = websocket
   }
 
-  public bind = (): void => {
+  public bind = (websocket: WebSocket): void => {
+    this.websocket = websocket
+
     this.websocket.onerror = this.error
     this.websocket.onmessage = (event: MessageEvent) => {
       this.parse(event)
     }
   }
 
-  public subscribeToMessage = (callback: (currentRecord: MessageChannelMessage['message']) => void): (() => void) => {
+  public subscribeForRoom = (): void => {
     this.send(this.generateSubscription(channels.MESSAGE_CHANNEL, {}))
+    this.send(this.generateSubscription(channels.NOW_PLAYING_CHANNEL, {}))
+    this.send(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
+    this.send(this.generateSubscription(channels.USERS_CHANNEL, {}))
+  }
+
+  public unsubscribeForRoom = (): void => {
+    this.send(this.generateUnsubscription(channels.MESSAGE_CHANNEL))
+    this.send(this.generateUnsubscription(channels.NOW_PLAYING_CHANNEL))
+    this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
+    this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
+  }
+
+  public subscribeToMessage = (callback: (currentRecord: MessageChannelMessage['message']) => void): (() => void) => {
     this.messageSubscription = callback
-    return () => this.send(this.generateUnsubscription(channels.MESSAGE_CHANNEL))
+    this.messageMessages.forEach(this.messageSubscription)
+    this.messageMessages = []
+    return () => (this.messageSubscription = null)
   }
 
   public subscribeToNowPlaying = (
     callback: (currentRecord: NowPlayingChannelMessage['room']) => void,
   ): (() => void) => {
-    this.send(this.generateSubscription(channels.NOW_PLAYING_CHANNEL, {}))
     this.nowPlayingSubscription = callback
-    return () => this.send(this.generateUnsubscription(channels.NOW_PLAYING_CHANNEL))
+    this.nowPlayingMessages.forEach(this.nowPlayingSubscription)
+    this.nowPlayingMessages = []
+    return () => (this.nowPlayingSubscription = null)
   }
 
   public subscribeToRoomPlaylist = (
     callback: (roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void,
   ): (() => void) => {
-    this.send(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
     this.roomPlaylistSubscription = callback
-    return () => this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
+    this.roomPlaylistMessages.forEach(this.roomPlaylistSubscription)
+    this.roomPlaylistMessages = []
+    return () => (this.roomPlaylistSubscription = null)
   }
 
   public subscribeToUsers = (callback: (room: UserChannelMessage['room']) => void): (() => void) => {
-    this.send(this.generateSubscription(channels.USERS_CHANNEL, {}))
     this.userSubscription = callback
-    return () => this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
+    this.userMessages.forEach(this.userSubscription)
+    this.userMessages = []
+    return () => (this.userSubscription = null)
   }
 
   private error: (event: Event) => void = event => {
@@ -100,19 +127,35 @@ export class Client {
     switch (websocketMessage.messageType) {
       case channels.MESSAGE_CHANNEL:
         const message = websocketMessage.message.data.message
-        this.messageSubscription(message)
+        if (!!this.messageSubscription) {
+          this.messageSubscription(message)
+        } else {
+          this.messageMessages.push(message)
+        }
         return
       case channels.NOW_PLAYING_CHANNEL:
         const currentRecord = websocketMessage.message.data.room
-        this.nowPlayingSubscription(currentRecord)
+        if (!!this.nowPlayingSubscription) {
+          this.nowPlayingSubscription(currentRecord)
+        } else {
+          this.nowPlayingMessages.push(currentRecord)
+        }
         return
       case channels.ROOM_PLAYLIST_CHANNEL:
         const roomPlaylist = websocketMessage.message.data.roomPlaylist
-        this.roomPlaylistSubscription(roomPlaylist)
+        if (!!this.roomPlaylistSubscription) {
+          this.roomPlaylistSubscription(roomPlaylist)
+        } else {
+          this.roomPlaylistMessages.push(roomPlaylist)
+        }
         return
       case channels.USERS_CHANNEL:
         const room = websocketMessage.message.data.room
-        this.userSubscription(room)
+        if (!!this.userSubscription) {
+          this.userSubscription(room)
+        } else {
+          this.userMessages.push(room)
+        }
         return
     }
   }
@@ -143,5 +186,11 @@ export class Client {
     }
   }
 
-  private send = (msg: object): void => this.websocket.send(JSON.stringify(msg))
+  private send = (msg: object): void => {
+    if (!this.websocket) {
+      console.error('Attempting to send before websocket initialized')
+      return
+    }
+    this.websocket.send(JSON.stringify(msg))
+  }
 }

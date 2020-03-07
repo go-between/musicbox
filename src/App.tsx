@@ -16,12 +16,13 @@ type AuthContext = {
 }
 export const AuthContext = createContext<Partial<AuthContext>>({})
 
-type WebsocketContext = InstanceType<typeof Client> | null
-export const WebsocketContext = createContext<WebsocketContext>(null)
+const socketClient = new Client({ debug: true })
+type WebsocketContext = InstanceType<typeof Client>
+export const WebsocketContext = createContext<WebsocketContext>(socketClient)
 
 const App: React.FC = () => {
   const [token, setToken] = useState(localStorage.getItem('musicbox-token') || '')
-  const [websocketClient, setWebsocketClient] = useState()
+  const [socketConnected, setSocketConnected] = useState(false)
 
   const apolloClient = new ApolloClient({
     uri: `${API_HOST}/api/v1/graphql`,
@@ -36,17 +37,19 @@ const App: React.FC = () => {
     }
 
     awaitWebsocket(token).then(websocket => {
-      const socketClient = new Client(websocket, { debug: true })
-      socketClient.bind()
-
-      setWebsocketClient(socketClient)
+      socketClient.bind(websocket)
+      setSocketConnected(true)
     })
   }, [token])
+
+  if (!socketConnected) {
+    return <p>Loading...</p>
+  }
 
   return (
     <ApolloProvider client={apolloClient}>
       <AuthContext.Provider value={{ token, setToken }}>
-        <WebsocketContext.Provider value={websocketClient}>
+        <WebsocketContext.Provider value={socketClient}>
           <ThemeProvider theme={theme}>
             <Global
               styles={css({

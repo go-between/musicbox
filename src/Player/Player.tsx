@@ -33,10 +33,6 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
   const websocket = useContext(WebsocketContext)
   const { deleteRecord } = useContext(PlaylistRecordContext)
   useEffect(() => {
-    if (!websocket) {
-      return
-    }
-
     return websocket.subscribeToNowPlaying(nowPlaying => {
       setRecord(nowPlaying.currentRecord)
       if (!!nowPlaying.currentRecord) {

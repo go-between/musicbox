@@ -26,10 +26,6 @@ const RoomPlaylist: React.FC<Props> = ({ roomId }) => {
   const websocket = useContext(WebsocketContext)
 
   useEffect(() => {
-    if (!websocket) {
-      return
-    }
-
     return websocket.subscribeToRoomPlaylist(roomPlaylist => {
       setPlaylistRecords(roomPlaylist)
     })
