@@ -47,10 +47,6 @@ const Messages: React.FC = () => {
 
   const websocket = useContext(WebsocketContext)
   useEffect(() => {
-    if (!websocket) {
-      return
-    }
-
     return websocket.subscribeToMessage(message => {
       setNewMessage(message)
     })
