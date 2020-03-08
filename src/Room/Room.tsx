@@ -9,6 +9,7 @@ import { WebsocketContext } from 'App'
 import Chat from './Chat'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
+import CurrentRecordContextProvider from './CurrentRecordContextProvider'
 import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
 
 const Room: React.FC = () => {
@@ -34,20 +35,22 @@ const Room: React.FC = () => {
 
   return (
     <PlaylistRecordContextProvider>
-      <Flex
-        sx={{
-          alignItems: 'top',
-          bg: 'background',
-          flexDirection: ['column', 'row'],
-          minHeight: '100vh',
-          mx: 'auto',
-          position: 'relative',
-        }}
-      >
-        <SideNav />
-        <Main room={data.roomActivate.room} />
-        <Chat room={data.roomActivate.room} />
-      </Flex>
+      <CurrentRecordContextProvider>
+        <Flex
+          sx={{
+            alignItems: 'top',
+            bg: 'background',
+            flexDirection: ['column', 'row'],
+            minHeight: '100vh',
+            mx: 'auto',
+            position: 'relative',
+          }}
+        >
+          <SideNav />
+          <Main room={data.roomActivate.room} />
+          <Chat room={data.roomActivate.room} />
+        </Flex>
+      </CurrentRecordContextProvider>
     </PlaylistRecordContextProvider>
   )
 }

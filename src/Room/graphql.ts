@@ -137,7 +137,7 @@ export type Room = {
       name: string
       email: string
     }
-  }
+  } | null
   name: string
   users: User[]
 }

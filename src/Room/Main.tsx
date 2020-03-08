@@ -40,7 +40,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         }}
       >
         <Box>
-          <Player currentRecord={room.currentRecord} />
+          <Player />
         </Box>
 
         <Box>
