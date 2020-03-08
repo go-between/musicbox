@@ -16,10 +16,8 @@ export const MESSAGES_QUERY = gql`
       id
       createdAt
       message
-      roomPlaylistRecord {
-        song {
-          name
-        }
+      song {
+        name
       }
       user {
         email
@@ -113,10 +111,8 @@ export type Message = {
   id: string
   createdAt: string
   message: string
-  roomPlaylistRecord: {
-    song: {
-      name: string
-    }
+  song: {
+    name: string
   } | null
   user: {
     email: string

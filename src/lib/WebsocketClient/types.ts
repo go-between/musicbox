@@ -75,10 +75,8 @@ export type MessageChannelMessage = {
     id: string
     createdAt: string
     message: string
-    roomPlaylistRecord: {
-      song: {
-        name: string
-      }
+    song: {
+      name: string
     } | null
     user: {
       email: string
