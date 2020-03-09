@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Box, Text } from 'rebass'
 import { Label, Slider } from '@rebass/forms'
 
-import { WebsocketContext } from 'App'
+import { WebsocketContext } from 'Router'
 import { CurrentRecordContext, PlaylistRecordContext } from 'Room'
 
 import PlayerPrimitive from './PlayerPrimitive'

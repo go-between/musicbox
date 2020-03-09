@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box, Text } from 'rebass'
 
-import { WebsocketContext } from 'App'
+import { WebsocketContext } from 'Router'
 
 import { ROOM_PLAYLIST_QUERY, RoomPlaylistQuery, RoomPlaylistRecord } from './graphql'
 

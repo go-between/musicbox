@@ -48,7 +48,7 @@ const Invitation: React.FC = () => {
       setErrors(errors)
     }
 
-    if (setToken && accessToken) {
+    if (accessToken) {
       setToken(accessToken)
       localStorage.setItem('musicbox-token', accessToken)
       history.push('/home')

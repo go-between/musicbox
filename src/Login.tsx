@@ -33,9 +33,6 @@ const Login: React.FC = () => {
 
   const attemptLogin = (ev: React.FormEvent): void => {
     ev.preventDefault()
-    if (!setToken) {
-      return
-    }
 
     setErrors('')
     request(email, password).then(response => {

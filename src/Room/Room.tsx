@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { Flex } from 'rebass'
 
 import { SideNav } from 'components'
-import { WebsocketContext } from 'App'
+import { WebsocketContext } from 'Router'
 
 import Chat from './Chat'
 import Main from './Main'

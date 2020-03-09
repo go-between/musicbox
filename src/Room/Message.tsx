@@ -14,7 +14,10 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
     onCompleted: () => setPinned(!pinned),
   })
 
-  const pinOrUnpin = (): void => messagePin({ variables: { messageId: message.id, pin: !pinned } })
+  const pinOrUnpin = (): void => {
+    messagePin({ variables: { messageId: message.id, pin: !pinned } })
+  }
+
   return (
     <Box
       key={message.id}

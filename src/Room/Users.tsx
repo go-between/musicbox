@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Box, Text } from 'rebass'
 
-import { WebsocketContext } from 'App'
+import { WebsocketContext } from 'Router'
 import { User } from './graphql'
 
 type Props = {

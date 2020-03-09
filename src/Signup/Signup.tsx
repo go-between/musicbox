@@ -27,7 +27,7 @@ const Signup: React.FC = () => {
   }
 
   useEffect(() => {
-    if (!data || !setToken) {
+    if (!data) {
       return
     }
     setErrors(data.teamCreate.errors)
