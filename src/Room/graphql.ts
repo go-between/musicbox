@@ -16,6 +16,7 @@ export const MESSAGES_QUERY = gql`
       id
       createdAt
       message
+      pinned
       song {
         name
       }
@@ -37,6 +38,26 @@ export type MessageCreate = {
 export const MESSAGE_CREATE = gql`
   mutation MessageCreate($message: String!) {
     messageCreate(input: { message: $message }) {
+      errors
+    }
+  }
+`
+
+export type MessagePin = {
+  data: {}
+  vars: {
+    messageId: string
+    pin: boolean
+  }
+}
+
+export const MESSAGE_PIN = gql`
+  mutation MessagePin($messageId: ID!, $pin: Boolean!) {
+    messagePin(input: { messageId: $messageId, pin: $pin }) {
+      message {
+        id
+        pinned
+      }
       errors
     }
   }
@@ -111,6 +132,7 @@ export type Message = {
   id: string
   createdAt: string
   message: string
+  pinned: boolean
   song: {
     name: string
   } | null

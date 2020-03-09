@@ -75,6 +75,7 @@ export type MessageChannelMessage = {
     id: string
     createdAt: string
     message: string
+    pinned: boolean
     song: {
       name: string
     } | null

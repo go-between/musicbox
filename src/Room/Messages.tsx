@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Gravatar from 'react-gravatar'
 import { useQuery } from '@apollo/react-hooks'
-import moment from 'moment'
-import { Box, Flex, Text } from 'rebass'
+import { Box } from 'rebass'
 
 import { WebsocketContext } from 'App'
 
-import { MESSAGES_QUERY, MessagesQuery, Message } from './graphql'
+import { MESSAGES_QUERY, MessagesQuery, Message as MessageType } from './graphql'
+import Message from './Message'
 
 const Messages: React.FC = () => {
   const { data, loading } = useQuery<MessagesQuery['data'], MessagesQuery['vars']>(MESSAGES_QUERY)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [newMessage, setNewMessage] = useState<Message | null>(null)
+  const [messages, setMessages] = useState<MessageType[]>([])
+  const [newMessage, setNewMessage] = useState<MessageType | null>(null)
 
   useEffect(() => {
     if (!data) {
@@ -56,58 +55,7 @@ const Messages: React.FC = () => {
     return <p>Loading...</p>
   }
 
-  const messageLines = messages.map(message => {
-    const withSong = message.song && <i> during {message.song.name}</i>
-    const displayDate = moment(message.createdAt).format('ddd h:mm a')
-
-    return (
-      <Box
-        key={message.id}
-        sx={{
-          pb: 3,
-        }}
-      >
-        <Flex alignItems="top">
-          <Box
-            sx={{
-              minWidth: 'auto',
-            }}
-          >
-            <Gravatar email={message.user.email} size={32} style={{ borderRadius: '100%' }} />
-          </Box>
-
-          <Box
-            sx={{
-              hyphens: 'auto',
-              overflowWrap: 'break-word',
-              wordBreak: 'break-word',
-              wordWrap: 'break-word',
-            }}
-            mx={2}
-          >
-            <Text
-              sx={{
-                fontSize: 2,
-                fontWeight: '800',
-                pb: 0,
-              }}
-            >
-              <Box as="span" color="text">
-                {message.user.name}
-              </Box>
-              {withSong}
-              <Box as="span" color="#A0AEC0" fontSize={1} px={2}>
-                {displayDate}
-              </Box>
-            </Text>
-
-            <Text fontSize={2}>{message.message}</Text>
-          </Box>
-        </Flex>
-      </Box>
-    )
-  })
-
+  const messageLines = messages.map(message => <Message key={message.id} message={message} />)
   return (
     <Box
       id="chat"
