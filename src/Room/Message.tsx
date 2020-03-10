@@ -21,7 +21,6 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   }
 
   const user = useUserContext()
-  console.log(message)
   const pinButton =
     user.id !== message.user.id || !message.song ? (
       ''
