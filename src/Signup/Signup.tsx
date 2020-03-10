@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import { Box, Button } from 'rebass'
 import { Input, Label } from '@rebass/forms'
 
+import { useAuthContext } from 'Context'
 import { setString } from 'lib/setters'
 import Container from 'components/Container'
-import { AuthContext } from 'App'
 
 import { TEAM_CREATE, TeamCreate } from './graphql'
 
@@ -16,7 +16,7 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<string[]>([])
-  const { setToken } = useContext(AuthContext)
+  const { setToken } = useAuthContext()
   const history = useHistory()
 
   const [teamCreate, { data }] = useMutation<TeamCreate['data'], TeamCreate['vars']>(TEAM_CREATE)

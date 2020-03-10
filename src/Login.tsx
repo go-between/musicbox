@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button, Box, Heading } from 'rebass'
 import { Label, Input } from '@rebass/forms'
@@ -6,7 +6,7 @@ import { Lock, Mail } from 'react-feather'
 
 import { setString } from 'lib/setters'
 import { API_HOST } from 'lib/constants'
-import { AuthContext } from 'App'
+import { useAuthContext } from 'Context'
 
 const request = (email: string, password: string): Promise<Response> => {
   const url = `${API_HOST}/api/v1/oauth/token`
@@ -29,7 +29,7 @@ const Login: React.FC = () => {
   const [errors, setErrors] = useState('')
   const history = useHistory()
 
-  const { setToken } = useContext(AuthContext)
+  const { setToken } = useAuthContext()
 
   const attemptLogin = (ev: React.FormEvent): void => {
     ev.preventDefault()

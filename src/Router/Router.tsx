@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
-import { AuthContext } from 'App'
+import React from 'react'
+import { useAuthContext } from 'Context'
 
 import Authorized from './Authorized'
 import Unauthorized from './Unauthorized'
 
 const Router: React.FC = () => {
-  const { token } = useContext(AuthContext)
+  const { token } = useAuthContext()
 
   if (!token) {
     return <Unauthorized />

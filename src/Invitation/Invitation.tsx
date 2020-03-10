@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button } from 'rebass'
 import { Label, Input } from '@rebass/forms'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import { useLocation, useHistory } from 'react-router-dom'
 
-import { AuthContext } from 'App'
+import { useAuthContext } from 'Context'
 import { setString } from 'lib/setters'
 
 import { INVITATION_ACCEPT, INVITATION_QUERY, InvitationAccept, InvitationQuery } from './graphql'
@@ -29,7 +29,7 @@ const Invitation: React.FC = () => {
     InvitationAccept['data'],
     InvitationAccept['vars']
   >(INVITATION_ACCEPT)
-  const { setToken } = useContext(AuthContext)
+  const { setToken } = useAuthContext()
   const history = useHistory()
 
   const acceptInvitation = (): void => {
