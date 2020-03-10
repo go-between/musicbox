@@ -1,4 +1,4 @@
 import Router from './Router'
 
-export { WebsocketContext } from './Authorized'
+export { WebsocketContext } from './WebsocketContextProvider'
 export default Router
