@@ -11,7 +11,7 @@ import Room from 'Room'
 import Signup from 'Signup'
 import { API_HOST } from 'lib/constants'
 
-import { WebsocketContextProvider } from 'Context'
+import { UserContextProvider, WebsocketContextProvider } from 'Context'
 
 const Router: React.FC<{ token: string }> = ({ token }) => {
   const apolloClient = new ApolloClient({
@@ -24,39 +24,41 @@ const Router: React.FC<{ token: string }> = ({ token }) => {
   return (
     <WebsocketContextProvider token={token}>
       <ApolloProvider client={apolloClient}>
-        <BrowserRouter>
-          <Switch>
-            <Route key="invitation" path="/invitation">
-              <Invitation />
-            </Route>
+        <UserContextProvider>
+          <BrowserRouter>
+            <Switch>
+              <Route key="invitation" path="/invitation">
+                <Invitation />
+              </Route>
 
-            <Route path="/invitations">
-              <Invitations />
-            </Route>
+              <Route path="/invitations">
+                <Invitations />
+              </Route>
 
-            <Route path="/home">
-              <Home />
-            </Route>
+              <Route path="/home">
+                <Home />
+              </Route>
 
-            <Route key="login" path="/login">
-              <Login />
-            </Route>
+              <Route key="login" path="/login">
+                <Login />
+              </Route>
 
-            <Route key="signup" path="/signup">
-              <Signup />
-            </Route>
+              <Route key="signup" path="/signup">
+                <Signup />
+              </Route>
 
-            <Route path="/room/:id">
-              <Room />
-            </Route>
+              <Route path="/room/:id">
+                <Room />
+              </Route>
 
-            <Redirect
-              to={{
-                pathname: '/home',
-              }}
-            />
-          </Switch>
-        </BrowserRouter>
+              <Redirect
+                to={{
+                  pathname: '/home',
+                }}
+              />
+            </Switch>
+          </BrowserRouter>
+        </UserContextProvider>
       </ApolloProvider>
     </WebsocketContextProvider>
   )

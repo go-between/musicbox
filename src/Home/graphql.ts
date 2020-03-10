@@ -48,54 +48,8 @@ export const TEAM_ACTIVATE = gql`
   }
 `
 
-export type UserQuery = {
-  data: {
-    user: User
-  }
-  vars: {}
-}
-export const USER_QUERY = gql`
-  query UserQuery {
-    user {
-      id
-      email
-      name
-      activeRoom {
-        id
-      }
-      activeTeam {
-        id
-        name
-      }
-      teams {
-        id
-        name
-      }
-    }
-  }
-`
-
 // Entities
 type Room = {
   id: string
   name: string
-}
-
-export type Team = {
-  id: string
-  name: string
-}
-
-type User = {
-  id: string
-  email: string
-  name: string
-  activeRoom: {
-    id: string
-  }
-  activeTeam: {
-    id: string
-    name: string
-  }
-  teams: Team[]
 }
