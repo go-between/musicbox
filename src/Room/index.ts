@@ -1,4 +1,5 @@
 import Room from './Room'
 
-export { PlaylistRecordContext } from './PlaylistRecordContextProvider'
+export { useCurrentRecordContext } from './CurrentRecordContextProvider'
+export { usePlaylistRecordContext } from './PlaylistRecordContextProvider'
 export default Room

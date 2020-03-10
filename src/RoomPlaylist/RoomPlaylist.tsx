@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box, Text } from 'rebass'
 
-import { WebsocketContext } from 'App'
+import { useWebsocketContext } from 'Context'
 
 import { ROOM_PLAYLIST_QUERY, RoomPlaylistQuery, RoomPlaylistRecord } from './graphql'
 
@@ -23,7 +23,7 @@ const RoomPlaylist: React.FC<Props> = ({ roomId }) => {
     }
   }, [data])
 
-  const websocket = useContext(WebsocketContext)
+  const websocket = useWebsocketContext()
 
   useEffect(() => {
     return websocket.subscribeToRoomPlaylist(roomPlaylist => {

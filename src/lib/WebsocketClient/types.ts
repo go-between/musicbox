@@ -75,10 +75,12 @@ export type MessageChannelMessage = {
     id: string
     createdAt: string
     message: string
+    pinned: boolean
     song: {
       name: string
     } | null
     user: {
+      id: string
       email: string
       name: string
     }
@@ -87,10 +89,11 @@ export type MessageChannelMessage = {
 
 export type NowPlayingChannelMessage = {
   room: {
-    currentRecord?: {
+    currentRecord: {
       id: string
       playedAt: string
       song: {
+        id: string
         name: string
         youtubeId: string
       }
@@ -98,7 +101,7 @@ export type NowPlayingChannelMessage = {
         name: string
         email: string
       }
-    }
+    } | null
   }
 }
 

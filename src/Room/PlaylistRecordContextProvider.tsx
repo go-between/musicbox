@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 
 import {
@@ -15,22 +15,8 @@ type PlaylistRecordContext = {
   playlistRecordsReorder: (options: { variables: { orderedRecords: OrderedRecord[] } }) => void
   setPlaylistRecords: (records: RoomPlaylistRecord[]) => void
 }
-export const PlaylistRecordContext = createContext<PlaylistRecordContext>({
-  addRecord: (songId: string) => {
-    console.log('addRecord must be redefined', songId)
-  },
-  deleteRecord: (recordId: string, options: { persist: boolean }) => {
-    console.log('deleteRecord must be redefined', recordId, options)
-  },
-  playlistRecords: [],
-  playlistRecordsReorder: () => {
-    console.log('playlistRecordsReorder must be redefined')
-  },
-  setPlaylistRecords: (records: RoomPlaylistRecord[]) => {
-    console.log('setPlaylistRecords must be redeifined', records)
-  },
-})
 
+const PlaylistRecordContext = createContext<Partial<PlaylistRecordContext>>({})
 const PlaylistRecordContextProvider: React.FC = ({ children }) => {
   const [playlistRecords, setPlaylistRecords] = useState<RoomPlaylistRecord[]>([])
 
@@ -75,5 +61,28 @@ const PlaylistRecordContextProvider: React.FC = ({ children }) => {
       {children}
     </PlaylistRecordContext.Provider>
   )
+}
+export const usePlaylistRecordContext: () => PlaylistRecordContext = () => {
+  const { addRecord, deleteRecord, playlistRecords, playlistRecordsReorder, setPlaylistRecords } = useContext(
+    PlaylistRecordContext,
+  )
+
+  if (
+    addRecord === undefined ||
+    deleteRecord === undefined ||
+    playlistRecords === undefined ||
+    playlistRecordsReorder === undefined ||
+    setPlaylistRecords === undefined
+  ) {
+    throw new Error('PlaylistRecordContext accessed before being set')
+  }
+
+  return {
+    addRecord,
+    deleteRecord,
+    playlistRecords,
+    playlistRecordsReorder,
+    setPlaylistRecords,
+  }
 }
 export default PlaylistRecordContextProvider

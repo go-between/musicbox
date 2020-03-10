@@ -1,6 +1,34 @@
 import gql from 'graphql-tag'
 
 // Queries & Mutations
+export type PinnedMessagesQuery = {
+  data: {
+    pinnedMessages: Message[]
+  }
+  vars: {
+    songId: string
+  }
+}
+
+export const PINNED_MESSAGES_QUERY = gql`
+  query PinnedMessages($songId: ID!) {
+    pinnedMessages(songId: $songId) {
+      id
+      createdAt
+      message
+      pinned
+      song {
+        name
+      }
+      user {
+        id
+        email
+        name
+      }
+    }
+  }
+`
+
 export type MessagesQuery = {
   data: {
     messages: Message[]
@@ -16,10 +44,12 @@ export const MESSAGES_QUERY = gql`
       id
       createdAt
       message
+      pinned
       song {
         name
       }
       user {
+        id
         email
         name
       }
@@ -37,6 +67,26 @@ export type MessageCreate = {
 export const MESSAGE_CREATE = gql`
   mutation MessageCreate($message: String!) {
     messageCreate(input: { message: $message }) {
+      errors
+    }
+  }
+`
+
+export type MessagePin = {
+  data: {}
+  vars: {
+    messageId: string
+    pin: boolean
+  }
+}
+
+export const MESSAGE_PIN = gql`
+  mutation MessagePin($messageId: ID!, $pin: Boolean!) {
+    messagePin(input: { messageId: $messageId, pin: $pin }) {
+      message {
+        id
+        pinned
+      }
       errors
     }
   }
@@ -60,6 +110,7 @@ export const ROOM_ACTIVATE = gql`
         currentRecord {
           playedAt
           song {
+            id
             name
             youtubeId
           }
@@ -111,10 +162,12 @@ export type Message = {
   id: string
   createdAt: string
   message: string
+  pinned: boolean
   song: {
     name: string
   } | null
   user: {
+    id: string
     email: string
     name: string
   }
@@ -130,6 +183,7 @@ export type Room = {
   currentRecord: {
     playedAt: string
     song: {
+      id: string
       name: string
       youtubeId: string
     }
@@ -137,7 +191,7 @@ export type Room = {
       name: string
       email: string
     }
-  }
+  } | null
   name: string
   users: User[]
 }

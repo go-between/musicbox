@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Text } from 'rebass'
 import { Label, Slider } from '@rebass/forms'
 
-import { WebsocketContext } from 'App'
-import { PlaylistRecordContext } from 'Room'
+import { useWebsocketContext } from 'Context'
+import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 
 import PlayerPrimitive from './PlayerPrimitive'
 
@@ -18,30 +18,25 @@ type Record = {
     email: string
   }
 }
-type Props = {
-  currentRecord?: Record
-}
-const Player: React.FC<Props> = ({ currentRecord }) => {
-  const [record, setRecord] = useState<Record>()
+
+const Player: React.FC = () => {
   const [volume, setVolume] = useState(100)
   const [progress, setProgress] = useState(0)
 
-  useEffect(() => {
-    setRecord(currentRecord)
-  }, [currentRecord])
+  const websocket = useWebsocketContext()
+  const { deleteRecord } = usePlaylistRecordContext()
+  const { currentRecord, setCurrentRecord } = useCurrentRecordContext()
 
-  const websocket = useContext(WebsocketContext)
-  const { deleteRecord } = useContext(PlaylistRecordContext)
   useEffect(() => {
     return websocket.subscribeToNowPlaying(nowPlaying => {
-      setRecord(nowPlaying.currentRecord)
+      setCurrentRecord(nowPlaying.currentRecord)
       if (!!nowPlaying.currentRecord) {
         deleteRecord(nowPlaying.currentRecord.id, { persist: false })
       }
     })
-  }, [deleteRecord, websocket])
+  }, [deleteRecord, setCurrentRecord, websocket])
 
-  if (!record) {
+  if (!currentRecord) {
     return <p>Nothing Playing!</p>
   }
 
@@ -61,13 +56,13 @@ const Player: React.FC<Props> = ({ currentRecord }) => {
     >
       <Box width="100%">
         <Text fontSize={[2, 3]} mb={3}>
-          {record.song.name} by {record.user.name}
+          {currentRecord.song.name} by {currentRecord.user.name}
         </Text>
 
         <PlayerPrimitive
           changeProgress={changeProgress}
-          playedAt={record.playedAt}
-          youtubeId={record.song.youtubeId}
+          playedAt={currentRecord.playedAt}
+          youtubeId={currentRecord.song.youtubeId}
           volume={volume}
         />
       </Box>

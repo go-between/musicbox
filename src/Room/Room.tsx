@@ -1,20 +1,21 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 import { Flex } from 'rebass'
 
 import { SideNav } from 'components'
-import { WebsocketContext } from 'App'
+import { useWebsocketContext } from 'Context'
 
 import Chat from './Chat'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
+import CurrentRecordContextProvider from './CurrentRecordContextProvider'
 import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
 
 const Room: React.FC = () => {
   const { id } = useParams()
 
-  const websocket = useContext(WebsocketContext)
+  const websocket = useWebsocketContext()
   const [roomActivate, { data, loading }] = useMutation<RoomActivate['data'], RoomActivate['vars']>(ROOM_ACTIVATE, {
     onCompleted: websocket.subscribeForRoom,
   })
@@ -34,20 +35,22 @@ const Room: React.FC = () => {
 
   return (
     <PlaylistRecordContextProvider>
-      <Flex
-        sx={{
-          alignItems: 'top',
-          bg: 'background',
-          flexDirection: ['column', 'row'],
-          minHeight: '100vh',
-          mx: 'auto',
-          position: 'relative',
-        }}
-      >
-        <SideNav />
-        <Main room={data.roomActivate.room} />
-        <Chat room={data.roomActivate.room} />
-      </Flex>
+      <CurrentRecordContextProvider>
+        <Flex
+          sx={{
+            alignItems: 'top',
+            bg: 'background',
+            flexDirection: ['column', 'row'],
+            minHeight: '100vh',
+            mx: 'auto',
+            position: 'relative',
+          }}
+        >
+          <SideNav />
+          <Main room={data.roomActivate.room} />
+          <Chat room={data.roomActivate.room} />
+        </Flex>
+      </CurrentRecordContextProvider>
     </PlaylistRecordContextProvider>
   )
 }
