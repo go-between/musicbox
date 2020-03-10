@@ -80,6 +80,7 @@ export type MessageChannelMessage = {
       name: string
     } | null
     user: {
+      id: string
       email: string
       name: string
     }

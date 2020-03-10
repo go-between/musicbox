@@ -21,6 +21,7 @@ export const MESSAGES_QUERY = gql`
         name
       }
       user {
+        id
         email
         name
       }
@@ -137,6 +138,7 @@ export type Message = {
     name: string
   } | null
   user: {
+    id: string
     email: string
     name: string
   }

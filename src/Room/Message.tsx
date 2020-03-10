@@ -4,6 +4,8 @@ import Gravatar from 'react-gravatar'
 import { Button, Box, Flex, Text } from 'rebass'
 import { useMutation } from '@apollo/react-hooks'
 
+import { useUserContext } from 'Context'
+
 import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
 
 const Message: React.FC<{ message: MessageType }> = ({ message }) => {
@@ -17,6 +19,13 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   const pinOrUnpin = (): void => {
     messagePin({ variables: { messageId: message.id, pin: !pinned } })
   }
+
+  const user = useUserContext()
+  const pinButton = user.id !== message.user.id ? '' : (
+    <Button sx={{ fontSize: 1 }} onClick={pinOrUnpin}>
+      {pinned ? 'unpin' : 'pin'}
+    </Button>
+  )
 
   return (
     <Box
@@ -57,9 +66,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             <Box as="span" color="#A0AEC0" fontSize={1} px={2}>
               {displayDate}
             </Box>
-            <Button sx={{ fontSize: 1 }} onClick={pinOrUnpin}>
-              {pinned ? 'unpin' : 'pin'}
-            </Button>
+            {pinButton}
           </Text>
 
           <Text fontSize={2}>{message.message}</Text>
