@@ -29,7 +29,7 @@ const PinnedMessages: React.FC = () => {
 
   return (
     <Box
-      id="chat"
+      id="pinned-messages"
       sx={{
         overflowY: 'scroll',
       }}
