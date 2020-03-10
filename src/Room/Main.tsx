@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Box, Flex, Heading } from 'rebass'
 
 import Player from 'Player'
 import QuickAdd from 'QuickAdd'
 import RoomPlaylist from 'RoomPlaylist'
 import UserPlaylist from 'UserPlaylist'
+import { useCurrentRecordContext } from 'Room'
 
 import { Room as RoomType } from './graphql'
 import PinnedMessages from './PinnedMessages'
@@ -14,6 +15,14 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
   const selectUserPlaylist = (): void => setTab('userPlaylist')
   const selectRoomPlaylist = (): void => setTab('roomPlaylist')
   const selectPinnedMessages = (): void => setTab('pinnedMessages')
+
+  // TODO:  Sort of a hack to ensure current record is set after room has
+  // been activated.  This should be pulled out.
+  const { setCurrentRecord } = useCurrentRecordContext()
+  const { currentRecord } = room
+  useEffect(() => {
+    setCurrentRecord(currentRecord)
+  }, [currentRecord, setCurrentRecord])
 
   return (
     <Flex
