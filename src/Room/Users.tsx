@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Text } from 'rebass'
 
-import { WebsocketContext } from 'Router'
+import { useWebsocketContext } from 'Context'
 import { User } from './graphql'
 
 type Props = {
@@ -9,8 +9,7 @@ type Props = {
 }
 const Users: React.FC<Props> = ({ initialUsers }) => {
   const [users, setUsers] = useState<User[]>([])
-
-  const websocket = useContext(WebsocketContext)
+  const websocket = useWebsocketContext()
 
   useEffect(() => {
     return websocket.subscribeToUsers(room => {

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 import { Flex } from 'rebass'
 
 import { SideNav } from 'components'
-import { WebsocketContext } from 'Router'
+import { useWebsocketContext } from 'Context'
 
 import Chat from './Chat'
 import Main from './Main'
@@ -15,7 +15,7 @@ import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
 const Room: React.FC = () => {
   const { id } = useParams()
 
-  const websocket = useContext(WebsocketContext)
+  const websocket = useWebsocketContext()
   const [roomActivate, { data, loading }] = useMutation<RoomActivate['data'], RoomActivate['vars']>(ROOM_ACTIVATE, {
     onCompleted: websocket.subscribeForRoom,
   })

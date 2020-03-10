@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 
-import { WebsocketContext } from 'Router'
+import { useWebsocketContext } from 'Context'
 
 import { MESSAGES_QUERY, MessagesQuery, Message as MessageType } from './graphql'
 import Message from './Message'
@@ -44,7 +44,7 @@ const Messages: React.FC = () => {
     }, 100)
   }, [messages, newMessage])
 
-  const websocket = useContext(WebsocketContext)
+  const websocket = useWebsocketContext()
   useEffect(() => {
     return websocket.subscribeToMessage(message => {
       setNewMessage(message)

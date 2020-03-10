@@ -1,10 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { Client, awaitWebsocket } from 'lib/WebsocketClient/client'
 
 const socketClient = new Client({ debug: true })
 type WebsocketContext = InstanceType<typeof Client>
-export const WebsocketContext = createContext<WebsocketContext>(socketClient)
+const WebsocketContext = createContext<WebsocketContext>(socketClient)
 
 const WebsocketContextProvider: React.FC<{ token: string }> = ({ children, token }) => {
   const [socketConnected, setSocketConnected] = useState(false)
@@ -23,4 +23,7 @@ const WebsocketContextProvider: React.FC<{ token: string }> = ({ children, token
   return <WebsocketContext.Provider value={socketClient}>{children}</WebsocketContext.Provider>
 }
 
+export const useWebsocketContext = (): WebsocketContext => {
+  return useContext(WebsocketContext)
+}
 export default WebsocketContextProvider

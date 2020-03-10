@@ -11,7 +11,7 @@ import Room from 'Room'
 import Signup from 'Signup'
 import { API_HOST } from 'lib/constants'
 
-import WebsocketContextProvider from './WebsocketContextProvider'
+import { WebsocketContextProvider } from 'Context'
 
 const Router: React.FC<{ token: string }> = ({ token }) => {
   const apolloClient = new ApolloClient({
