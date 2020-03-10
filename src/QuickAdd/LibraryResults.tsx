@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
 
-import { PlaylistRecordContext } from 'Room'
+import { usePlaylistRecordContext } from 'Room'
 
 import { SongsQuery, SONGS_QUERY } from './graphql'
 
 const LibraryResult: React.FC<{ id: string; title: string }> = ({ id, title }) => {
-  const { addRecord } = useContext(PlaylistRecordContext)
+  const { addRecord } = usePlaylistRecordContext()
   const enqueueSong = (): void => addRecord(id)
 
   return (

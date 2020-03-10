@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Text } from 'rebass'
 import { Label, Slider } from '@rebass/forms'
 
 import { useWebsocketContext } from 'Context'
-import { CurrentRecordContext, PlaylistRecordContext } from 'Room'
+import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 
 import PlayerPrimitive from './PlayerPrimitive'
 
@@ -24,8 +24,8 @@ const Player: React.FC = () => {
   const [progress, setProgress] = useState(0)
 
   const websocket = useWebsocketContext()
-  const { deleteRecord } = useContext(PlaylistRecordContext)
-  const { currentRecord, setCurrentRecord } = useContext(CurrentRecordContext)
+  const { deleteRecord } = usePlaylistRecordContext()
+  const { currentRecord, setCurrentRecord } = useCurrentRecordContext()
 
   useEffect(() => {
     return websocket.subscribeToNowPlaying(nowPlaying => {

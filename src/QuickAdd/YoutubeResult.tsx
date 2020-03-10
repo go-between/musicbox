@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
 
-import { PlaylistRecordContext } from 'Room'
+import { usePlaylistRecordContext } from 'Room'
 
 import { SONG_CREATE, SongCreateMutation } from './graphql'
 import { ParsedResult } from './types'
@@ -12,7 +12,7 @@ type Props = {
   result: ParsedResult
 }
 const YoutubeResult: React.FC<Props> = ({ result }) => {
-  const { addRecord } = useContext(PlaylistRecordContext)
+  const { addRecord } = usePlaylistRecordContext()
   const enqueueSong = (data: { songCreate: { song: { id: string } } }): void => {
     addRecord(data.songCreate.song.id)
   }

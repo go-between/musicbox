@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { X } from 'react-feather'
 
-import { PlaylistRecordContext } from 'Room'
+import { usePlaylistRecordContext } from 'Room'
 
 import { ROOM_PLAYLIST_FOR_USER_QUERY, RoomPlaylistForUserQuery } from './graphql'
 
 const UserPlaylist: React.FC = () => {
   const { data, loading } = useQuery<RoomPlaylistForUserQuery['data']>(ROOM_PLAYLIST_FOR_USER_QUERY)
-  const { deleteRecord, playlistRecords, setPlaylistRecords } = useContext(PlaylistRecordContext)
+  const { deleteRecord, playlistRecords, setPlaylistRecords } = usePlaylistRecordContext()
 
   useEffect(() => {
     if (!data) {

@@ -21,11 +21,14 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   }
 
   const user = useUserContext()
-  const pinButton = user.id !== message.user.id ? '' : (
-    <Button sx={{ fontSize: 1 }} onClick={pinOrUnpin}>
-      {pinned ? 'unpin' : 'pin'}
-    </Button>
-  )
+  const pinButton =
+    user.id !== message.user.id ? (
+      ''
+    ) : (
+      <Button sx={{ fontSize: 1 }} onClick={pinOrUnpin}>
+        {pinned ? 'unpin' : 'pin'}
+      </Button>
+    )
 
   return (
     <Box
