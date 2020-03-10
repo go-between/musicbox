@@ -1,6 +1,34 @@
 import gql from 'graphql-tag'
 
 // Queries & Mutations
+export type PinnedMessagesQuery = {
+  data: {
+    pinnedMessages: Message[]
+  }
+  vars: {
+    songId: string
+  }
+}
+
+export const PINNED_MESSAGES_QUERY = gql`
+  query PinnedMessages($songId: ID!) {
+    pinnedMessages(songId: $songId) {
+      id
+      createdAt
+      message
+      pinned
+      song {
+        name
+      }
+      user {
+        id
+        email
+        name
+      }
+    }
+  }
+`
+
 export type MessagesQuery = {
   data: {
     messages: Message[]
@@ -82,6 +110,7 @@ export const ROOM_ACTIVATE = gql`
         currentRecord {
           playedAt
           song {
+            id
             name
             youtubeId
           }
@@ -154,6 +183,7 @@ export type Room = {
   currentRecord: {
     playedAt: string
     song: {
+      id: string
       name: string
       youtubeId: string
     }

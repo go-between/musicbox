@@ -93,6 +93,7 @@ export type NowPlayingChannelMessage = {
       id: string
       playedAt: string
       song: {
+        id: string
         name: string
         youtubeId: string
       }

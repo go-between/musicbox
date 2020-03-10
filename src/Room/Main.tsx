@@ -7,11 +7,13 @@ import RoomPlaylist from 'RoomPlaylist'
 import UserPlaylist from 'UserPlaylist'
 
 import { Room as RoomType } from './graphql'
+import PinnedMessages from './PinnedMessages'
 
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {
   const [tab, setTab] = useState('userPlaylist')
   const selectUserPlaylist = (): void => setTab('userPlaylist')
   const selectRoomPlaylist = (): void => setTab('roomPlaylist')
+  const selectPinnedMessages = (): void => setTab('pinnedMessages')
 
   return (
     <Flex
@@ -51,7 +53,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
                 onClick={selectUserPlaylist}
                 variant="transparent"
                 sx={{
-                  bg: tab === 'roomPlaylist' ? 'transparent' : 'accent',
+                  bg: tab === 'userPlaylist' ? 'accent' : 'transparent',
                   cursor: 'pointer',
                   ':disabled': {
                     pointerEvents: 'none',
@@ -84,6 +86,26 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
                 Room Playlist
               </Button>
             </Box>
+
+            <Box>
+              <Button
+                disabled={tab === 'pinnedMessages'}
+                onClick={selectPinnedMessages}
+                variant="transparent"
+                sx={{
+                  bg: tab === 'pinnedMessages' ? 'accent' : 'transparent',
+                  cursor: 'pointer',
+                  ':disabled': {
+                    pointerEvents: 'none',
+                  },
+                  ':hover': {
+                    bg: 'accent',
+                  },
+                }}
+              >
+                Pinned Messages
+              </Button>
+            </Box>
           </Flex>
         </Box>
 
@@ -93,6 +115,9 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           </Box>
           <Box display={tab === 'roomPlaylist' ? 'block' : 'none'}>
             <RoomPlaylist roomId={room.id} />
+          </Box>
+          <Box display={tab === 'pinnedMessages' ? 'block' : 'none'}>
+            <PinnedMessages />
           </Box>
         </Flex>
       </Box>
