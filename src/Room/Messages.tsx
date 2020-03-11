@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import moment from 'moment'
 import { Box } from 'rebass'
 
 import { useWebsocketContext } from 'Context'
@@ -7,8 +8,13 @@ import { useWebsocketContext } from 'Context'
 import { MESSAGES_QUERY, MessagesQuery, Message as MessageType } from './graphql'
 import Message from './Message'
 
+const messagesFrom = moment()
+  .subtract(2, 'days')
+  .toISOString()
 const Messages: React.FC = () => {
-  const { data, loading } = useQuery<MessagesQuery['data'], MessagesQuery['vars']>(MESSAGES_QUERY)
+  const { data, loading } = useQuery<MessagesQuery['data'], MessagesQuery['vars']>(MESSAGES_QUERY, {
+    variables: { from: messagesFrom },
+  })
   const [messages, setMessages] = useState<MessageType[]>([])
   const [newMessage, setNewMessage] = useState<MessageType | null>(null)
 
