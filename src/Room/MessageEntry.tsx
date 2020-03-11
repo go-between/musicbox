@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
-import { Input, Label } from '@rebass/forms'
+import { Input, Label, Textarea } from '@rebass/forms'
 
 import { MESSAGE_CREATE, MessageCreate } from './graphql'
 
@@ -9,7 +9,7 @@ const MessageEntry: React.FC = () => {
   const [message, setMessage] = useState<string>('')
   const [messageCreate] = useMutation<MessageCreate['data'], MessageCreate['vars']>(MESSAGE_CREATE)
 
-  const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+  const onChange = (ev: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setMessage(ev.target.value)
   }
 
@@ -34,9 +34,20 @@ const MessageEntry: React.FC = () => {
         p: 3,
       }}
     >
-      <Label>Type Away and Hit Enter</Label>
       <Box>
-        <Input type="text" onChange={onChange} placeholder="Message the room" onKeyPress={onKeyPress} value={message} />
+        <Textarea
+          onChange={onChange} placeholder="Share your thoughts with the room and hit enter" onKeyPress={onKeyPress} value={message}
+          sx={{
+            bg: 'background',
+            borderColor: 'transparent',
+            borderRadius: 4,
+            minHeight:'70px',
+            maxHeight: '300px',
+            height: 'auto',
+            resize: 'vertical',
+            overflow: 'auto',
+          }}
+        />
       </Box>
     </Box>
   )
