@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
-import { Input, Label, Textarea } from '@rebass/forms'
+import { Textarea } from '@rebass/forms'
 
 import { MESSAGE_CREATE, MessageCreate } from './graphql'
 
@@ -36,12 +36,15 @@ const MessageEntry: React.FC = () => {
     >
       <Box>
         <Textarea
-          onChange={onChange} placeholder="Share your thoughts with the room and hit enter" onKeyPress={onKeyPress} value={message}
+          onChange={onChange}
+          placeholder="Share your thoughts with the room and hit enter"
+          onKeyPress={onKeyPress}
+          value={message}
           sx={{
             bg: 'background',
             borderColor: 'transparent',
             borderRadius: 4,
-            minHeight:'70px',
+            minHeight: '70px',
             maxHeight: '300px',
             height: 'auto',
             resize: 'vertical',
