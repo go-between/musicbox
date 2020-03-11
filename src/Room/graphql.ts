@@ -115,6 +115,7 @@ export const ROOM_ACTIVATE = gql`
             youtubeId
           }
           user {
+            id
             name
             email
           }
@@ -188,6 +189,7 @@ export type Room = {
       youtubeId: string
     }
     user: {
+      id: string
       name: string
       email: string
     }

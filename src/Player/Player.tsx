@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Text } from 'rebass'
+import { Box, Button, Flex, Text } from 'rebass'
 import { Label, Slider } from '@rebass/forms'
+import { useMutation } from '@apollo/react-hooks'
 
-import { useWebsocketContext } from 'Context'
+import { useWebsocketContext, useUserContext } from 'Context'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 
+import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
 import PlayerPrimitive from './PlayerPrimitive'
 
 type Record = {
@@ -27,6 +29,10 @@ const Player: React.FC = () => {
   const { deleteRecord } = usePlaylistRecordContext()
   const { currentRecord, setCurrentRecord } = useCurrentRecordContext()
 
+  const [roomPlaylistRecordAbandon] = useMutation<RoomPlaylistRecordAbandon['data'], RoomPlaylistRecordAbandon['vars']>(
+    ROOM_PLAYLIST_RECORD_ABANDON,
+  )
+
   useEffect(() => {
     return websocket.subscribeToNowPlaying(nowPlaying => {
       setCurrentRecord(nowPlaying.currentRecord)
@@ -35,6 +41,8 @@ const Player: React.FC = () => {
       }
     })
   }, [deleteRecord, setCurrentRecord, websocket])
+
+  const user = useUserContext()
 
   if (!currentRecord) {
     return <p>Nothing Playing!</p>
@@ -47,6 +55,8 @@ const Player: React.FC = () => {
     setVolume(parseInt(ev.currentTarget.value, 10))
   }
 
+  const userOwnsCurrentRecord = currentRecord.user.id === user.id
+  const skipButton = userOwnsCurrentRecord ? <Button onClick={() => roomPlaylistRecordAbandon()}>Skip Song</Button> : ''
   return (
     <Box
       width="100%"
@@ -55,9 +65,13 @@ const Player: React.FC = () => {
       }}
     >
       <Box width="100%">
-        <Text fontSize={[2, 3]} mb={3}>
-          {currentRecord.song.name} by {currentRecord.user.name}
-        </Text>
+        <Flex alignItems="center" justifyContent="space-between" mb={3}>
+          <Text fontSize={[2, 3]}>
+            {currentRecord.song.name} by {currentRecord.user.name}
+          </Text>
+
+          {skipButton}
+        </Flex>
 
         <PlayerPrimitive
           changeProgress={changeProgress}
