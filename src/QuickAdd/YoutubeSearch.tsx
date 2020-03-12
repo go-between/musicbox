@@ -10,6 +10,7 @@ type Props = {
 }
 const YoutubeSearch: React.FC<Props> = ({ query }) => {
   const [results, setResults] = useState<ParsedResult[]>([])
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (query.length === 0) {
@@ -17,6 +18,10 @@ const YoutubeSearch: React.FC<Props> = ({ query }) => {
     }
 
     search(query).then(response => {
+      if (response.status !== 200) {
+        setError('Sorry, YouTube search is temporarily unavailable.  Try adding some songs from your library!')
+        return
+      }
       response.json().then((body: Results) => {
         setResults(deserialize(body))
       })
@@ -43,6 +48,26 @@ const YoutubeSearch: React.FC<Props> = ({ query }) => {
     </Box>
   ))
 
+  const errorDisplay = (
+    <Box
+      key="youtube-result-error"
+      as="li"
+      sx={{
+        alignItems: 'center',
+        borderBottom: '1px solid',
+        borderColor: 'muted',
+        display: 'flex',
+        justifyContent: 'space-between',
+        listStyle: 'none',
+        mx: 0,
+        my: 3,
+        pb: 3,
+      }}
+    >
+      {error}
+    </Box>
+  )
+  const result = !!error ? errorDisplay : resultElements
   return (
     <Box
       as="ul"
@@ -51,7 +76,7 @@ const YoutubeSearch: React.FC<Props> = ({ query }) => {
         p: 0,
       }}
     >
-      {resultElements}
+      {result}
     </Box>
   )
 }
