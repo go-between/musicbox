@@ -15,6 +15,7 @@ const RoomPlaylist: React.FC<Props> = ({ roomId }) => {
 
   const { data, loading } = useQuery<RoomPlaylistQuery['data'], RoomPlaylistQuery['vars']>(ROOM_PLAYLIST_QUERY, {
     variables: { roomId },
+    fetchPolicy: 'network-only',
   })
 
   useEffect(() => {
