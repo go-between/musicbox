@@ -34,6 +34,7 @@
     "@babel/preset-typescript": "7.7.7",
     "@babel/runtime": "^7.7.7",
     "@types/dotenv-webpack": "^1.7.0",
+    "@types/react-beautiful-dnd": "^12.1.1",
     "@typescript-eslint/eslint-plugin": "^2.14.0",
     "@typescript-eslint/parser": "^2.14.0",
     "babel-loader": "8.0.6",
