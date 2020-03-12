@@ -12,7 +12,7 @@ type PlaylistRecordContext = {
   addRecord: (songId: string) => void
   deleteRecord: (recordId: string, options: { persist: boolean }) => void
   playlistRecords: RoomPlaylistRecord[]
-  playlistRecordsReorder: (options: { variables: { orderedRecords: OrderedRecord[] } }) => void
+  reorderRecords: (records: RoomPlaylistRecord[]) => void
   setPlaylistRecords: (records: RoomPlaylistRecord[]) => void
 }
 
@@ -54,16 +54,25 @@ const PlaylistRecordContextProvider: React.FC = ({ children }) => {
     }
   }
 
+  const reorderRecords = (records: RoomPlaylistRecord[]): void => {
+    const orderedRecords: OrderedRecord[] = records.map(r => ({
+      roomPlaylistRecordId: r.id,
+      songId: r.song.id,
+    }))
+
+    playlistRecordsReorder({ variables: { orderedRecords } })
+  }
+
   return (
     <PlaylistRecordContext.Provider
-      value={{ addRecord, deleteRecord, playlistRecords, setPlaylistRecords, playlistRecordsReorder }}
+      value={{ addRecord, deleteRecord, playlistRecords, reorderRecords, setPlaylistRecords }}
     >
       {children}
     </PlaylistRecordContext.Provider>
   )
 }
 export const usePlaylistRecordContext: () => PlaylistRecordContext = () => {
-  const { addRecord, deleteRecord, playlistRecords, playlistRecordsReorder, setPlaylistRecords } = useContext(
+  const { addRecord, deleteRecord, playlistRecords, reorderRecords, setPlaylistRecords } = useContext(
     PlaylistRecordContext,
   )
 
@@ -71,7 +80,7 @@ export const usePlaylistRecordContext: () => PlaylistRecordContext = () => {
     addRecord === undefined ||
     deleteRecord === undefined ||
     playlistRecords === undefined ||
-    playlistRecordsReorder === undefined ||
+    reorderRecords === undefined ||
     setPlaylistRecords === undefined
   ) {
     throw new Error('PlaylistRecordContext accessed before being set')
@@ -81,7 +90,7 @@ export const usePlaylistRecordContext: () => PlaylistRecordContext = () => {
     addRecord,
     deleteRecord,
     playlistRecords,
-    playlistRecordsReorder,
+    reorderRecords,
     setPlaylistRecords,
   }
 }
