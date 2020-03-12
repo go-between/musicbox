@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box } from 'rebass'
-import { X } from 'react-feather'
 
 import { usePlaylistRecordContext } from 'Room'
 
 import { ROOM_PLAYLIST_FOR_USER_QUERY, RoomPlaylistForUserQuery } from './graphql'
+import UserPlaylistRecord from './UserPlaylistRecord'
 
 const UserPlaylist: React.FC = () => {
   const { data, loading } = useQuery<RoomPlaylistForUserQuery['data']>(ROOM_PLAYLIST_FOR_USER_QUERY)
@@ -24,57 +24,10 @@ const UserPlaylist: React.FC = () => {
   }
 
   const records = playlistRecords.map(record => {
-    const removeRecord = (): void => deleteRecord(record.id, { persist: true })
-    return (
-      <Box
-        as="li"
-        key={record.id}
-        sx={{
-          alignItems: 'center',
-          borderBottom: '1px solid',
-          borderColor: 'muted',
-          display: 'flex',
-          justifyContent: 'space-between',
-          listStyle: 'none',
-          mx: 0,
-          my: 3,
-          pb: 3,
-        }}
-      >
-        <Box
-          as="span"
-          sx={{
-            fontSize: 1,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            mr: 2,
-          }}
-        >
-          {record.song.name}
-        </Box>
-
-        <Box
-          onClick={removeRecord}
-          sx={{
-            alignItems: 'center',
-            bg: 'accent',
-            borderRadius: 4,
-            color: 'text',
-            cursor: 'pointer',
-            display: 'flex',
-            p: 1,
-            mx: 1,
-            '&:hover': {
-              bg: 'muted',
-            },
-          }}
-        >
-          <X size={18} />
-        </Box>
-      </Box>
-    )
+    const onDelete = (): void => deleteRecord(record.id, { persist: true })
+    return <UserPlaylistRecord key={record.id} record={record} onDelete={onDelete} />
   })
+
   return (
     <Box
       as="ul"
