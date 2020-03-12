@@ -38,7 +38,7 @@ type Props = {
   activeRoom?: string
 }
 const RoomSelector: React.FC<Props> = ({ activeRoom }) => {
-  const { loading, error, data } = useQuery<RoomsQuery['data']>(ROOMS_QUERY)
+  const { loading, error, data } = useQuery<RoomsQuery['data']>(ROOMS_QUERY, { fetchPolicy: 'network-only' })
   const [roomName, setRoomName] = useState('')
   const [roomCreateMutation] = useMutation<RoomCreate['data'], RoomCreate['vars']>(ROOM_CREATE, {
     onCompleted: () => setRoomName(''),

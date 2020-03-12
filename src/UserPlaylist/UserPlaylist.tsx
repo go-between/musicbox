@@ -17,7 +17,9 @@ const reorder: Reorder = (list, startIndex, endIndex) => {
   return result
 }
 const UserPlaylist: React.FC = () => {
-  const { data, loading } = useQuery<RoomPlaylistForUserQuery['data']>(ROOM_PLAYLIST_FOR_USER_QUERY)
+  const { data, loading } = useQuery<RoomPlaylistForUserQuery['data']>(ROOM_PLAYLIST_FOR_USER_QUERY, {
+    fetchPolicy: 'network-only',
+  })
   const { deleteRecord, playlistRecords, reorderRecords, setPlaylistRecords } = usePlaylistRecordContext()
 
   useEffect(() => {

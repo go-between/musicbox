@@ -49,7 +49,7 @@ const USER_QUERY = gql`
 
 const UserContext = createContext<User | null>(null)
 const UserContextProvider: React.FC = ({ children }) => {
-  const { loading, data } = useQuery<UserQuery['data']>(USER_QUERY)
+  const { loading, data } = useQuery<UserQuery['data']>(USER_QUERY, { fetchPolicy: 'network-only' })
 
   if (!data || loading) {
     return <p>Loading...</p>

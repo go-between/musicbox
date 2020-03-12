@@ -24,6 +24,7 @@ const Invitation: React.FC = () => {
 
   const { loading, data } = useQuery<InvitationQuery['data'], InvitationQuery['vars']>(INVITATION_QUERY, {
     variables: { email, token },
+    fetchPolicy: 'network-only',
   })
   const [invitationAcceptMutation, { data: invitationData }] = useMutation<
     InvitationAccept['data'],

@@ -14,6 +14,7 @@ const messagesFrom = moment()
 const Messages: React.FC = () => {
   const { data, loading } = useQuery<MessagesQuery['data'], MessagesQuery['vars']>(MESSAGES_QUERY, {
     variables: { from: messagesFrom },
+    fetchPolicy: 'network-only',
   })
   const [messages, setMessages] = useState<MessageType[]>([])
   const [newMessage, setNewMessage] = useState<MessageType | null>(null)

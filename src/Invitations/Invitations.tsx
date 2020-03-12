@@ -33,7 +33,7 @@ const Invitations: React.FC = () => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
 
-  const { loading, data } = useQuery<InvitationsQuery['data']>(INVITATIONS_QUERY)
+  const { loading, data } = useQuery<InvitationsQuery['data']>(INVITATIONS_QUERY, { fetchPolicy: 'network-only' })
 
   const clearInvitation = (): void => {
     setEmail('')
