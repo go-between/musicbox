@@ -1,12 +1,11 @@
 import { YOUTUBE_API, YOUTUBE_KEY } from 'lib/constants'
-import { ParsedResult, Results } from './types'
+import { Result, YoutubeResults } from './types'
 
-export const deserialize = (results: Results): ParsedResult[] => {
+export const deserialize = (results: YoutubeResults): Result[] => {
   return results.items.map(result => ({
     id: result.id.videoId,
-    description: result.snippet.description,
-    title: result.snippet.title,
-    image: result.snippet.thumbnails.default.url,
+    name: result.snippet.title,
+    resultType: 'youtube',
   }))
 }
 

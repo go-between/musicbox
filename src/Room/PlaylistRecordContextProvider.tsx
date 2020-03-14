@@ -19,7 +19,6 @@ type PlaylistRecordContext = {
 const PlaylistRecordContext = createContext<Partial<PlaylistRecordContext>>({})
 const PlaylistRecordContextProvider: React.FC = ({ children }) => {
   const [playlistRecords, setPlaylistRecords] = useState<RoomPlaylistRecord[]>([])
-
   const playlistRecordOnComplete = (data: RoomPlaylistRecordsReorderMutation['data']): void => {
     setPlaylistRecords(data.roomPlaylistRecordsReorder.roomPlaylistRecords)
   }
@@ -35,7 +34,6 @@ const PlaylistRecordContextProvider: React.FC = ({ children }) => {
       songId: r.song.id,
     }))
     orderedRecords.push({ songId })
-
     playlistRecordsReorder({ variables: { orderedRecords } })
   }
 

@@ -1,15 +1,32 @@
 import React from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
 
 import { usePlaylistRecordContext } from 'Room'
 
-import { SongsQuery, SONGS_QUERY } from './graphql'
+import { Result } from './types'
+import { SONG_CREATE, SongCreateMutation } from './graphql'
 
-const LibraryResult: React.FC<{ id: string; title: string }> = ({ id, title }) => {
+type ResultProps = {
+  id: string
+  title: string
+  resultType: 'youtube' | 'library'
+}
+
+const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
   const { addRecord } = usePlaylistRecordContext()
-  const enqueueSong = (): void => addRecord(id)
+  const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
+    onCompleted: data => addRecord(data.songCreate.song.id),
+  })
+
+  const onClick = (): void => {
+    if (resultType === 'library') {
+      addRecord(id)
+    } else {
+      createSong({ variables: { youtubeId: id } })
+    }
+  }
 
   return (
     <Box
@@ -54,26 +71,13 @@ const LibraryResult: React.FC<{ id: string; title: string }> = ({ id, title }) =
           },
         }}
       >
-        <Plus size={18} onClick={enqueueSong} />
+        <Plus size={18} onClick={onClick} />
       </Box>
     </Box>
   )
 }
 
-const LibraryResults: React.FC<{ query: string }> = ({ query }) => {
-  const { data, loading } = useQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
-    fetchPolicy: 'network-only',
-    variables: { query },
-  })
-
-  if (loading) {
-    return <p>Loading...</p>
-  }
-
-  if (!data) {
-    return <div />
-  }
-
+const Results: React.FC<{ results: Result[] }> = ({ results }) => {
   return (
     <Box
       as="ul"
@@ -82,11 +86,11 @@ const LibraryResults: React.FC<{ query: string }> = ({ query }) => {
         p: 0,
       }}
     >
-      {data.songs.map(song => (
-        <LibraryResult key={song.id} id={song.id} title={song.name} />
+      {results.map(result => (
+        <SearchResult key={result.id} id={result.id} title={result.name} resultType={result.resultType} />
       ))}
     </Box>
   )
 }
 
-export default LibraryResults
+export default Results
