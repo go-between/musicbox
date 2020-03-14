@@ -28,9 +28,7 @@ const MessageEntry: React.FC = () => {
     <Box
       sx={{
         bg: 'accent',
-        borderRadius: 4,
-        border: '1px solid',
-        borderColor: 'muted',
+        borderRadius: 6,
         p: 3,
       }}
     >
@@ -43,7 +41,8 @@ const MessageEntry: React.FC = () => {
           sx={{
             bg: 'background',
             borderColor: 'transparent',
-            borderRadius: 4,
+            borderRadius: 3,
+            color: 'text',
             minHeight: '70px',
             maxHeight: '300px',
             height: 'auto',

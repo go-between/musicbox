@@ -36,13 +36,13 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
     >
       <Box>
         <QuickAdd />
-        <Heading
+        {/* <Heading
           sx={{
             fontSize: [3, 4, 5],
           }}
         >
           {room.name}
-        </Heading>
+        </Heading> */}
       </Box>
 
       <Box
@@ -54,9 +54,14 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           <Player />
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            // border: '1px solid',
+            py: 3,
+          }}
+        >
           <Flex flexDirection="row">
-            <Box mr={3}>
+            <Box>
               <Button
                 disabled={tab === 'userPlaylist'}
                 onClick={selectUserPlaylist}
@@ -76,7 +81,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
               </Button>
             </Box>
 
-            <Box>
+            <Box mx={3}>
               <Button
                 disabled={tab === 'roomPlaylist'}
                 onClick={selectRoomPlaylist}

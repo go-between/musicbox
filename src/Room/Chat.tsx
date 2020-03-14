@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Heading, Text } from 'rebass'
+import { Box, Flex } from 'rebass'
 
 import Messages from './Messages'
 import MessageEntry from './MessageEntry'
@@ -16,29 +16,13 @@ const Chat: React.FC<{ room: RoomType }> = ({ room }) => {
         color: 'text',
         flexDirection: 'column',
         height: '100vh',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         overflow: 'scroll',
         p: 4,
         width: ['100%', '40%'],
       }}
     >
-      <Heading
-        sx={{
-          fontSize: '3',
-          pb: 4,
-        }}
-      >
-        Active Users
-        <Text
-          sx={{
-            color: 'text',
-            fontWeight: '400',
-            fontSize: 3,
-          }}
-        >
-          <Users initialUsers={room.users || []} />
-        </Text>
-      </Heading>
+      <Users initialUsers={room.users || []} />
       <Messages />
       <MessageEntry />
     </Flex>

@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import Gravatar from 'react-gravatar'
+import { MessageCircle, Star } from 'react-feather'
 import { Button, Box, Flex, Text } from 'rebass'
 import { useMutation } from '@apollo/react-hooks'
 
 import { useUserContext } from 'Context'
 
 import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
+import { fontSize } from 'styled-system'
 
 const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   const [pinned, setPinned] = useState(message.pinned)
-  const withSong = message.song && <i> during {message.song.name}</i>
+  const withSong = message.song && `${message.song.name}`
   const displayDate = moment(message.createdAt).format('ddd h:mm a')
   const [messagePin] = useMutation<MessagePin['data'], MessagePin['vars']>(MESSAGE_PIN, {
     onCompleted: () => setPinned(!pinned),
@@ -25,9 +27,21 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
     user.id !== message.user.id || !message.song ? (
       ''
     ) : (
-      <Button sx={{ fontSize: 1 }} onClick={pinOrUnpin}>
-        {pinned ? 'unpin' : 'pin'}
-      </Button>
+      <Box
+        onClick={pinOrUnpin}
+        sx={{
+          borderRadius: 6,
+          cursor: 'pointer',
+          fontSize: 1,
+          p: 2,
+          '&:hover': {
+            bg: 'accent'
+          }
+        }}
+      >
+        {pinned ? <Star size={16} /> : <Star size={16} color="#5A67D8" fill="#5A67D8" /> }
+        {/* {pinned ? 'unpin' : 'pin' } */}
+      </Box>
     )
 
   return (
@@ -49,30 +63,69 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
         <Box
           sx={{
             hyphens: 'auto',
+            mx: 2,
             overflowWrap: 'break-word',
             wordBreak: 'break-word',
             wordWrap: 'break-word',
+            width: '100%'
           }}
-          mx={2}
         >
           <Text
             sx={{
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              display: 'flex',
+              fontSize: 2,
+              mb: 2,
+            }}
+          >
+            <Box>
+              <Box as="span" sx={{color: 'text', fontWeight: '800'}}>
+                {message.user.name}
+              </Box>
+
+              <Box as="span" sx={{color: '#A0AEC0', fontSize: 1, fontWeight: '600', px: 2}}>
+                {displayDate}
+              </Box>
+            </Box>
+
+            <Box>
+              {pinButton}
+            </Box>
+          </Text>
+
+          <Text
+            fontSize={2}
+            mb={2}
+          >
+            {message.message}
+          </Text>
+
+          <Box sx={{alignItems: 'center', color: '#A0AEC0', display: 'flex', fontSize: 2, fontWeight: '400', mb: 2}}>
+            {withSong ? <MessageCircle size={16} /> : <></>}
+            <Box mx={1}>
+              {withSong}
+            </Box>
+          </Box>
+
+          {/* <Text
+            sx={{
+              alignItems: 'center',
+              display: 'inline-flex',
               fontSize: 2,
               fontWeight: '800',
               pb: 0,
             }}
           >
-            <Box as="span" color="text">
-              {message.user.name}
-            </Box>
-            {withSong}
-            <Box as="span" color="#A0AEC0" fontSize={1} px={2}>
-              {displayDate}
-            </Box>
-            {pinButton}
-          </Text>
 
-          <Text fontSize={2}>{message.message}</Text>
+
+
+
+            <Box>
+              {pinButton}
+            </Box>
+          </Text> */}
+
         </Box>
       </Flex>
     </Box>

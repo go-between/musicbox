@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, Flex, Text } from 'rebass'
+import { Youtube } from 'react-feather'
 import { Label, Slider } from '@rebass/forms'
 import { useMutation } from '@apollo/react-hooks'
 
@@ -22,7 +23,8 @@ type Record = {
 }
 
 const Player: React.FC = () => {
-  const [volume, setVolume] = useState(100)
+  // const [volume, setVolume] = useState(100)
+  const [volume, setVolume] = useState(0)
   const [progress, setProgress] = useState(0)
 
   const websocket = useWebsocketContext()
@@ -45,7 +47,38 @@ const Player: React.FC = () => {
   const user = useUserContext()
 
   if (!currentRecord) {
-    return <p>Nothing Playing!</p>
+    return (
+      <Flex
+        sx={{
+          alignItems: 'center',
+          border: '1px solid',
+          borderColor: 'accent',
+          borderRadius: 6,
+          boxShadow: 'xl',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: '350px',
+          mb: 4,
+        }}
+      >
+        <Flex
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            bg: 'accent',
+            borderRadius: '100%',
+            color: 'text',
+            p: 3,
+          }}
+        >
+          <Youtube />
+        </Flex>
+
+        <Box p={2}>
+          Nothing Playing! Add a song to start jamming!
+        </Box>
+      </Flex>
+    )
   }
 
   const changeProgress = (opts: { played: number }): void => {
