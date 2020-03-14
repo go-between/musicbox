@@ -31,16 +31,21 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
   return (
     <Box
       as="li"
+      onClick={onClick}
       sx={{
         alignItems: 'center',
-        borderBottom: '1px solid',
-        borderColor: 'muted',
+        borderRadius: 3,
+        cursor: 'pointer',
         display: 'flex',
         justifyContent: 'space-between',
         listStyle: 'none',
         mx: 0,
-        my: 3,
-        pb: 3,
+        my: 2,
+        px: 2,
+        py: 3,
+        '&:hover': {
+          bg: '#4A5568'
+        }
       }}
     >
       <Box
@@ -71,7 +76,7 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
           },
         }}
       >
-        <Plus size={18} onClick={onClick} />
+        <Plus size={18} />
       </Box>
     </Box>
   )

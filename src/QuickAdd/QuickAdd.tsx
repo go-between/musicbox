@@ -25,6 +25,15 @@ const ResultsContainer: React.FC<{ error: string; results: Result[] }> = ({ erro
     <Box
       sx={{
         bg: 'accent',
+        borderRadius: 4,
+        position:'absolute',
+        top: '105%',
+        left: 0,
+        right: 0,
+        maxHeight: '400px',
+        overflow: 'scroll',
+        px: 3,
+        transition: 'all 2s ease-in'
       }}
     >
       <Results results={results} />
@@ -86,27 +95,40 @@ export const QuickAdd: React.FC = () => {
           mb: 4,
         }}
       >
-        <Flex sx={{ borderRadius: 4 }} bg="accent" width="100%" mr={2} py={1} px={3} alignItems="center">
-          <Search />
-          <Input
-            type="text"
-            value={query}
-            onChange={setString(setQuery)}
+        <Flex sx={{ borderRadius: 6 }} bg="accent" width="100%" px={3} py={2} alignItems="center" justifyContent="space-between">
+          <Flex
             sx={{
-              bg: 'accent',
-              boxShadow: 'none',
+              alignItems: 'center',
+              width: ['65%', '70%', '75%']
             }}
-          />
-
-          <Select
-            defaultValue="library"
-            width="200px"
-            sx={{ borderRadius: 4, py: 2, borderColor: 'transparent' }}
-            onChange={setString(setSearchSelection)}
           >
-            <option value="library">My Library</option>
-            <option value="youtube">Youtube</option>
-          </Select>
+            <Search />
+            <Input
+              type="text"
+              value={query}
+              onChange={setString(setQuery)}
+              sx={{
+                bg: 'accent',
+                boxShadow: 'none',
+
+              }}
+            />
+          </Flex>
+
+          <Box
+            sx={{
+              width: ['35%', '30%', '25%']
+            }}
+          >
+            <Select
+              defaultValue="library"
+              sx={{ bg: 'background', borderRadius: 4, borderColor: 'transparent' }}
+              onChange={setString(setSearchSelection)}
+            >
+              <option value="library">My Library</option>
+              <option value="youtube">Youtube</option>
+            </Select>
+          </Box>
         </Flex>
       </Flex>
 

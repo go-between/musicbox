@@ -11,12 +11,13 @@ export const SideNav: React.FC = () => {
   }
 
   return (
-    <Flex
+    <Box
       as="aside"
       sx={{
         bg: 'background',
         borderRight: '1px solid',
-        borderColor: 'muted',
+        borderColor: 'accent',
+        display: ['none', 'flex'],
         flexDirection: 'column',
         height: '100vh',
         overflow: 'hidden',
@@ -108,6 +109,6 @@ export const SideNav: React.FC = () => {
           Sign Up
         </Link>
       </Box>
-    </Flex>
+    </Box>
   )
 }

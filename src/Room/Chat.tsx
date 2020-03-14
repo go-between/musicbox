@@ -12,7 +12,7 @@ const Chat: React.FC<{ room: RoomType }> = ({ room }) => {
       as="aside"
       sx={{
         borderLeft: '1px solid',
-        borderColor: 'muted',
+        borderColor: 'accent',
         color: 'text',
         flexDirection: 'column',
         height: '100vh',
