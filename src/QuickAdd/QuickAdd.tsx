@@ -26,14 +26,14 @@ const ResultsContainer: React.FC<{ error: string; results: Result[] }> = ({ erro
       sx={{
         bg: 'accent',
         borderRadius: 4,
-        position:'absolute',
+        position: 'absolute',
         top: '105%',
         left: 0,
         right: 0,
         maxHeight: '400px',
         overflow: 'scroll',
         px: 3,
-        transition: 'all 2s ease-in'
+        transition: 'all 2s ease-in',
       }}
     >
       <Results results={results} />
@@ -95,11 +95,19 @@ export const QuickAdd: React.FC = () => {
           mb: 4,
         }}
       >
-        <Flex sx={{ borderRadius: 6 }} bg="accent" width="100%" px={3} py={2} alignItems="center" justifyContent="space-between">
+        <Flex
+          sx={{ borderRadius: 6 }}
+          bg="accent"
+          width="100%"
+          px={3}
+          py={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Flex
             sx={{
               alignItems: 'center',
-              width: ['65%', '70%', '75%']
+              width: ['65%', '70%', '75%'],
             }}
           >
             <Search />
@@ -110,14 +118,13 @@ export const QuickAdd: React.FC = () => {
               sx={{
                 bg: 'accent',
                 boxShadow: 'none',
-
               }}
             />
           </Flex>
 
           <Box
             sx={{
-              width: ['35%', '30%', '25%']
+              width: ['35%', '30%', '25%'],
             }}
           >
             <Select

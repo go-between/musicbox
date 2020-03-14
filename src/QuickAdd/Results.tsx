@@ -44,8 +44,8 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
         px: 2,
         py: 3,
         '&:hover': {
-          bg: '#4A5568'
-        }
+          bg: '#4A5568',
+        },
       }}
     >
       <Box

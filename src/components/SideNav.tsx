@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Heading, Link } from 'rebass'
+import { Box, Heading, Link } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import { Home, Inbox, Send, UserPlus } from 'react-feather'
 
