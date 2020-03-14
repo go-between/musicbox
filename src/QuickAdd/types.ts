@@ -1,11 +1,10 @@
-export type ParsedResult = {
+export type Result = {
   id: string
-  description: string
-  title: string
-  image: string
+  name: string
+  resultType: 'youtube' | 'library'
 }
 
-export type Results = {
+export type YoutubeResults = {
   kind: 'youtube#searchListResponse'
   etag: string
   nextPageToken: string
@@ -14,10 +13,10 @@ export type Results = {
     totalResults: number
     resultsPerPage: number
   }
-  items: Result[]
+  items: YoutubeResult[]
 }
 
-export type Result = {
+export type YoutubeResult = {
   kind: 'youtube#searchResult'
   etag: string
   id: {
