@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Box, Flex, Heading } from 'rebass'
+import { Button, Box, Flex } from 'rebass'
 
 import Player from 'Player'
 import QuickAdd from 'QuickAdd'

@@ -74,9 +74,7 @@ const Player: React.FC = () => {
           <Youtube />
         </Flex>
 
-        <Box p={2}>
-          Nothing Playing! Add a song to start jamming!
-        </Box>
+        <Box p={2}>Nothing Playing! Add a song to start jamming!</Box>
       </Flex>
     )
   }

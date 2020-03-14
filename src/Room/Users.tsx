@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Gravatar from 'react-gravatar'
-import { Circle } from 'react-feather'
-import { Box, Flex, Heading, Text } from 'rebass'
+import { Box, Heading } from 'rebass'
 
 import { useWebsocketContext } from 'Context'
 import { User } from './graphql'
@@ -28,7 +27,7 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
       sx={{
         borderBottom: '3px solid',
         borderColor: 'accent',
-        mb: 4
+        mb: 4,
       }}
     >
       <Heading
@@ -63,7 +62,7 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
           px: 0,
           py: 3,
           whiteSpace: 'nowrap',
-          width: 'auto'
+          width: 'auto',
         }}
       >
         {users.map(u => (
@@ -74,7 +73,7 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
               display: 'inline-flex',
               '&:not(:last-child)': {
                 mr: 2,
-              }
+              },
             }}
           >
             <Gravatar email={u.email} size={32} style={{ borderRadius: '100%' }} />

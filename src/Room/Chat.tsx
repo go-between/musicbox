@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex } from 'rebass'
+import { Flex } from 'rebass'
 
 import Messages from './Messages'
 import MessageEntry from './MessageEntry'
