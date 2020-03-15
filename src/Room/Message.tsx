@@ -39,7 +39,6 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
         }}
       >
         {pinned ? <Star size={16} /> : <Star size={16} color="#5A67D8" fill="#5A67D8" />}
-        {/* {pinned ? 'unpin' : 'pin' } */}
       </Box>
     )
 

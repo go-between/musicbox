@@ -23,8 +23,7 @@ type Record = {
 }
 
 const Player: React.FC = () => {
-  // const [volume, setVolume] = useState(100)
-  const [volume, setVolume] = useState(0)
+  const [volume, setVolume] = useState(100)
   const [progress, setProgress] = useState(0)
 
   const websocket = useWebsocketContext()
