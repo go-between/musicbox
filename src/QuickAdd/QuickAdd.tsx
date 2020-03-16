@@ -12,15 +12,7 @@ import { Result, YoutubeResults } from './types'
 import { deserialize, search } from './youtube'
 import { SongsQuery, SONGS_QUERY } from './graphql'
 
-const ResultsContainer: React.FC<{ error: string; results: Result[] }> = ({ error, results }) => {
-  if (results.length === 0) {
-    return <></>
-  }
-
-  if (error) {
-    return <div>{error}</div>
-  }
-
+const FloatingResults: React.FC = ({ children }) => {
   return (
     <Box
       sx={{
@@ -36,8 +28,27 @@ const ResultsContainer: React.FC<{ error: string; results: Result[] }> = ({ erro
         transition: 'all 2s ease-in',
       }}
     >
-      <Results results={results} />
+      {children}
     </Box>
+  )
+}
+const ResultsContainer: React.FC<{ error: string; results: Result[] }> = ({ error, results }) => {
+  if (error) {
+    return (
+      <FloatingResults>
+        <Box p={3}>{error}</Box>
+      </FloatingResults>
+    )
+  }
+
+  if (results.length === 0) {
+    return <></>
+  }
+
+  return (
+    <FloatingResults>
+      <Results results={results} />
+    </FloatingResults>
   )
 }
 
@@ -73,7 +84,7 @@ export const QuickAdd: React.FC = () => {
     if (searchSelection === 'library') {
       searchLibrary({ variables: { query: debouncedQuery } })
     } else {
-      search(query).then(response => {
+      search(debouncedQuery).then(response => {
         if (response.status !== 200) {
           setError('Sorry, YouTube search is temporarily unavailable.  Try adding some songs from your library!')
           return
@@ -83,7 +94,7 @@ export const QuickAdd: React.FC = () => {
         })
       })
     }
-  }, [debouncedQuery, query, searchLibrary, searchSelection])
+  }, [debouncedQuery, searchLibrary, searchSelection])
 
   return (
     <Box sx={{ position: 'relative' }}>
