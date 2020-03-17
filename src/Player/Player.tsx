@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks'
 
 import { useWebsocketContext, useUserContext } from 'Context'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
-import { persistVolume, retrieveVolume } from 'lib/localStore'
+import { persistShowVideo, retrieveShowVideo, persistVolume, retrieveVolume } from 'lib/localStore'
 
 import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
 import PlayerPrimitive from './PlayerPrimitive'
@@ -25,6 +25,7 @@ type Record = {
 
 const Player: React.FC = () => {
   const [volume, setVolume] = useState(retrieveVolume())
+  const [showVideo, setShowVideo] = useState(retrieveShowVideo())
   const [progress, setProgress] = useState(0)
 
   const websocket = useWebsocketContext()
@@ -82,6 +83,10 @@ const Player: React.FC = () => {
   const changeProgress = (opts: { played: number }): void => {
     setProgress(opts.played * 100)
   }
+  const changeShowVideo = (): void => {
+    setShowVideo(!showVideo)
+    persistShowVideo(!showVideo)
+  }
   const changeVolume = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     const volume = parseInt(ev.currentTarget.value, 10)
     setVolume(volume)
@@ -103,7 +108,7 @@ const Player: React.FC = () => {
         mb: 4,
       }}
     >
-      <Box width="100%">
+      <Box width="100%" display={showVideo ? 'initial' : 'none'}>
         <PlayerPrimitive
           changeProgress={changeProgress}
           playedAt={currentRecord.playedAt}
@@ -121,7 +126,12 @@ const Player: React.FC = () => {
           {currentRecord.song.name} by {currentRecord.user.name}
         </Text>
 
-        {skipButton}
+        <Flex>
+          {skipButton}
+          <Button onClick={changeShowVideo} sx={{ fontSize: 1, marginLeft: 3 }}>
+            {showVideo ? 'Hide Video' : 'Show Video'}
+          </Button>
+        </Flex>
       </Flex>
 
       <Box>

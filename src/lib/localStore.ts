@@ -1,3 +1,13 @@
+export const retrieveShowVideo = (): boolean => {
+  const showVideo = localStorage.getItem('musicbox-showVideo') || 'true'
+
+  return showVideo === 'true'
+}
+
+export const persistShowVideo = (showVideo: boolean): void => {
+  localStorage.setItem('musicbox-showVideo', showVideo ? 'true' : 'false')
+}
+
 export const retrieveToken = (): string => {
   return localStorage.getItem('musicbox-token') || ''
 }
