@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 
+import { retrieveToken, persistToken } from 'lib/localStore'
+
 const TokenContext = createContext<string>('')
 type SetToken = (token: string) => void
 const SetTokenContext = createContext<SetToken>((token: string) => {
@@ -7,11 +9,16 @@ const SetTokenContext = createContext<SetToken>((token: string) => {
 })
 
 const AuthContextProvider: React.FC = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('musicbox-token') || '')
+  const [token, setToken] = useState(retrieveToken())
+
+  const wrappedSetToken = (token: string): void => {
+    setToken(token)
+    persistToken(token)
+  }
 
   return (
     <TokenContext.Provider value={token}>
-      <SetTokenContext.Provider value={setToken}>{children}</SetTokenContext.Provider>
+      <SetTokenContext.Provider value={wrappedSetToken}>{children}</SetTokenContext.Provider>
     </TokenContext.Provider>
   )
 }
