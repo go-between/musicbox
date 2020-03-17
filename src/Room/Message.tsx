@@ -33,12 +33,15 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
           cursor: 'pointer',
           fontSize: 1,
           p: 2,
+          // position: 'absolute',
+          // right: 0,
+          // top: 0,
           '&:hover': {
             bg: 'accent',
           },
         }}
       >
-        {pinned ? <Star size={16} /> : <Star size={16} color="#5A67D8" fill="#5A67D8" />}
+        {pinned ? <Star size={18} /> : <Star size={18} color="#5A67D8" fill="#5A67D8" />}
       </Box>
     )
 
@@ -49,7 +52,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
         pb: 3,
       }}
     >
-      <Flex alignItems="top">
+      <Flex alignItems="flex-start">
         <Box
           sx={{
             minWidth: 'auto',
@@ -68,32 +71,41 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             width: '100%',
           }}
         >
-          <Text
+          <Flex
+            alignItems="flex-start"
+            justifyContent="space-between"
             sx={{
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              display: 'flex',
-              fontSize: 2,
-              mb: 0,
+              position: 'relative'
             }}
           >
-            <Box>
-              <Box as="span" sx={{ color: 'text', fontWeight: '800' }}>
-                {message.user.name}
+            <Text
+              sx={{
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+                display: 'flex',
+                fontSize: 2,
+                mb: 2,
+              }}
+            >
+              <Box mb={1}>
+                <Box as="span" sx={{ color: 'text', fontWeight: '800' }}>
+                  {message.user.name}
+                </Box>
+
+                <Box as="span" sx={{ color: '#A0AEC0', fontSize: 1, fontWeight: '600', px: 2 }}>
+                  {displayDate}
+                </Box>
               </Box>
 
-              <Box as="span" sx={{ color: '#A0AEC0', fontSize: 1, fontWeight: '600', px: 2 }}>
-                {displayDate}
+              <Box sx={{ alignItems: 'center', color: '#A0AEC0', display: 'flex', fontSize: 2, fontWeight: '400', mb: 2 }}>
+                {withSong ? <MessageCircle size={16} /> : <></>}
+                <Box mx={1}>{withSong}</Box>
               </Box>
-            </Box>
+            </Text>
 
             <Box>{pinButton}</Box>
-          </Text>
-
-          <Box sx={{ alignItems: 'center', color: '#A0AEC0', display: 'flex', fontSize: 2, fontWeight: '400', mb: 2 }}>
-            {withSong ? <MessageCircle size={16} /> : <></>}
-            <Box mx={1}>{withSong}</Box>
-          </Box>
+          </Flex>
 
           <Text fontSize={2} mb={2}>
             {message.message}
