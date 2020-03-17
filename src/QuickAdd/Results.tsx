@@ -5,8 +5,11 @@ import { Plus } from 'react-feather'
 import { Result } from './types'
 import { useResultsContext } from './ResultsContextProvider'
 
-const SearchResult: React.FC<{ result: Result }> = ({ result }) => {
-  const { selectResult } = useResultsContext()
+type SearchResultProps = {
+  result: Result
+  selectResult: (result: Result) => void
+}
+const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult }) => {
   const onClick = (): void => selectResult(result)
 
   return (
@@ -60,7 +63,17 @@ const SearchResult: React.FC<{ result: Result }> = ({ result }) => {
   )
 }
 
-const Results: React.FC<{ results: Result[] }> = ({ results }) => {
+const Results: React.FC = () => {
+  const { results, error, selectResult } = useResultsContext()
+
+  if (!!error) {
+    return <Box p={3}>{error}</Box>
+  }
+
+  if (results.length === 0) {
+    return <></>
+  }
+
   return (
     <Box
       as="ul"
@@ -70,7 +83,7 @@ const Results: React.FC<{ results: Result[] }> = ({ results }) => {
       }}
     >
       {results.map(result => (
-        <SearchResult key={result.id} result={result} />
+        <SearchResult key={result.id} result={result} selectResult={selectResult} />
       ))}
     </Box>
   )

@@ -7,6 +7,8 @@ import { Result } from './types'
 import { SongCreateMutation, SONG_CREATE } from './graphql'
 
 type ResultsContext = {
+  error: string
+  setError: (error: string) => void
   results: Result[]
   setResults: (results: Result[]) => void
   selectResult: (result: Result) => void
@@ -14,6 +16,7 @@ type ResultsContext = {
 
 const ResultsContext = createContext<Partial<ResultsContext>>({})
 const ResultsContextProvider: React.FC = ({ children }) => {
+  const [error, setError] = useState('')
   const [results, setResults] = useState<Result[]>([])
   const { addRecord } = usePlaylistRecordContext()
   const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
@@ -28,16 +31,26 @@ const ResultsContextProvider: React.FC = ({ children }) => {
     }
   }
 
-  return <ResultsContext.Provider value={{ results, setResults, selectResult }}>{children}</ResultsContext.Provider>
+  return (
+    <ResultsContext.Provider value={{ error, setError, results, setResults, selectResult }}>
+      {children}
+    </ResultsContext.Provider>
+  )
 }
 
 export const useResultsContext: () => ResultsContext = () => {
-  const { results, setResults, selectResult } = useContext(ResultsContext)
+  const { error, setError, results, setResults, selectResult } = useContext(ResultsContext)
 
-  if (results === undefined || setResults === undefined || selectResult === undefined) {
+  if (
+    error === undefined ||
+    setError === undefined ||
+    results === undefined ||
+    setResults === undefined ||
+    selectResult === undefined
+  ) {
     throw new Error('ResultsContext accessed before being set')
   }
 
-  return { results, setResults, selectResult }
+  return { error, setError, results, setResults, selectResult }
 }
 export default ResultsContextProvider
