@@ -1,32 +1,17 @@
 import React from 'react'
-import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
 
-import { usePlaylistRecordContext } from 'Room'
-
 import { Result } from './types'
-import { SONG_CREATE, SongCreateMutation } from './graphql'
+import { useResultsContext } from './ResultsContextProvider'
 
-type ResultProps = {
-  id: string
-  title: string
-  resultType: 'youtube' | 'library'
+type SearchResultProps = {
+  result: Result
+  selectResult: (result: Result) => void
+  selected: boolean
 }
-
-const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
-  const { addRecord } = usePlaylistRecordContext()
-  const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
-    onCompleted: data => addRecord(data.songCreate.song.id),
-  })
-
-  const onClick = (): void => {
-    if (resultType === 'library') {
-      addRecord(id)
-    } else {
-      createSong({ variables: { youtubeId: id } })
-    }
-  }
+const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult, selected }) => {
+  const onClick = (): void => selectResult(result)
 
   return (
     <Box
@@ -43,6 +28,7 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
         my: 2,
         px: 2,
         py: 3,
+        bg: `${selected ? '#4A5568' : 'initial'}`,
         '&:hover': {
           bg: '#4A5568',
         },
@@ -58,7 +44,7 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
           mr: 2,
         }}
       >
-        {title}
+        {result.name}
       </Box>
 
       <Box
@@ -79,7 +65,17 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
   )
 }
 
-const Results: React.FC<{ results: Result[] }> = ({ results }) => {
+const Results: React.FC = () => {
+  const { results, error, selectResult, resultIndex } = useResultsContext()
+
+  if (!!error) {
+    return <Box p={3}>{error}</Box>
+  }
+
+  if (results.length === 0) {
+    return <></>
+  }
+
   return (
     <Box
       as="ul"
@@ -88,8 +84,8 @@ const Results: React.FC<{ results: Result[] }> = ({ results }) => {
         p: 0,
       }}
     >
-      {results.map(result => (
-        <SearchResult key={result.id} id={result.id} title={result.name} resultType={result.resultType} />
+      {results.map((result, idx) => (
+        <SearchResult key={result.id} result={result} selectResult={selectResult} selected={idx === resultIndex} />
       ))}
     </Box>
   )
