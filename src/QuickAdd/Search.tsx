@@ -13,7 +13,7 @@ import { deserialize, search } from './youtube'
 import { SongsQuery, SONGS_QUERY } from './graphql'
 
 export const Search: React.FC = () => {
-  const { setResults, setError } = useResultsContext()
+  const { setResults, setError, setResultIndex, results, resultIndex, selectResult } = useResultsContext()
   const [query, setQuery] = useState('')
   const [searchSelection, setSearchSelection] = useState('library')
   const [debouncedQuery] = useDebounce(query, 500)
@@ -33,6 +33,7 @@ export const Search: React.FC = () => {
   })
 
   useEffect(() => {
+    setResultIndex(null)
     setResults([])
     setError('')
 
@@ -53,7 +54,29 @@ export const Search: React.FC = () => {
         })
       })
     }
-  }, [debouncedQuery, searchLibrary, searchSelection, setError, setResults])
+  }, [debouncedQuery, searchLibrary, searchSelection, setError, setResultIndex, setResults])
+
+  const navigateResult = (ev: React.KeyboardEvent): void => {
+    if (ev.key === 'ArrowUp') {
+      ev.preventDefault()
+      if (resultIndex === null) {
+        setResultIndex(results.length - 1)
+      } else {
+        setResultIndex(Math.max(resultIndex - 1, 0))
+      }
+    } else if (ev.key === 'ArrowDown') {
+      ev.preventDefault()
+      if (resultIndex === null) {
+        setResultIndex(0)
+      } else {
+        setResultIndex(Math.min(resultIndex + 1, results.length - 1))
+      }
+    } else if (ev.key === 'Enter' && resultIndex !== null) {
+      selectResult(results[resultIndex])
+    } else if (ev.key === 'Escape') {
+      setQuery('')
+    }
+  }
 
   return (
     <Flex
@@ -84,6 +107,7 @@ export const Search: React.FC = () => {
             type="text"
             value={query}
             onChange={setString(setQuery)}
+            onKeyDown={navigateResult}
             sx={{
               bg: 'accent',
               boxShadow: 'none',

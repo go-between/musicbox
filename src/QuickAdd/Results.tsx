@@ -8,8 +8,9 @@ import { useResultsContext } from './ResultsContextProvider'
 type SearchResultProps = {
   result: Result
   selectResult: (result: Result) => void
+  selected: boolean
 }
-const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult }) => {
+const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult, selected }) => {
   const onClick = (): void => selectResult(result)
 
   return (
@@ -27,6 +28,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult }) => 
         my: 2,
         px: 2,
         py: 3,
+        bg: `${selected ? '#4A5568' : 'initial'}`,
         '&:hover': {
           bg: '#4A5568',
         },
@@ -64,7 +66,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult }) => 
 }
 
 const Results: React.FC = () => {
-  const { results, error, selectResult } = useResultsContext()
+  const { results, error, selectResult, resultIndex } = useResultsContext()
 
   if (!!error) {
     return <Box p={3}>{error}</Box>
@@ -82,8 +84,8 @@ const Results: React.FC = () => {
         p: 0,
       }}
     >
-      {results.map(result => (
-        <SearchResult key={result.id} result={result} selectResult={selectResult} />
+      {results.map((result, idx) => (
+        <SearchResult key={result.id} result={result} selectResult={selectResult} selected={idx === resultIndex} />
       ))}
     </Box>
   )
