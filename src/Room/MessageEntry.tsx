@@ -10,7 +10,7 @@ const MessageEntry: React.FC = () => {
   const [messageCreate] = useMutation<MessageCreate['data'], MessageCreate['vars']>(MESSAGE_CREATE)
   const textArea = createRef<HTMLTextAreaElement>()
 
-  const autoExpand = ():void => {
+  const autoExpand = (): void => {
     if (!textArea.current) {
       return
     }
