@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/react-hooks'
 
 import { useWebsocketContext, useUserContext } from 'Context'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
+import { persistVolume, retrieveVolume } from 'lib/localStore'
 
 import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
 import PlayerPrimitive from './PlayerPrimitive'
@@ -23,7 +24,7 @@ type Record = {
 }
 
 const Player: React.FC = () => {
-  const [volume, setVolume] = useState(100)
+  const [volume, setVolume] = useState(retrieveVolume())
   const [progress, setProgress] = useState(0)
 
   const websocket = useWebsocketContext()
@@ -82,7 +83,9 @@ const Player: React.FC = () => {
     setProgress(opts.played * 100)
   }
   const changeVolume = (ev: React.ChangeEvent<HTMLInputElement>): void => {
-    setVolume(parseInt(ev.currentTarget.value, 10))
+    const volume = parseInt(ev.currentTarget.value, 10)
+    setVolume(volume)
+    persistVolume(volume)
   }
 
   const userOwnsCurrentRecord = currentRecord.user.id === user.id
