@@ -7,6 +7,7 @@ import { Search } from 'react-feather'
 
 import { setString } from 'lib/setters'
 
+import ResultsContextProvider from './ResultsContextProvider'
 import Results from './Results'
 import { Result, YoutubeResults } from './types'
 import { deserialize, search } from './youtube'
@@ -32,7 +33,12 @@ const FloatingResults: React.FC = ({ children }) => {
     </Box>
   )
 }
-const ResultsContainer: React.FC<{ error: string; results: Result[] }> = ({ error, results }) => {
+
+type ResultsContainerProps = {
+  error: string
+  results: Result[]
+}
+const ResultsContainer: React.FC<ResultsContainerProps> = ({ error, results }) => {
   if (error) {
     return (
       <FloatingResults>
@@ -54,9 +60,9 @@ const ResultsContainer: React.FC<{ error: string; results: Result[] }> = ({ erro
 
 export const QuickAdd: React.FC = () => {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<Result[]>([])
   const [error, setError] = useState('')
   const [searchSelection, setSearchSelection] = useState('library')
+  const [results, setResults] = useState<Result[]>([])
   const [debouncedQuery] = useDebounce(query, 500)
   const [searchLibrary] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
     fetchPolicy: 'network-only',
@@ -150,7 +156,9 @@ export const QuickAdd: React.FC = () => {
         </Flex>
       </Flex>
 
-      <ResultsContainer results={results} error={error} />
+      <ResultsContextProvider>
+        <ResultsContainer results={results} error={error} />
+      </ResultsContextProvider>
     </Box>
   )
 }

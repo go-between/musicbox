@@ -1,32 +1,13 @@
 import React from 'react'
-import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 import { Plus } from 'react-feather'
 
-import { usePlaylistRecordContext } from 'Room'
-
 import { Result } from './types'
-import { SONG_CREATE, SongCreateMutation } from './graphql'
+import { useResultsContext } from './ResultsContextProvider'
 
-type ResultProps = {
-  id: string
-  title: string
-  resultType: 'youtube' | 'library'
-}
-
-const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
-  const { addRecord } = usePlaylistRecordContext()
-  const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
-    onCompleted: data => addRecord(data.songCreate.song.id),
-  })
-
-  const onClick = (): void => {
-    if (resultType === 'library') {
-      addRecord(id)
-    } else {
-      createSong({ variables: { youtubeId: id } })
-    }
-  }
+const SearchResult: React.FC<{ result: Result }> = ({ result }) => {
+  const { selectResult } = useResultsContext()
+  const onClick = (): void => selectResult(result)
 
   return (
     <Box
@@ -58,7 +39,7 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
           mr: 2,
         }}
       >
-        {title}
+        {result.name}
       </Box>
 
       <Box
@@ -89,7 +70,7 @@ const Results: React.FC<{ results: Result[] }> = ({ results }) => {
       }}
     >
       {results.map(result => (
-        <SearchResult key={result.id} id={result.id} title={result.name} resultType={result.resultType} />
+        <SearchResult key={result.id} result={result} />
       ))}
     </Box>
   )
