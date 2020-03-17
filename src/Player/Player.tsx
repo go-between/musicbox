@@ -86,7 +86,13 @@ const Player: React.FC = () => {
   }
 
   const userOwnsCurrentRecord = currentRecord.user.id === user.id
-  const skipButton = userOwnsCurrentRecord ? <Button onClick={() => roomPlaylistRecordAbandon()}>Skip Song</Button> : ''
+  const skipButton = userOwnsCurrentRecord ? (
+    <Button sx={{ fontSize: 1 }} onClick={() => roomPlaylistRecordAbandon()}>
+      Skip Song
+    </Button>
+  ) : (
+    ''
+  )
   return (
     <Box
       width="100%"
@@ -95,14 +101,6 @@ const Player: React.FC = () => {
       }}
     >
       <Box width="100%">
-        <Flex alignItems="center" justifyContent="space-between" mb={3}>
-          <Text fontSize={[2, 3]}>
-            {currentRecord.song.name} by {currentRecord.user.name}
-          </Text>
-
-          {skipButton}
-        </Flex>
-
         <PlayerPrimitive
           changeProgress={changeProgress}
           playedAt={currentRecord.playedAt}
@@ -114,6 +112,14 @@ const Player: React.FC = () => {
       <Box width="100%" height="6px" mb={4}>
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
+
+      <Flex alignItems="center" justifyContent="space-between" mb={3}>
+        <Text fontSize={[2, 3]}>
+          {currentRecord.song.name} by {currentRecord.user.name}
+        </Text>
+
+        {skipButton}
+      </Flex>
 
       <Box>
         <Label>Volume</Label>

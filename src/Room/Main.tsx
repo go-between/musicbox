@@ -56,7 +56,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
 
         <Box
           sx={{
-            // border: '1px solid',
             py: 3,
           }}
         >
@@ -117,7 +116,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
                   },
                 }}
               >
-                Pinned Messages
+                Starred Messages
               </Button>
             </Box>
           </Flex>

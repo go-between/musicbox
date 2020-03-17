@@ -71,9 +71,6 @@ const SearchResult: React.FC<ResultProps> = ({ id, title, resultType }) => {
           display: 'flex',
           p: 1,
           mx: 1,
-          '&:hover': {
-            bg: 'muted',
-          },
         }}
       >
         <Plus size={18} />

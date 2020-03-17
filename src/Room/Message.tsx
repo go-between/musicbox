@@ -74,7 +74,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
               justifyContent: 'space-between',
               display: 'flex',
               fontSize: 2,
-              mb: 2,
+              mb: 0,
             }}
           >
             <Box>
@@ -90,14 +90,14 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             <Box>{pinButton}</Box>
           </Text>
 
-          <Text fontSize={2} mb={2}>
-            {message.message}
-          </Text>
-
           <Box sx={{ alignItems: 'center', color: '#A0AEC0', display: 'flex', fontSize: 2, fontWeight: '400', mb: 2 }}>
             {withSong ? <MessageCircle size={16} /> : <></>}
             <Box mx={1}>{withSong}</Box>
           </Box>
+
+          <Text fontSize={2} mb={2}>
+            {message.message}
+          </Text>
         </Box>
       </Flex>
     </Box>
