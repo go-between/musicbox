@@ -33,15 +33,12 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
           cursor: 'pointer',
           fontSize: 1,
           p: 2,
-          // position: 'absolute',
-          // right: 0,
-          // top: 0,
           '&:hover': {
             bg: 'accent',
           },
         }}
       >
-        {pinned ? <Star size={18} /> : <Star size={18} color="#5A67D8" fill="#5A67D8" />}
+        {pinned ? <Star size={18} color="#5A67D8" fill="#5A67D8" /> : <Star size={18} />}
       </Box>
     )
 
@@ -86,6 +83,8 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
                 display: 'flex',
                 fontSize: 2,
                 mb: 2,
+                overflow: 'hidden',
+                width: '100%',
               }}
             >
               <Box mb={1}>
@@ -99,10 +98,28 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
               </Box>
 
               <Box
-                sx={{ alignItems: 'center', color: '#A0AEC0', display: 'flex', fontSize: 2, fontWeight: '400', mb: 2 }}
+                sx={{
+                  alignItems: 'center',
+                  color: '#A0AEC0',
+                  display: 'flex',
+                  fontSize: 2,
+                  fontWeight: '400',
+                  minWidth: '0',
+                  mb: 2,
+                }}
               >
                 {withSong ? <MessageCircle size={16} /> : <></>}
-                <Box mx={1}>{withSong}</Box>
+                <Box
+                  sx={{
+                    minWidth: '0',
+                    mx: 2,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {withSong}
+                </Box>
               </Box>
             </Text>
 
