@@ -75,7 +75,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             alignItems="flex-start"
             justifyContent="space-between"
             sx={{
-              position: 'relative'
+              position: 'relative',
             }}
           >
             <Text
@@ -98,7 +98,9 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
                 </Box>
               </Box>
 
-              <Box sx={{ alignItems: 'center', color: '#A0AEC0', display: 'flex', fontSize: 2, fontWeight: '400', mb: 2 }}>
+              <Box
+                sx={{ alignItems: 'center', color: '#A0AEC0', display: 'flex', fontSize: 2, fontWeight: '400', mb: 2 }}
+              >
                 {withSong ? <MessageCircle size={16} /> : <></>}
                 <Box mx={1}>{withSong}</Box>
               </Box>
