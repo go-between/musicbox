@@ -95,7 +95,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             <Box mx={1}>{withSong}</Box>
           </Box>
 
-          <Text fontSize={2} mb={2}>
+          <Text fontSize={2} mb={2} sx={{ whiteSpace: 'pre-line' }}>
             {message.message}
           </Text>
         </Box>

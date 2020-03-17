@@ -28,7 +28,7 @@ const MessageEntry: React.FC = () => {
   }
 
   const onChange = (ev: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setMessage(ev.target.value)
+    setMessage(ev.target.value.trimLeft())
     autoExpand()
   }
 
@@ -37,7 +37,7 @@ const MessageEntry: React.FC = () => {
       return
     }
 
-    if (ev.key === 'Enter') {
+    if (ev.key === 'Enter' && !ev.shiftKey) {
       ev.preventDefault()
       messageCreate({ variables: { message } })
       setMessage('')
