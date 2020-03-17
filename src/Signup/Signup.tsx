@@ -34,7 +34,6 @@ const Signup: React.FC = () => {
 
     if (!!data.teamCreate.accessToken) {
       setToken(data.teamCreate.accessToken)
-      localStorage.setItem('musicbox-token', data.teamCreate.accessToken)
       history.push('/home')
     }
   }, [data, history, setToken])
