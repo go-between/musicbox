@@ -11,7 +11,7 @@ import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
 
 const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   const [pinned, setPinned] = useState(message.pinned)
-  const withSong = message.song && `${message.song.name}`
+  const withSong = message.song && message.song.name
   const displayDate = moment(message.createdAt).format('ddd h:mm a')
   const [messagePin] = useMutation<MessagePin['data'], MessagePin['vars']>(MESSAGE_PIN, {
     onCompleted: () => setPinned(!pinned),

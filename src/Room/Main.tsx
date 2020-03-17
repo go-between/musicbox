@@ -36,13 +36,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
     >
       <Box>
         <QuickAdd />
-        {/* <Heading
-          sx={{
-            fontSize: [3, 4, 5],
-          }}
-        >
-          {room.name}
-        </Heading> */}
       </Box>
 
       <Box
