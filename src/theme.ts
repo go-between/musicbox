@@ -1,6 +1,7 @@
 const colors = {
   accent: '#2D3748', // a contrast color for emphasizing UI
   background: '#1A202C', // body background color
+  backgroundTint: '#1c2330',
   text: '#E2E8F0', // body color
   muted: '#4A5568', // a gray or subdued color for decorative purposes
   formBorder: '#CBD5E0',

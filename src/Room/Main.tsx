@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Box, Flex, Heading } from 'rebass'
+import { Button, Box, Flex } from 'rebass'
 
 import Player from 'Player'
 import QuickAdd from 'QuickAdd'
@@ -36,13 +36,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
     >
       <Box>
         <QuickAdd />
-        <Heading
-          sx={{
-            fontSize: [3, 4, 5],
-          }}
-        >
-          {room.name}
-        </Heading>
       </Box>
 
       <Box
@@ -54,9 +47,13 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           <Player />
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            py: 3,
+          }}
+        >
           <Flex flexDirection="row">
-            <Box mr={3}>
+            <Box>
               <Button
                 disabled={tab === 'userPlaylist'}
                 onClick={selectUserPlaylist}
@@ -76,7 +73,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
               </Button>
             </Box>
 
-            <Box>
+            <Box mx={3}>
               <Button
                 disabled={tab === 'roomPlaylist'}
                 onClick={selectRoomPlaylist}
@@ -112,7 +109,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
                   },
                 }}
               >
-                Pinned Messages
+                Starred Messages
               </Button>
             </Box>
           </Flex>

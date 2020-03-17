@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, Flex, Text } from 'rebass'
+import { Youtube } from 'react-feather'
 import { Label, Slider } from '@rebass/forms'
 import { useMutation } from '@apollo/react-hooks'
 
@@ -45,7 +46,36 @@ const Player: React.FC = () => {
   const user = useUserContext()
 
   if (!currentRecord) {
-    return <p>Nothing Playing!</p>
+    return (
+      <Flex
+        sx={{
+          alignItems: 'center',
+          border: '1px solid',
+          borderColor: 'accent',
+          borderRadius: 6,
+          boxShadow: 'xl',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: '350px',
+          mb: 4,
+        }}
+      >
+        <Flex
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            bg: 'accent',
+            borderRadius: '100%',
+            color: 'text',
+            p: 3,
+          }}
+        >
+          <Youtube />
+        </Flex>
+
+        <Box p={2}>Nothing Playing! Add a song to start jamming!</Box>
+      </Flex>
+    )
   }
 
   const changeProgress = (opts: { played: number }): void => {
@@ -56,7 +86,13 @@ const Player: React.FC = () => {
   }
 
   const userOwnsCurrentRecord = currentRecord.user.id === user.id
-  const skipButton = userOwnsCurrentRecord ? <Button onClick={() => roomPlaylistRecordAbandon()}>Skip Song</Button> : ''
+  const skipButton = userOwnsCurrentRecord ? (
+    <Button sx={{ fontSize: 1 }} onClick={() => roomPlaylistRecordAbandon()}>
+      Skip Song
+    </Button>
+  ) : (
+    ''
+  )
   return (
     <Box
       width="100%"
@@ -65,14 +101,6 @@ const Player: React.FC = () => {
       }}
     >
       <Box width="100%">
-        <Flex alignItems="center" justifyContent="space-between" mb={3}>
-          <Text fontSize={[2, 3]}>
-            {currentRecord.song.name} by {currentRecord.user.name}
-          </Text>
-
-          {skipButton}
-        </Flex>
-
         <PlayerPrimitive
           changeProgress={changeProgress}
           playedAt={currentRecord.playedAt}
@@ -84,6 +112,14 @@ const Player: React.FC = () => {
       <Box width="100%" height="6px" mb={4}>
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
+
+      <Flex alignItems="center" justifyContent="space-between" mb={3}>
+        <Text fontSize={[2, 3]}>
+          {currentRecord.song.name} by {currentRecord.user.name}
+        </Text>
+
+        {skipButton}
+      </Flex>
 
       <Box>
         <Label>Volume</Label>

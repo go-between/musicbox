@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Text } from 'rebass'
+import Gravatar from 'react-gravatar'
+import { Box, Heading } from 'rebass'
 
 import { useWebsocketContext } from 'Context'
 import { User } from './graphql'
@@ -23,25 +24,62 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
 
   return (
     <Box
-      as="ul"
       sx={{
-        listStyle: 'none',
-        m: 0,
-        p: 0,
+        borderBottom: '3px solid',
+        borderColor: 'accent',
+        mb: 4,
       }}
     >
-      {users.map(u => (
-        <Box as="li" key={u.id}>
-          <Text
+      <Heading
+        sx={{
+          alignItems: 'center',
+          color: 'text',
+          display: 'flex',
+          fontSize: 2,
+          fontWeight: '600',
+          m: 0,
+        }}
+      >
+        <Box
+          sx={{
+            bg: 'green',
+            borderRadius: '100%',
+            height: '12px',
+            mr: 2,
+            width: '12px',
+          }}
+        />
+        Active Users
+      </Heading>
+
+      <Box
+        as="ul"
+        sx={{
+          boxShadow: 'inner',
+          listStyle: 'none',
+          my: 0,
+          overflowX: 'auto',
+          px: 0,
+          py: 3,
+          whiteSpace: 'nowrap',
+          width: 'auto',
+        }}
+      >
+        {users.map(u => (
+          <Box
+            as="li"
+            key={u.id}
             sx={{
-              fontWeight: '400',
+              display: 'inline-flex',
+              '&:not(:last-child)': {
+                mr: 2,
+              },
             }}
           >
-            {u.name}-{u.email}
-          </Text>
-          {/* ({u.id}) */}
-        </Box>
-      ))}
+            <Gravatar email={u.email} size={32} style={{ borderRadius: '100%' }} />
+          </Box>
+        ))}
+      </Box>
     </Box>
   )
 }

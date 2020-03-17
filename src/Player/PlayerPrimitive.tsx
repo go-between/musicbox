@@ -33,7 +33,7 @@ const PlayerPrimitive: React.FC<Props> = ({ changeProgress, playedAt, youtubeId,
       volume={volume / 100.0}
       height="350px"
       width="100%"
-      style={{ pointerEvents: 'none' }}
+      style={{ border: '1px solid #2D3748', pointerEvents: 'none' }}
       onProgress={changeProgress}
     />
   )

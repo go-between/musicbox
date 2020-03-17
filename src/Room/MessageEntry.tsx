@@ -1,24 +1,44 @@
-import React, { useState } from 'react'
+import React, { createRef, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
-import { Textarea } from '@rebass/forms'
+import { Label, Textarea } from '@rebass/forms'
 
 import { MESSAGE_CREATE, MessageCreate } from './graphql'
 
 const MessageEntry: React.FC = () => {
   const [message, setMessage] = useState<string>('')
   const [messageCreate] = useMutation<MessageCreate['data'], MessageCreate['vars']>(MESSAGE_CREATE)
+  const textArea = createRef<HTMLTextAreaElement>()
+
+  const autoExpand = (): void => {
+    if (!textArea.current) {
+      return
+    }
+    textArea.current.style.height = 'inherit'
+
+    const computed = window.getComputedStyle(textArea.current)
+    const height =
+      parseInt(computed.getPropertyValue('border-top-width'), 10) +
+      parseInt(computed.getPropertyValue('padding-top'), 10) +
+      textArea.current.scrollHeight +
+      parseInt(computed.getPropertyValue('padding-bottom'), 10) +
+      parseInt(computed.getPropertyValue('border-bottom-width'), 10)
+
+    textArea.current.style.height = height + 'px'
+  }
 
   const onChange = (ev: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setMessage(ev.target.value)
+    autoExpand()
   }
 
   const onKeyPress = (ev: React.KeyboardEvent): void => {
-    if (message.length === 0) {
+    if (message.trim().length === 0) {
       return
     }
 
     if (ev.key === 'Enter') {
+      ev.preventDefault()
       messageCreate({ variables: { message } })
       setMessage('')
     }
@@ -27,27 +47,35 @@ const MessageEntry: React.FC = () => {
   return (
     <Box
       sx={{
-        bg: 'accent',
-        borderRadius: 4,
+        bg: 'background',
         border: '1px solid',
         borderColor: 'muted',
-        p: 3,
+        borderRadius: 6,
+        boxShadow: 'xxl',
+        p: 2,
       }}
     >
       <Box>
+        <Label fontSize={1} color="gray300" p={2}>
+          Share your thoughts with the room and hit enter
+        </Label>
         <Textarea
           onChange={onChange}
-          placeholder="Share your thoughts with the room and hit enter"
+          ref={textArea}
+          placeholder=""
           onKeyPress={onKeyPress}
+          onKeyUp={autoExpand}
           value={message}
+          id="chat-message-textarea"
           sx={{
-            bg: 'background',
+            bg: 'accent',
             borderColor: 'transparent',
-            borderRadius: 4,
-            minHeight: '70px',
-            maxHeight: '300px',
+            borderRadius: 3,
+            color: 'text',
             height: 'auto',
-            resize: 'vertical',
+            maxHeight: '300px',
+            resize: 'none',
+            outline: 'none',
             overflow: 'auto',
           }}
         />
