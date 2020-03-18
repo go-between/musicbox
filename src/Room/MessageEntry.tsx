@@ -45,41 +45,29 @@ const MessageEntry: React.FC = () => {
   }
 
   return (
-    <Box
-      sx={{
-        bg: 'background',
-        border: '1px solid',
-        borderColor: 'muted',
-        borderRadius: 6,
-        boxShadow: 'xxl',
-        p: 2,
-      }}
-    >
-      <Box>
-        <Label fontSize={1} color="gray300" p={2}>
-          Share your thoughts with the room and hit enter
-        </Label>
-        <Textarea
-          onChange={onChange}
-          ref={textArea}
-          placeholder=""
-          onKeyPress={onKeyPress}
-          onKeyUp={autoExpand}
-          value={message}
-          id="chat-message-textarea"
-          sx={{
-            bg: 'accent',
-            borderColor: 'transparent',
-            borderRadius: 3,
-            color: 'text',
-            height: 'auto',
-            maxHeight: '300px',
-            resize: 'none',
-            outline: 'none',
-            overflow: 'auto',
-          }}
-        />
-      </Box>
+    <Box>
+      <Textarea
+        onChange={onChange}
+        ref={textArea}
+        placeholder="Share your thoughts with the room and hit enter"
+        onKeyPress={onKeyPress}
+        onKeyUp={autoExpand}
+        value={message}
+        id="chat-message-textarea"
+        sx={{
+          bg: 'backgroundTint',
+          border: '1px solid',
+          borderColor: 'accent',
+          borderRadius: 6,
+          boxShadow: 'xxl',
+          color: 'text',
+          height: '82px',
+          maxHeight: '300px',
+          resize: 'none',
+          outline: 'none',
+          overflow: 'auto',
+        }}
+      />
     </Box>
   )
 }
