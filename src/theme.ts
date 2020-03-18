@@ -137,7 +137,30 @@ export default {
     select: {
       borderRadius: 9999,
     },
-    textarea: {},
+    textarea: {
+      '::-webkit-input-placeholder': {
+        color: 'gray500',
+        fontSize: 2,
+        fontWeight: 'bold',
+      },
+      ':-ms-input-placeholder': {
+        color: 'gray500',
+        fontSize: 2,
+        fontWeight: 'bold',
+      },
+      '::-moz-placeholder': {
+        color: 'gray500',
+        fontSize: 2,
+        fontWeight: 'bold',
+        opacity: 1,
+      },
+      ':-moz-placeholder': {
+        color: 'gray500',
+        fontSize: 2,
+        fontWeight: 'bold',
+        opacity: 1,
+      }
+    },
     label: {
       color: 'text',
       fontSize: 1,
