@@ -159,7 +159,7 @@ export default {
         fontSize: 2,
         fontWeight: 'bold',
         opacity: 1,
-      }
+      },
     },
     label: {
       color: 'text',

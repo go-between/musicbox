@@ -1,7 +1,7 @@
 import React, { createRef, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box } from 'rebass'
-import { Label, Textarea } from '@rebass/forms'
+import { Textarea } from '@rebass/forms'
 
 import { MESSAGE_CREATE, MessageCreate } from './graphql'
 
@@ -55,7 +55,7 @@ const MessageEntry: React.FC = () => {
         value={message}
         id="chat-message-textarea"
         sx={{
-          bg: 'backgroundTint',
+          bg: 'accent',
           border: '1px solid',
           borderColor: 'accent',
           borderRadius: 6,

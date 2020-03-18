@@ -11,7 +11,6 @@ import { persistShowVideo, retrieveShowVideo, persistVolume, retrieveVolume } fr
 
 import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
 import PlayerPrimitive from './PlayerPrimitive'
-import { width, fontSize } from 'styled-system'
 
 type Record = {
   playedAt: string
@@ -133,10 +132,7 @@ const Player: React.FC = () => {
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
 
-      <Flex
-        alignItems="center"
-        mb={2}
-      >
+      <Flex alignItems="center" mb={2}>
         <Gravatar email={currentRecord.user.email} size={32} style={{ borderRadius: '100%' }} />
         <Text
           as="span"
@@ -169,14 +165,14 @@ const Player: React.FC = () => {
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center" pr={4} width="100%">
           <Volume2 />
-          <Box mx={2}/>
+          <Box mx={2} />
           <Slider onChange={changeVolume} value={volume} />
         </Flex>
 
         <Flex
           sx={{
             justifyContent: 'space-between',
-            minWidth: '280px'
+            minWidth: '280px',
           }}
         >
           {skipButton}
