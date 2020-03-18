@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, Flex, Text } from 'rebass'
-import { Youtube } from 'react-feather'
-import { Label, Slider } from '@rebass/forms'
+import { EyeOff, SkipForward, Volume2, Youtube } from 'react-feather'
+import { Slider } from '@rebass/forms'
 import { useMutation } from '@apollo/react-hooks'
+import Gravatar from 'react-gravatar'
 
 import { useWebsocketContext, useUserContext } from 'Context'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
@@ -95,7 +96,17 @@ const Player: React.FC = () => {
 
   const userOwnsCurrentRecord = currentRecord.user.id === user.id
   const skipButton = userOwnsCurrentRecord ? (
-    <Button sx={{ fontSize: 1 }} onClick={() => roomPlaylistRecordAbandon()}>
+    <Button
+      sx={{
+        alignItems: 'center',
+        display: 'flex',
+        fontSize: 2,
+        mr: 3,
+      }}
+      onClick={() => roomPlaylistRecordAbandon()}
+    >
+      <SkipForward size={16} />
+      <Box px={2} />
       Skip Song
     </Button>
   ) : (
@@ -121,23 +132,64 @@ const Player: React.FC = () => {
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
 
-      <Flex alignItems="center" justifyContent="space-between" mb={3}>
-        <Text fontSize={[2, 3]}>
-          {currentRecord.song.name} by {currentRecord.user.name}
+      <Flex alignItems="center" mb={2}>
+        <Gravatar email={currentRecord.user.email} size={32} style={{ borderRadius: '100%' }} />
+        <Text
+          as="span"
+          sx={{
+            color: 'gray500',
+            fontSize: 2,
+            fontWeight: '800',
+            px: 2,
+            mb: 1,
+          }}
+        >
+          Played by: {currentRecord.user.name}
         </Text>
+      </Flex>
 
-        <Flex>
+      <Box mb={3}>
+        <Text
+          fontSize={[2]}
+          sx={{
+            minWidth: 0,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {currentRecord.song.name}
+        </Text>
+      </Box>
+
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center" pr={4} width="100%">
+          <Volume2 />
+          <Box mx={2} />
+          <Slider onChange={changeVolume} value={volume} />
+        </Flex>
+
+        <Flex
+          sx={{
+            justifyContent: 'space-between',
+            minWidth: '280px',
+          }}
+        >
           {skipButton}
-          <Button onClick={changeShowVideo} sx={{ fontSize: 1, marginLeft: 3 }}>
+          <Button
+            onClick={changeShowVideo}
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              fontSize: 2,
+            }}
+          >
+            <EyeOff size={16} />
+            <Box px={2} />
             {showVideo ? 'Hide Video' : 'Show Video'}
           </Button>
         </Flex>
       </Flex>
-
-      <Box>
-        <Label>Volume</Label>
-        <Slider onChange={changeVolume} value={volume} />
-      </Box>
     </Box>
   )
 }

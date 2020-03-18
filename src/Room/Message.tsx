@@ -92,7 +92,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
                   {message.user.name}
                 </Box>
 
-                <Box as="span" sx={{ color: '#A0AEC0', fontSize: 1, fontWeight: '600', px: 2 }}>
+                <Box as="span" sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>
                   {displayDate}
                 </Box>
               </Box>
@@ -100,7 +100,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
               <Box
                 sx={{
                   alignItems: 'center',
-                  color: '#A0AEC0',
+                  color: 'gray500',
                   display: 'flex',
                   fontSize: 2,
                   fontWeight: '400',
