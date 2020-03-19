@@ -45,7 +45,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         }}
       >
         <Box>
-          <Users initialUsers={room.users || []} />
+          <Users initialUsers={room.users} />
         </Box>
 
         <Box>

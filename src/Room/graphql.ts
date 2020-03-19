@@ -92,6 +92,45 @@ export const MESSAGE_PIN = gql`
   }
 `
 
+export type RecordListenCreate = {
+  data: {}
+  vars: {
+    recordId: string
+    approval: number
+  }
+}
+
+export const RECORD_LISTEN_CREATE = gql`
+  mutation RecordListenCreate($recordId: ID!, $approval: Int!) {
+    recordListenCreate(input: { recordId: $recordId, approval: $approval }) {
+      recordListen {
+        id
+      }
+      errors
+    }
+  }
+`
+
+export type RecordListensQuery = {
+  data: {
+    recordListens: RecordListen[]
+  }
+  vars: {
+    recordId: string
+  }
+}
+
+export const RECORD_LISTENS = gql`
+  query RecordListens($recordId: ID!) {
+    recordListens(recordId: $recordId) {
+      approval
+      user {
+        id
+      }
+    }
+  }
+`
+
 export type RoomActivate = {
   data: {
     roomActivate: {
@@ -108,6 +147,7 @@ export const ROOM_ACTIVATE = gql`
       room {
         id
         currentRecord {
+          id
           playedAt
           song {
             id
@@ -182,6 +222,7 @@ export type OrderedRecord = {
 export type Room = {
   id: string
   currentRecord: {
+    id: string
     playedAt: string
     song: {
       id: string
@@ -196,6 +237,13 @@ export type Room = {
   } | null
   name: string
   users: User[]
+}
+
+export type RecordListen = {
+  approval: number
+  user: {
+    id: string
+  }
 }
 
 export type RoomPlaylistRecord = {
