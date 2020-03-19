@@ -5,6 +5,7 @@ import Player from 'Player'
 import QuickAdd from 'QuickAdd'
 import RoomPlaylist from 'RoomPlaylist'
 import UserPlaylist from 'UserPlaylist'
+import Users from './Users'
 import { useCurrentRecordContext } from 'Room'
 
 import { Room as RoomType } from './graphql'
@@ -43,6 +44,10 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           overflowY: 'scroll',
         }}
       >
+        <Box>
+          <Users initialUsers={room.users || []} />
+        </Box>
+
         <Box>
           <Player />
         </Box>

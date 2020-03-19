@@ -128,31 +128,16 @@ const Player: React.FC = () => {
         />
       </Box>
 
-      <Box width="100%" height="6px" mb={4}>
+      <Box width="100%" height="6px" mb={2}>
         <Box width={`${progress}%`} height="100%" bg="text" />
       </Box>
 
-      <Flex alignItems="center" mb={2}>
-        <Gravatar email={currentRecord.user.email} size={32} style={{ borderRadius: '100%' }} />
-        <Text
-          as="span"
-          sx={{
-            color: 'gray500',
-            fontSize: 2,
-            fontWeight: '800',
-            px: 2,
-            mb: 1,
-          }}
-        >
-          Played by: {currentRecord.user.name}
-        </Text>
-      </Flex>
-
-      <Box mb={3}>
+      <Flex justifyContent="space-between" alignItems="center" mb={4}>
         <Text
           fontSize={[2]}
           sx={{
             minWidth: 0,
+            width: '50%',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
@@ -160,7 +145,24 @@ const Player: React.FC = () => {
         >
           {currentRecord.song.name}
         </Text>
-      </Box>
+
+        <Flex alignItems="center">
+          <Text
+            as="span"
+            sx={{
+              color: 'gray500',
+              fontSize: 2,
+              fontWeight: '800',
+              px: 2,
+              mb: 1,
+              textAlign: 'right',
+            }}
+          >
+            {currentRecord.user.name}
+          </Text>
+          <Gravatar email={currentRecord.user.email} size={32} style={{ borderRadius: '100%' }} />
+        </Flex>
+      </Flex>
 
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center" pr={4} width="100%">

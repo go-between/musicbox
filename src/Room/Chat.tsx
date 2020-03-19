@@ -3,10 +3,8 @@ import { Flex } from 'rebass'
 
 import Messages from './Messages'
 import MessageEntry from './MessageEntry'
-import Users from './Users'
-import { Room as RoomType } from './graphql'
 
-const Chat: React.FC<{ room: RoomType }> = ({ room }) => {
+const Chat: React.FC = () => {
   return (
     <Flex
       as="aside"
@@ -22,7 +20,6 @@ const Chat: React.FC<{ room: RoomType }> = ({ room }) => {
         width: ['100%', '40%'],
       }}
     >
-      <Users initialUsers={room.users || []} />
       <Messages />
       <MessageEntry />
     </Flex>
