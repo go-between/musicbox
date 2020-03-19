@@ -5,6 +5,7 @@ import {
   Options,
   MessageChannelMessage,
   NowPlayingChannelMessage,
+  RecordListensMessage,
   RoomPlaylistMessage,
   Subscriptions,
   UserChannelMessage,
@@ -33,6 +34,9 @@ export class Client {
   private nowPlayingMessages: Array<NowPlayingChannelMessage['room']> = []
   private nowPlayingSubscription: ((currentRecord: NowPlayingChannelMessage['room']) => void) | null = null
 
+  private recordListensMessages: Array<RecordListensMessage['recordListens']> = []
+  private recordListensSubscription: ((recordListens: RecordListensMessage['recordListens']) => void) | null = null
+
   private roomPlaylistMessages: Array<RoomPlaylistMessage['roomPlaylist']> = []
   private roomPlaylistSubscription: ((roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void) | null = null
 
@@ -55,6 +59,7 @@ export class Client {
   public subscribeForRoom = (): void => {
     this.send(this.generateSubscription(channels.MESSAGE_CHANNEL, {}))
     this.send(this.generateSubscription(channels.NOW_PLAYING_CHANNEL, {}))
+    this.send(this.generateSubscription(channels.RECORD_LISTENS_CHANNEL, {}))
     this.send(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
     this.send(this.generateSubscription(channels.USERS_CHANNEL, {}))
   }
@@ -62,6 +67,7 @@ export class Client {
   public unsubscribeForRoom = (): void => {
     this.send(this.generateUnsubscription(channels.MESSAGE_CHANNEL))
     this.send(this.generateUnsubscription(channels.NOW_PLAYING_CHANNEL))
+    this.send(this.generateUnsubscription(channels.RECORD_LISTENS_CHANNEL))
     this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
     this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
   }
@@ -80,6 +86,15 @@ export class Client {
     this.nowPlayingMessages.forEach(this.nowPlayingSubscription)
     this.nowPlayingMessages = []
     return () => (this.nowPlayingSubscription = null)
+  }
+
+  public subscribeToRecordListens = (
+    callback: (recordListens: RecordListensMessage['recordListens']) => void,
+  ): (() => void) => {
+    this.recordListensSubscription = callback
+    this.recordListensMessages.forEach(this.recordListensSubscription)
+    this.recordListensMessages = []
+    return () => (this.recordListensSubscription = null)
   }
 
   public subscribeToRoomPlaylist = (
@@ -139,6 +154,14 @@ export class Client {
           this.nowPlayingSubscription(currentRecord)
         } else {
           this.nowPlayingMessages.push(currentRecord)
+        }
+        return
+      case channels.RECORD_LISTENS_CHANNEL:
+        const recordListens = websocketMessage.message.data.recordListens
+        if (!!this.recordListensSubscription) {
+          this.recordListensSubscription(recordListens)
+        } else {
+          this.recordListensMessages.push(recordListens)
         }
         return
       case channels.ROOM_PLAYLIST_CHANNEL:

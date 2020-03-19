@@ -1,18 +1,21 @@
 // Channels
 export const MESSAGE_CHANNEL = 'MessageChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
+export const RECORD_LISTENS_CHANNEL = 'RecordListensChannel'
 export const ROOM_PLAYLIST_CHANNEL = 'RoomPlaylistChannel'
 export const USERS_CHANNEL = 'UsersChannel'
 
 export type Channel =
   | typeof MESSAGE_CHANNEL
   | typeof NOW_PLAYING_CHANNEL
+  | typeof RECORD_LISTENS_CHANNEL
   | typeof ROOM_PLAYLIST_CHANNEL
   | typeof USERS_CHANNEL
 
 export type Channels = {
   MESSAGE_CHANNEL: typeof MESSAGE_CHANNEL
   NOW_PLAYING_CHANNEL: typeof NOW_PLAYING_CHANNEL
+  RECORD_LISTENS_CHANNEL: typeof RECORD_LISTENS_CHANNEL
   ROOM_PLAYLIST_CHANNEL: typeof ROOM_PLAYLIST_CHANNEL
   USERS_CHANNEL: typeof USERS_CHANNEL
 }
@@ -20,6 +23,7 @@ export type Channels = {
 export const channels: Channels = {
   MESSAGE_CHANNEL,
   NOW_PLAYING_CHANNEL,
+  RECORD_LISTENS_CHANNEL,
   ROOM_PLAYLIST_CHANNEL,
   USERS_CHANNEL,
 }
@@ -27,6 +31,7 @@ export const channels: Channels = {
 export type Subscriptions = {
   [MESSAGE_CHANNEL]: {}
   [NOW_PLAYING_CHANNEL]: {}
+  [RECORD_LISTENS_CHANNEL]: {}
   [ROOM_PLAYLIST_CHANNEL]: {}
   [USERS_CHANNEL]: {}
 }
@@ -64,6 +69,7 @@ type WebsocketMessage<T, K> = {
 export type DataMessage =
   | WebsocketMessage<typeof MESSAGE_CHANNEL, MessageChannelMessage>
   | WebsocketMessage<typeof NOW_PLAYING_CHANNEL, NowPlayingChannelMessage>
+  | WebsocketMessage<typeof RECORD_LISTENS_CHANNEL, RecordListensMessage>
   | WebsocketMessage<typeof ROOM_PLAYLIST_CHANNEL, RoomPlaylistMessage>
   | WebsocketMessage<typeof USERS_CHANNEL, UserChannelMessage>
 
@@ -104,6 +110,17 @@ export type NowPlayingChannelMessage = {
       }
     } | null
   }
+}
+
+type RecordListen = {
+  approval: number
+  user: {
+    id: string
+  }
+}
+
+export type RecordListensMessage = {
+  recordListens: RecordListen[]
 }
 
 type RecordForRoomPlaylist = {
