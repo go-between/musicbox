@@ -48,7 +48,7 @@ const Room: React.FC = () => {
         >
           <SideNav />
           <Main room={data.roomActivate.room} />
-          <Chat room={data.roomActivate.room} />
+          <Chat />
         </Flex>
       </CurrentRecordContextProvider>
     </PlaylistRecordContextProvider>
