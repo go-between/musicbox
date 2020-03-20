@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createRef, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import moment from 'moment'
 import { Box } from 'rebass'
@@ -18,6 +18,7 @@ const Messages: React.FC = () => {
   })
   const [messages, setMessages] = useState<MessageType[]>([])
   const [newMessage, setNewMessage] = useState<MessageType | null>(null)
+  const chat = createRef<HTMLDivElement>()
 
   useEffect(() => {
     if (!data) {
@@ -25,13 +26,6 @@ const Messages: React.FC = () => {
     }
 
     setMessages(data.messages)
-    // TODO: this needs to be cleaned up, I'm just duplicating what we're doing below on setMessages
-    const chat = document.getElementById('chat')
-    setTimeout(() => {
-      if (chat) {
-        chat.scrollTop = chat.scrollHeight
-      }
-    }, 100)
   }, [data])
 
   useEffect(() => {
@@ -42,14 +36,15 @@ const Messages: React.FC = () => {
     const newMessages = [...messages, newMessage].sort((prev, next) => (prev.createdAt > next.createdAt ? 1 : 0))
     setMessages(newMessages)
     setNewMessage(null)
-    // TODO: revist this and see if there's a more elegant way to do this without using setTimeout
-    const chat = document.getElementById('chat')
-    setTimeout(() => {
-      if (chat) {
-        chat.scrollTop = chat.scrollHeight
-      }
-    }, 100)
   }, [messages, newMessage])
+
+  useEffect(() => {
+    if (!chat || !chat.current) {
+      return
+    }
+
+    chat.current.scrollTop = chat.current.scrollHeight
+  }, [chat, messages])
 
   const websocket = useWebsocketContext()
   useEffect(() => {
@@ -65,7 +60,7 @@ const Messages: React.FC = () => {
   const messageLines = messages.map(message => <Message key={message.id} message={message} />)
   return (
     <Box
-      id="chat"
+      ref={chat}
       sx={{
         overflowY: 'scroll',
       }}
