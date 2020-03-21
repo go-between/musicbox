@@ -31,7 +31,16 @@ const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, qu
 }
 
 export const Search: React.FC = () => {
-  const { query, results, resultIndex, setResults, setError, setResultIndex, selectResult, setQuery } = useResultsContext()
+  const {
+    query,
+    results,
+    resultIndex,
+    setResults,
+    setError,
+    setResultIndex,
+    selectResult,
+    setQuery,
+  } = useResultsContext()
   const [searchSelection, setSearchSelection] = useState('library')
   const [debouncedQuery] = useDebounce(query, 500)
   const clear = (): void => {
@@ -129,7 +138,7 @@ export const Search: React.FC = () => {
               color: 'gray500',
             }}
           >
-            <SearchIcon size={22}/>
+            <SearchIcon size={22} />
           </Flex>
 
           <Input

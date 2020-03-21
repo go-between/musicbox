@@ -51,7 +51,17 @@ const ResultsContextProvider: React.FC = ({ children }) => {
 }
 
 export const useResultsContext: () => ResultsContext = () => {
-  const { error, query, results, setError, setQuery, setResults, selectResult, resultIndex, setResultIndex } = useContext(ResultsContext)
+  const {
+    error,
+    query,
+    results,
+    setError,
+    setQuery,
+    setResults,
+    selectResult,
+    resultIndex,
+    setResultIndex,
+  } = useContext(ResultsContext)
 
   if (
     error === undefined ||
@@ -67,6 +77,6 @@ export const useResultsContext: () => ResultsContext = () => {
     throw new Error('ResultsContext accessed before being set')
   }
 
-  return { error, query, results, resultIndex, setError, setQuery,  setResults, selectResult, setResultIndex }
+  return { error, query, results, resultIndex, setError, setQuery, setResults, selectResult, setResultIndex }
 }
 export default ResultsContextProvider

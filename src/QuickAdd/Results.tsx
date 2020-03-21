@@ -9,7 +9,7 @@ import { Result } from './types'
 import { useResultsContext } from './ResultsContextProvider'
 
 const NowPlaying: React.FC = () => {
-  return(
+  return (
     <Flex alignItems="center">
       <Text
         sx={{
