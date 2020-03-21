@@ -62,18 +62,43 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
   return (
     <Box
       as="span"
-      sx={{ color: 'gray500', cursor: 'pointer', fontSize: 1, fontWeight: '600', textDecoration: 'underline' }}
+      sx={{
+        '&:hover > *': { visibility: 'visible' },
+        position: 'relative',
+        color: 'gray500',
+        cursor: 'pointer',
+        fontSize: 1,
+        fontWeight: '600',
+      }}
     >
       @{' '}
-      {saidAt
-        .minutes()
-        .toString()
-        .padStart(2, '0')}
-      :
-      {saidAt
-        .seconds()
-        .toString()
-        .padStart(2, '0')}
+      <Box as="span" sx={{ textDecoration: 'underline' }}>
+        {saidAt
+          .minutes()
+          .toString()
+          .padStart(2, '0')}
+        :
+        {saidAt
+          .seconds()
+          .toString()
+          .padStart(2, '0')}
+      </Box>
+      <Box
+        sx={{
+          visibility: 'hidden',
+          position: 'absolute',
+          zIndex: 100,
+          width: '200px',
+          bottom: '150%',
+          left: '50%',
+          marginLeft: '-100px',
+          textAlign: 'center',
+          bg: 'accent',
+          p: 2,
+        }}
+      >
+        {song.name}
+      </Box>
     </Box>
   )
 }
@@ -90,6 +115,7 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
       justifyContent="space-between"
       sx={{
         position: 'relative',
+        overflow: 'visible',
       }}
     >
       <Text
@@ -100,7 +126,7 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
           display: 'flex',
           fontSize: 2,
           mb: 2,
-          overflow: 'hidden',
+          overflow: 'visible',
           width: '100%',
         }}
       >
@@ -143,14 +169,15 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
           sx={{
             hyphens: 'auto',
             mx: 2,
-            overflowWrap: 'break-word',
-            wordBreak: 'break-word',
-            wordWrap: 'break-word',
             width: '100%',
           }}
         >
           <MessageHeader message={message} />
-          <Text fontSize={2} mb={2} sx={{ whiteSpace: 'pre-line' }}>
+          <Text
+            fontSize={2}
+            mb={2}
+            sx={{ whiteSpace: 'pre-line', overflowWrap: 'break-word', wordBreak: 'break-word', wordWrap: 'break-word' }}
+          >
             {message.message}
           </Text>
         </Box>
