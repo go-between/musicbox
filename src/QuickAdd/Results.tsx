@@ -138,9 +138,11 @@ const Results: React.FC = () => {
 
     const parent = resultsRef.current.parentElement
     const parentStyles = window.getComputedStyle(parent)
-    const height = parseInt(parentStyles.getPropertyValue('max-height'))
+    const height = parseInt(parentStyles.getPropertyValue('height'))
+    const selectedStyles = window.getComputedStyle(selectedRef.current)
+    const selectedHeight = parseInt(selectedStyles.getPropertyValue('height'))
 
-    if (selectedRef.current.offsetTop > height + parent.scrollTop) {
+    if (selectedRef.current.offsetTop > height + parent.scrollTop - selectedHeight) {
       parent.scrollTop = selectedRef.current.offsetTop
     } else if (selectedRef.current.offsetTop < parent.scrollTop) {
       parent.scrollTop = parent.scrollTop - height
