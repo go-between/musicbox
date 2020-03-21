@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
+import { useToasts } from 'react-toast-notifications'
 import { useMutation } from '@apollo/react-hooks'
 
 import { usePlaylistRecordContext } from 'Room'
@@ -8,20 +9,24 @@ import { SongCreateMutation, SONG_CREATE } from './graphql'
 
 type ResultsContext = {
   error: string
-  setError: (error: string) => void
+  query: string
   results: Result[]
+  resultIndex: number | null
+  setError: (error: string) => void
+  setQuery: (query: string) => void
   setResults: (results: Result[]) => void
   selectResult: (result: Result) => void
-  resultIndex: number | null
   setResultIndex: (idx: number | null) => void
 }
 
 const ResultsContext = createContext<Partial<ResultsContext>>({})
 const ResultsContextProvider: React.FC = ({ children }) => {
   const [error, setError] = useState('')
+  const [query, setQuery] = useState('')
   const [results, setResults] = useState<Result[]>([])
   const [resultIndex, setResultIndex] = useState<number | null>(null)
   const { addRecord } = usePlaylistRecordContext()
+  const { addToast } = useToasts()
   const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
     onCompleted: data => addRecord(data.songCreate.song.id),
   })
@@ -32,11 +37,13 @@ const ResultsContextProvider: React.FC = ({ children }) => {
     } else {
       createSong({ variables: { youtubeId: record.id } })
     }
+
+    addToast(`Successfully added ${record.name}`, { appearance: 'success' })
   }
 
   return (
     <ResultsContext.Provider
-      value={{ error, setError, results, setResults, selectResult, resultIndex, setResultIndex }}
+      value={{ error, query, results, resultIndex, setError, setQuery, setResults, selectResult, setResultIndex }}
     >
       {children}
     </ResultsContext.Provider>
@@ -44,12 +51,24 @@ const ResultsContextProvider: React.FC = ({ children }) => {
 }
 
 export const useResultsContext: () => ResultsContext = () => {
-  const { error, setError, results, setResults, selectResult, resultIndex, setResultIndex } = useContext(ResultsContext)
+  const {
+    error,
+    query,
+    results,
+    setError,
+    setQuery,
+    setResults,
+    selectResult,
+    resultIndex,
+    setResultIndex,
+  } = useContext(ResultsContext)
 
   if (
     error === undefined ||
+    query === undefined ||
     setError === undefined ||
     results === undefined ||
+    setQuery === undefined ||
     setResults === undefined ||
     selectResult === undefined ||
     resultIndex === undefined ||
@@ -58,6 +77,6 @@ export const useResultsContext: () => ResultsContext = () => {
     throw new Error('ResultsContext accessed before being set')
   }
 
-  return { error, setError, results, setResults, selectResult, resultIndex, setResultIndex }
+  return { error, query, results, resultIndex, setError, setQuery, setResults, selectResult, setResultIndex }
 }
 export default ResultsContextProvider

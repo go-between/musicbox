@@ -3,7 +3,7 @@ import { useLazyQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 import { Box, Flex } from 'rebass'
 import { Input, Select } from '@rebass/forms'
-import { Search as SearchIcon } from 'react-feather'
+import { Search as SearchIcon, XCircle } from 'react-feather'
 
 import { setString } from 'lib/setters'
 
@@ -12,11 +12,42 @@ import { Result, YoutubeResults } from './types'
 import { deserialize, search } from './youtube'
 import { SongsQuery, SONGS_QUERY } from './graphql'
 
+const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, query }) => {
+  if (query.length === 0) {
+    return <></>
+  }
+  return (
+    <Flex
+      onClick={clear}
+      sx={{
+        color: 'gray500',
+        cursor: 'pointer',
+        px: 2,
+      }}
+    >
+      <XCircle size={22} />
+    </Flex>
+  )
+}
+
 export const Search: React.FC = () => {
-  const { setResults, setError, setResultIndex, results, resultIndex, selectResult } = useResultsContext()
-  const [query, setQuery] = useState('')
+  const {
+    query,
+    results,
+    resultIndex,
+    setResults,
+    setError,
+    setResultIndex,
+    selectResult,
+    setQuery,
+  } = useResultsContext()
   const [searchSelection, setSearchSelection] = useState('library')
   const [debouncedQuery] = useDebounce(query, 500)
+  const clear = (): void => {
+    setQuery('')
+    setResults([])
+  }
+
   const [searchLibrary] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
     fetchPolicy: 'network-only',
     onCompleted: data => {
@@ -102,7 +133,14 @@ export const Search: React.FC = () => {
             width: ['65%', '70%', '75%'],
           }}
         >
-          <SearchIcon />
+          <Flex
+            sx={{
+              color: 'gray500',
+            }}
+          >
+            <SearchIcon size={22} />
+          </Flex>
+
           <Input
             type="text"
             value={query}
@@ -113,6 +151,7 @@ export const Search: React.FC = () => {
               boxShadow: 'none',
             }}
           />
+          <CloseButton clear={clear} query={debouncedQuery} />
         </Flex>
 
         <Box
