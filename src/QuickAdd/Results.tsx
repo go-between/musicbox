@@ -1,16 +1,21 @@
 import React, { createRef, useEffect } from 'react'
-import { Box } from 'rebass'
-import { Plus } from 'react-feather'
+import { Box, Text } from 'rebass'
+import { Plus, CheckCircle } from 'react-feather'
+
+import { usePlaylistRecordContext } from 'Room/PlaylistRecordContextProvider'
+import { useCurrentRecordContext } from 'Room/CurrentRecordContextProvider'
 
 import { Result } from './types'
 import { useResultsContext } from './ResultsContextProvider'
 
 type SearchResultProps = {
+  alreadyAdded: boolean
   result: Result
   selectResult: (result: Result) => void
   selected: boolean
+  nowPlaying: boolean
 }
-const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult, selected }) => {
+const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selectResult, selected }) => {
   const onClick = (): void => selectResult(result)
 
   return (
@@ -34,6 +39,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult, selec
         },
       }}
     >
+      {nowPlaying ? <Text>now playing</Text> : <></>}
+
       <Box
         as="span"
         sx={{
@@ -59,7 +66,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult, selec
           mx: 1,
         }}
       >
-        <Plus size={18} />
+        {alreadyAdded ? <CheckCircle size={18} /> : <Plus size={18} />}
       </Box>
     </Box>
   )
@@ -67,19 +74,40 @@ const SearchResult: React.FC<SearchResultProps> = ({ result, selectResult, selec
 
 const Results: React.FC = () => {
   const { results, error, selectResult, resultIndex } = useResultsContext()
+  const { playlistRecords } = usePlaylistRecordContext()
+  const { currentRecord } = useCurrentRecordContext()
 
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()
   const resultItems = results.map((result, idx) => {
+    const alreadyAdded =
+      !!playlistRecords.find(record => record.song.id === result.id) || currentRecord?.song.id === result.id
+    const nowPlaying = currentRecord?.song.id === result.id
+
     if (idx === resultIndex) {
       return (
         <Box key={result.id} ref={selectedRef}>
-          <SearchResult result={result} selectResult={selectResult} selected={true} />
+          <SearchResult
+            result={result}
+            nowPlaying={nowPlaying}
+            selectResult={selectResult}
+            selected={true}
+            alreadyAdded={alreadyAdded}
+          />
         </Box>
       )
     }
 
-    return <SearchResult key={result.id} result={result} selectResult={selectResult} selected={false} />
+    return (
+      <SearchResult
+        key={result.id}
+        nowPlaying={nowPlaying}
+        result={result}
+        selectResult={selectResult}
+        selected={false}
+        alreadyAdded={alreadyAdded}
+      />
+    )
   })
 
   useEffect(() => {
