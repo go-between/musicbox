@@ -72,6 +72,27 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
   )
 }
 
+const FloatingResults: React.FC = ({ children }) => {
+  return (
+    <Box
+      sx={{
+        bg: 'accent',
+        borderRadius: 4,
+        position: 'absolute',
+        top: '105%',
+        left: 0,
+        right: 0,
+        maxHeight: '400px',
+        overflow: 'scroll',
+        px: 3,
+        transition: 'all 2s ease-in',
+      }}
+    >
+      {children}
+    </Box>
+  )
+}
+
 const Results: React.FC = () => {
   const { results, error, selectResult, resultIndex } = useResultsContext()
   const { playlistRecords } = usePlaylistRecordContext()
@@ -135,16 +156,18 @@ const Results: React.FC = () => {
   }
 
   return (
-    <Box
-      ref={resultsRef}
-      as="ul"
-      sx={{
-        m: 0,
-        p: 0,
-      }}
-    >
-      {resultItems}
-    </Box>
+    <FloatingResults>
+      <Box
+        ref={resultsRef}
+        as="ul"
+        sx={{
+          m: 0,
+          p: 0,
+        }}
+      >
+        {resultItems}
+      </Box>
+    </FloatingResults>
   )
 }
 

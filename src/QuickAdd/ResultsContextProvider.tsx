@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
+import { useToasts } from 'react-toast-notifications'
 import { useMutation } from '@apollo/react-hooks'
 
 import { usePlaylistRecordContext } from 'Room'
@@ -22,6 +23,7 @@ const ResultsContextProvider: React.FC = ({ children }) => {
   const [results, setResults] = useState<Result[]>([])
   const [resultIndex, setResultIndex] = useState<number | null>(null)
   const { addRecord } = usePlaylistRecordContext()
+  const { addToast } = useToasts()
   const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
     onCompleted: data => addRecord(data.songCreate.song.id),
   })
@@ -32,6 +34,8 @@ const ResultsContextProvider: React.FC = ({ children }) => {
     } else {
       createSong({ variables: { youtubeId: record.id } })
     }
+
+    addToast(`Successfully added ${record.name}`, { appearance: 'success' })
   }
 
   return (
