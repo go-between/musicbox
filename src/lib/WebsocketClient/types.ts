@@ -82,6 +82,9 @@ export type MessageChannelMessage = {
     createdAt: string
     message: string
     pinned: boolean
+    roomPlaylistRecord: {
+      playedAt: string
+    } | null
     song: {
       name: string
     } | null

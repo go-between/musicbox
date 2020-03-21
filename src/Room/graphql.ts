@@ -17,6 +17,9 @@ export const PINNED_MESSAGES_QUERY = gql`
       createdAt
       message
       pinned
+      roomPlaylistRecord {
+        playedAt
+      }
       song {
         name
       }
@@ -45,6 +48,9 @@ export const MESSAGES_QUERY = gql`
       createdAt
       message
       pinned
+      roomPlaylistRecord {
+        playedAt
+      }
       song {
         name
       }
@@ -204,6 +210,9 @@ export type Message = {
   createdAt: string
   message: string
   pinned: boolean
+  roomPlaylistRecord: {
+    playedAt: string
+  } | null
   song: {
     name: string
   } | null
