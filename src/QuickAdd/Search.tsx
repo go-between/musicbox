@@ -17,21 +17,28 @@ const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, qu
     return <></>
   }
   return (
-    <Box onClick={clear}>
-      <XCircle />
-    </Box>
+    <Flex
+      onClick={clear}
+      sx={{
+        color: 'gray500',
+        cursor: 'pointer',
+        px: 2,
+      }}
+    >
+      <XCircle size={22} />
+    </Flex>
   )
 }
 
 export const Search: React.FC = () => {
-  const { setResults, setError, setResultIndex, results, resultIndex, selectResult } = useResultsContext()
-  const [query, setQuery] = useState('')
+  const { query, results, resultIndex, setResults, setError, setResultIndex, selectResult, setQuery } = useResultsContext()
   const [searchSelection, setSearchSelection] = useState('library')
   const [debouncedQuery] = useDebounce(query, 500)
   const clear = (): void => {
     setQuery('')
     setResults([])
   }
+
   const [searchLibrary] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
     fetchPolicy: 'network-only',
     onCompleted: data => {
@@ -117,7 +124,14 @@ export const Search: React.FC = () => {
             width: ['65%', '70%', '75%'],
           }}
         >
-          <SearchIcon />
+          <Flex
+            sx={{
+              color: 'gray500',
+            }}
+          >
+            <SearchIcon size={22}/>
+          </Flex>
+
           <Input
             type="text"
             value={query}

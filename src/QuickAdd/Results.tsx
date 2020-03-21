@@ -1,12 +1,29 @@
 import React, { createRef, useEffect } from 'react'
-import { Box, Text } from 'rebass'
-import { Plus, CheckCircle } from 'react-feather'
+import { Box, Flex, Text } from 'rebass'
+import { Check, Plus } from 'react-feather'
 
 import { usePlaylistRecordContext } from 'Room/PlaylistRecordContextProvider'
 import { useCurrentRecordContext } from 'Room/CurrentRecordContextProvider'
 
 import { Result } from './types'
 import { useResultsContext } from './ResultsContextProvider'
+
+const NowPlaying: React.FC = () => {
+  return(
+    <Flex alignItems="center">
+      <Text
+        sx={{
+          color: 'gray500',
+          fontSize: 0,
+          fontWeight: 600,
+          textTransform: 'uppercase',
+        }}
+      >
+        Now playing
+      </Text>
+    </Flex>
+  )
+}
 
 type SearchResultProps = {
   alreadyAdded: boolean
@@ -15,6 +32,7 @@ type SearchResultProps = {
   selected: boolean
   nowPlaying: boolean
 }
+
 const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selectResult, selected }) => {
   const onClick = (): void => selectResult(result)
 
@@ -39,19 +57,19 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
         },
       }}
     >
-      {nowPlaying ? <Text>now playing</Text> : <></>}
-
-      <Box
-        as="span"
-        sx={{
-          fontSize: 1,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-          mr: 2,
-        }}
-      >
-        {result.name}
+      <Box>
+        {nowPlaying ? <NowPlaying /> : <></>}
+        <Box
+          sx={{
+            fontSize: 1,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            mr: 2,
+          }}
+        >
+          {result.name}
+        </Box>
       </Box>
 
       <Box
@@ -66,15 +84,17 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
           mx: 1,
         }}
       >
-        {alreadyAdded ? <CheckCircle size={18} /> : <Plus size={18} />}
+        {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
       </Box>
     </Box>
   )
 }
 
 const FloatingResults: React.FC = ({ children }) => {
+  const preventEventBubbling = (event: React.MouseEvent): void => event.preventDefault()
   return (
     <Box
+      onClick={preventEventBubbling}
       sx={{
         bg: 'accent',
         borderRadius: 4,
@@ -94,12 +114,15 @@ const FloatingResults: React.FC = ({ children }) => {
 }
 
 const Results: React.FC = () => {
-  const { results, error, selectResult, resultIndex } = useResultsContext()
+  const { error, results, resultIndex, setQuery, selectResult, setResults } = useResultsContext()
   const { playlistRecords } = usePlaylistRecordContext()
   const { currentRecord } = useCurrentRecordContext()
-
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()
+  const clear = (): void => {
+    setResults([])
+    setQuery('')
+  }
   const resultItems = results.map((result, idx) => {
     const alreadyAdded =
       !!playlistRecords.find(record => record.song.id === result.id) || currentRecord?.song.id === result.id
@@ -130,6 +153,14 @@ const Results: React.FC = () => {
       />
     )
   })
+
+  useEffect(() => {
+    if (results.length > 0) {
+      document.addEventListener('click', clear, false)
+    }
+
+    return () => document.removeEventListener('click', clear, false)
+  }, [results, clear])
 
   useEffect(() => {
     if (!resultsRef?.current?.parentElement || !selectedRef?.current) {
