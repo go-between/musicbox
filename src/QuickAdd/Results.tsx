@@ -34,7 +34,10 @@ type SearchResultProps = {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selectResult, selected }) => {
-  const onClick = (): void => selectResult(result)
+  const onClick = (ev: React.MouseEvent): void => {
+    ev.stopPropagation()
+    selectResult(result)
+  }
 
   return (
     <Box
@@ -91,10 +94,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
 }
 
 const FloatingResults: React.FC = ({ children }) => {
-  const preventEventBubbling = (event: React.MouseEvent): void => event.preventDefault()
   return (
     <Box
-      onClick={preventEventBubbling}
       sx={{
         bg: 'accent',
         borderRadius: 4,
@@ -119,10 +120,7 @@ const Results: React.FC = () => {
   const { currentRecord } = useCurrentRecordContext()
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()
-  const clear = (): void => {
-    setResults([])
-    setQuery('')
-  }
+
   const resultItems = results.map((result, idx) => {
     const alreadyAdded =
       !!playlistRecords.find(record => record.song.id === result.id) || currentRecord?.song.id === result.id
@@ -155,12 +153,17 @@ const Results: React.FC = () => {
   })
 
   useEffect(() => {
-    if (results.length > 0) {
-      document.addEventListener('click', clear, false)
+    const clear = (): void => {
+      setResults([])
+      setQuery('')
     }
 
-    return () => document.removeEventListener('click', clear, false)
-  }, [results, clear])
+    if (results.length > 0) {
+      window.addEventListener('click', clear, false)
+    }
+
+    return () => window.removeEventListener('click', clear, false)
+  }, [results, setQuery, setResults])
 
   useEffect(() => {
     if (!resultsRef?.current?.parentElement || !selectedRef?.current) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import moment from 'moment'
+import moment, { Moment } from 'moment'
 import Gravatar from 'react-gravatar'
-import { MessageCircle, Star } from 'react-feather'
+import { Star } from 'react-feather'
 import { Box, Flex, Text } from 'rebass'
 import { useMutation } from '@apollo/react-hooks'
 
@@ -9,39 +9,146 @@ import { useUserContext } from 'Context'
 
 import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
 
-const Message: React.FC<{ message: MessageType }> = ({ message }) => {
-  const [pinned, setPinned] = useState(message.pinned)
-  const withSong = message.song && message.song.name
-  const displayDate = moment(message.createdAt).format('ddd h:mm a')
+type PinProps = {
+  showPin: boolean
+  previouslyPinned: boolean
+  messageId: string
+}
+const Pin: React.FC<PinProps> = ({ showPin, previouslyPinned, messageId }) => {
+  const [pinned, setPinned] = useState(previouslyPinned)
+
   const [messagePin] = useMutation<MessagePin['data'], MessagePin['vars']>(MESSAGE_PIN, {
     onCompleted: () => setPinned(!pinned),
   })
 
   const pinOrUnpin = (): void => {
-    messagePin({ variables: { messageId: message.id, pin: !pinned } })
+    messagePin({ variables: { messageId, pin: !pinned } })
   }
 
-  const user = useUserContext()
-  const pinButton =
-    user.id !== message.user.id || !message.song ? (
-      ''
-    ) : (
+  if (!showPin) {
+    return <></>
+  }
+
+  return (
+    <Box
+      onClick={pinOrUnpin}
+      sx={{
+        borderRadius: 6,
+        cursor: 'pointer',
+        fontSize: 1,
+        p: 2,
+        '&:hover': {
+          bg: 'accent',
+        },
+      }}
+    >
+      {pinned ? <Star size={18} color="#5A67D8" fill="#5A67D8" /> : <Star size={18} />}
+    </Box>
+  )
+}
+
+type PlayedAtProps = {
+  messageCreated: Moment
+  playedAt?: Moment | ''
+  song: MessageType['song']
+}
+const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) => {
+  if (!song || !playedAt) {
+    return <></>
+  }
+
+  const saidAt = moment.duration(messageCreated.diff(playedAt))
+
+  return (
+    <Box
+      as="span"
+      sx={{
+        '&:hover > *': { visibility: 'visible' },
+        position: 'relative',
+        color: 'gray500',
+        cursor: 'pointer',
+        fontSize: 1,
+        fontWeight: '600',
+      }}
+    >
+      @{' '}
+      <Box as="span" sx={{ textDecoration: 'underline' }}>
+        {saidAt
+          .minutes()
+          .toString()
+          .padStart(2, '0')}
+        :
+        {saidAt
+          .seconds()
+          .toString()
+          .padStart(2, '0')}
+      </Box>
       <Box
-        onClick={pinOrUnpin}
         sx={{
-          borderRadius: 6,
-          cursor: 'pointer',
-          fontSize: 1,
+          visibility: 'hidden',
+          position: 'absolute',
+          zIndex: 100,
+          width: '200px',
+          bottom: '150%',
+          left: '50%',
+          marginLeft: '-100px',
+          textAlign: 'center',
+          bg: 'accent',
           p: 2,
-          '&:hover': {
-            bg: 'accent',
-          },
         }}
       >
-        {pinned ? <Star size={18} color="#5A67D8" fill="#5A67D8" /> : <Star size={18} />}
+        {song.name}
       </Box>
-    )
+    </Box>
+  )
+}
 
+const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
+  const createdAt = moment(message.createdAt)
+  const playedAt = message.roomPlaylistRecord?.playedAt && moment(message.roomPlaylistRecord?.playedAt)
+  const user = useUserContext()
+  const showPin = user.id === message.user.id && !!message.song
+
+  return (
+    <Flex
+      alignItems="flex-start"
+      justifyContent="space-between"
+      sx={{
+        position: 'relative',
+        overflow: 'visible',
+      }}
+    >
+      <Text
+        sx={{
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          flexDirection: 'column',
+          display: 'flex',
+          fontSize: 2,
+          mb: 2,
+          overflow: 'visible',
+          width: '100%',
+        }}
+      >
+        <Box mb={1}>
+          <Box as="span" sx={{ color: 'text', fontWeight: '800' }}>
+            {message.user.name}
+          </Box>
+
+          <Box as="span" sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>
+            {createdAt.format('ddd h:mm a')}
+          </Box>
+
+          <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} />
+        </Box>
+      </Text>
+
+      <Pin messageId={message.id} previouslyPinned={message.pinned} showPin={showPin} />
+    </Flex>
+  )
+}
+
+const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   return (
     <Box
       key={message.id}
@@ -62,71 +169,15 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
           sx={{
             hyphens: 'auto',
             mx: 2,
-            overflowWrap: 'break-word',
-            wordBreak: 'break-word',
-            wordWrap: 'break-word',
             width: '100%',
           }}
         >
-          <Flex
-            alignItems="flex-start"
-            justifyContent="space-between"
-            sx={{
-              position: 'relative',
-            }}
+          <MessageHeader message={message} />
+          <Text
+            fontSize={2}
+            mb={2}
+            sx={{ whiteSpace: 'pre-line', overflowWrap: 'break-word', wordBreak: 'break-word', wordWrap: 'break-word' }}
           >
-            <Text
-              sx={{
-                alignItems: 'flex-start',
-                justifyContent: 'space-between',
-                flexDirection: 'column',
-                display: 'flex',
-                fontSize: 2,
-                mb: 2,
-                overflow: 'hidden',
-                width: '100%',
-              }}
-            >
-              <Box mb={1}>
-                <Box as="span" sx={{ color: 'text', fontWeight: '800' }}>
-                  {message.user.name}
-                </Box>
-
-                <Box as="span" sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>
-                  {displayDate}
-                </Box>
-              </Box>
-
-              <Box
-                sx={{
-                  alignItems: 'center',
-                  color: 'gray500',
-                  display: 'flex',
-                  fontSize: 2,
-                  fontWeight: '400',
-                  minWidth: '0',
-                  mb: 2,
-                }}
-              >
-                {withSong ? <MessageCircle size={16} /> : <></>}
-                <Box
-                  sx={{
-                    minWidth: '0',
-                    mx: 2,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {withSong}
-                </Box>
-              </Box>
-            </Text>
-
-            <Box>{pinButton}</Box>
-          </Flex>
-
-          <Text fontSize={2} mb={2} sx={{ whiteSpace: 'pre-line' }}>
             {message.message}
           </Text>
         </Box>
