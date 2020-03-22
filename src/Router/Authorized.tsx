@@ -6,6 +6,7 @@ import ApolloClient from 'apollo-boost'
 import Home from 'Home'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
+import Library from 'Library'
 import Login from 'Login'
 import Room from 'Room'
 import Signup from 'Signup'
@@ -37,6 +38,10 @@ const Router: React.FC<{ token: string }> = ({ token }) => {
 
               <Route path="/home">
                 <Home />
+              </Route>
+
+              <Route path="/library">
+                <Library />
               </Route>
 
               <Route key="login" path="/login">
