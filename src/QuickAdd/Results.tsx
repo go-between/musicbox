@@ -36,7 +36,6 @@ type SearchResultProps = {
 const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selectResult, selected }) => {
   const onClick = (ev: React.MouseEvent): void => {
     ev.stopPropagation()
-    console.log('hi')
     selectResult(result)
   }
 
