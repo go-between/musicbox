@@ -3,6 +3,9 @@ import { Flex } from 'rebass'
 
 import { SideNav } from 'components'
 
+import Songs from './Songs'
+import Tags from './Tags'
+
 const Library: React.FC = () => {
   return (
     <Flex
@@ -16,6 +19,8 @@ const Library: React.FC = () => {
       }}
     >
       <SideNav />
+      <Songs />
+      <Tags />
     </Flex>
   )
 }
