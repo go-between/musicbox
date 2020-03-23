@@ -2,6 +2,7 @@ export type Result = {
   id: string
   name: string
   resultType: 'youtube' | 'library'
+  youtubeId?: string
 }
 
 export type YoutubeResults = {

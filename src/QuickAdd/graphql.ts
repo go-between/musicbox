@@ -28,6 +28,7 @@ export const SONGS_QUERY = gql`
     songs(query: $query) {
       id
       name
+      youtubeId
     }
   }
 `

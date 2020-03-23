@@ -6,6 +6,7 @@ export const deserialize = (results: YoutubeResults): Result[] => {
     id: result.id.videoId,
     name: result.snippet.title,
     resultType: 'youtube',
+    youtubeId: result.id.videoId,
   }))
 }
 

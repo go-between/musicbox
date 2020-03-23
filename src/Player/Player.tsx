@@ -7,10 +7,11 @@ import Gravatar from 'react-gravatar'
 
 import { useWebsocketContext, useUserContext } from 'Context'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
-import { persistShowVideo, retrieveShowVideo, persistVolume, retrieveVolume } from 'lib/localStore'
+import { persistShowVideo, retrieveShowVideo, persistVolume } from 'lib/localStore'
 
 import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
 import PlayerPrimitive from './PlayerPrimitive'
+import { useVolumeContext, PLAYERS } from './VolumeContextProvider'
 
 type Record = {
   playedAt: string
@@ -25,13 +26,14 @@ type Record = {
 }
 
 const Player: React.FC = () => {
-  const [volume, setVolume] = useState(retrieveVolume())
+  // const [volume, setVolume] = useState(retrieveVolume())
   const [showVideo, setShowVideo] = useState(retrieveShowVideo())
   const [progress, setProgress] = useState(0)
 
   const websocket = useWebsocketContext()
   const { deleteRecord } = usePlaylistRecordContext()
   const { currentRecord, setCurrentRecord } = useCurrentRecordContext()
+  const { setUnmutedPlayer, setVolume, unmutedPlayer, volume } = useVolumeContext()
 
   const [roomPlaylistRecordAbandon] = useMutation<RoomPlaylistRecordAbandon['data'], RoomPlaylistRecordAbandon['vars']>(
     ROOM_PLAYLIST_RECORD_ABANDON,
@@ -92,6 +94,7 @@ const Player: React.FC = () => {
     const volume = parseInt(ev.currentTarget.value, 10)
     setVolume(volume)
     persistVolume(volume)
+    setUnmutedPlayer(PLAYERS.main)
   }
 
   const userOwnsCurrentRecord = currentRecord.user.id === user.id
@@ -112,6 +115,11 @@ const Player: React.FC = () => {
   ) : (
     ''
   )
+
+  console.log('umutedPlayer:')
+  console.log(unmutedPlayer)
+  console.log('unmutedPlayer === PLAYERS.main:')
+  console.log(unmutedPlayer === PLAYERS.main)
   return (
     <Box
       width="100%"
@@ -124,7 +132,7 @@ const Player: React.FC = () => {
           changeProgress={changeProgress}
           playedAt={currentRecord.playedAt}
           youtubeId={currentRecord.song.youtubeId}
-          volume={volume}
+          volume={unmutedPlayer === PLAYERS.main ? volume || 0 : 0}
         />
       </Box>
 

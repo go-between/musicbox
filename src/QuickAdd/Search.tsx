@@ -53,8 +53,7 @@ export const Search: React.FC = () => {
     onCompleted: data => {
       const libraryResults: Result[] = data.songs.map(song => {
         return {
-          id: song.id,
-          name: song.name,
+          ...song,
           resultType: 'library',
         }
       })
@@ -81,7 +80,7 @@ export const Search: React.FC = () => {
           return
         }
         response.json().then((body: YoutubeResults) => {
-          setResults(deserialize(body))
+          setResults(deserialize(body).map(song => ({ ...song, youtubeId: song.id })))
         })
       })
     }

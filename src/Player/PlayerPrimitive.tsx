@@ -3,10 +3,10 @@ import ReactPlayer from 'react-player'
 import moment from 'moment'
 
 type Props = {
-  changeProgress: (opts: { played: number }) => void
+  changeProgress?: (opts: { played: number }) => void
   playedAt: string
-  youtubeId: string
-  volume: number
+  youtubeId: string | undefined
+  volume: number | null
 }
 
 const PlayerPrimitive: React.FC<Props> = ({ changeProgress, playedAt, youtubeId, volume }) => {
@@ -30,7 +30,7 @@ const PlayerPrimitive: React.FC<Props> = ({ changeProgress, playedAt, youtubeId,
       ref={setRefFromPlayer}
       url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
       playing={true}
-      volume={volume / 100.0}
+      volume={(volume || 0) / 100.0}
       height="350px"
       width="100%"
       style={{ border: '1px solid #2D3748', pointerEvents: 'none' }}

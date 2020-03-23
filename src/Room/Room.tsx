@@ -6,6 +6,8 @@ import { Flex } from 'rebass'
 import { SideNav } from 'components'
 import { useWebsocketContext } from 'Context'
 
+import VolumeContextProvider from 'Player/VolumeContextProvider'
+
 import Chat from './Chat'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
@@ -36,20 +38,22 @@ const Room: React.FC = () => {
   return (
     <PlaylistRecordContextProvider>
       <CurrentRecordContextProvider>
-        <Flex
-          sx={{
-            alignItems: 'top',
-            bg: 'background',
-            flexDirection: ['column', 'row'],
-            minHeight: '100vh',
-            mx: 'auto',
-            position: 'relative',
-          }}
-        >
-          <SideNav />
-          <Main room={data.roomActivate.room} />
-          <Chat />
-        </Flex>
+        <VolumeContextProvider>
+          <Flex
+            sx={{
+              alignItems: 'top',
+              bg: 'background',
+              flexDirection: ['column', 'row'],
+              minHeight: '100vh',
+              mx: 'auto',
+              position: 'relative',
+            }}
+          >
+            <SideNav />
+            <Main room={data.roomActivate.room} />
+            <Chat />
+          </Flex>
+        </VolumeContextProvider>
       </CurrentRecordContextProvider>
     </PlaylistRecordContextProvider>
   )

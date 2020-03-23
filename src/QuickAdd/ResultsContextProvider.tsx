@@ -7,6 +7,10 @@ import { usePlaylistRecordContext } from 'Room'
 import { Result } from './types'
 import { SongCreateMutation, SONG_CREATE } from './graphql'
 
+export const RESULTS_CONTEXTS = {
+  library: 'library',
+}
+
 type ResultsContext = {
   error: string
   query: string
@@ -32,7 +36,7 @@ const ResultsContextProvider: React.FC = ({ children }) => {
   })
 
   const selectResult = (record: Result): void => {
-    if (record.resultType === 'library') {
+    if (record.resultType === RESULTS_CONTEXTS.library) {
       addRecord(record.id)
     } else {
       createSong({ variables: { youtubeId: record.id } })
