@@ -81,6 +81,8 @@
     "react-toast-notifications": "^2.4.0",
     "rebass": "^4.0.7",
     "styled-system": "^5.1.4",
+    "sweetalert2": "^9.10.2",
+    "sweetalert2-react-content": "^3.0.1",
     "use-debounce": "^3.3.0",
     "webpack-merge": "^4.2.2"
   }
