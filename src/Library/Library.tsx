@@ -5,23 +5,26 @@ import { SideNav } from 'components'
 
 import Songs from './Songs'
 import Tags from './Tags'
+import TagsContextProvider from './TagsContextProvider'
 
 const Library: React.FC = () => {
   return (
-    <Flex
-      sx={{
-        alignItems: 'top',
-        bg: 'background',
-        flexDirection: ['column', 'row'],
-        minHeight: '100vh',
-        mx: 'auto',
-        position: 'relative',
-      }}
-    >
-      <SideNav />
-      <Songs />
-      <Tags />
-    </Flex>
+    <TagsContextProvider>
+      <Flex
+        sx={{
+          alignItems: 'top',
+          bg: 'background',
+          flexDirection: ['column', 'row'],
+          minHeight: '100vh',
+          mx: 'auto',
+          position: 'relative',
+        }}
+      >
+        <SideNav />
+        <Songs />
+        <Tags />
+      </Flex>
+    </TagsContextProvider>
   )
 }
 
