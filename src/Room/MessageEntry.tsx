@@ -45,7 +45,7 @@ const MessageEntry: React.FC = () => {
   }
 
   return (
-    <Box>
+    <Box px={4}>
       <Textarea
         onChange={onChange}
         ref={textArea}

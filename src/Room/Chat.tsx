@@ -16,7 +16,7 @@ const Chat: React.FC = () => {
         height: '100vh',
         justifyContent: 'space-between',
         overflow: 'scroll',
-        p: 4,
+        py: 4,
         width: ['100%', '40%'],
       }}
     >
