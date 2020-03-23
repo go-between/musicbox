@@ -114,7 +114,6 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
   const playedAt = message.roomPlaylistRecord?.playedAt && moment(message.roomPlaylistRecord?.playedAt)
   const user = useUserContext()
   const showPin = user.id === message.user.id && !!message.song
-  console.log(message.pinned)
 
   return (
     <>
@@ -165,22 +164,26 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
   )
 }
 
-const Message: React.FC<{ message: MessageType }> = ({ message }) => {
-  const PinnedMessage: React.FC = () => {
-    return (
-      <Flex
-        sx={{
-          alignItems: 'center',
-          m: 2,
-        }}
-      >
-        <Star size={14} color="#5A67D8" fill="#5A67D8" />
-        <Text fontSize={1} mx={1}>
-          Pinned!
-        </Text>
-      </Flex>
-    )
+const PinnedMessage: React.FC<{ pinned: boolean }> = ({ pinned }) => {
+  if (!pinned) {
+    return <></>
   }
+  return (
+    <Flex
+      sx={{
+        alignItems: 'center',
+        m: 2,
+      }}
+    >
+      <Star size={14} color="#5A67D8" fill="#5A67D8" />
+      <Text fontSize={1} mx={1}>
+        Pinned!
+      </Text>
+    </Flex>
+  )
+}
+
+const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   return (
     <>
       <Box
@@ -198,7 +201,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
           },
         }}
       >
-        {message.pinned ? PinnedMessage : <></>}
+        <PinnedMessage pinned={message.pinned} />
         <Flex alignItems="flex-start">
           <Box
             sx={{
