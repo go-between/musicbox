@@ -4,15 +4,15 @@ import { useMutation, useQuery } from '@apollo/react-hooks'
 import { Tag, TagCreate, TagsQuery, TAG_CREATE, TAGS_QUERY } from './graphql'
 
 type TagsContext = {
-  activeTag: string | null
-  setActiveTag: (id: string) => void
+  activeTag: Tag | null
+  setActiveTag: (tag: Tag) => void
   tags: Tag[]
   tagCreate: (name: string) => void
 }
 
 const TagsContext = createContext<Partial<TagsContext>>({})
 const TagsContextProvider: React.FC = ({ children }) => {
-  const [activeTag, setActiveTag] = useState<string | null>(null)
+  const [activeTag, setActiveTag] = useState<Tag | null>(null)
   const [tags, setTags] = useState<Tag[]>([])
   const [tagCreateMutation] = useMutation<TagCreate['data'], TagCreate['vars']>(TAG_CREATE)
 

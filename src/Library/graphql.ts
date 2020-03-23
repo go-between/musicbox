@@ -1,5 +1,44 @@
 import gql from 'graphql-tag'
 
+export type SongsQuery = {
+  data: {
+    songs: Song[]
+  }
+  vars: {
+    query: string
+  }
+}
+
+export const SONGS_QUERY = gql`
+  query LibrarySongsQuery($query: String) {
+    songs(query: $query) {
+      id
+      name
+      youtubeId
+      tags {
+        id
+        name
+      }
+    }
+  }
+`
+
+export type TagToggle = {
+  data: {}
+  vars: {
+    songId: string
+    tagId: string
+  }
+}
+
+export const TAG_TOGGLE = gql`
+  mutation TagToggle($songId: ID!, $tagId: ID!) {
+    tagToggle(input: { songId: $songId, tagId: $tagId }) {
+      errors
+    }
+  }
+`
+
 export type TagCreate = {
   data: {}
   vars: {
@@ -30,6 +69,13 @@ export const TAGS_QUERY = gql`
     }
   }
 `
+
+export type Song = {
+  id: string
+  name: string
+  youtubeId: string
+  tags: Tag[]
+}
 
 export type Tag = {
   id: string

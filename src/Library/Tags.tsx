@@ -9,13 +9,13 @@ import { useTagsContext } from './TagsContextProvider'
 
 type TagProps = {
   active: boolean
-  setActiveTag: (tag: string) => void
+  setActiveTag: (tag: TagType) => void
   tag: TagType
 }
 const Tag: React.FC<TagProps> = ({ active, setActiveTag, tag }) => {
   const activate = (): void => {
     if (!active) {
-      setActiveTag(tag.id)
+      setActiveTag(tag)
     }
   }
 
@@ -81,13 +81,13 @@ const Tags: React.FC = () => {
         width: ['100%', '30%'],
       }}
     >
-      <Heading mb={4}>Your Tags</Heading>
+      <Heading mb={4}>My Tags</Heading>
       <Flex flexDirection="row" justifyContent="space-between" mb={4}>
         <TagCreate tagCreate={tagCreate} />
       </Flex>
       <Box>
         {tags.map(tag => (
-          <Tag key={tag.id} active={tag.id === activeTag} setActiveTag={setActiveTag} tag={tag} />
+          <Tag key={tag.id} active={tag.id === activeTag?.id} setActiveTag={setActiveTag} tag={tag} />
         ))}
       </Box>
     </Flex>
