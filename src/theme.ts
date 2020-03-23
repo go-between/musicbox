@@ -7,6 +7,8 @@ const colors = {
   formBorder: '#CBD5E0',
   primary: '#5A67D8', // primary button and link color
   secondary: '#4C51BF', // secondary color - can be used for hover states
+  accentHover: 'rgba(45, 55, 72, .3)',
+  highlight: 'rgba(90, 103, 216, .1)',
   modes: {
     light: {
       accent: '#718096',
@@ -17,14 +19,6 @@ const colors = {
       primary: '#5A67D8',
       secondary: '#4C51BF',
     },
-    // dark: {
-    //   text: '#fff',
-    //   background: '#000',
-    //   primary: '#0cf',
-    //   secondary: '#f0e',
-    //   gray: '#222',
-    //   lightgray: '#111',
-    // },
   },
   black: '#232323',
   blue: '#3182CE',

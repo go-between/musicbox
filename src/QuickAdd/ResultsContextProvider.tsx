@@ -42,7 +42,7 @@ const ResultsContextProvider: React.FC = ({ children }) => {
       createSong({ variables: { youtubeId: record.id } })
     }
 
-    addToast(`Successfully added ${record.name}`, { appearance: 'success' })
+    addToast(`Successfully added ${record.name}`, { appearance: 'success', autoDismiss: true })
   }
 
   return (

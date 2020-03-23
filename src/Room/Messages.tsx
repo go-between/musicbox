@@ -36,16 +36,51 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup }> = ({ messageGroup }
     <>
       <Box
         sx={{
-          borderBottomColor: 'text',
-          borderBottomWidth: 1,
-          borderBottomStyle: 'solid',
-          color: 'text',
-          mb: 2,
-          mx: 5,
-          textAlign: 'center',
+          my: 4,
+          position: 'relative',
+          '&:before': {
+            bg: 'accent',
+            content: "''",
+            height: '1px',
+            left: 0,
+            position: 'absolute',
+            top: '50%',
+            width: '25%',
+          },
+          '&:after': {
+            bg: 'accent',
+            content: "''",
+            height: '1px',
+            right: 0,
+            position: 'absolute',
+            top: '50%',
+            width: '25%',
+          },
         }}
       >
-        {songName || 'Nothing Playing'}
+        <Box
+          sx={{
+            bg: 'backgroundTint',
+            border: '1px solid',
+            borderColor: 'accent',
+            borderRadius: 6,
+            boxShadow: 'md',
+            color: 'gray500',
+            fontSize: 0,
+            fontWeight: 600,
+            overflow: 'hidden',
+            py: 2,
+            px: 3,
+            m: '0 auto',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            width: '50%',
+          }}
+        >
+          {songName || 'No Song Playing'}
+        </Box>
       </Box>
       {messages.map(message => (
         <Message key={message.id} message={message} />
@@ -113,6 +148,7 @@ const Messages: React.FC = () => {
       ref={chat}
       sx={{
         overflowY: 'scroll',
+        py: 4,
       }}
     >
       {messageLines}

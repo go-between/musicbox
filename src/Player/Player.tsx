@@ -69,7 +69,6 @@ const Player: React.FC = () => {
           sx={{
             alignItems: 'center',
             justifyContent: 'center',
-            bg: 'accent',
             borderRadius: '100%',
             color: 'text',
             p: 3,

@@ -33,7 +33,7 @@ const Pin: React.FC<PinProps> = ({ showPin, previouslyPinned, messageId }) => {
     <Box
       onClick={pinOrUnpin}
       sx={{
-        borderRadius: 6,
+        borderRadius: 4,
         cursor: 'pointer',
         fontSize: 1,
         p: 2,
@@ -42,7 +42,7 @@ const Pin: React.FC<PinProps> = ({ showPin, previouslyPinned, messageId }) => {
         },
       }}
     >
-      {pinned ? <Star size={18} color="#5A67D8" fill="#5A67D8" /> : <Star size={18} />}
+      {pinned ? <Star size={16} color="#5A67D8" fill="#5A67D8" /> : <Star size={16} />}
     </Box>
   )
 }
@@ -61,14 +61,15 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
 
   return (
     <Box
-      as="span"
       sx={{
-        '&:hover > *': { visibility: 'visible' },
-        position: 'relative',
         color: 'gray500',
         cursor: 'pointer',
         fontSize: 1,
         fontWeight: '600',
+        position: 'relative',
+        '&:hover > *': {
+          visibility: 'visible',
+        },
       }}
     >
       @{' '}
@@ -85,16 +86,21 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
       </Box>
       <Box
         sx={{
-          visibility: 'hidden',
-          position: 'absolute',
-          zIndex: 100,
-          width: '200px',
+          bg: 'black',
+          borderRadius: 6,
+          border: '1px solid',
+          borderColor: 'gray700',
+          boxShadow: 'xxl',
           bottom: '150%',
+          fontSize: 0,
           left: '50%',
-          marginLeft: '-100px',
-          textAlign: 'center',
-          bg: 'accent',
+          ml: '-100px',
           p: 2,
+          position: 'absolute',
+          textAlign: 'center',
+          visibility: 'hidden',
+          width: '250px',
+          zIndex: 100,
         }}
       >
         {song.name}
@@ -110,79 +116,124 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
   const showPin = user.id === message.user.id && !!message.song
 
   return (
-    <Flex
-      alignItems="flex-start"
-      justifyContent="space-between"
-      sx={{
-        position: 'relative',
-        overflow: 'visible',
-      }}
-    >
-      <Text
+    <>
+      <Box
+        className="message-options"
         sx={{
-          alignItems: 'flex-start',
+          alignItems: 'center',
+          border: '1px solid',
+          borderColor: 'accent',
+          bg: 'background',
+          borderRadius: 6,
+          boxShadow: 'xxl',
+          display: 'none',
           justifyContent: 'space-between',
-          flexDirection: 'column',
-          display: 'flex',
-          fontSize: 2,
-          mb: 2,
-          overflow: 'visible',
-          width: '100%',
+          position: 'absolute',
+          top: -3,
+          right: 4,
         }}
       >
-        <Box mb={1}>
-          <Box as="span" sx={{ color: 'text', fontWeight: '800' }}>
-            {message.user.name}
-          </Box>
+        <Pin messageId={message.id} previouslyPinned={message.pinned} showPin={showPin} />
+      </Box>
 
-          <Box as="span" sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>
-            {createdAt.format('ddd h:mm a')}
-          </Box>
+      <Flex
+        alignItems="flex-start"
+        justifyContent="space-between"
+        sx={{
+          position: 'relative',
+          overflow: 'visible',
+        }}
+      >
+        <Text
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            fontSize: 2,
+            mb: 1,
+            overflow: 'visible',
+            width: '100%',
+          }}
+        >
+          <Box sx={{ color: 'text', fontWeight: '800' }}>{message.user.name}</Box>
 
+          <Box sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>{createdAt.format('ddd h:mm a')}</Box>
           <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} />
-        </Box>
-      </Text>
+        </Text>
+      </Flex>
+    </>
+  )
+}
 
-      <Pin messageId={message.id} previouslyPinned={message.pinned} showPin={showPin} />
+const PinnedMessage: React.FC<{ pinned: boolean }> = ({ pinned }) => {
+  if (!pinned) {
+    return <></>
+  }
+  return (
+    <Flex
+      sx={{
+        alignItems: 'center',
+        m: 2,
+      }}
+    >
+      <Star size={14} color="#5A67D8" fill="#5A67D8" />
+      <Text fontSize={1} mx={1}>
+        Pinned!
+      </Text>
     </Flex>
   )
 }
 
 const Message: React.FC<{ message: MessageType }> = ({ message }) => {
   return (
-    <Box
-      key={message.id}
-      sx={{
-        pb: 3,
-      }}
-    >
-      <Flex alignItems="flex-start">
-        <Box
-          sx={{
-            minWidth: 'auto',
-          }}
-        >
-          <Gravatar email={message.user.email} size={32} style={{ borderRadius: '100%' }} />
-        </Box>
-
-        <Box
-          sx={{
-            hyphens: 'auto',
-            mx: 2,
-            width: '100%',
-          }}
-        >
-          <MessageHeader message={message} />
-          <Text
-            fontSize={2}
-            mb={2}
-            sx={{ whiteSpace: 'pre-line', overflowWrap: 'break-word', wordBreak: 'break-word', wordWrap: 'break-word' }}
+    <>
+      <Box
+        key={message.id}
+        sx={{
+          bg: message.pinned ? 'highlight' : 'inherit',
+          position: 'relative',
+          px: 4,
+          py: 3,
+          '&:hover': {
+            bg: message.pinned ? 'highlight' : 'accentHover',
+          },
+          '&:hover .message-options': {
+            display: 'flex',
+          },
+        }}
+      >
+        <PinnedMessage pinned={message.pinned} />
+        <Flex alignItems="flex-start">
+          <Box
+            sx={{
+              minWidth: 'auto',
+            }}
           >
-            {message.message}
-          </Text>
-        </Box>
-      </Flex>
-    </Box>
+            <Gravatar email={message.user.email} size={32} style={{ borderRadius: '100%' }} />
+          </Box>
+
+          <Box
+            sx={{
+              hyphens: 'auto',
+              mx: 2,
+              width: '100%',
+            }}
+          >
+            <MessageHeader message={message} />
+            <Text
+              fontSize={2}
+              sx={{
+                whiteSpace: 'pre-line',
+                overflowWrap: 'break-word',
+                wordBreak: 'break-word',
+                wordWrap: 'break-word',
+              }}
+            >
+              {message.message}
+            </Text>
+          </Box>
+        </Flex>
+      </Box>
+    </>
   )
 }
 
