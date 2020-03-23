@@ -60,55 +60,6 @@ export const SideNav: React.FC = () => {
           Library
         </Link>
       </Box>
-
-      <Box>
-        <Heading
-          sx={{
-            fontSize: '.75rem',
-            fontWeight: '800',
-            letterSpacing: '.025rem',
-            mb: 3,
-            textTransform: 'uppercase',
-          }}
-          color="Text"
-        >
-          Settings
-        </Heading>
-
-        <Link
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            fontSize: 2,
-            mb: 3,
-            textDecoration: 'none',
-          }}
-          color="text"
-          onClick={navigate('/invitations')}
-          href="#"
-        >
-          <Send size={20} color="#4A5568" />
-          <Box mr={2} />
-          Invitations
-        </Link>
-
-        <Link
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            fontSize: 2,
-            mb: 3,
-            textDecoration: 'none',
-          }}
-          color="text"
-          onClick={navigate('/signup')}
-          href="#"
-        >
-          <UserPlus size={20} color="#4A5568" />
-          <Box mr={2} />
-          Sign Up
-        </Link>
-      </Box>
     </Box>
   )
 }
