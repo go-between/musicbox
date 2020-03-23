@@ -68,7 +68,7 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
         fontWeight: '600',
         position: 'relative',
         '&:hover > *': {
-          visibility: 'visible'
+          visibility: 'visible',
         },
       }}
     >
@@ -155,13 +155,9 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
             width: '100%',
           }}
         >
-          <Box sx={{ color: 'text', fontWeight: '800' }}>
-            {message.user.name}
-          </Box>
+          <Box sx={{ color: 'text', fontWeight: '800' }}>{message.user.name}</Box>
 
-          <Box sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>
-            {createdAt.format('ddd h:mm a')}
-          </Box>
+          <Box sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>{createdAt.format('ddd h:mm a')}</Box>
           <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} />
         </Text>
       </Flex>
@@ -170,7 +166,7 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
 }
 
 const Message: React.FC<{ message: MessageType }> = ({ message }) => {
-  const pinnedMessage = () => {
+  const PinnedMessage: React.FC = () => {
     return (
       <Flex
         sx={{
@@ -179,7 +175,9 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
         }}
       >
         <Star size={14} color="#5A67D8" fill="#5A67D8" />
-        <Text fontSize={1} mx={1}>Pinned!</Text>
+        <Text fontSize={1} mx={1}>
+          Pinned!
+        </Text>
       </Flex>
     )
   }
@@ -196,11 +194,11 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             bg: message.pinned ? 'highlight' : 'accentHover',
           },
           '&:hover .message-options': {
-            display: 'flex'
-          }
+            display: 'flex',
+          },
         }}
       >
-        {message.pinned ? pinnedMessage() : <></>}
+        {message.pinned ? PinnedMessage : <></>}
         <Flex alignItems="flex-start">
           <Box
             sx={{
@@ -220,7 +218,12 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             <MessageHeader message={message} />
             <Text
               fontSize={2}
-              sx={{ whiteSpace: 'pre-line', overflowWrap: 'break-word', wordBreak: 'break-word', wordWrap: 'break-word' }}
+              sx={{
+                whiteSpace: 'pre-line',
+                overflowWrap: 'break-word',
+                wordBreak: 'break-word',
+                wordWrap: 'break-word',
+              }}
             >
               {message.message}
             </Text>

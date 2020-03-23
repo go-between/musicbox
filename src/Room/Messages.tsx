@@ -55,7 +55,7 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup }> = ({ messageGroup }
             position: 'absolute',
             top: '50%',
             width: '25%',
-          }
+          },
         }}
       >
         <Box
@@ -148,7 +148,7 @@ const Messages: React.FC = () => {
       ref={chat}
       sx={{
         overflowY: 'scroll',
-        py: 4
+        py: 4,
       }}
     >
       {messageLines}
