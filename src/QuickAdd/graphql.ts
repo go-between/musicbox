@@ -24,8 +24,8 @@ export const SONG_CREATE = gql`
   }
 `
 export const SONGS_QUERY = gql`
-  query SongsQuery($query: String) {
-    songs(query: $query) {
+  query SongsQuery($query: String, $tagIds: [ID!]) {
+    songs(query: $query, tagIds: $tagIds) {
       id
       name
       youtubeId
@@ -38,8 +38,25 @@ export type SongsQuery = {
   }
   vars: {
     query: string
+    tagIds: string[]
   }
 }
+
+export type TagsQuery = {
+  data: {
+    tags: Tag[]
+  }
+  vars: {}
+}
+
+export const TAGS_QUERY = gql`
+  query Tags {
+    tags {
+      id
+      name
+    }
+  }
+`
 
 // Entities
 export type OrderedRecord = {
@@ -56,6 +73,11 @@ export type RoomPlaylistRecord = {
 }
 
 export type Song = {
+  id: string
+  name: string
+}
+
+export type Tag = {
   id: string
   name: string
 }

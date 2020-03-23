@@ -183,7 +183,7 @@ const Results: React.FC = () => {
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()
 
-  const libraryContext = results[0] && results[0].resultType === RESULTS_CONTEXTS.library
+  const libraryContext = results[0]?.resultType === RESULTS_CONTEXTS.library
 
   const resultItems = results.map((result, idx) => {
     const alreadyAdded =

@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { usePlaylistRecordContext } from 'Room'
 
 import { Result } from './types'
-import { SongCreateMutation, SONG_CREATE } from './graphql'
+import { SongCreateMutation, SONG_CREATE, Tag } from './graphql'
 
 export const RESULTS_CONTEXTS = {
   library: 'library',
@@ -21,12 +21,15 @@ type ResultsContext = {
   setResults: (results: Result[]) => void
   selectResult: (result: Result) => void
   setResultIndex: (idx: number | null) => void
+  tags: Tag[]
+  setTags: (tags: Tag[]) => void
 }
 
 const ResultsContext = createContext<Partial<ResultsContext>>({})
 const ResultsContextProvider: React.FC = ({ children }) => {
   const [error, setError] = useState('')
   const [query, setQuery] = useState('')
+  const [tags, setTags] = useState<Tag[]>([])
   const [results, setResults] = useState<Result[]>([])
   const [resultIndex, setResultIndex] = useState<number | null>(null)
   const { addRecord } = usePlaylistRecordContext()
@@ -47,7 +50,19 @@ const ResultsContextProvider: React.FC = ({ children }) => {
 
   return (
     <ResultsContext.Provider
-      value={{ error, query, results, resultIndex, setError, setQuery, setResults, selectResult, setResultIndex }}
+      value={{
+        error,
+        query,
+        results,
+        resultIndex,
+        setError,
+        setQuery,
+        setResults,
+        selectResult,
+        setResultIndex,
+        tags,
+        setTags,
+      }}
     >
       {children}
     </ResultsContext.Provider>
@@ -65,6 +80,8 @@ export const useResultsContext: () => ResultsContext = () => {
     selectResult,
     resultIndex,
     setResultIndex,
+    tags,
+    setTags,
   } = useContext(ResultsContext)
 
   if (
@@ -76,11 +93,25 @@ export const useResultsContext: () => ResultsContext = () => {
     setResults === undefined ||
     selectResult === undefined ||
     resultIndex === undefined ||
-    setResultIndex === undefined
+    setResultIndex === undefined ||
+    tags === undefined ||
+    setTags === undefined
   ) {
     throw new Error('ResultsContext accessed before being set')
   }
 
-  return { error, query, results, resultIndex, setError, setQuery, setResults, selectResult, setResultIndex }
+  return {
+    error,
+    query,
+    results,
+    resultIndex,
+    setError,
+    setQuery,
+    setResults,
+    selectResult,
+    setResultIndex,
+    tags,
+    setTags,
+  }
 }
 export default ResultsContextProvider

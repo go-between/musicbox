@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 import { Box, Flex } from 'rebass'
 import { Input, Select } from '@rebass/forms'
@@ -10,7 +10,7 @@ import { setString } from 'lib/setters'
 import { useResultsContext } from './ResultsContextProvider'
 import { Result, YoutubeResults } from './types'
 import { deserialize, search } from './youtube'
-import { SongsQuery, SONGS_QUERY } from './graphql'
+import { SongsQuery, TagsQuery, SONGS_QUERY, TAGS_QUERY } from './graphql'
 
 const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, query }) => {
   if (query.length === 0) {
@@ -40,12 +40,30 @@ export const Search: React.FC = () => {
     setResultIndex,
     selectResult,
     setQuery,
+    tags,
+    setTags,
   } = useResultsContext()
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [searchSelection, setSearchSelection] = useState('library')
   const [debouncedQuery] = useDebounce(query, 500)
   const clear = (): void => {
     setQuery('')
     setResults([])
+  }
+
+  const { data: tagsData } = useQuery<TagsQuery['data'], TagsQuery['vars']>(TAGS_QUERY, {
+    fetchPolicy: 'network-only',
+  })
+
+  useEffect(() => {
+    if (!tagsData) {
+      return
+    }
+
+    setTags(tagsData.tags)
+  }, [tagsData, setTags])
+  const selectTag = (ev: React.ChangeEvent<HTMLSelectElement>): void => {
+    setSelectedTags([ev.target.value])
   }
 
   const [searchLibrary] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
@@ -67,12 +85,12 @@ export const Search: React.FC = () => {
     setResults([])
     setError('')
 
-    if (debouncedQuery.length === 0) {
+    if (debouncedQuery.length === 0 && selectedTags.length === 0) {
       return
     }
 
     if (searchSelection === 'library') {
-      searchLibrary({ variables: { query: debouncedQuery } })
+      searchLibrary({ variables: { query: debouncedQuery, tagIds: selectedTags } })
     } else {
       search(debouncedQuery).then(response => {
         if (response.status !== 200) {
@@ -84,7 +102,7 @@ export const Search: React.FC = () => {
         })
       })
     }
-  }, [debouncedQuery, searchLibrary, searchSelection, setError, setResultIndex, setResults])
+  }, [debouncedQuery, searchLibrary, searchSelection, setError, setResultIndex, setResults, selectedTags])
 
   const navigateResult = (ev: React.KeyboardEvent): void => {
     if (ev.key === 'ArrowUp') {
@@ -115,8 +133,25 @@ export const Search: React.FC = () => {
         justifyContent: 'space-between',
         borderRadius: 4,
         mb: 4,
+        flexDirection: 'column',
       }}
     >
+      <Box sx={{ width: '100%' }}>
+        <Select
+          placeholder="Select a Tag"
+          sx={{ bg: 'background', borderRadius: 4, borderColor: 'transparent' }}
+          onChange={selectTag}
+        >
+          <option key="no-tag" value="">
+            Select Tag
+          </option>
+          {tags.map(t => (
+            <option key={t.id} value={t.id}>
+              {t.name}
+            </option>
+          ))}
+        </Select>
+      </Box>
       <Flex
         sx={{ borderRadius: 6 }}
         bg="accent"

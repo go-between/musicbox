@@ -52,7 +52,7 @@ export const SideNav: React.FC = () => {
             textDecoration: 'none',
           }}
           color="text"
-          onClick={() => alert('lol')}
+          onClick={navigate('/library')}
           href="#"
         >
           <Inbox size={20} color="#4A5568" />
