@@ -23,6 +23,9 @@ export const INVITATION_QUERY = gql`
       invitingUser {
         name
       }
+      invitedUser {
+        name
+      }
     }
   }
 `
@@ -36,14 +39,14 @@ export type InvitationAccept = {
   }
   vars: {
     email: string
-    name: string
+    name?: string
     token: string
     password: string
   }
 }
 
 export const INVITATION_ACCEPT = gql`
-  mutation InvitationAccept($email: String!, $password: String!, $token: ID!, $name: String!) {
+  mutation InvitationAccept($email: Email!, $password: String!, $token: ID!, $name: String) {
     invitationAccept(input: { invitation: { email: $email, password: $password, token: $token, name: $name } }) {
       accessToken
       errors
@@ -62,4 +65,7 @@ export type PendingInvitation = {
   invitingUser: {
     name: string
   }
+  invitedUser: {
+    name: string
+  } | null
 }
