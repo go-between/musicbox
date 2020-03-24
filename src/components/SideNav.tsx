@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box, Heading, Link } from 'rebass'
+import { Box, Link } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Home, Inbox, Send, UserPlus } from 'react-feather'
+import { Home, Inbox } from 'react-feather'
 
 export const SideNav: React.FC = () => {
   const history = useHistory()
