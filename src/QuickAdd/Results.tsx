@@ -3,15 +3,14 @@ import { Box, Flex, Text } from 'rebass'
 import { Check, Plus, ZoomIn } from 'react-feather'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { useToasts } from 'react-toast-notifications'
 
-import { usePlaylistRecordContext } from 'Room/PlaylistRecordContextProvider'
-import { useCurrentRecordContext } from 'Room/CurrentRecordContextProvider'
+import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
+import PlayerPrimitive from 'Player/PlayerPrimitive'
+import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 
-import PlayerPrimitive from '../Player/PlayerPrimitive'
-import { useVolumeContext, PLAYERS } from '../Player/VolumeContextProvider'
-
-import { Result } from './types'
-import { useResultsContext, RESULTS_CONTEXTS } from './ResultsContextProvider'
+import { Song } from './graphql'
+import { useResultsContext } from './ResultsContextProvider'
 
 const ReactSwal = withReactContent(Swal)
 
@@ -34,26 +33,20 @@ const NowPlaying: React.FC = () => {
 
 type SearchResultProps = {
   alreadyAdded: boolean
-  libraryContext: boolean
-  result: Result
-  selectResult: (result: Result) => void
+  result: Song
   selected: boolean
   nowPlaying: boolean
 }
 
-const SearchResult: React.FC<SearchResultProps> = ({
-  alreadyAdded,
-  libraryContext,
-  nowPlaying,
-  result,
-  selectResult,
-  selected,
-}) => {
+const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selected }) => {
   const { setUnmutedPlayer, volume } = useVolumeContext()
+  const { addRecord } = usePlaylistRecordContext()
+  const { addToast } = useToasts()
 
   const onClick = (ev: React.MouseEvent): void => {
     ev.stopPropagation()
-    selectResult(result)
+    addRecord(result.id)
+    addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
   }
 
   const showPreview = (e: MouseEvent): void => {
@@ -63,14 +56,15 @@ const SearchResult: React.FC<SearchResultProps> = ({
       allowOutsideClick: () => true,
       animation: true,
       cancelButtonText: 'Cancel',
-      confirmButtonText: libraryContext ? 'Add to room' : 'Add to My Library & Room',
+      confirmButtonText: 'Add',
       showCancelButton: true,
       title: result.name,
       html: <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} />,
       width: '30%',
     }).then(userAction => {
       if (userAction.value) {
-        selectResult(result)
+        addRecord(result.id)
+        addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
       }
       setUnmutedPlayer(PLAYERS.main)
     })
@@ -177,13 +171,11 @@ const FloatingResults: React.FC = ({ children }) => {
 }
 
 const Results: React.FC = () => {
-  const { error, results, resultIndex, setQuery, selectResult, setResults } = useResultsContext()
+  const { error, results, resultIndex, setQuery, setResults } = useResultsContext()
   const { playlistRecords } = usePlaylistRecordContext()
   const { currentRecord } = useCurrentRecordContext()
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()
-
-  const libraryContext = results[0]?.resultType === RESULTS_CONTEXTS.library
 
   const resultItems = results.map((result, idx) => {
     const alreadyAdded =
@@ -193,14 +185,7 @@ const Results: React.FC = () => {
     if (idx === resultIndex) {
       return (
         <Box key={result.id} ref={selectedRef}>
-          <SearchResult
-            result={result}
-            nowPlaying={nowPlaying}
-            libraryContext={libraryContext}
-            selectResult={selectResult}
-            selected={true}
-            alreadyAdded={alreadyAdded}
-          />
+          <SearchResult result={result} nowPlaying={nowPlaying} selected={true} alreadyAdded={alreadyAdded} />
         </Box>
       )
     }
@@ -209,9 +194,7 @@ const Results: React.FC = () => {
       <SearchResult
         key={result.id}
         nowPlaying={nowPlaying}
-        libraryContext={libraryContext}
         result={result}
-        selectResult={selectResult}
         selected={false}
         alreadyAdded={alreadyAdded}
       />

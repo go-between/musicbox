@@ -4,9 +4,7 @@ import { retrieveToken, persistToken } from 'lib/localStore'
 
 const TokenContext = createContext<string>('')
 type SetToken = (token: string) => void
-const SetTokenContext = createContext<SetToken>((token: string) => {
-  console.log('setToken must be overridden', token)
-})
+const SetTokenContext = createContext<SetToken | undefined>(undefined)
 
 const AuthContextProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState(retrieveToken())
@@ -24,9 +22,14 @@ const AuthContextProvider: React.FC = ({ children }) => {
 }
 
 export const useAuthContext: () => { token: string; setToken: SetToken } = () => {
+  const setToken = useContext(SetTokenContext)
+  if (setToken === undefined) {
+    throw new Error('Auth Context accessed before being set')
+  }
+
   return {
     token: useContext(TokenContext),
-    setToken: useContext(SetTokenContext),
+    setToken,
   }
 }
 export default AuthContextProvider

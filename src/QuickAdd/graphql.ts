@@ -4,9 +4,7 @@ import gql from 'graphql-tag'
 export type SongCreateMutation = {
   data: {
     songCreate: {
-      song: {
-        id: string
-      }
+      song: Song
     }
   }
   vars: {
@@ -18,6 +16,8 @@ export const SONG_CREATE = gql`
     songCreate(input: { youtubeId: $youtubeId }) {
       song {
         id
+        name
+        youtubeId
       }
       errors
     }
@@ -75,6 +75,7 @@ export type RoomPlaylistRecord = {
 export type Song = {
   id: string
   name: string
+  youtubeId: string
 }
 
 export type Tag = {

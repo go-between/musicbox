@@ -31,7 +31,10 @@ module.exports = {
         "allowExpressions": true,
         "allowTypedFunctionExpressions": true,
       }
-    ]
+    ],
+    "no-console": 2,
+    "no-alert": 2,
+    "no-debugger": 2,
   },
   settings: {
     react: {

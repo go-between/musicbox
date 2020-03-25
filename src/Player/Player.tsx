@@ -115,10 +115,6 @@ const Player: React.FC = () => {
     ''
   )
 
-  console.log('umutedPlayer:')
-  console.log(unmutedPlayer)
-  console.log('unmutedPlayer === PLAYERS.main:')
-  console.log(unmutedPlayer === PLAYERS.main)
   return (
     <Box
       width="100%"
