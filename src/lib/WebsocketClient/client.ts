@@ -134,6 +134,7 @@ export class Client {
 
   private log: (...args: Parameters<typeof console.log>) => void = (...args) => {
     if (this.debug) {
+      // eslint-disable-next-line no-console
       console.log(...args)
     }
   }
@@ -211,6 +212,7 @@ export class Client {
 
   private send = (msg: object): void => {
     if (!this.websocket) {
+      // eslint-disable-next-line no-console
       console.error('Attempting to send before websocket initialized')
       return
     }
