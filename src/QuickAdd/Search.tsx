@@ -64,7 +64,11 @@ export const Search: React.FC = () => {
     setTags(tagsData.tags)
   }, [tagsData, setTags])
   const selectTag = (ev: React.ChangeEvent<HTMLSelectElement>): void => {
-    setSelectedTags([ev.target.value])
+    if (!!ev.target.value) {
+      setSelectedTags([ev.target.value])
+    } else {
+      setSelectedTags([])
+    }
   }
 
   const [searchLibrary] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
