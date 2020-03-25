@@ -3,12 +3,11 @@ import { Box, Flex, Text } from 'rebass'
 import { Check, Plus, ZoomIn } from 'react-feather'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { useToasts } from 'react-toast-notifications'
 
-import { usePlaylistRecordContext } from 'Room/PlaylistRecordContextProvider'
-import { useCurrentRecordContext } from 'Room/CurrentRecordContextProvider'
-
-import PlayerPrimitive from '../Player/PlayerPrimitive'
-import { useVolumeContext, PLAYERS } from '../Player/VolumeContextProvider'
+import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
+import PlayerPrimitive from 'Player/PlayerPrimitive'
+import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 
 import { Result } from './types'
 import { useResultsContext, RESULTS_CONTEXTS } from './ResultsContextProvider'
@@ -36,24 +35,19 @@ type SearchResultProps = {
   alreadyAdded: boolean
   libraryContext: boolean
   result: Result
-  selectResult: (result: Result) => void
   selected: boolean
   nowPlaying: boolean
 }
 
-const SearchResult: React.FC<SearchResultProps> = ({
-  alreadyAdded,
-  libraryContext,
-  nowPlaying,
-  result,
-  selectResult,
-  selected,
-}) => {
+const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, libraryContext, nowPlaying, result, selected }) => {
   const { setUnmutedPlayer, volume } = useVolumeContext()
+  const { addRecord } = usePlaylistRecordContext()
+  const { addToast } = useToasts()
 
   const onClick = (ev: React.MouseEvent): void => {
     ev.stopPropagation()
-    selectResult(result)
+    addRecord(result.id)
+    addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
   }
 
   const showPreview = (e: MouseEvent): void => {
@@ -70,7 +64,8 @@ const SearchResult: React.FC<SearchResultProps> = ({
       width: '30%',
     }).then(userAction => {
       if (userAction.value) {
-        selectResult(result)
+        addRecord(result.id)
+        addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
       }
       setUnmutedPlayer(PLAYERS.main)
     })
@@ -177,7 +172,7 @@ const FloatingResults: React.FC = ({ children }) => {
 }
 
 const Results: React.FC = () => {
-  const { error, results, resultIndex, setQuery, selectResult, setResults } = useResultsContext()
+  const { error, results, resultIndex, setQuery, setResults } = useResultsContext()
   const { playlistRecords } = usePlaylistRecordContext()
   const { currentRecord } = useCurrentRecordContext()
   const resultsRef = createRef<HTMLUListElement>()
@@ -197,7 +192,6 @@ const Results: React.FC = () => {
             result={result}
             nowPlaying={nowPlaying}
             libraryContext={libraryContext}
-            selectResult={selectResult}
             selected={true}
             alreadyAdded={alreadyAdded}
           />
@@ -211,7 +205,6 @@ const Results: React.FC = () => {
         nowPlaying={nowPlaying}
         libraryContext={libraryContext}
         result={result}
-        selectResult={selectResult}
         selected={false}
         alreadyAdded={alreadyAdded}
       />
