@@ -75,6 +75,7 @@ export type RoomPlaylistRecord = {
 export type Song = {
   id: string
   name: string
+  youtubeId: string
 }
 
 export type Tag = {

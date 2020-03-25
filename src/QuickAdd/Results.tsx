@@ -9,8 +9,8 @@ import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 
-import { Result } from './types'
-import { useResultsContext, RESULTS_CONTEXTS } from './ResultsContextProvider'
+import { Song } from './graphql'
+import { useResultsContext } from './ResultsContextProvider'
 
 const ReactSwal = withReactContent(Swal)
 
@@ -33,13 +33,12 @@ const NowPlaying: React.FC = () => {
 
 type SearchResultProps = {
   alreadyAdded: boolean
-  libraryContext: boolean
-  result: Result
+  result: Song
   selected: boolean
   nowPlaying: boolean
 }
 
-const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, libraryContext, nowPlaying, result, selected }) => {
+const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selected }) => {
   const { setUnmutedPlayer, volume } = useVolumeContext()
   const { addRecord } = usePlaylistRecordContext()
   const { addToast } = useToasts()
@@ -57,7 +56,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, libraryContex
       allowOutsideClick: () => true,
       animation: true,
       cancelButtonText: 'Cancel',
-      confirmButtonText: libraryContext ? 'Add to room' : 'Add to My Library & Room',
+      confirmButtonText: 'Add',
       showCancelButton: true,
       title: result.name,
       html: <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} />,
@@ -178,8 +177,6 @@ const Results: React.FC = () => {
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()
 
-  const libraryContext = results[0]?.resultType === RESULTS_CONTEXTS.library
-
   const resultItems = results.map((result, idx) => {
     const alreadyAdded =
       !!playlistRecords.find(record => record.song.id === result.id) || currentRecord?.song.id === result.id
@@ -188,13 +185,7 @@ const Results: React.FC = () => {
     if (idx === resultIndex) {
       return (
         <Box key={result.id} ref={selectedRef}>
-          <SearchResult
-            result={result}
-            nowPlaying={nowPlaying}
-            libraryContext={libraryContext}
-            selected={true}
-            alreadyAdded={alreadyAdded}
-          />
+          <SearchResult result={result} nowPlaying={nowPlaying} selected={true} alreadyAdded={alreadyAdded} />
         </Box>
       )
     }
@@ -203,7 +194,6 @@ const Results: React.FC = () => {
       <SearchResult
         key={result.id}
         nowPlaying={nowPlaying}
-        libraryContext={libraryContext}
         result={result}
         selected={false}
         alreadyAdded={alreadyAdded}

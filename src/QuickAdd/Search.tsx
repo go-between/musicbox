@@ -10,8 +10,7 @@ import { setString } from 'lib/setters'
 import { usePlaylistRecordContext } from 'Room'
 
 import { useResultsContext } from './ResultsContextProvider'
-import { Result } from './types'
-import { SongsQuery, TagsQuery, SONGS_QUERY, TAGS_QUERY } from './graphql'
+import { SongsQuery, TagsQuery, SONGS_QUERY, TAGS_QUERY, Song } from './graphql'
 
 const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, query }) => {
   if (query.length === 0) {
@@ -71,7 +70,7 @@ export const Search: React.FC = () => {
   const [searchLibrary] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
     fetchPolicy: 'network-only',
     onCompleted: data => {
-      const libraryResults: Result[] = data.songs.map(song => {
+      const libraryResults: Song[] = data.songs.map(song => {
         return {
           ...song,
           resultType: 'library',
