@@ -3,7 +3,7 @@ import { Box, Link } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import { Home, Inbox } from 'react-feather'
 
-export const SideNav: React.FC = () => {
+export const SideNav: React.FC = ({ children }) => {
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()
@@ -19,6 +19,7 @@ export const SideNav: React.FC = () => {
         borderColor: 'accent',
         display: ['none', 'flex'],
         flexDirection: 'column',
+        justifyContent: 'space-between',
         height: '100vh',
         overflow: 'hidden',
         p: 4,
@@ -38,7 +39,7 @@ export const SideNav: React.FC = () => {
           onClick={navigate('/home')}
           href="#"
         >
-          <Home size={20} color="#4A5568" />
+          <Box as={Home} size={20} color="muted" />
           <Box mr={2} />
           Home
         </Link>
@@ -55,11 +56,12 @@ export const SideNav: React.FC = () => {
           onClick={navigate('/library')}
           href="#"
         >
-          <Inbox size={20} color="#4A5568" />
+          <Box as={Inbox} size={20} color="muted" />
           <Box mr={2} />
           Library
         </Link>
       </Box>
+      <Box>{children}</Box>
     </Box>
   )
 }

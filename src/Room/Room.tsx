@@ -9,6 +9,7 @@ import { useWebsocketContext } from 'Context'
 import VolumeContextProvider from 'Player/VolumeContextProvider'
 
 import Chat from './Chat'
+import Keyboard from './Keyboard'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
 import CurrentRecordContextProvider from './CurrentRecordContextProvider'
@@ -49,7 +50,9 @@ const Room: React.FC = () => {
               position: 'relative',
             }}
           >
-            <SideNav />
+            <SideNav>
+              <Keyboard />
+            </SideNav>
             <Main room={data.roomActivate.room} />
             <Chat />
           </Flex>
