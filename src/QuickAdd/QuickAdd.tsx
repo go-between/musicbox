@@ -43,7 +43,7 @@ const SourceSelection: React.FC<SourceSelectionProps> = ({ source, setSource }) 
 
   return (
     <Link href="#" onClick={setYoutube} sx={{ color: 'text' }}>
-      Use YouTube ID instead
+      Use YouTube URL instead
     </Link>
   )
 }

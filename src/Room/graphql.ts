@@ -101,7 +101,13 @@ export const MESSAGE_PIN = gql`
 `
 
 export type RecordListenCreate = {
-  data: {}
+  data: {
+    recordListenCreate: {
+      recordListen: {
+        approval: number
+      }
+    }
+  }
   vars: {
     recordId: string
     approval: number
@@ -113,6 +119,7 @@ export const RECORD_LISTEN_CREATE = gql`
     recordListenCreate(input: { recordId: $recordId, approval: $approval }) {
       recordListen {
         id
+        approval
       }
       errors
     }
