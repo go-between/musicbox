@@ -12,6 +12,7 @@ import Chat from './Chat'
 import Keyboard from './Keyboard'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
+import ApprovalContextProvider from './ApprovalContextProvider'
 import CurrentRecordContextProvider from './CurrentRecordContextProvider'
 import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
 
@@ -37,28 +38,30 @@ const Room: React.FC = () => {
   }
 
   return (
-    <PlaylistRecordContextProvider>
-      <CurrentRecordContextProvider>
-        <VolumeContextProvider>
-          <Flex
-            sx={{
-              alignItems: 'top',
-              bg: 'background',
-              flexDirection: ['column', 'row'],
-              minHeight: '100vh',
-              mx: 'auto',
-              position: 'relative',
-            }}
-          >
-            <SideNav>
-              <Keyboard />
-            </SideNav>
-            <Main room={data.roomActivate.room} />
-            <Chat />
-          </Flex>
-        </VolumeContextProvider>
-      </CurrentRecordContextProvider>
-    </PlaylistRecordContextProvider>
+    <ApprovalContextProvider>
+      <PlaylistRecordContextProvider>
+        <CurrentRecordContextProvider>
+          <VolumeContextProvider>
+            <Flex
+              sx={{
+                alignItems: 'top',
+                bg: 'background',
+                flexDirection: ['column', 'row'],
+                minHeight: '100vh',
+                mx: 'auto',
+                position: 'relative',
+              }}
+            >
+              <SideNav>
+                <Keyboard />
+              </SideNav>
+              <Main room={data.roomActivate.room} />
+              <Chat />
+            </Flex>
+          </VolumeContextProvider>
+        </CurrentRecordContextProvider>
+      </PlaylistRecordContextProvider>
+    </ApprovalContextProvider>
   )
 }
 
