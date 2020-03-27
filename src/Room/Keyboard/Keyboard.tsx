@@ -4,7 +4,7 @@ import { Box, Flex } from 'rebass'
 import { useToasts } from 'react-toast-notifications'
 import { Command } from 'react-feather'
 
-import { useCurrentRecordContext } from 'Room'
+import { useApprovalContext, useCurrentRecordContext } from 'Room'
 import { SongCreateMutation, SONG_CREATE } from './graphql'
 
 const Keyboard: React.FC = () => {
@@ -19,6 +19,8 @@ const Keyboard: React.FC = () => {
   })
 
   const { currentRecord } = useCurrentRecordContext()
+  const { incrementApproval } = useApprovalContext()
+
   const shortcutHandler = useCallback(
     (ev: KeyboardEvent): void => {
       if ((!ev.ctrlKey && !ev.metaKey) || !ev.shiftKey) {
@@ -33,9 +35,15 @@ const Keyboard: React.FC = () => {
 
           createSong({ variables: { youtubeId: currentRecord.song.youtubeId } })
           return
+        case 'p':
+          if (!currentRecord) {
+            return
+          }
+          incrementApproval(currentRecord.id)
+          return
       }
     },
-    [currentRecord, createSong],
+    [currentRecord, createSong, incrementApproval],
   )
 
   useEffect(() => {
@@ -88,6 +96,9 @@ const Keyboard: React.FC = () => {
         </Box>
         <Box as="li">
           Add current song to library: <b>A</b>
+        </Box>
+        <Box as="li">
+          Increase song approval: <b>P</b>
         </Box>
       </Box>
       <Box as={Command} size={20} color="muted" />
