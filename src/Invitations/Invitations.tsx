@@ -8,7 +8,7 @@ import { setString } from 'lib/setters'
 
 import { INVITATION_CREATE, INVITATIONS_QUERY, InvitationCreate, InvitationsQuery, Invitation } from './graphql'
 
-import Container from '../components/Container'
+import { Container } from 'components'
 
 const InvitationPartial: React.FC<Invitation> = ({ email, name, invitationState }) => {
   const [resentInvitation, setResentInvitation] = useState(false)

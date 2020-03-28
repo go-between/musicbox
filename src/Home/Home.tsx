@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Heading } from 'rebass'
 import { Cast, Users } from 'react-feather'
 
-import Container from 'components/Container'
+import { Container } from 'components'
 import { useUserContext } from 'Context'
 
 import RoomSelector from './RoomSelector'

@@ -6,7 +6,7 @@ import { Input, Label } from '@rebass/forms'
 
 import { useAuthContext } from 'Context'
 import { setString } from 'lib/setters'
-import Container from 'components/Container'
+import { Container } from 'components'
 
 import { TEAM_CREATE, TeamCreate } from './graphql'
 
