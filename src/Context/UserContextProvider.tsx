@@ -17,6 +17,7 @@ type User = {
   activeTeam: {
     id: string
     name: string
+    rooms: Array<{ id: string; name: string }>
   }
   teams: Team[]
 }
@@ -38,6 +39,10 @@ const USER_QUERY = gql`
       activeTeam {
         id
         name
+        rooms {
+          id
+          name
+        }
       }
       teams {
         id

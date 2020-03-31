@@ -22,6 +22,7 @@ const Room: React.FC = () => {
   const websocket = useWebsocketContext()
   const [roomActivate, { data, loading }] = useMutation<RoomActivate['data'], RoomActivate['vars']>(ROOM_ACTIVATE, {
     onCompleted: websocket.subscribeForRoom,
+    refetchQueries: ['UserQuery'],
   })
 
   useEffect(() => {

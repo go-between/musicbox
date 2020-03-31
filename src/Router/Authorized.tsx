@@ -3,12 +3,12 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 
-import Home from 'Home'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
 import Library from 'Library'
 import Login from 'Login'
 import Room from 'Room'
+import Rooms from 'Rooms'
 import Signup from 'Signup'
 import { API_HOST } from 'lib/constants'
 
@@ -36,10 +36,6 @@ const Router: React.FC<{ token: string }> = ({ token }) => {
                 <Invitations />
               </Route>
 
-              <Route path="/home">
-                <Home />
-              </Route>
-
               <Route path="/library">
                 <Library />
               </Route>
@@ -52,13 +48,17 @@ const Router: React.FC<{ token: string }> = ({ token }) => {
                 <Signup />
               </Route>
 
+              <Route path="/rooms">
+                <Rooms />
+              </Route>
+
               <Route path="/room/:id">
                 <Room />
               </Route>
 
               <Redirect
                 to={{
-                  pathname: '/home',
+                  pathname: '/rooms',
                 }}
               />
             </Switch>
