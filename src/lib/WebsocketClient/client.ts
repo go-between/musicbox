@@ -7,6 +7,7 @@ import {
   NowPlayingChannelMessage,
   RecordListensMessage,
   RoomPlaylistMessage,
+  TeamMessage,
   Subscriptions,
   UserChannelMessage,
 } from './types'
@@ -40,6 +41,9 @@ export class Client {
   private roomPlaylistMessages: Array<RoomPlaylistMessage['roomPlaylist']> = []
   private roomPlaylistSubscription: ((roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void) | null = null
 
+  private teamMessages: Array<TeamMessage['team']> = []
+  private teamSubscription: ((team: TeamMessage['team']) => void) | null = null
+
   private userMessages: Array<UserChannelMessage['room']> = []
   private userSubscription: ((room: UserChannelMessage['room']) => void) | null = null
 
@@ -70,6 +74,14 @@ export class Client {
     this.send(this.generateUnsubscription(channels.RECORD_LISTENS_CHANNEL))
     this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
     this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
+  }
+
+  public subscribeForTeam = (): void => {
+    this.send(this.generateSubscription(channels.TEAM_CHANNEL, {}))
+  }
+
+  public unsubscribeForTeam = (): void => {
+    this.send(this.generateUnsubscription(channels.TEAM_CHANNEL))
   }
 
   public subscribeToMessage = (callback: (currentRecord: MessageChannelMessage['message']) => void): (() => void) => {
@@ -104,6 +116,13 @@ export class Client {
     this.roomPlaylistMessages.forEach(this.roomPlaylistSubscription)
     this.roomPlaylistMessages = []
     return () => (this.roomPlaylistSubscription = null)
+  }
+
+  public subscribeToTeam = (callback: (team: TeamMessage['team']) => void): (() => void) => {
+    this.teamSubscription = callback
+    this.teamMessages.forEach(this.teamSubscription)
+    this.teamMessages = []
+    return () => (this.teamSubscription = null)
   }
 
   public subscribeToUsers = (callback: (room: UserChannelMessage['room']) => void): (() => void) => {
@@ -171,6 +190,14 @@ export class Client {
           this.roomPlaylistSubscription(roomPlaylist)
         } else {
           this.roomPlaylistMessages.push(roomPlaylist)
+        }
+        return
+      case channels.TEAM_CHANNEL:
+        const team = websocketMessage.message.data.team
+        if (!!this.teamSubscription) {
+          this.teamSubscription(team)
+        } else {
+          this.teamMessages.push(team)
         }
         return
       case channels.USERS_CHANNEL:

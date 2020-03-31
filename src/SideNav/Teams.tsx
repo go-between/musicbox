@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box, Heading } from 'rebass'
 import { Select } from '@rebass/forms'
 import { useHistory } from 'react-router-dom'
+import { Speaker } from 'react-feather'
 
-import { useUserContext } from 'Context'
+import { useUserContext, useWebsocketContext, User } from 'Context'
 
 import { TeamActivate, TEAM_ACTIVATE } from './graphql'
 
 type TeamSelectorProps = {
   activeTeamId: string
   changeTeam: (ev: React.ChangeEvent<HTMLSelectElement>) => void
-  teams: Array<{ id: string; name: string }>
+  teams: User['teams']
 }
 const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, teams }) => {
   if (teams.length === 1) {
@@ -46,36 +47,60 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
 
 type RoomSelectorProps = {
   activeRoomId?: string
-  rooms?: Array<{ id: string; name: string }>
+  activeTeamId?: string
+  initialRooms: User['activeTeam']['rooms']
 }
 
-const RoomSelector: React.FC<RoomSelectorProps> = ({ activeRoomId, rooms }) => {
+const RoomSelector: React.FC<RoomSelectorProps> = ({ activeTeamId, activeRoomId, initialRooms }) => {
   const { push } = useHistory()
+  const [rooms, setRooms] = useState<User['activeTeam']['rooms']>(
+    initialRooms.sort((a, b) => (a.name > b.name ? 1 : -1)),
+  )
   const navigateToRoom = (id: string): void => push(`/room/${id}`)
+  const websocket = useWebsocketContext()
+
+  useEffect(() => {
+    websocket.subscribeForTeam()
+    websocket.subscribeToTeam(team => setRooms(team.rooms.sort((a, b) => (a.name > b.name ? 1 : -1))))
+
+    return websocket.unsubscribeForTeam
+  }, [activeTeamId, websocket])
 
   if (!rooms) {
     return <p>Loading</p>
   }
 
-  const roomItems = rooms.map(r => (
-    <Box
-      as="li"
-      key={r.id}
-      onClick={() => navigateToRoom(r.id)}
-      sx={{
-        bg: activeRoomId === r.id ? 'accent' : 'initial',
-        cursor: 'pointer',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        '&:hover': {
-          bg: 'accent',
-        },
-      }}
-    >
-      {r.name}
-    </Box>
-  ))
+  const roomItems = rooms.map(r => {
+    const icon = r.currentSong ? (
+      <Box display="inline-block" sx={{ position: 'relative', '&:hover > *': { visibility: 'visible' } }}>
+        <Box sx={{ position: 'absolute', bg: 'accent', visibility: 'hidden', overflow: 'display' }}>
+          {r.currentSong.name}
+        </Box>
+        <Speaker size={12} />
+      </Box>
+    ) : (
+      <></>
+    )
+    return (
+      <Box
+        as="li"
+        key={r.id}
+        onClick={() => navigateToRoom(r.id)}
+        sx={{
+          bg: activeRoomId === r.id ? 'accent' : 'initial',
+          cursor: 'pointer',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          '&:hover': {
+            bg: 'accent',
+          },
+        }}
+      >
+        {icon} {r.name}
+      </Box>
+    )
+  })
 
   return (
     <Box as="ul" sx={{ listStyleType: 'none', pl: 2 }}>
@@ -108,7 +133,11 @@ const Teams: React.FC = () => {
   return (
     <>
       <TeamSelector activeTeamId={user.activeTeam.id} changeTeam={changeTeam} teams={user.teams} />
-      <RoomSelector activeRoomId={user.activeRoom?.id} rooms={user.activeTeam.rooms} />
+      <RoomSelector
+        activeTeamId={user.activeTeam.id}
+        activeRoomId={user.activeRoom?.id}
+        initialRooms={user.activeTeam.rooms}
+      />
     </>
   )
 }
