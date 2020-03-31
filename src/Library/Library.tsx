@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex } from 'rebass'
 
-import { SideNav } from 'components'
+import SideNav from 'SideNav'
 
 import Songs from './Songs'
 import Tags from './Tags'

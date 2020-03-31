@@ -3,6 +3,7 @@ export const MESSAGE_CHANNEL = 'MessageChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
 export const RECORD_LISTENS_CHANNEL = 'RecordListensChannel'
 export const ROOM_PLAYLIST_CHANNEL = 'RoomPlaylistChannel'
+export const TEAM_CHANNEL = 'TeamChannel'
 export const USERS_CHANNEL = 'UsersChannel'
 
 export type Channel =
@@ -10,6 +11,7 @@ export type Channel =
   | typeof NOW_PLAYING_CHANNEL
   | typeof RECORD_LISTENS_CHANNEL
   | typeof ROOM_PLAYLIST_CHANNEL
+  | typeof TEAM_CHANNEL
   | typeof USERS_CHANNEL
 
 export type Channels = {
@@ -17,6 +19,7 @@ export type Channels = {
   NOW_PLAYING_CHANNEL: typeof NOW_PLAYING_CHANNEL
   RECORD_LISTENS_CHANNEL: typeof RECORD_LISTENS_CHANNEL
   ROOM_PLAYLIST_CHANNEL: typeof ROOM_PLAYLIST_CHANNEL
+  TEAM_CHANNEL: typeof TEAM_CHANNEL
   USERS_CHANNEL: typeof USERS_CHANNEL
 }
 
@@ -25,6 +28,7 @@ export const channels: Channels = {
   NOW_PLAYING_CHANNEL,
   RECORD_LISTENS_CHANNEL,
   ROOM_PLAYLIST_CHANNEL,
+  TEAM_CHANNEL,
   USERS_CHANNEL,
 }
 
@@ -33,6 +37,7 @@ export type Subscriptions = {
   [NOW_PLAYING_CHANNEL]: {}
   [RECORD_LISTENS_CHANNEL]: {}
   [ROOM_PLAYLIST_CHANNEL]: {}
+  [TEAM_CHANNEL]: {}
   [USERS_CHANNEL]: {}
 }
 
@@ -71,6 +76,7 @@ export type DataMessage =
   | WebsocketMessage<typeof NOW_PLAYING_CHANNEL, NowPlayingChannelMessage>
   | WebsocketMessage<typeof RECORD_LISTENS_CHANNEL, RecordListensMessage>
   | WebsocketMessage<typeof ROOM_PLAYLIST_CHANNEL, RoomPlaylistMessage>
+  | WebsocketMessage<typeof TEAM_CHANNEL, TeamMessage>
   | WebsocketMessage<typeof USERS_CHANNEL, UserChannelMessage>
 
 export type Message = SystemMessage | DataMessage
@@ -142,6 +148,19 @@ type RecordForRoomPlaylist = {
 
 export type RoomPlaylistMessage = {
   roomPlaylist: RecordForRoomPlaylist[]
+}
+
+type RoomForTeamMessage = {
+  id: string
+  name: string
+  currentSong: {
+    name: string
+  } | null
+}
+export type TeamMessage = {
+  team: {
+    rooms: RoomForTeamMessage[]
+  }
 }
 
 type UserForUserChannel = {

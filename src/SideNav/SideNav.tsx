@@ -3,6 +3,8 @@ import { Box, Link } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import { Home, Inbox } from 'react-feather'
 
+import Teams from './Teams'
+
 export const SideNav: React.FC = ({ children }) => {
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
@@ -60,7 +62,10 @@ export const SideNav: React.FC = ({ children }) => {
           <Box mr={2} />
           Library
         </Link>
+
+        <Teams />
       </Box>
+
       <Box>{children}</Box>
     </Box>
   )
