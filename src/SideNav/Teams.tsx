@@ -53,9 +53,7 @@ type RoomSelectorProps = {
 
 const RoomSelector: React.FC<RoomSelectorProps> = ({ activeTeamId, activeRoomId, initialRooms }) => {
   const { push } = useHistory()
-  const [rooms, setRooms] = useState<User['activeTeam']['rooms']>(
-    initialRooms.sort((a, b) => (a.name > b.name ? 1 : -1)),
-  )
+  const [rooms, setRooms] = useState<User['activeTeam']['rooms']>([])
   const navigateToRoom = (id: string): void => push(`/room/${id}`)
   const websocket = useWebsocketContext()
 
@@ -65,6 +63,10 @@ const RoomSelector: React.FC<RoomSelectorProps> = ({ activeTeamId, activeRoomId,
 
     return websocket.unsubscribeForTeam
   }, [activeTeamId, websocket])
+
+  useEffect(() => {
+    setRooms(initialRooms.sort((a, b) => (a.name > b.name ? 1 : -1)))
+  }, [initialRooms])
 
   if (!rooms) {
     return <p>Loading</p>
