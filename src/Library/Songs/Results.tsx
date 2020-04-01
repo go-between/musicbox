@@ -57,14 +57,9 @@ const TagList: React.FC<{ tags: TagType[] }> = ({ tags }) => {
 }
 
 type ResultProps = {
-  activeTag: TagType | null
   result: SongType
-  tagResult: (songId: string) => void
 }
-const Result: React.FC<ResultProps> = ({ activeTag, result, tagResult }) => {
-  const addTag = (): void => tagResult(result.id)
-  const hasTag = !!result.tags.find(tag => tag.id === activeTag?.id)
-
+const Result: React.FC<ResultProps> = ({ result }) => {
   return (
     <Box
       as="li"
@@ -83,34 +78,6 @@ const Result: React.FC<ResultProps> = ({ activeTag, result, tagResult }) => {
       }}
     >
       <Box
-        onClick={addTag}
-        sx={{
-          borderColor: 'accent',
-          border: '1px solid',
-          borderRadius: 4,
-          p: 1,
-          position: 'relative',
-          cursor: !!activeTag ? 'pointer' : 'inherit',
-          '&:hover > *': { visibility: 'visible' },
-        }}
-      >
-        <TagButton hasTag={hasTag} />
-        <Box
-          sx={{
-            visibility: 'hidden',
-            position: 'absolute',
-            zIndex: 100,
-            width: '200px',
-            left: '110%',
-            top: 0,
-            bg: 'accent',
-            p: 2,
-          }}
-        >
-          <TagList tags={result.tags} />
-        </Box>
-      </Box>
-      <Box
         sx={{
           overflow: 'hidden',
           textOverflow: 'ellipsis',
@@ -126,21 +93,11 @@ const Result: React.FC<ResultProps> = ({ activeTag, result, tagResult }) => {
 
 const Songs: React.FC = () => {
   const { query } = useSearchContext()
-  const { activeTag } = useTagsContext()
   const [debouncedQuery] = useDebounce(query, 500)
   const [results, setResults] = useState<SongType[]>([])
   const [searchLibrary, { data }] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
     fetchPolicy: 'network-only',
   })
-
-  const [tagToggleMutation] = useMutation<TagToggle['data'], TagToggle['vars']>(TAG_TOGGLE)
-  const tagResult = (songId: string): void => {
-    if (!activeTag) {
-      return
-    }
-
-    tagToggleMutation({ variables: { songId, tagId: activeTag.id }, refetchQueries: ['LibrarySongsQuery'] })
-  }
 
   useEffect(() => {
     if (!data) {
@@ -158,9 +115,7 @@ const Songs: React.FC = () => {
     return <></>
   }
 
-  const resultItems = results.map(result => (
-    <Result key={result.id} activeTag={activeTag} result={result} tagResult={tagResult} />
-  ))
+  const resultItems = results.map(result => <Result key={result.id} result={result} />)
   return (
     <Box
       as="ul"

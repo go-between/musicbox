@@ -23,22 +23,6 @@ export const SONGS_QUERY = gql`
   }
 `
 
-export type TagToggle = {
-  data: {}
-  vars: {
-    songId: string
-    tagId: string
-  }
-}
-
-export const TAG_TOGGLE = gql`
-  mutation TagToggle($songId: ID!, $tagId: ID!) {
-    tagToggle(input: { songId: $songId, tagId: $tagId }) {
-      errors
-    }
-  }
-`
-
 export type TagCreate = {
   data: {}
   vars: {
