@@ -6,7 +6,7 @@ const Container: React.FC = ({ children }) => (
     sx={{
       maxWidth: '1200px',
       mx: 'auto',
-      px: 3,
+      px: [3, 4],
     }}
   >
     {children}

@@ -43,10 +43,13 @@ const colors = {
   offWhite: '#f7f7f7',
   indigo100: '#EBF4FF',
   indigo200: '#C3DAFE',
+  indigo300: '#A3BFFA',
+  indigo400: '#7F9CF5',
   indigo500: '#667EEA',
   indigo600: '#5A67D8',
   indigo700: '#4C51BF',
   indigo800: '#434190',
+  indigo900: '#3C366B',
   red: '#E53E3E',
   redDark: '#C53030',
   redLight: '#FFF5F5',
@@ -70,6 +73,20 @@ export default {
       lineHeight: '1.5',
       px: 3,
       py: 2,
+      '&:hover': {
+        bg: 'secondary',
+      },
+    },
+    mini: {
+      bg: 'primary',
+      boxShadow: 'base',
+      color: 'white',
+      cursor: 'pointer',
+      fontSize: 1,
+      fontWeight: '600',
+      lineHeight: '1.5',
+      px: 2,
+      py: 1,
       '&:hover': {
         bg: 'secondary',
       },
@@ -101,7 +118,7 @@ export default {
   fontSizes: [10, 12, 14, 16, 18, 20, 24, 32, 48, 64, 72, 96],
   fonts: {
     body: 'inter, system-ui, sans-serif',
-    heading: 'inherit',
+    heading: 'inter, system-ui, sans-serif',
     monospace: 'Menlo, monospace',
   },
   fontWeights: {
@@ -165,6 +182,9 @@ export default {
     radio: {},
     checkbox: {},
   },
+  link: {
+    cursor: 'pointer',
+  },
   lineHeight: '1.5',
   listTypes: ['none', 'disc'],
   shadows: {
@@ -179,6 +199,14 @@ export default {
   },
   styles: {},
   space: [0, 4, 8, 16, 32, 64, 128, 256],
+  text: {
+    headline: {
+      fontSize: [7, 8, 9],
+      letterSpacing: '-0.045em',
+      textIndent: '-0.012em',
+      lineHeight: '1em',
+    }
+  },
   zIndices: {
     zNeg: -1,
     z0: 0,

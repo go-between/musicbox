@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 
+import Marketing from 'Marketing'
 import Home from 'Home'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
@@ -28,6 +29,10 @@ const Router: React.FC<{ token: string }> = ({ token }) => {
         <UserContextProvider>
           <BrowserRouter>
             <Switch>
+              <Route key="marketing" path="/marketing">
+                <Marketing />
+              </Route>
+
               <Route key="invitation" path="/invitation">
                 <Invitation />
               </Route>
