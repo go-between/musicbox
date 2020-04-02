@@ -1,65 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex } from 'rebass'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { Box } from 'rebass'
+import { Checkbox, Label } from '@rebass/forms'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
-import { Tag as TagIcon } from 'react-feather'
 
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
-import { SongsQuery, TagToggle, Song as SongType, Tag as TagType, SONGS_QUERY, TAG_TOGGLE } from '../graphql'
-
-type TagButtonProps = {
-  hasTag: boolean
-}
-const TagButton: React.FC<TagButtonProps> = ({ hasTag }) => {
-  const icon = hasTag ? <TagIcon size={16} color="#5A67D8" fill="#5A67D8" /> : <TagIcon size={16} />
-  const wording = hasTag ? 'Tagged' : 'Untagged'
-
-  return (
-    <Flex
-      sx={{
-        alignItems: 'center',
-        flexDirection: 'row',
-        minWidth: '80px',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Box mr={1}>{icon}</Box>
-      <Box fontSize={12}>{wording}</Box>
-    </Flex>
-  )
-}
-
-const TagList: React.FC<{ tags: TagType[] }> = ({ tags }) => {
-  const tagItems = tags.map(t => (
-    <Box
-      key={t.id}
-      as="li"
-      sx={{
-        listStyle: 'none',
-      }}
-    >
-      {t.name}
-    </Box>
-  ))
-
-  return (
-    <Box
-      as="ul"
-      sx={{
-        m: 0,
-        p: 0,
-      }}
-    >
-      {tagItems}
-    </Box>
-  )
-}
+import { SongsQuery, Song as SongType, SONGS_QUERY } from '../graphql'
 
 type ResultProps = {
   result: SongType
 }
 const Result: React.FC<ResultProps> = ({ result }) => {
+  const { activeTag, addSong, removeSong, modifyTags, songsToAdd, songsToRemove } = useTagsContext()
+
+  const toggleTag = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+    if (ev.target.checked) {
+      addSong(result.id)
+    } else {
+      removeSong(result.id)
+    }
+  }
+
+  const existingTag = !!result.tags.find(t => t.id === activeTag?.id)
+  const checked =
+    (existingTag && !songsToRemove.find(s => s === result.id)) ||
+    (!existingTag && !!songsToAdd.find(s => s === result.id))
+
   return (
     <Box
       as="li"
@@ -78,14 +45,21 @@ const Result: React.FC<ResultProps> = ({ result }) => {
       }}
     >
       <Box
+        display="flex"
         sx={{
+          alignItems: 'center',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           ml: 3,
         }}
       >
-        {result.name}
+        <Box>
+          <Label sx={{ m: 0, visibility: modifyTags ? 'visible' : 'hidden' }}>
+            <Checkbox checked={checked} onChange={toggleTag} sx={{ cursor: 'pointer' }} />
+          </Label>
+        </Box>
+        <Box>{result.name}</Box>
       </Box>
     </Box>
   )
@@ -122,6 +96,7 @@ const Songs: React.FC = () => {
       sx={{
         m: 0,
         p: 0,
+        overflow: 'scroll',
       }}
     >
       {resultItems}

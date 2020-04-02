@@ -38,6 +38,23 @@ export const TAG_CREATE = gql`
   }
 `
 
+export type TagToggle = {
+  data: {}
+  vars: {
+    tagId: string
+    addSongIds: string[]
+    removeSongIds: string[]
+  }
+}
+
+export const TAG_TOGGLE = gql`
+  mutation TagToggle($tagId: ID!, $addSongIds: [ID!]!, $removeSongIds: [ID!]!) {
+    tagToggle(input: { tagId: $tagId, addSongIds: $addSongIds, removeSongIds: $removeSongIds }) {
+      errors
+    }
+  }
+`
+
 export type TagsQuery = {
   data: {
     tags: Tag[]

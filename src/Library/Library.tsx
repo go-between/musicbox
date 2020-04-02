@@ -4,7 +4,7 @@ import { Flex } from 'rebass'
 import SideNav from 'SideNav'
 
 import Songs from './Songs'
-import Tags from './Tags'
+import SongDetails from './SongDetails'
 import SearchContextProvider from './SearchContextProvider'
 import TagsContextProvider from './TagsContextProvider'
 
@@ -24,7 +24,7 @@ const Library: React.FC = () => {
         >
           <SideNav />
           <Songs />
-          <Tags />
+          <SongDetails />
         </Flex>
       </TagsContextProvider>
     </SearchContextProvider>
