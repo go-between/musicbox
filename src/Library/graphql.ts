@@ -1,5 +1,29 @@
 import gql from 'graphql-tag'
 
+export type SongQuery = {
+  data: {
+    song: Song
+  }
+  vars: {
+    id: string
+  }
+}
+
+export const SONG_QUERY = gql`
+  query Song($id: ID!) {
+    song(id: $id) {
+      id
+      durationInSeconds
+      name
+      youtubeId
+      tags {
+        id
+        name
+      }
+    }
+  }
+`
+
 export type SongsQuery = {
   data: {
     songs: Song[]
@@ -13,28 +37,13 @@ export const SONGS_QUERY = gql`
   query LibrarySongsQuery($query: String) {
     songs(query: $query) {
       id
+      durationInSeconds
       name
       youtubeId
       tags {
         id
         name
       }
-    }
-  }
-`
-
-export type TagToggle = {
-  data: {}
-  vars: {
-    songId: string
-    tagId: string
-  }
-}
-
-export const TAG_TOGGLE = gql`
-  mutation TagToggle($songId: ID!, $tagId: ID!) {
-    tagToggle(input: { songId: $songId, tagId: $tagId }) {
-      errors
     }
   }
 `
@@ -49,6 +58,23 @@ export type TagCreate = {
 export const TAG_CREATE = gql`
   mutation TagCreate($name: String!) {
     tagCreate(input: { name: $name }) {
+      errors
+    }
+  }
+`
+
+export type TagToggle = {
+  data: {}
+  vars: {
+    tagId: string
+    addSongIds: string[]
+    removeSongIds: string[]
+  }
+}
+
+export const TAG_TOGGLE = gql`
+  mutation TagToggle($tagId: ID!, $addSongIds: [ID!]!, $removeSongIds: [ID!]!) {
+    tagToggle(input: { tagId: $tagId, addSongIds: $addSongIds, removeSongIds: $removeSongIds }) {
       errors
     }
   }
@@ -72,6 +98,7 @@ export const TAGS_QUERY = gql`
 
 export type Song = {
   id: string
+  durationInSeconds: number
   name: string
   youtubeId: string
   tags: Tag[]
