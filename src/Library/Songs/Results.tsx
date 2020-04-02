@@ -13,7 +13,9 @@ type ResultProps = {
 }
 const Result: React.FC<ResultProps> = ({ result }) => {
   const { activeTag, addSong, removeSong, modifyTags, songsToAdd, songsToRemove } = useTagsContext()
+  const { activeSongId, setActiveSongId } = useSearchContext()
 
+  const selectSong = (): void => setActiveSongId(result.id)
   const toggleTag = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     if (ev.target.checked) {
       addSong(result.id)
@@ -39,10 +41,13 @@ const Result: React.FC<ResultProps> = ({ result }) => {
         my: 2,
         px: 2,
         py: 3,
+        bg: activeSongId === result.id ? 'accent' : 'initial',
+        cursor: 'pointer',
         '&:hover': {
           bg: '#4A5568',
         },
       }}
+      onClick={selectSong}
     >
       <Box
         display="flex"

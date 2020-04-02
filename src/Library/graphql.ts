@@ -1,5 +1,29 @@
 import gql from 'graphql-tag'
 
+export type SongQuery = {
+  data: {
+    song: Song
+  }
+  vars: {
+    id: string
+  }
+}
+
+export const SONG_QUERY = gql`
+  query Song($id: ID!) {
+    song(id: $id) {
+      id
+      durationInSeconds
+      name
+      youtubeId
+      tags {
+        id
+        name
+      }
+    }
+  }
+`
+
 export type SongsQuery = {
   data: {
     songs: Song[]
@@ -13,6 +37,7 @@ export const SONGS_QUERY = gql`
   query LibrarySongsQuery($query: String) {
     songs(query: $query) {
       id
+      durationInSeconds
       name
       youtubeId
       tags {
@@ -73,6 +98,7 @@ export const TAGS_QUERY = gql`
 
 export type Song = {
   id: string
+  durationInSeconds: number
   name: string
   youtubeId: string
   tags: Tag[]
