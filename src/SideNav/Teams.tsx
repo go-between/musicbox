@@ -135,6 +135,10 @@ const Teams: React.FC = () => {
   return (
     <>
       <TeamSelector activeTeamId={user.activeTeam.id} changeTeam={changeTeam} teams={user.teams} />
+      <hr/>
+
+      <Box>Rooms</Box>
+      <hr/>
       <RoomSelector
         activeTeamId={user.activeTeam.id}
         activeRoomId={user.activeRoom?.id}

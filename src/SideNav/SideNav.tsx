@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Link } from 'rebass'
+import { Box, Flex, Link } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import { Home, Inbox } from 'react-feather'
 
@@ -32,24 +32,7 @@ export const SideNav: React.FC = ({ children }) => {
         <Link
           sx={{
             alignItems: 'center',
-            display: 'flex',
-            fontSize: 2,
-            mb: 3,
-            textDecoration: 'none',
-          }}
-          color="text"
-          onClick={navigate('/home')}
-          href="#"
-        >
-          <Box as={Home} size={20} color="muted" />
-          <Box mr={2} />
-          Home
-        </Link>
-
-        <Link
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
+            display: 'inline-flex',
             fontSize: 2,
             mb: 3,
             textDecoration: 'none',
@@ -58,8 +41,15 @@ export const SideNav: React.FC = ({ children }) => {
           onClick={navigate('/library')}
           href="#"
         >
-          <Box as={Inbox} size={20} color="muted" />
-          <Box mr={2} />
+          {/* <Flex
+            sx={{
+              alignItems: 'center',
+              mr: 2,
+            }}
+          >
+
+          </Flex> */}
+          <Box as={Inbox} size={[16, 20]} color='muted' mr={2} />
           Library
         </Link>
 
