@@ -4,12 +4,13 @@ import moment from 'moment'
 
 type Props = {
   changeProgress?: (opts: { played: number }) => void
+  controls?: boolean
   playedAt: string
   youtubeId: string | undefined
   volume: number | null
 }
 
-const PlayerPrimitive: React.FC<Props> = ({ changeProgress, playedAt, youtubeId, volume }) => {
+const PlayerPrimitive: React.FC<Props> = ({ changeProgress, controls, playedAt, youtubeId, volume }) => {
   const [player, setPlayer] = useState<ReactPlayer>()
   const setRefFromPlayer = (player: ReactPlayer): void => setPlayer(player)
 
@@ -28,6 +29,7 @@ const PlayerPrimitive: React.FC<Props> = ({ changeProgress, playedAt, youtubeId,
   return (
     <ReactPlayer
       ref={setRefFromPlayer}
+      controls={controls}
       url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
       playing={true}
       volume={(volume || 0) / 100.0}

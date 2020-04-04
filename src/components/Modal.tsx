@@ -4,11 +4,12 @@ import { XCircle } from 'react-feather'
 
 type Props = {
   showModal: boolean
-  closeModal: () => void
+  closeModal: (ev?: React.MouseEvent) => void
   title: string
 }
 export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title }) => {
   const preventBubble = (ev: React.MouseEvent): void => ev.stopPropagation()
+  if (!showModal) return <></>
   return (
     <Box
       onClick={closeModal}

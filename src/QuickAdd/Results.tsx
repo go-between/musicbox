@@ -1,18 +1,15 @@
-import React, { createRef, useEffect, MouseEvent } from 'react'
-import { Box, Flex, Text } from 'rebass'
+import React, { createRef, useEffect, useState } from 'react'
+import { Box, Button, Flex, Text } from 'rebass'
 import { Check, Plus, ZoomIn } from 'react-feather'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import { useToasts } from 'react-toast-notifications'
 
+import { Modal } from 'components'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 
 import { Song } from './graphql'
 import { useResultsContext } from './ResultsContextProvider'
-
-const ReactSwal = withReactContent(Swal)
 
 const NowPlaying: React.FC = () => {
   return (
@@ -43,31 +40,28 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
   const { addRecord } = usePlaylistRecordContext()
   const { addToast } = useToasts()
 
+  const [showModal, setShowModal] = useState(false)
+
+  const openModal = (ev: React.MouseEvent): void => {
+    ev.stopPropagation()
+    setShowModal(true)
+    setUnmutedPlayer(PLAYERS.preview)
+  }
+  const closeModal = (ev?: React.MouseEvent): void => {
+    if (ev) {
+      ev.stopPropagation()
+    }
+    setShowModal(false)
+    setUnmutedPlayer(PLAYERS.main)
+  }
+
   const onClick = (ev: React.MouseEvent): void => {
     ev.stopPropagation()
     addRecord(result.id)
     addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
-  }
-
-  const showPreview = (e: MouseEvent): void => {
-    e.stopPropagation()
-    setUnmutedPlayer(PLAYERS.preview)
-    ReactSwal.fire({
-      allowOutsideClick: () => true,
-      animation: true,
-      cancelButtonText: 'Cancel',
-      confirmButtonText: 'Add',
-      showCancelButton: true,
-      title: result.name,
-      html: <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} />,
-      width: '30%',
-    }).then(userAction => {
-      if (userAction.value) {
-        addRecord(result.id)
-        addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
-      }
-      setUnmutedPlayer(PLAYERS.main)
-    })
+    if (showModal) {
+      closeModal()
+    }
   }
 
   return (
@@ -126,7 +120,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
             p: 1,
             mx: 1,
           }}
-          onClick={showPreview}
+          onClick={openModal}
         >
           <ZoomIn size={18} />
         </Box>
@@ -145,6 +139,27 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
           {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
         </Box>
       </Box>
+
+      <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
+        <PlayerPrimitive
+          playedAt=""
+          youtubeId={result.youtubeId}
+          volume={volume}
+          controls={true}
+        />
+
+        <Button
+          onClick={onClick}
+        >
+          Add
+        </Button>
+
+        <Button
+          onClick={closeModal}
+        >
+          Close
+        </Button>
+      </Modal>
     </Box>
   )
 }
