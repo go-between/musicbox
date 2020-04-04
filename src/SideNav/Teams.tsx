@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { Box, Heading } from 'rebass'
+import { Box, Flex, Heading, Text } from 'rebass'
 import { Select } from '@rebass/forms'
 import { useHistory } from 'react-router-dom'
-import { Speaker } from 'react-feather'
+import { Box as BoxIcon, PlusCircle, Speaker } from 'react-feather'
 
 import { useUserContext, useWebsocketContext, User } from 'Context'
+import { CreateRoom } from './CreateRoom'
 
+import { Modal } from 'components'
 import { TeamActivate, TEAM_ACTIVATE } from './graphql'
 
 type TeamSelectorProps = {
@@ -16,7 +18,15 @@ type TeamSelectorProps = {
 }
 const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, teams }) => {
   if (teams.length === 1) {
-    return <Heading>{teams[0].name}</Heading>
+    return (
+      <Heading
+        sx={{
+          mb: 4,
+        }}
+      >
+        {teams[0].name}
+      </Heading>
+    )
   }
 
   const options = teams.map(t => (
@@ -26,22 +36,28 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
   ))
 
   return (
-    <Select
-      onChange={changeTeam}
-      defaultValue={activeTeamId}
+    <Box
       sx={{
-        bg: 'background',
-        borderRadius: 4,
-        borderColor: 'transparent',
-        cursor: 'pointer',
-        overflow: 'hidden',
-        p: 0,
-        pr: 4,
-        textOverflow: 'ellipsis',
+        mb: 4,
       }}
     >
-      {options}
-    </Select>
+      <Select
+        onChange={changeTeam}
+        defaultValue={activeTeamId}
+        sx={{
+          bg: 'background',
+          borderRadius: 4,
+          borderColor: 'transparent',
+          cursor: 'pointer',
+          overflow: 'hidden',
+          p: 0,
+          pr: 4,
+          textOverflow: 'ellipsis',
+        }}
+      >
+        {options}
+      </Select>
+    </Box>
   )
 }
 
@@ -89,8 +105,11 @@ const RoomSelector: React.FC<RoomSelectorProps> = ({ activeTeamId, activeRoomId,
         key={r.id}
         onClick={() => navigateToRoom(r.id)}
         sx={{
+          alignItems: 'center',
           bg: activeRoomId === r.id ? 'accent' : 'initial',
+          display: 'inline-flex',
           cursor: 'pointer',
+          fontSize: 2,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
@@ -99,13 +118,14 @@ const RoomSelector: React.FC<RoomSelectorProps> = ({ activeTeamId, activeRoomId,
           },
         }}
       >
-        {icon} {r.name}
+        <Box as={BoxIcon} size={[16, 20]} color='muted' mr={2} />
+        {r.name}
       </Box>
     )
   })
 
   return (
-    <Box as="ul" sx={{ listStyleType: 'none', pl: 2 }}>
+    <Box as="ul" sx={{ listStyleType: 'none', m: 0, p: 0,}}>
       {roomItems}
     </Box>
   )
@@ -132,18 +152,55 @@ const Teams: React.FC = () => {
     return <p>Loading</p>
   }
 
+  const [showModal, setShowModal] = useState(false)
+  const openModal = (): void => setShowModal(true)
+  const closeModal = (): void => setShowModal(false)
+
   return (
     <>
-      <TeamSelector activeTeamId={user.activeTeam.id} changeTeam={changeTeam} teams={user.teams} />
-      <hr/>
 
-      <Box>Rooms</Box>
-      <hr/>
+      <TeamSelector activeTeamId={user.activeTeam.id} changeTeam={changeTeam} teams={user.teams} />
+
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        mb={3}
+      >
+        <Text
+          sx={{
+            fontSize: 2,
+            fontWeight: '600',
+            textTransform: 'uppercase'
+          }}
+        >
+          Rooms
+        </Text>
+
+        <Box
+          as={PlusCircle}
+          onClick={openModal}
+          size={18}
+          sx={{
+            color: 'muted',
+            cursor: 'pointer',
+            '&:hover': {
+              bg: 'muted',
+              color: 'background',
+              borderRadius: '100%'
+            }
+          }}
+        />
+      </Flex>
+
       <RoomSelector
         activeTeamId={user.activeTeam.id}
         activeRoomId={user.activeRoom?.id}
         initialRooms={user.activeTeam.rooms}
       />
+
+      <Modal showModal={showModal} closeModal={closeModal} title="Create Room">
+        <CreateRoom closeModal={closeModal} />
+      </Modal>
     </>
   )
 }
