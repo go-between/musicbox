@@ -1,24 +1,31 @@
 import React, { createContext, useContext, useState } from 'react'
 
 type SearchContext = {
+  activeSongId: string
   query: string
+  setActiveSongId: (songId: string) => void
   setQuery: (query: string) => void
 }
 
 const SearchContext = createContext<Partial<SearchContext>>({})
 const SearchProvider: React.FC = ({ children }) => {
   const [query, setQuery] = useState('')
+  const [activeSongId, setActiveSongId] = useState('')
 
-  return <SearchContext.Provider value={{ query, setQuery }}>{children}</SearchContext.Provider>
+  return (
+    <SearchContext.Provider value={{ activeSongId, query, setActiveSongId, setQuery }}>
+      {children}
+    </SearchContext.Provider>
+  )
 }
 
 export const useSearchContext: () => SearchContext = () => {
-  const { query, setQuery } = useContext(SearchContext)
+  const { activeSongId, query, setActiveSongId, setQuery } = useContext(SearchContext)
 
-  if (query === undefined || setQuery === undefined) {
+  if (activeSongId === undefined || query === undefined || setActiveSongId === undefined || setQuery === undefined) {
     throw new Error('Search accessed before being set')
   }
 
-  return { query, setQuery }
+  return { activeSongId, query, setActiveSongId, setQuery }
 }
 export default SearchProvider
