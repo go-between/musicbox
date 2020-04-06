@@ -120,13 +120,13 @@ const Teams: React.FC = () => {
     teamActivate({ variables: { teamId: user.teams[0].id } })
   }, [teamActivate, user])
 
-  if (!user.activeTeam) {
-    return <p>Loading</p>
-  }
-
   const [showModal, setShowModal] = useState(false)
   const openModal = (): void => setShowModal(true)
   const closeModal = (): void => setShowModal(false)
+
+  if (!user.activeTeam) {
+    return <p>Loading</p>
+  }
 
   return (
     <>

@@ -37,6 +37,7 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
           bg: activeRoomId === room.id ? 'accent' : 'initial',
           borderRadius: 4,
           display: 'flex',
+          color: activeRoomId === room.id ? 'gray500' : 'text',
           cursor: 'pointer',
           fontSize: 2,
           px: 1,
