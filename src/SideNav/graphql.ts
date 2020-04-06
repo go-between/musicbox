@@ -38,7 +38,6 @@ type Room = {
   } | null
 }
 
-
 export type RoomCreate = {
   data: {}
   vars: {

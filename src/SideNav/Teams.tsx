@@ -30,7 +30,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
   }
 
   const options = teams.map(t => (
-    <Box as="option" key={t.id} value={t.id} sx={{minWidth: '0',}}>
+    <Box as="option" key={t.id} value={t.id} sx={{ minWidth: '0' }}>
       {t.name}
     </Box>
   ))
@@ -93,17 +93,11 @@ const RoomSelector: React.FC<RoomSelectorProps> = ({ activeTeamId, activeRoomId,
   }
 
   const roomItems = rooms.map(r => {
-    return (
-      <RoomDetails
-        key={r.id}
-        activeRoomId={activeRoomId}
-        room={r}
-      />
-    )
+    return <RoomDetails key={r.id} activeRoomId={activeRoomId} room={r} />
   })
 
   return (
-    <Box as="ul" sx={{ listStyleType: 'none', m: 0, p: 0,}}>
+    <Box as="ul" sx={{ listStyleType: 'none', m: 0, p: 0 }}>
       {roomItems}
     </Box>
   )
@@ -136,17 +130,13 @@ const Teams: React.FC = () => {
 
   return (
     <>
-      <Flex
-        alignItems="center"
-        justifyContent="space-between"
-        mb={3}
-      >
+      <Flex alignItems="center" justifyContent="space-between" mb={3}>
         <Text
           sx={{
             color: 'gray500',
             fontSize: 2,
             fontWeight: '600',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }}
         >
           Teams
@@ -155,17 +145,13 @@ const Teams: React.FC = () => {
 
       <TeamSelector activeTeamId={user.activeTeam.id} changeTeam={changeTeam} teams={user.teams} />
 
-      <Flex
-        alignItems="center"
-        justifyContent="space-between"
-        mb={3}
-      >
+      <Flex alignItems="center" justifyContent="space-between" mb={3}>
         <Text
           sx={{
             color: 'gray500',
             fontSize: 2,
             fontWeight: '600',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }}
         >
           Rooms
@@ -183,8 +169,8 @@ const Teams: React.FC = () => {
             '&:hover': {
               bg: 'muted',
               color: 'background',
-              borderRadius: '100%'
-            }
+              borderRadius: '100%',
+            },
           }}
         />
       </Flex>

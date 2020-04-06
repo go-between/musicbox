@@ -53,7 +53,7 @@ export const SideNav: React.FC = ({ children }) => {
           onClick={navigate('/library')}
           href="#"
         >
-          <Box as={Inbox} size={[16, 20]} color='muted' mr={2} />
+          <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
           Library
         </Link>
         {children}

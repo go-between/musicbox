@@ -21,9 +21,7 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
 
   const activeUsers = room.users.map(user => {
     return (
-      <li
-        key={user.id}
-      >
+      <li key={user.id}>
         <Gravatar email={user.email} size={24} style={{ borderRadius: '100%' }} />
         {user.name}
       </li>
@@ -80,7 +78,7 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
             px: 1,
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            width: '100%'
+            width: '100%',
           }}
         >
           {room.name}
@@ -90,10 +88,11 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
       <Modal showModal={showModal} closeModal={closeModal} title="Room Details">
         <Box
           sx={{
-            mb: 3
+            mb: 3,
           }}
         >
-          {room.currentSong ? room.currentSong?.name : 'No Song Currently Playing'}</Box>
+          {room.currentSong ? room.currentSong?.name : 'No Song Currently Playing'}
+        </Box>
         {room.users.length ? activeUsers : <Box>There are no Users in this room</Box>}
       </Modal>
     </>

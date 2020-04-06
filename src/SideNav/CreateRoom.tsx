@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RoomCreate, ROOM_CREATE } from './graphql'
 import { useMutation } from '@apollo/react-hooks'
-import { Box, Button, Flex } from 'rebass'
+import { Box, Button } from 'rebass'
 import { Input } from '@rebass/forms'
 
 import { setString } from 'lib/setters'

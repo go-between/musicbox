@@ -6,7 +6,7 @@ export const Logo: React.FC = () => (
   <Image
     src={MusicboxLogo}
     sx={{
-      width: '150px'
+      width: '150px',
     }}
   />
 )

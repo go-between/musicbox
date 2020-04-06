@@ -23,6 +23,7 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
         right: 0,
         bg: 'rgba(0, 0, 0, 0.5)',
         visibility: showModal ? 'visible' : 'hidden',
+        zIndex: 1000,
       }}
     >
       <Box

@@ -141,24 +141,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
       </Box>
 
       <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
-        <PlayerPrimitive
-          playedAt=""
-          youtubeId={result.youtubeId}
-          volume={volume}
-          controls={true}
-        />
+        <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} controls={true} />
 
-        <Button
-          onClick={onClick}
-        >
-          Add
-        </Button>
+        <Button onClick={onClick}>Add</Button>
 
-        <Button
-          onClick={closeModal}
-        >
-          Close
-        </Button>
+        <Button onClick={closeModal}>Close</Button>
       </Modal>
     </Box>
   )
