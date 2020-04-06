@@ -27,12 +27,21 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.json']
   },
   module: {
-    rules: [{
-      // Include ts, tsx, js, and jsx files.
-      test: /\.(ts|js)x?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-    }],
+    rules: [
+      {
+        // Include ts, tsx, js, and jsx files.
+        test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'images/[name].[ext]'
+        }
+      },
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),

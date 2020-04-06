@@ -1,11 +1,12 @@
 import React from 'react'
 import { Image } from 'rebass'
+import MusicboxLogo from 'images/musicbox-logo.svg'
 
-export const Logo: React.FC = ({ path }) => (
+export const Logo: React.FC = () => (
   <Image
-    src={path}
+    src={MusicboxLogo}
     sx={{
-      width: [ '100%', '50%' ],
+      width: '150px'
     }}
   />
 )
