@@ -66,6 +66,9 @@ const MessageEntry: React.FC = () => {
           resize: 'none',
           outline: 'none',
           overflow: 'auto',
+          '&:focus-within': {
+            boxShadow: 'outline',
+          },
         }}
       />
     </Box>
