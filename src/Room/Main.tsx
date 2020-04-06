@@ -9,13 +9,11 @@ import Users from './Users'
 import { useCurrentRecordContext } from 'Room'
 
 import { Room as RoomType } from './graphql'
-import PinnedMessages from './PinnedMessages'
 
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {
   const [tab, setTab] = useState('userPlaylist')
   const selectUserPlaylist = (): void => setTab('userPlaylist')
   const selectRoomPlaylist = (): void => setTab('roomPlaylist')
-  const selectPinnedMessages = (): void => setTab('pinnedMessages')
 
   // TODO:  Sort of a hack to ensure current record is set after room has
   // been activated.  This should be pulled out.
@@ -97,26 +95,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
                 Room Playlist
               </Button>
             </Box>
-
-            <Box>
-              <Button
-                disabled={tab === 'pinnedMessages'}
-                onClick={selectPinnedMessages}
-                variant="transparent"
-                sx={{
-                  bg: tab === 'pinnedMessages' ? 'accent' : 'transparent',
-                  cursor: 'pointer',
-                  ':disabled': {
-                    pointerEvents: 'none',
-                  },
-                  ':hover': {
-                    bg: 'accent',
-                  },
-                }}
-              >
-                Starred Messages
-              </Button>
-            </Box>
           </Flex>
         </Box>
 
@@ -126,9 +104,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           </Box>
           <Box display={tab === 'roomPlaylist' ? 'block' : 'none'}>
             <RoomPlaylist roomId={room.id} />
-          </Box>
-          <Box display={tab === 'pinnedMessages' ? 'block' : 'none'}>
-            <PinnedMessages />
           </Box>
         </Flex>
       </Box>
