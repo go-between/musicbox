@@ -1,9 +1,11 @@
 import React from 'react'
-import { Box, Flex, Link } from 'rebass'
+import { Box, Link } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Home, Inbox } from 'react-feather'
+import { Inbox } from 'react-feather'
 
 import Teams from './Teams'
+
+import { Logo } from 'components'
 
 export const SideNav: React.FC = ({ children }) => {
   const history = useHistory()
@@ -24,11 +26,21 @@ export const SideNav: React.FC = ({ children }) => {
         justifyContent: 'space-between',
         height: '100vh',
         overflow: 'hidden',
-        p: 4,
+        p: 3,
         width: ['100%', '300px'],
       }}
     >
       <Box mb={4}>
+        <Box mb={4}>
+          <Logo />
+        </Box>
+
+        <Box mb={4}>
+          <Teams />
+        </Box>
+      </Box>
+
+      <Box>
         <Link
           sx={{
             alignItems: 'center',
@@ -41,22 +53,11 @@ export const SideNav: React.FC = ({ children }) => {
           onClick={navigate('/library')}
           href="#"
         >
-          {/* <Flex
-            sx={{
-              alignItems: 'center',
-              mr: 2,
-            }}
-          >
-
-          </Flex> */}
           <Box as={Inbox} size={[16, 20]} color='muted' mr={2} />
           Library
         </Link>
-
-        <Teams />
+        {children}
       </Box>
-
-      <Box>{children}</Box>
     </Box>
   )
 }

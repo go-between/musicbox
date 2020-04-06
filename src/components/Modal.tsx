@@ -25,7 +25,16 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
         visibility: showModal ? 'visible' : 'hidden',
       }}
     >
-      <Box sx={{ width: '600px', m: 'auto', bg: 'accent', p: 2 }} onClick={preventBubble}>
+      <Box
+        onClick={preventBubble}
+        sx={{
+          bg: 'accent',
+          borderRadius: 6,
+          m: 'auto',
+          p: 3,
+          width: '600px',
+        }}
+      >
         <Flex alignItems="center" justifyContent="space-between" mb={2}>
           <Heading>{title}</Heading>
           <Box onClick={closeModal} sx={{ cursor: 'pointer' }}>

@@ -8,6 +8,11 @@ type Room = {
   currentSong: {
     name: string
   } | null
+  users: Array<{
+    id: string
+    email: string
+    name: string
+  }>
 }
 
 type Team = {
@@ -51,6 +56,11 @@ const USER_QUERY = gql`
           id
           name
           currentSong {
+            name
+          }
+          users {
+            id
+            email
             name
           }
         }

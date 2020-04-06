@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Gravatar from 'react-gravatar'
 import { useLazyQuery } from '@apollo/react-hooks'
-import { Box, Heading, Flex, Text } from 'rebass'
+import { Box, Flex, Text } from 'rebass'
 
 import { useWebsocketContext } from 'Context'
 
@@ -69,28 +69,6 @@ const Users: React.FC<Props> = ({ initialUsers }) => {
         mb: 4,
       }}
     >
-      <Heading
-        sx={{
-          alignItems: 'center',
-          color: 'text',
-          display: 'flex',
-          fontSize: 2,
-          fontWeight: '600',
-          m: 0,
-        }}
-      >
-        <Box
-          sx={{
-            bg: 'green',
-            borderRadius: '100%',
-            height: '12px',
-            mr: 2,
-            width: '12px',
-          }}
-        />
-        Active Users
-      </Heading>
-
       <Flex justifyContent="space-between" alignItems="center">
         <Box
           as="ul"
