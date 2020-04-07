@@ -17,7 +17,7 @@ const Rooms: React.FC = () => {
     >
       <SideNav />
       <Flex as="main" alignItems="center" justifyContent="center" width="100%">
-        <Heading>Please a room on the left</Heading>
+        <Heading>Please select a room on the left</Heading>
       </Flex>
     </Flex>
   )

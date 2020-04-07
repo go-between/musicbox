@@ -37,3 +37,18 @@ type Room = {
     name: string
   } | null
 }
+
+export type RoomCreate = {
+  data: {}
+  vars: {
+    name: string
+  }
+}
+
+export const ROOM_CREATE = gql`
+  mutation RoomCreate($name: String!) {
+    roomCreate(input: { name: $name }) {
+      errors
+    }
+  }
+`

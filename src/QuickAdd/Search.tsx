@@ -132,7 +132,12 @@ export const Search: React.FC = () => {
       }}
     >
       <Flex
-        sx={{ borderRadius: 6 }}
+        sx={{
+          borderRadius: 6,
+          '&:focus-within': {
+            boxShadow: 'outline',
+          },
+        }}
         bg="accent"
         width="100%"
         px={3}

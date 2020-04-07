@@ -156,6 +156,11 @@ type RoomForTeamMessage = {
   currentSong: {
     name: string
   } | null
+  users: Array<{
+    id: string
+    email: string
+    name: string
+  }>
 }
 export type TeamMessage = {
   team: {
