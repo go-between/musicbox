@@ -6,12 +6,13 @@ export type RoomHistoryQuery = {
     roomPlaylist: RoomPlaylistRecord[]
   }
   vars: {
+    from: string
     roomId: string
   }
 }
 export const ROOM_HISTORY_QUERY = gql`
-  query RoomHistory($roomId: ID!) {
-    roomPlaylist(roomId: $roomId, historical: true) {
+  query RoomHistory($roomId: ID!, $from: DateTime) {
+    roomPlaylist(roomId: $roomId, historical: true, from: $from) {
       id
       playedAt
       song {
