@@ -5,14 +5,17 @@ import moment from 'moment'
 
 import { ROOM_HISTORY_QUERY, RoomHistoryQuery, RoomPlaylistRecord } from './graphql'
 
+const recordsFrom = moment()
+  .subtract(2, 'days')
+  .toISOString()
+
 type Props = {
   roomId: string
 }
-
 const RoomHistory: React.FC<Props> = ({ roomId }) => {
   const [playlistRecords, setPlaylistRecords] = useState<RoomPlaylistRecord[]>([])
   const { data, loading } = useQuery<RoomHistoryQuery['data'], RoomHistoryQuery['vars']>(ROOM_HISTORY_QUERY, {
-    variables: { roomId },
+    variables: { roomId, from: recordsFrom },
     fetchPolicy: 'network-only',
   })
 
