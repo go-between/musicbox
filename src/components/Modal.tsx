@@ -3,8 +3,8 @@ import { Box, Flex, Heading } from 'rebass'
 import { XCircle } from 'react-feather'
 
 type Props = {
-  showModal: boolean
   closeModal: (ev?: React.MouseEvent) => void
+  showModal: boolean
   title: string
 }
 export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title }) => {
@@ -36,7 +36,15 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
           width: '600px',
         }}
       >
-        <Flex alignItems="center" justifyContent="space-between" mb={2}>
+        <Flex
+          sx={{
+            borderBottom: '2px solid',
+            borderColor: 'muted',
+            pb: 3,
+          }}
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Heading>{title}</Heading>
           <Box onClick={closeModal} sx={{ cursor: 'pointer' }}>
             <XCircle />

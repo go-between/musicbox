@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Box } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import Gravatar from 'react-gravatar'
+import { Grid } from 'react-feather'
 
 import { User } from 'Context'
 
@@ -35,12 +36,13 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
         sx={{
           alignItems: 'center',
           bg: activeRoomId === room.id ? 'accent' : 'initial',
-          borderRadius: 4,
+          boxShadow: activeRoomId === room.id ? 'inset 4px 0 0 #5A67D8' : 'none',
           display: 'flex',
-          color: activeRoomId === room.id ? 'gray500' : 'text',
+          color: activeRoomId === room.id ? '#7F9CF5' : 'text',
           cursor: 'pointer',
           fontSize: 2,
-          px: 1,
+          fontWeight: activeRoomId === room.id ? '600' : '400',
+          px: 3,
           py: 2,
           mb: 2,
           overflow: 'hidden',
@@ -48,35 +50,25 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
           whiteSpace: 'nowrap',
           '&:hover': {
             bg: 'accent',
-            borderRadius: 4,
           },
         }}
       >
         <Box
           onClick={openModal}
+          as={Grid}
+          size={20}
           sx={{
-            alignItems: 'center',
-            bg: 'secondary',
-            borderRadius: '6px',
-            color: 'text',
-            fontSize: 1,
-            display: 'flex',
-            height: '24px',
-            justifyContent: 'center',
+            color: activeRoomId === room.id ? '#7F9CF5' : 'muted',
             mr: 2,
-            p: 1,
-            width: '24px',
+            width: '20px',
           }}
-        >
-          {room.users.length}
-        </Box>
+        />
 
         <Box
           onClick={() => navigateToRoom(room.id)}
           sx={{
             minWidth: '0',
             overflow: 'hidden',
-            px: 1,
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             width: '100%',
@@ -89,6 +81,7 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
       <Modal showModal={showModal} closeModal={closeModal} title="Room Details">
         <Box
           sx={{
+            py: 4,
             mb: 3,
           }}
         >

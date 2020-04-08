@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react'
 import { Box, Button, Flex, Text } from 'rebass'
-import { Check, Plus, ZoomIn } from 'react-feather'
+import { Check, Eye, Plus } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
 import { Modal } from 'components'
@@ -122,7 +122,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
           }}
           onClick={openModal}
         >
-          <ZoomIn size={18} />
+          <Eye size={18} />
         </Box>
         <Box
           sx={{
