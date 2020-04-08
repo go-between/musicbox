@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex, Heading } from 'rebass'
+import { Box, Flex, Text } from 'rebass'
+import { Clock, List, User as UserPlaylistIcon, Users as RoomPlaylistIcon, } from 'react-feather'
 
 import Player from 'Player'
 import QuickAdd from 'QuickAdd'
@@ -75,46 +76,80 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           <Flex
             alignItems="center"
             justifyContent="space-between"
-            sx={{ borderBottom: 'thin solid', borderBottomColor: 'accent' }}
+            sx={{ borderBottom: '1px solid', borderBottomColor: 'accent' }}
           >
             <Box
               onClick={selectUserPlaylist}
               sx={{
+                alignItems: 'center',
+                borderBottom: '3px solid',
+                borderColor: tab === 'userPlaylist' ? 'primary' : 'transparent',
+                cursor: tab === 'userPlaylist' ? 'default' : 'pointer',
+                display: 'flex',
+                fontWeight: tab === 'userPlaylist' ? '600' : '400',
+                justifyContent: 'flex-start',
+                py: 2,
+                px: 3,
                 textAlign: 'center',
                 width: '100%',
-                cursor: tab === 'userPlaylist' ? 'default' : 'pointer',
-                bg: tab === 'userPlaylist' ? 'accent' : 'inherit',
-                p: 2,
-                '&:hover': { bg: 'accent' },
+                '&:hover': {
+                  bg: 'accent',
+                  borderTopRightRadius: 6,
+                  borderTopLeftRadius: 6,
+                },
               }}
             >
-              <Heading>User Playlist</Heading>
+              <Box as={UserPlaylistIcon} mr={2} size={18} color="muted" />
+              <Text>
+                User Playlist
+              </Text>
             </Box>
             <Box
               onClick={selectRoomPlaylist}
               sx={{
+                alignItems: 'center',
+                borderBottom: '3px solid',
+                borderColor: tab === 'roomPlaylist' ? 'primary' : 'transparent',
+                cursor: tab === 'roomPlaylist' ? 'default' : 'pointer',
+                display: 'flex',
+                fontWeight: tab === 'roomPlaylist' ? '600' : '400',
+                justifyContent: 'flex-start',
+                py: 2,
+                px: 3,
                 textAlign: 'center',
                 width: '100%',
-                cursor: tab === 'roomPlaylist' ? 'default' : 'pointer',
-                bg: tab === 'roomPlaylist' ? 'accent' : 'inherit',
-                p: 2,
-                '&:hover': { bg: 'accent' },
+                '&:hover': {
+                  bg: 'accent',
+                  borderTopRightRadius: 6,
+                  borderTopLeftRadius: 6,
+                },
               }}
             >
-              <Heading>Room Playlist</Heading>
+              <Box as={RoomPlaylistIcon} mr={2} size={18} color="muted" />
+              <Text>Room Playlist</Text>
             </Box>
             <Box
               onClick={selectRoomHistory}
               sx={{
-                textAlign: 'center',
-                width: '100%',
+                alignItems: 'center',
+                borderBottom: '3px solid',
+                borderColor: tab === 'roomHistory' ? 'primary' : 'transparent',
                 cursor: tab === 'roomHistory' ? 'default' : 'pointer',
-                bg: tab === 'roomHistory' ? 'accent' : 'inherit',
-                p: 2,
-                '&:hover': { bg: 'accent' },
+                display: 'flex',
+                fontWeight: tab === 'roomHistory' ? '600' : '400',
+                justifyContent: 'flex-start',
+                py: 2,
+                px: 3,
+                width: '100%',
+                '&:hover': {
+                  bg: 'accent',
+                  borderTopRightRadius: 6,
+                  borderTopLeftRadius: 6,
+                },
               }}
             >
-              <Heading>Room History</Heading>
+              <Box as={Clock} mr={2} size={18} color="muted" />
+              <Text>Room History</Text>
             </Box>
           </Flex>
         </Box>

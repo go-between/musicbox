@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Box, Flex, Heading, Text } from 'rebass'
 import { Select } from '@rebass/forms'
-import { PlusCircle } from 'react-feather'
+import { Plus } from 'react-feather'
 
 import { useUserContext, useWebsocketContext, User } from 'Context'
 import { CreateRoom } from './CreateRoom'
@@ -46,18 +46,17 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
         defaultValue={activeTeamId}
         sx={{
           bg: 'background',
-          borderRadius: 4,
+          borderRadius: 0,
           borderColor: 'transparent',
           cursor: 'pointer',
           fontSize: 2,
-          px: 1,
+          px: 3,
           py: 2,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           '&:hover': {
             bg: 'accent',
-            borderRadius: 4,
           },
         }}
       >
@@ -130,11 +129,11 @@ const Teams: React.FC = () => {
 
   return (
     <>
-      <Flex alignItems="center" justifyContent="space-between" mb={3}>
+      <Flex alignItems="center" justifyContent="space-between" mb={3} px={3}>
         <Text
           sx={{
             color: 'gray500',
-            fontSize: 2,
+            fontSize: 1,
             fontWeight: '600',
             textTransform: 'uppercase',
           }}
@@ -145,11 +144,11 @@ const Teams: React.FC = () => {
 
       <TeamSelector activeTeamId={user.activeTeam.id} changeTeam={changeTeam} teams={user.teams} />
 
-      <Flex alignItems="center" justifyContent="space-between" mb={3}>
+      <Flex alignItems="center" justifyContent="space-between" mb={3} px={3} display="inline-flex">
         <Text
           sx={{
             color: 'gray500',
-            fontSize: 2,
+            fontSize: 1,
             fontWeight: '600',
             textTransform: 'uppercase',
           }}
@@ -158,18 +157,17 @@ const Teams: React.FC = () => {
         </Text>
 
         <Box
-          as={PlusCircle}
+          as={Plus}
           onClick={openModal}
-          size={24}
+          size={20}
           sx={{
             color: 'muted',
             cursor: 'pointer',
-            mx: 1,
-            width: '24px',
+            width: '20px',
             '&:hover': {
               bg: 'muted',
               color: 'background',
-              borderRadius: '100%',
+              borderRadius: '3px',
             },
           }}
         />

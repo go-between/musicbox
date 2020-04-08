@@ -26,12 +26,11 @@ export const SideNav: React.FC = ({ children }) => {
         justifyContent: 'space-between',
         height: '100vh',
         overflow: 'hidden',
-        p: 3,
         width: ['100%', '300px'],
       }}
     >
       <Box mb={4}>
-        <Box mb={4}>
+        <Box px={3} py={4}>
           <Logo />
         </Box>
 
@@ -40,7 +39,7 @@ export const SideNav: React.FC = ({ children }) => {
         </Box>
       </Box>
 
-      <Box>
+      <Box px={3} mb={3}>
         <Link
           sx={{
             alignItems: 'center',
