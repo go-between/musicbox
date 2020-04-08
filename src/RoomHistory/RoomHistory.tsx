@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box, Flex, Text } from 'rebass'
 import moment from 'moment'
 
-import { ROOM_HISTORY_QUERY, RoomHistoryQuery, RoomPlaylistRecord } from './graphql'
+import { useUserContext } from 'Context'
+
+import { ROOM_HISTORY_QUERY, RoomHistoryQuery } from './graphql'
 
 const recordsFrom = moment()
   .subtract(2, 'days')
   .toISOString()
 
-type Props = {
-  roomId: string
-}
-const RoomHistory: React.FC<Props> = ({ roomId }) => {
-  const [playlistRecords, setPlaylistRecords] = useState<RoomPlaylistRecord[]>([])
+const RoomHistory: React.FC = () => {
+  const user = useUserContext()
   const { data, loading } = useQuery<RoomHistoryQuery['data'], RoomHistoryQuery['vars']>(ROOM_HISTORY_QUERY, {
-    variables: { roomId, from: recordsFrom },
-    fetchPolicy: 'network-only',
+    variables: { roomId: user.activeRoom.id, from: recordsFrom },
+    fetchPolicy: 'no-cache',
   })
 
-  useEffect(() => {
-    if (!data) {
-      return
-    }
-
-    setPlaylistRecords(data.roomPlaylist)
-  }, [data])
-
-  if (loading) {
+  if (loading || !data) {
     return <p>Loading...</p>
   }
 
-  const records = playlistRecords.map(record => {
+  const records = data.roomPlaylist.map(record => {
     const playDate = moment(record.playedAt)
     return (
       <Box
