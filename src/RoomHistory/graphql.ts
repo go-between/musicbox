@@ -11,7 +11,7 @@ export type RoomHistoryQuery = {
   }
 }
 export const ROOM_HISTORY_QUERY = gql`
-  query RoomHistory($roomId: ID!, $from: DateTime) {
+  query RoomHistoryQuery($roomId: ID!, $from: DateTime) {
     roomPlaylist(roomId: $roomId, historical: true, from: $from) {
       id
       playedAt
