@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Box, Text } from 'rebass'
 
-import { useWebsocketContext } from 'Context'
+import { useUserContext, useWebsocketContext } from 'Context'
 
 import { ROOM_PLAYLIST_QUERY, RoomPlaylistQuery, RoomPlaylistRecord } from './graphql'
 
-type Props = {
-  roomId: string
-}
-
-const RoomPlaylist: React.FC<Props> = ({ roomId }) => {
+const RoomPlaylist: React.FC = () => {
+  const user = useUserContext()
   const [playlistRecords, setPlaylistRecords] = useState<RoomPlaylistRecord[]>([])
 
   const { data, loading } = useQuery<RoomPlaylistQuery['data'], RoomPlaylistQuery['vars']>(ROOM_PLAYLIST_QUERY, {
-    variables: { roomId },
+    variables: { roomId: user.activeRoom.id },
     fetchPolicy: 'network-only',
   })
 
