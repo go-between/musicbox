@@ -11,23 +11,9 @@ import { useCurrentRecordContext } from 'Room'
 
 import { Room as RoomType } from './graphql'
 
-type MainComponentProps = {
-  roomId: string
-  component: 'userPlaylist' | 'roomPlaylist' | 'roomHistory'
-}
-const MainComponent: React.FC<MainComponentProps> = ({ roomId, component }) => {
-  switch (component) {
-    case 'userPlaylist':
-      return <UserPlaylist />
-    case 'roomPlaylist':
-      return <RoomPlaylist roomId={roomId} />
-    case 'roomHistory':
-      return <RoomHistory roomId={roomId} />
-  }
-}
-
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {
-  const [tab, setTab] = useState<'userPlaylist' | 'roomPlaylist' | 'roomHistory'>('userPlaylist')
+  type Tabs = 'userPlaylist' | 'roomPlaylist' | 'roomHistory'
+  const [tab, setTab] = useState<Tabs>('userPlaylist')
   const selectUserPlaylist = (): void => setTab('userPlaylist')
   const selectRoomPlaylist = (): void => setTab('roomPlaylist')
   const selectRoomHistory = (): void => setTab('roomHistory')
@@ -39,6 +25,13 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
   useEffect(() => {
     setCurrentRecord(currentRecord)
   }, [currentRecord, setCurrentRecord])
+
+  const components: { [k: string]: React.FC } = {
+    userPlaylist: UserPlaylist,
+    roomPlaylist: RoomPlaylist,
+    roomHistory: RoomHistory,
+  }
+  const Component = components[tab]
 
   return (
     <Flex
@@ -120,7 +113,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         </Box>
 
         <Flex flexDirection="column">
-          <MainComponent roomId={room.id} component={tab} />
+          <Component />
         </Flex>
       </Box>
     </Flex>
