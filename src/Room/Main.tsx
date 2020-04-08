@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
-import { Clock, List, User as UserPlaylistIcon, Users as RoomPlaylistIcon, } from 'react-feather'
+import { Clock, User as UserPlaylistIcon, Users as RoomPlaylistIcon } from 'react-feather'
 
 import Player from 'Player'
 import QuickAdd from 'QuickAdd'
@@ -100,9 +100,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
               }}
             >
               <Box as={UserPlaylistIcon} mr={2} size={18} color="muted" />
-              <Text>
-                User Playlist
-              </Text>
+              <Text>User Playlist</Text>
             </Box>
             <Box
               onClick={selectRoomPlaylist}
