@@ -1,11 +1,12 @@
 import React from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import { useMutation, useQuery } from '@apollo/react-hooks'
 import { Box, Flex, Text } from 'rebass'
 import moment from 'moment'
+import { useToasts } from 'react-toast-notifications'
 
 import { useUserContext } from 'Context'
 
-import { ROOM_HISTORY_QUERY, RoomHistoryQuery } from './graphql'
+import { ROOM_HISTORY_QUERY, SONG_CREATE, RoomHistoryQuery, SongCreateMutation } from './graphql'
 
 const recordsFrom = moment()
   .subtract(2, 'days')
@@ -18,12 +19,22 @@ const RoomHistory: React.FC = () => {
     fetchPolicy: 'no-cache',
   })
 
+  const { addToast } = useToasts()
+  const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
+    onCompleted: ({ songCreate: { song } }) => {
+      addToast(`Successfully added ${song.name} to your library`, { appearance: 'success', autoDismiss: true })
+    },
+  })
+
   if (loading || !data) {
     return <p>Loading...</p>
   }
 
   const records = data.roomPlaylist.map(record => {
     const playDate = moment(record.playedAt)
+    const addSong = (): void => {
+      createSong({ variables: { youtubeId: record.song.youtubeId } })
+    }
     return (
       <Box
         as="li"
@@ -63,6 +74,11 @@ const RoomHistory: React.FC = () => {
             }}
           >
             {record.song.name}
+            {record.user.id !== user.id && (
+              <Text onClick={addSong} sx={{ display: 'inline', cursor: 'pointer', ml: 2, textDecoration: 'underline' }}>
+                (Add to Library)
+              </Text>
+            )}
           </Text>
           <Flex
             sx={{
