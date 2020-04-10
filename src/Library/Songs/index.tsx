@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex } from 'rebass'
+import { Flex } from 'rebass'
 
 import Search from './Search'
 import Tags from './Tags'
@@ -18,9 +18,7 @@ const Songs: React.FC = () => {
     >
       <Search />
       <Tags />
-      <Box sx={{ maxHeight: '100vh', overflow: 'scroll' }}>
-        <Results />
-      </Box>
+      <Results />
     </Flex>
   )
 }

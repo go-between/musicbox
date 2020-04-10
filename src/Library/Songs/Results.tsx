@@ -100,8 +100,9 @@ const Songs: React.FC = () => {
       as="ul"
       sx={{
         m: 0,
-        p: 0,
         overflow: 'scroll',
+        p: 0,
+        position: 'relative',
       }}
     >
       {resultItems}
