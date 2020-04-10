@@ -162,7 +162,7 @@ const Teams: React.FC = () => {
             fontSize: 2,
             mb: 3,
             textDecoration: 'none',
-            width: '100%'
+            width: '100%',
           }}
           color="text"
           onClick={navigate('/library')}
