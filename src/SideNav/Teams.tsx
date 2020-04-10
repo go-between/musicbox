@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { Box, Flex, Heading, Text } from 'rebass'
+import { Box, Flex, Heading, Link, Text } from 'rebass'
 import { Select } from '@rebass/forms'
-import { Plus } from 'react-feather'
+import { Inbox, Plus } from 'react-feather'
+import { useHistory } from 'react-router-dom'
 
 import { useUserContext, useWebsocketContext, User } from 'Context'
 import { CreateRoom } from './CreateRoom'
@@ -103,6 +104,12 @@ const RoomSelector: React.FC<RoomSelectorProps> = ({ activeTeamId, activeRoomId,
 }
 
 const Teams: React.FC = () => {
+  const history = useHistory()
+  const navigate = (to: string) => (ev: React.MouseEvent) => {
+    ev.preventDefault()
+    history.push(to)
+  }
+
   const user = useUserContext()
   const [teamActivate] = useMutation<TeamActivate['data'], TeamActivate['vars']>(TEAM_ACTIVATE, {
     refetchQueries: ['UserQuery'],
@@ -129,6 +136,43 @@ const Teams: React.FC = () => {
 
   return (
     <>
+      <Flex
+        sx={{
+          px: 3,
+        }}
+      >
+        <Text
+          sx={{
+            color: 'gray500',
+            fontSize: 1,
+            fontWeight: '600',
+            mb: 3,
+            textTransform: 'uppercase',
+          }}
+        >
+          Music
+        </Text>
+      </Flex>
+
+      <Box width="100%" mb={4} px={3}>
+        <Link
+          sx={{
+            alignItems: 'center',
+            display: 'inline-flex',
+            fontSize: 2,
+            mb: 3,
+            textDecoration: 'none',
+            width: '100%'
+          }}
+          color="text"
+          onClick={navigate('/library')}
+          href="#"
+        >
+          <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
+          Library
+        </Link>
+      </Box>
+
       <Flex alignItems="center" justifyContent="space-between" mb={3} px={3}>
         <Text
           sx={{
