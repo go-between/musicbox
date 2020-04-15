@@ -16,8 +16,10 @@ export const SONG_CREATE = gql`
     songCreate(input: { youtubeId: $youtubeId }) {
       song {
         id
+        durationInSeconds
         name
         youtubeId
+        thumbnailUrl
       }
       errors
     }
@@ -27,8 +29,10 @@ export const SONGS_QUERY = gql`
   query SongsQuery($query: String, $tagIds: [ID!]) {
     songs(query: $query, tagIds: $tagIds) {
       id
+      durationInSeconds
       name
       youtubeId
+      thumbnailUrl
     }
   }
 `
@@ -74,8 +78,10 @@ export type RoomPlaylistRecord = {
 
 export type Song = {
   id: string
+  durationInSeconds: number
   name: string
   youtubeId: string
+  thumbnailUrl: string
 }
 
 export type Tag = {

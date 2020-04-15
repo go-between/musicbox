@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box } from 'rebass'
+import { Box, Image } from 'rebass'
 import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
@@ -64,7 +64,10 @@ const Result: React.FC<ResultProps> = ({ result }) => {
             <Checkbox checked={checked} onChange={toggleTag} sx={{ cursor: 'pointer' }} />
           </Label>
         </Box>
-        <Box>{result.name}</Box>
+        <Box>
+          <Image src={result.thumbnailUrl} />
+          {result.name}
+        </Box>
       </Box>
     </Box>
   )

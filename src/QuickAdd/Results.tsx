@@ -1,5 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react'
-import { Box, Button, Flex, Text } from 'rebass'
+import moment from 'moment'
+import { Box, Button, Image, Flex, Text } from 'rebass'
 import { Check, Eye, Plus } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
@@ -64,6 +65,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
     }
   }
 
+  const songDuration = moment.duration(result.durationInSeconds, "seconds")
+
   return (
     <Box
       as="li"
@@ -86,6 +89,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
       }}
     >
       <Box>
+        <Image src={result.thumbnailUrl}/>
         {nowPlaying ? <NowPlaying /> : <></>}
         <Box
           sx={{
@@ -97,6 +101,15 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
           }}
         >
           {result.name}
+        </Box>
+
+        <Box>
+          {songDuration.minutes().toString().padStart(2, '0')}
+          :
+          {songDuration
+            .seconds()
+            .toString()
+            .padStart(2, '0')}
         </Box>
       </Box>
       <Box

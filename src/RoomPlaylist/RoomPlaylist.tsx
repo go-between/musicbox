@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { Box, Text } from 'rebass'
+import { Box, Image, Text } from 'rebass'
 
 import { useUserContext, useWebsocketContext } from 'Context'
 
@@ -50,6 +50,7 @@ const RoomPlaylist: React.FC = () => {
           pb: 3,
         }}
       >
+        <Image src={record.song.thumbnailUrl} />
         <Box
           sx={{
             overflow: 'hidden',

@@ -40,6 +40,7 @@ export const SONGS_QUERY = gql`
       durationInSeconds
       name
       youtubeId
+      thumbnailUrl
       tags {
         id
         name
@@ -100,8 +101,9 @@ export type Song = {
   id: string
   durationInSeconds: number
   name: string
-  youtubeId: string
+  thumbnailUrl: string
   tags: Tag[]
+  youtubeId: string
 }
 
 export type Tag = {

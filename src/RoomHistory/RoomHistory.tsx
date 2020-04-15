@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation, useQuery } from '@apollo/react-hooks'
-import { Box, Flex, Text } from 'rebass'
+import { Box, Flex, Image, Text } from 'rebass'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
 
@@ -59,6 +59,7 @@ const RoomHistory: React.FC = () => {
             mr: 2,
           }}
         >
+          <Image src={record.song.thumbnailUrl} />
           <Text
             sx={{
               color: 'gray300',

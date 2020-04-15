@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from 'rebass'
+import { Box, Image } from 'rebass'
 import { X } from 'react-feather'
 
 import { RoomPlaylistRecord } from './graphql'
@@ -25,6 +25,7 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
         pb: 3,
       }}
     >
+      <Image src={record.song.thumbnailUrl} />
       <Box
         as="span"
         sx={{
@@ -36,6 +37,10 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
         }}
       >
         {record.song.name}
+      </Box>
+
+      <Box>
+        {record.song.durationInSeconds}
       </Box>
 
       <Box
