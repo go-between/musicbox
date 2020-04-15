@@ -65,7 +65,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
     }
   }
 
-  const songDuration = moment.duration(result.durationInSeconds, "seconds")
+  const songDuration = moment.duration(result.durationInSeconds, 'seconds')
 
   return (
     <Box
@@ -89,7 +89,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
       }}
     >
       <Box>
-        <Image src={result.thumbnailUrl}/>
+        <Image src={result.thumbnailUrl} />
         {nowPlaying ? <NowPlaying /> : <></>}
         <Box
           sx={{
@@ -104,7 +104,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
         </Box>
 
         <Box>
-          {songDuration.minutes().toString().padStart(2, '0')}
+          {songDuration
+            .minutes()
+            .toString()
+            .padStart(2, '0')}
           :
           {songDuration
             .seconds()

@@ -39,9 +39,7 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
         {record.song.name}
       </Box>
 
-      <Box>
-        {record.song.durationInSeconds}
-      </Box>
+      <Box>{record.song.durationInSeconds}</Box>
 
       <Box
         onClick={onDelete}
