@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks'
 import { Box, Flex, Image, Text } from 'rebass'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
+import { Image as ImageIcon, Plus } from 'react-feather'
 
 import { useUserContext } from 'Context'
 
@@ -35,6 +36,40 @@ const RoomHistory: React.FC = () => {
     const addSong = (): void => {
       createSong({ variables: { youtubeId: record.song.youtubeId } })
     }
+
+    const renderThumbnail = (thumbnailUrl: string) => {
+      if (!thumbnailUrl) {
+        return(
+          <Flex
+            sx={{
+              alignItems: 'center',
+              border: '1px solid',
+              borderColor: 'accent',
+              borderRadius: 3,
+              boxShadow: 'xl',
+              height: '100%',
+              justifyContent: 'center',
+              p: 2,
+              width: '50px'
+            }}
+          >
+           <Box as={ImageIcon} size={20} color="muted" />
+          </Flex>
+        )
+      }
+      return (
+        <Image
+            src={thumbnailUrl}
+            sx={{
+              borderRadius: 3,
+              boxShadow: 'xl',
+              height: '100%',
+              width: '100%'
+            }}
+        />
+      )
+    }
+
     return (
       <Box
         as="li"
@@ -42,60 +77,92 @@ const RoomHistory: React.FC = () => {
         sx={{
           alignItems: 'center',
           borderBottom: '1px solid',
-          borderColor: 'muted',
+          borderColor: 'accent',
           display: 'flex',
-          justifyContent: 'space-between',
           listStyle: 'none',
           mx: 0,
           my: 3,
           pb: 3,
+          width: '100%'
         }}
       >
         <Box
           sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            mr: 2,
+            width: '50px',
           }}
         >
-          <Image src={record.song.thumbnailUrl} />
-          <Text
-            sx={{
-              color: 'gray300',
-              fontSize: 1,
-            }}
-          >
-            On {playDate.format('MMMM Do YYYY, h:mm:ss a')}, {record.user.name} played
-          </Text>
-          <Text
-            sx={{
-              color: 'gray300',
-              fontSize: 1,
-            }}
-          >
-            {record.song.name}
-            {record.user.id !== user.id && (
-              <Text onClick={addSong} sx={{ display: 'inline', cursor: 'pointer', ml: 2, textDecoration: 'underline' }}>
-                (Add to Library)
-              </Text>
-            )}
-          </Text>
-          <Flex
-            sx={{
-              color: 'gray300',
-              fontSize: 1,
-            }}
-          >
-            {record.recordListens.map(l => {
-              return (
-                <Text key={l.id} mr={1}>
-                  {l.user.name}: {l.approval}
-                </Text>
-              )
-            })}
-          </Flex>
+          {renderThumbnail(record.song.thumbnailUrl)}
         </Box>
+
+        <Flex
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            mx: 3,
+            width: '100%'
+          }}
+        >
+          <Box
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              mx: 3,
+            }}
+          >
+            <Text
+              sx={{
+                color: 'gray300',
+                fontSize: 1,
+              }}
+            >
+              On {playDate.format('MMMM Do YYYY, h:mm:ss a')}, {record.user.name} played
+            </Text>
+
+            <Text
+              sx={{
+                color: 'gray300',
+                fontSize: 1,
+              }}
+            >
+              {record.song.name}
+            </Text>
+
+            <Flex
+              sx={{
+                color: 'gray300',
+                fontSize: 1,
+              }}
+            >
+              {record.recordListens.map(l => {
+                return (
+                  <Text key={l.id} mr={1}>
+                    {l.user.name}: {l.approval}
+                  </Text>
+                )
+              })}
+            </Flex>
+          </Box>
+
+          {record.user.id !== user.id && (
+            <Box onClick={addSong}
+              sx={{
+                alignItems: 'center',
+                color: 'text',
+                cursor: 'pointer',
+                display: 'flex',
+                height: '24px',
+                widht: '24px',
+                '&:hover': {
+                  bg: 'muted',
+                  borderRadius: 4,
+                },
+              }}
+            >
+              <Plus size={20} />
+            </Box>
+          )}
+        </Flex>
       </Box>
     )
   })

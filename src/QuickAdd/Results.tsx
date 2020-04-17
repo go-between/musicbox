@@ -8,6 +8,7 @@ import { Modal } from 'components'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
+import { duration } from 'lib/formatters'
 
 import { Song } from './graphql'
 import { useResultsContext } from './ResultsContextProvider'
@@ -73,6 +74,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
       onClick={onClick}
       sx={{
         alignItems: 'center',
+        bg: `${selected ? '#4A5568' : 'initial'}`,
         borderRadius: 3,
         cursor: 'pointer',
         display: 'flex',
@@ -82,14 +84,29 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
         my: 2,
         px: 2,
         py: 3,
-        bg: `${selected ? '#4A5568' : 'initial'}`,
+        width: '100%',
         '&:hover': {
           bg: '#4A5568',
         },
       }}
     >
+      <Box
+        sx={{
+          width: '50px',
+        }}
+      >
+        <Image
+          src={result.thumbnailUrl}
+          sx={{
+            borderRadius: 3,
+            boxShadow: 'xl',
+            height: '100%',
+            width: '100%'
+          }}
+        />
+      </Box>
+
       <Box>
-        <Image src={result.thumbnailUrl} />
         {nowPlaying ? <NowPlaying /> : <></>}
         <Box
           sx={{
@@ -101,18 +118,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
           }}
         >
           {result.name}
-        </Box>
-
-        <Box>
-          {songDuration
-            .minutes()
-            .toString()
-            .padStart(2, '0')}
-          :
-          {songDuration
-            .seconds()
-            .toString()
-            .padStart(2, '0')}
         </Box>
       </Box>
       <Box
