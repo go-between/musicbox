@@ -41,7 +41,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         flexDirection: 'column',
         height: '100vh',
         p: 4,
-        width: ['100%', '50%'],
+        width: ['100%'],
       }}
     >
       <Box>

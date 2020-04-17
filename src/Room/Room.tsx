@@ -3,13 +3,10 @@ import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 import { Flex } from 'rebass'
 
-import SideNav from 'SideNav'
 import { useWebsocketContext } from 'Context'
-
 import VolumeContextProvider from 'Player/VolumeContextProvider'
 
 import Chat from './Chat'
-import Keyboard from './Keyboard'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
 import ApprovalContextProvider from './ApprovalContextProvider'
@@ -47,17 +44,10 @@ const Room: React.FC = () => {
             <VolumeContextProvider>
               <Flex
                 sx={{
-                  alignItems: 'top',
-                  bg: 'background',
                   flexDirection: ['column', 'row'],
-                  minHeight: '100vh',
-                  mx: 'auto',
-                  position: 'relative',
+                  width: ['100%'],
                 }}
               >
-                <SideNav>
-                  <Keyboard />
-                </SideNav>
                 <Main room={data.roomActivate.room} />
                 <Chat />
               </Flex>
