@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import moment from 'moment'
 import { useQuery } from '@apollo/react-hooks'
-import { Box, Text } from 'rebass'
+import { Box, Flex, Text } from 'rebass'
 
 import { useUserContext, useWebsocketContext } from 'Context'
 
 import { ROOM_PLAYLIST_QUERY, RoomPlaylistQuery, RoomPlaylistRecord } from './graphql'
+import { duration } from 'lib/formatters'
+import { MediaObject } from 'components'
 
 const RoomPlaylist: React.FC = () => {
   const user = useUserContext()
@@ -34,49 +37,59 @@ const RoomPlaylist: React.FC = () => {
   }
 
   const records = playlistRecords.map(record => {
+    const songDuration = moment.duration(record.song.durationInSeconds, 'seconds')
+
     return (
       <Box
         as="li"
         key={record.id}
         sx={{
-          alignItems: 'center',
           borderBottom: '1px solid',
-          borderColor: 'muted',
-          display: 'flex',
-          justifyContent: 'space-between',
+          borderColor: 'accent',
           listStyle: 'none',
           mx: 0,
           my: 3,
           pb: 3,
+          width: '100%',
         }}
       >
-        <Box
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            mr: 2,
-          }}
-        >
-          <Text
+        <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
+          <Box
             sx={{
-              color: 'gray300',
+              display: 'inline-block',
               fontSize: 1,
+              fontWeight: 600,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              width: '100%',
             }}
           >
-            {record.user.name}
-          </Text>
+            <Text
+              sx={{
+                color: 'gray500',
+                fontSize: 1,
+                fontWeight: 300,
+              }}
+            >
+              {record.user.name}
+            </Text>
 
-          <Text
-            sx={{
-              fontSize: 2,
-              fontWeight: '800',
-              pb: 1,
-            }}
-          >
             {record.song.name}
-          </Text>
-        </Box>
+          </Box>
+
+          <Flex alignItems="center">
+            <Box
+              sx={{
+                color: 'gray400',
+                fontSize: 1,
+                px: 3,
+              }}
+            >
+              {duration(songDuration)}
+            </Box>
+          </Flex>
+        </MediaObject>
       </Box>
     )
   })

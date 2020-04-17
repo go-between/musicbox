@@ -13,7 +13,9 @@ export const ROOM_PLAYLIST_FOR_USER_QUERY = gql`
       id
       song {
         id
+        durationInSeconds
         name
+        thumbnailUrl
       }
     }
   }
@@ -24,6 +26,8 @@ export type RoomPlaylistRecord = {
   id: string
   song: {
     id: string
+    durationInSeconds: number
     name: string
+    thumbnailUrl: string
   }
 }

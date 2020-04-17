@@ -138,7 +138,9 @@ type RecordForRoomPlaylist = {
   order: number
   song: {
     id: string
+    durationInSeconds: number
     name: string
+    thumbnailUrl: string
   }
   user: {
     email: string

@@ -205,7 +205,9 @@ export const ROOM_PLAYLIST_RECORDS_REORDER = gql`
         id
         song {
           id
+          durationInSeconds
           name
+          thumbnailUrl
         }
       }
       errors
@@ -269,7 +271,9 @@ export type RoomPlaylistRecord = {
   id: string
   song: {
     id: string
+    durationInSeconds: number
     name: string
+    thumbnailUrl: string
   }
 }
 

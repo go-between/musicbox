@@ -4,6 +4,8 @@ import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 
+import { MediaObject } from 'components'
+
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
 import { SongsQuery, Song as SongType, SONGS_QUERY } from '../graphql'
@@ -64,7 +66,11 @@ const Result: React.FC<ResultProps> = ({ result }) => {
             <Checkbox checked={checked} onChange={toggleTag} sx={{ cursor: 'pointer' }} />
           </Label>
         </Box>
-        <Box>{result.name}</Box>
+        <Box>
+          <MediaObject imageUrl={result.thumbnailUrl} alignment="center" placeholderImageColor="accent">
+            {result.name}
+          </MediaObject>
+        </Box>
       </Box>
     </Box>
   )

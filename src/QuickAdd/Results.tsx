@@ -1,4 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react'
+import moment from 'moment'
 import { Box, Button, Flex, Text } from 'rebass'
 import { Check, Eye, Plus } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
@@ -7,6 +8,8 @@ import { Modal } from 'components'
 import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
+import { duration } from 'lib/formatters'
+import { MediaObject } from 'components'
 
 import { Song } from './graphql'
 import { useResultsContext } from './ResultsContextProvider'
@@ -64,81 +67,86 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
     }
   }
 
+  const songDuration = moment.duration(result.durationInSeconds, 'seconds')
+
   return (
     <Box
       as="li"
       onClick={onClick}
       sx={{
         alignItems: 'center',
+        bg: `${selected ? '#4A5568' : 'initial'}`,
         borderRadius: 3,
         cursor: 'pointer',
-        display: 'flex',
-        justifyContent: 'space-between',
         listStyle: 'none',
         mx: 0,
         my: 2,
         px: 2,
         py: 3,
-        bg: `${selected ? '#4A5568' : 'initial'}`,
+        width: '100%',
         '&:hover': {
           bg: '#4A5568',
         },
       }}
     >
-      <Box>
-        {nowPlaying ? <NowPlaying /> : <></>}
-        <Box
-          sx={{
-            fontSize: 1,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            mr: 2,
-          }}
-        >
-          {result.name}
+      <MediaObject imageUrl={result.thumbnailUrl} alignment="center" placeholderImageColor="accent">
+        <Box flex={1}>
+          {nowPlaying ? <NowPlaying /> : <></>}
+          <Box
+            sx={{
+              fontSize: 1,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              mr: 2,
+            }}
+          >
+            {result.name}
+          </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          alignItems: 'center',
-          color: 'text',
-          cursor: 'pointer',
-          display: 'flex',
-          p: 1,
-          mx: 1,
-        }}
-      >
-        <Box
-          sx={{
-            alignItems: 'center',
-            bg: 'accent',
-            borderRadius: 4,
-            color: 'text',
-            cursor: 'pointer',
-            display: 'flex',
-            p: 1,
-            mx: 1,
-          }}
-          onClick={openModal}
-        >
-          <Eye size={18} />
-        </Box>
-        <Box
-          sx={{
-            alignItems: 'center',
-            bg: 'accent',
-            borderRadius: 4,
-            color: 'text',
-            cursor: 'pointer',
-            display: 'flex',
-            p: 1,
-            mx: 1,
-          }}
-        >
-          {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
-        </Box>
-      </Box>
+
+        <Flex alignItems="center" justifyContent="space-between">
+          <Box
+            sx={{
+              color: 'gray400',
+              fontSize: 1,
+              px: 3,
+            }}
+          >
+            {duration(songDuration)}
+          </Box>
+
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 1,
+              mx: 1,
+            }}
+            onClick={openModal}
+          >
+            <Eye size={18} />
+          </Box>
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 1,
+              mx: 1,
+            }}
+          >
+            {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
+          </Box>
+        </Flex>
+      </MediaObject>
 
       <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
         <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} controls={true} />

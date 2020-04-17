@@ -12,12 +12,14 @@ export type SongCreateMutation = {
   }
 }
 export const SONG_CREATE = gql`
-  mutation SongCreateFromKeyboard($youtubeId: ID!) {
+  mutation SongCreateFromRoomHistory($youtubeId: ID!) {
     songCreate(input: { youtubeId: $youtubeId }) {
       song {
         id
+        durationInSeconds
         name
         youtubeId
+        thumbnailUrl
       }
       errors
     }
@@ -40,8 +42,10 @@ export const ROOM_HISTORY_QUERY = gql`
       playedAt
       song {
         id
+        durationInSeconds
         name
         youtubeId
+        thumbnailUrl
       }
       recordListens {
         id
@@ -70,11 +74,7 @@ type RecordListen = {
 export type RoomPlaylistRecord = {
   id: string
   playedAt: string
-  song: {
-    id: string
-    name: string
-    youtubeId: string
-  }
+  song: Song
   recordListens: RecordListen[]
   user: {
     id: string
@@ -85,6 +85,8 @@ export type RoomPlaylistRecord = {
 
 export type Song = {
   id: string
+  durationInSeconds: number
   name: string
   youtubeId: string
+  thumbnailUrl: string
 }

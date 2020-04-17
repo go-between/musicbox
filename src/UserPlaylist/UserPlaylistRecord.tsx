@@ -1,61 +1,91 @@
 import React from 'react'
-import { Box } from 'rebass'
+import moment from 'moment'
+import { Box, Flex } from 'rebass'
 import { X } from 'react-feather'
 
 import { RoomPlaylistRecord } from './graphql'
+import { duration } from 'lib/formatters'
+import { MediaObject } from 'components'
 
 type Props = {
   record: RoomPlaylistRecord
   onDelete: () => void
 }
 const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
+  const songDuration = moment.duration(record.song.durationInSeconds, 'seconds')
+
   return (
     <Box
       as="li"
       key={record.id}
       sx={{
-        alignItems: 'center',
         borderBottom: '1px solid',
-        borderColor: 'muted',
-        display: 'flex',
-        justifyContent: 'space-between',
+        borderColor: 'accent',
         listStyle: 'none',
         mx: 0,
         my: 3,
         pb: 3,
+        width: '100%',
       }}
     >
-      <Box
-        as="span"
-        sx={{
-          fontSize: 1,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-          mr: 2,
-        }}
-      >
-        {record.song.name}
-      </Box>
+      <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
+        <Box
+          sx={{
+            display: 'inline-block',
+            fontSize: 1,
+            fontWeight: 600,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            width: '100%',
+          }}
+        >
+          {record.song.name}
+        </Box>
 
-      <Box
-        onClick={onDelete}
-        sx={{
-          alignItems: 'center',
-          bg: 'accent',
-          borderRadius: 4,
-          color: 'text',
-          cursor: 'pointer',
-          display: 'flex',
-          p: 1,
-          mx: 1,
-          '&:hover': {
-            bg: 'muted',
-          },
-        }}
-      >
-        <X size={18} />
-      </Box>
+        <Flex alignItems="center">
+          <Box
+            sx={{
+              color: 'gray400',
+              fontSize: 1,
+              px: 3,
+            }}
+          >
+            {duration(songDuration)}
+          </Box>
+
+          <Box
+            as={X}
+            onClick={onDelete}
+            size={28}
+            sx={{
+              color: 'text',
+              cursor: 'pointer',
+              width: '24px',
+              '&:hover': {
+                bg: 'muted',
+                borderRadius: 4,
+              },
+            }}
+          />
+
+          {/* <Box
+            onClick={onDelete}
+            sx={{
+              border: '1px solid',
+              color: 'text',
+              cursor: 'pointer',
+              width: '24px',
+              '&:hover': {
+                bg: 'muted',
+                borderRadius: 4,
+              },
+            }}
+          >
+            <X size={24} />
+          </Box> */}
+        </Flex>
+      </MediaObject>
     </Box>
   )
 }

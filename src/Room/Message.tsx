@@ -6,6 +6,7 @@ import { Box, Flex, Text } from 'rebass'
 import { useMutation } from '@apollo/react-hooks'
 
 import { useUserContext } from 'Context'
+import { duration } from 'lib/formatters'
 
 import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
 
@@ -74,15 +75,7 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
     >
       @{' '}
       <Box as="span" sx={{ textDecoration: 'underline' }}>
-        {saidAt
-          .minutes()
-          .toString()
-          .padStart(2, '0')}
-        :
-        {saidAt
-          .seconds()
-          .toString()
-          .padStart(2, '0')}
+        {duration(saidAt)}
       </Box>
       <Box
         sx={{

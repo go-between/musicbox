@@ -1,12 +1,14 @@
 import React from 'react'
 import { useMutation, useQuery } from '@apollo/react-hooks'
-import { Box, Flex, Text } from 'rebass'
+import { Box, Flex } from 'rebass'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
+import { Plus } from 'react-feather'
 
 import { useUserContext } from 'Context'
 
 import { ROOM_HISTORY_QUERY, SONG_CREATE, RoomHistoryQuery, SongCreateMutation } from './graphql'
+import { MediaObject } from 'components'
 
 const recordsFrom = moment()
   .subtract(2, 'days')
@@ -35,66 +37,68 @@ const RoomHistory: React.FC = () => {
     const addSong = (): void => {
       createSong({ variables: { youtubeId: record.song.youtubeId } })
     }
+
     return (
       <Box
         as="li"
         key={record.id}
         sx={{
-          alignItems: 'center',
           borderBottom: '1px solid',
-          borderColor: 'muted',
-          display: 'flex',
-          justifyContent: 'space-between',
+          borderColor: 'accent',
           listStyle: 'none',
           mx: 0,
           my: 3,
           pb: 3,
+          width: '100%',
         }}
       >
-        <Box
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            mr: 2,
-          }}
-        >
-          <Text
-            sx={{
-              color: 'gray300',
-              fontSize: 1,
-            }}
-          >
-            On {playDate.format('MMMM Do YYYY, h:mm:ss a')}, {record.user.name} played
-          </Text>
-          <Text
-            sx={{
-              color: 'gray300',
-              fontSize: 1,
-            }}
-          >
-            {record.song.name}
-            {record.user.id !== user.id && (
-              <Text onClick={addSong} sx={{ display: 'inline', cursor: 'pointer', ml: 2, textDecoration: 'underline' }}>
-                (Add to Library)
-              </Text>
-            )}
-          </Text>
-          <Flex
-            sx={{
-              color: 'gray300',
-              fontSize: 1,
-            }}
-          >
-            {record.recordListens.map(l => {
-              return (
-                <Text key={l.id} mr={1}>
-                  {l.user.name}: {l.approval}
-                </Text>
-              )
-            })}
+        <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
+          <Box sx={{ flex: 1 }}>
+            <Box
+              sx={{
+                display: 'inline-block',
+                fontSize: 1,
+                fontWeight: 300,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                width: '100%',
+              }}
+            >
+              On {playDate.format('MMMM Do YYYY, h:mm:ss a')}, {record.user.name} played
+            </Box>
+
+            <Box
+              sx={{
+                display: 'inline-block',
+                fontSize: 1,
+                fontWeight: 600,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                width: '100%',
+              }}
+            >
+              {record.song.name}
+            </Box>
+          </Box>
+
+          <Flex alignItems="center" mx={3}>
+            <Box
+              as={Plus}
+              onClick={addSong}
+              size={24}
+              sx={{
+                color: 'text',
+                cursor: 'pointer',
+                '&:hover': {
+                  bg: 'muted',
+                  borderRadius: 4,
+                },
+              }}
+            />
           </Flex>
-        </Box>
+        </MediaObject>
       </Box>
     )
   })
