@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 
@@ -16,27 +16,25 @@ const Unauthorized: React.FC = () => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <BrowserRouter>
-        <Switch>
-          <Route key="invitation" path="/invitation">
-            <Invitation />
-          </Route>
+      <Switch>
+        <Route key="invitation" path="/invitation">
+          <Invitation />
+        </Route>
 
-          <Route key="login" path="/login">
-            <Login />
-          </Route>
+        <Route key="login" path="/login">
+          <Login />
+        </Route>
 
-          <Route key="signup" path="/signup">
-            <Signup />
-          </Route>
+        <Route key="signup" path="/signup">
+          <Signup />
+        </Route>
 
-          <Redirect
-            to={{
-              pathname: '/login',
-            }}
-          />
-        </Switch>
-      </BrowserRouter>
+        <Redirect
+          to={{
+            pathname: '/login',
+          }}
+        />
+      </Switch>
     </ApolloProvider>
   )
 }

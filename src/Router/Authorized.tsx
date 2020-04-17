@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 
@@ -26,43 +26,41 @@ const Router: React.FC<{ token: string }> = ({ token }) => {
     <WebsocketContextProvider token={token}>
       <ApolloProvider client={apolloClient}>
         <UserContextProvider>
-          <BrowserRouter>
-            <Switch>
-              <Route key="invitation" path="/invitation">
-                <Invitation />
-              </Route>
+          <Switch>
+            <Route key="invitation" path="/invitation">
+              <Invitation />
+            </Route>
 
-              <Route path="/invitations">
-                <Invitations />
-              </Route>
+            <Route path="/invitations">
+              <Invitations />
+            </Route>
 
-              <Route path="/library">
-                <Library />
-              </Route>
+            <Route path="/library">
+              <Library />
+            </Route>
 
-              <Route key="login" path="/login">
-                <Login />
-              </Route>
+            <Route key="login" path="/login">
+              <Login />
+            </Route>
 
-              <Route key="signup" path="/signup">
-                <Signup />
-              </Route>
+            <Route key="signup" path="/signup">
+              <Signup />
+            </Route>
 
-              <Route path="/rooms">
-                <Rooms />
-              </Route>
+            <Route path="/rooms">
+              <Rooms />
+            </Route>
 
-              <Route path="/room/:id">
-                <Room />
-              </Route>
+            <Route path="/room/:id">
+              <Room />
+            </Route>
 
-              <Redirect
-                to={{
-                  pathname: '/rooms',
-                }}
-              />
-            </Switch>
-          </BrowserRouter>
+            <Redirect
+              to={{
+                pathname: '/rooms',
+              }}
+            />
+          </Switch>
         </UserContextProvider>
       </ApolloProvider>
     </WebsocketContextProvider>
