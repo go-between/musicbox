@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation, useQuery } from '@apollo/react-hooks'
-import { Box, Flex, Image, Text } from 'rebass'
+import { Box, Flex } from 'rebass'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
 import { Plus } from 'react-feather'
@@ -49,11 +49,11 @@ const RoomHistory: React.FC = () => {
           mx: 0,
           my: 3,
           pb: 3,
-          width: '100%'
+          width: '100%',
         }}
       >
         <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
-          <Box sx={{flex: 1}}>
+          <Box sx={{ flex: 1 }}>
             <Box
               sx={{
                 display: 'inline-block',
@@ -83,10 +83,7 @@ const RoomHistory: React.FC = () => {
             </Box>
           </Box>
 
-          <Flex
-            alignItems="center"
-            mx={3}
-          >
+          <Flex alignItems="center" mx={3}>
             <Box
               as={Plus}
               onClick={addSong}

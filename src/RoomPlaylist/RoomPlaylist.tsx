@@ -50,7 +50,7 @@ const RoomPlaylist: React.FC = () => {
           mx: 0,
           my: 3,
           pb: 3,
-          width: '100%'
+          width: '100%',
         }}
       >
         <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
@@ -78,9 +78,7 @@ const RoomPlaylist: React.FC = () => {
             {record.song.name}
           </Box>
 
-          <Flex
-            alignItems="center"
-          >
+          <Flex alignItems="center">
             <Box
               sx={{
                 color: 'gray400',
