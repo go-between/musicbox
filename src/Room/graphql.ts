@@ -187,34 +187,6 @@ export const ROOM_ACTIVATE = gql`
   }
 `
 
-export type RoomPlaylistRecordsReorderMutation = {
-  data: {
-    roomPlaylistRecordsReorder: {
-      roomPlaylistRecords: RoomPlaylistRecord[]
-    }
-  }
-  vars: {
-    orderedRecords: OrderedRecord[]
-  }
-}
-
-export const ROOM_PLAYLIST_RECORDS_REORDER = gql`
-  mutation RoomPlaylistRecordsReorder($orderedRecords: [OrderedPlaylistRecordInputObject!]!) {
-    roomPlaylistRecordsReorder(input: { orderedRecords: $orderedRecords }) {
-      roomPlaylistRecords {
-        id
-        song {
-          id
-          durationInSeconds
-          name
-          thumbnailUrl
-        }
-      }
-      errors
-    }
-  }
-`
-
 // Entities
 export type Message = {
   id: string
@@ -233,11 +205,6 @@ export type Message = {
     email: string
     name: string
   }
-}
-
-export type OrderedRecord = {
-  roomPlaylistRecordId?: string
-  songId: string
 }
 
 export type Room = {
@@ -264,16 +231,6 @@ export type RecordListen = {
   approval: number
   user: {
     id: string
-  }
-}
-
-export type RoomPlaylistRecord = {
-  id: string
-  song: {
-    id: string
-    durationInSeconds: number
-    name: string
-    thumbnailUrl: string
   }
 }
 

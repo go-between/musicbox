@@ -10,9 +10,7 @@ import Chat from './Chat'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
 import ApprovalContextProvider from './ApprovalContextProvider'
-import CurrentRecordContextProvider from './CurrentRecordContextProvider'
 import MessagesContextProvider from './MessagesContextProvider'
-import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
 
 const Room: React.FC = () => {
   const { id } = useParams()
@@ -38,24 +36,20 @@ const Room: React.FC = () => {
 
   return (
     <ApprovalContextProvider>
-      <PlaylistRecordContextProvider>
-        <CurrentRecordContextProvider>
-          <MessagesContextProvider>
-            <VolumeContextProvider>
-              <Flex
-                sx={{
-                  flexDirection: ['column', 'row'],
-                  height: '100%',
-                  width: ['100%'],
-                }}
-              >
-                <Main room={data.roomActivate.room} />
-                <Chat />
-              </Flex>
-            </VolumeContextProvider>
-          </MessagesContextProvider>
-        </CurrentRecordContextProvider>
-      </PlaylistRecordContextProvider>
+      <MessagesContextProvider>
+        <VolumeContextProvider>
+          <Flex
+            sx={{
+              flexDirection: ['column', 'row'],
+              height: '100%',
+              width: ['100%'],
+            }}
+          >
+            <Main room={data.roomActivate.room} />
+            <Chat />
+          </Flex>
+        </VolumeContextProvider>
+      </MessagesContextProvider>
     </ApprovalContextProvider>
   )
 }

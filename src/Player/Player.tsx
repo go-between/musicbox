@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Flex, Text } from 'rebass'
 import { EyeOff, SkipForward, Volume2, Youtube } from 'react-feather'
 import { Slider } from '@rebass/forms'
 import { useMutation } from '@apollo/react-hooks'
 import Gravatar from 'react-gravatar'
 
-import { useWebsocketContext, useUserContext } from 'Context'
-import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
+import { useCurrentRecordContext, useUserContext } from 'Context'
 import { persistShowVideo, retrieveShowVideo, persistVolume } from 'lib/localStore'
 
 import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
@@ -26,27 +25,15 @@ type Record = {
 }
 
 const Player: React.FC = () => {
-  // const [volume, setVolume] = useState(retrieveVolume())
   const [showVideo, setShowVideo] = useState(retrieveShowVideo())
   const [progress, setProgress] = useState(0)
 
-  const websocket = useWebsocketContext()
-  const { deleteRecord } = usePlaylistRecordContext()
-  const { currentRecord, setCurrentRecord } = useCurrentRecordContext()
+  const { currentRecord } = useCurrentRecordContext()
   const { setUnmutedPlayer, setVolume, unmutedPlayer, volume } = useVolumeContext()
 
   const [roomPlaylistRecordAbandon] = useMutation<RoomPlaylistRecordAbandon['data'], RoomPlaylistRecordAbandon['vars']>(
     ROOM_PLAYLIST_RECORD_ABANDON,
   )
-
-  useEffect(() => {
-    return websocket.subscribeToNowPlaying(nowPlaying => {
-      setCurrentRecord(nowPlaying.currentRecord)
-      if (!!nowPlaying.currentRecord) {
-        deleteRecord(nowPlaying.currentRecord.id, { persist: false })
-      }
-    })
-  }, [deleteRecord, setCurrentRecord, websocket])
 
   const user = useUserContext()
 

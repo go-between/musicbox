@@ -7,9 +7,9 @@ import QuickAdd from 'QuickAdd'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
-import Users from './Users'
-import { useCurrentRecordContext } from 'Room'
+import { useCurrentRecordContext } from 'Context'
 
+import Users from './Users'
 import { Room as RoomType } from './graphql'
 
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {

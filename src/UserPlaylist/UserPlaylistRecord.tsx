@@ -3,12 +3,12 @@ import moment from 'moment'
 import { Box, Flex } from 'rebass'
 import { X } from 'react-feather'
 
-import { RoomPlaylistRecord } from './graphql'
+import { PlaylistRecord } from 'Context'
 import { duration } from 'lib/formatters'
 import { MediaObject } from 'components'
 
 type Props = {
-  record: RoomPlaylistRecord
+  record: PlaylistRecord
   onDelete: () => void
 }
 const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
@@ -68,22 +68,6 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
               },
             }}
           />
-
-          {/* <Box
-            onClick={onDelete}
-            sx={{
-              border: '1px solid',
-              color: 'text',
-              cursor: 'pointer',
-              width: '24px',
-              '&:hover': {
-                bg: 'muted',
-                borderRadius: 4,
-              },
-            }}
-          >
-            <X size={24} />
-          </Box> */}
         </Flex>
       </MediaObject>
     </Box>

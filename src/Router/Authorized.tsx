@@ -14,7 +14,12 @@ import SideNav from 'SideNav'
 import Signup from 'Signup'
 import { API_HOST } from 'lib/constants'
 
-import { UserContextProvider, WebsocketContextProvider } from 'Context'
+import {
+  CurrentRecordContextProvider,
+  PlaylistRecordsContextProvider,
+  UserContextProvider,
+  WebsocketContextProvider,
+} from 'Context'
 
 const InnerRoutes: React.FC = () => (
   <Switch>
@@ -66,57 +71,61 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
     <WebsocketContextProvider token={token}>
       <ApolloProvider client={apolloClient}>
         <UserContextProvider>
-          <Flex
-            sx={{
-              alignItems: 'top',
-              bg: 'background',
-              flexDirection: 'column',
-              height: '100vh',
-              mx: 'auto',
-              position: 'relative',
-            }}
-          >
-            <Flex
-              sx={{
-                flexDirection: 'row',
-                height: '100%',
-                overflow: 'hidden',
-              }}
-            >
-              <Box
-                as="aside"
-                sx={{
-                  bg: 'background',
-                  borderRight: '1px solid',
-                  borderColor: 'accent',
-                  display: ['none', 'flex'],
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  overflow: 'hidden',
-                  width: ['100%', '300px'],
-                }}
-              >
-                <SideNav />
-              </Box>
+          <PlaylistRecordsContextProvider>
+            <CurrentRecordContextProvider>
               <Flex
-                as="main"
                 sx={{
+                  alignItems: 'top',
+                  bg: 'background',
                   flexDirection: 'column',
-                  width: ['100%'],
+                  height: '100vh',
+                  mx: 'auto',
+                  position: 'relative',
                 }}
               >
-                <InnerRoutes />
+                <Flex
+                  sx={{
+                    flexDirection: 'row',
+                    height: '100%',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <Box
+                    as="aside"
+                    sx={{
+                      bg: 'background',
+                      borderRight: '1px solid',
+                      borderColor: 'accent',
+                      display: ['none', 'flex'],
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      overflow: 'hidden',
+                      width: ['100%', '300px'],
+                    }}
+                  >
+                    <SideNav />
+                  </Box>
+                  <Flex
+                    as="main"
+                    sx={{
+                      flexDirection: 'column',
+                      width: ['100%'],
+                    }}
+                  >
+                    <InnerRoutes />
+                  </Flex>
+                </Flex>
+                <Box
+                  sx={{
+                    borderTop: '1px solid',
+                    borderColor: 'accent',
+                  }}
+                >
+                  Footer
+                </Box>
               </Flex>
-            </Flex>
-            <Box
-              sx={{
-                borderTop: '1px solid',
-                borderColor: 'accent',
-              }}
-            >
-              Footer
-            </Box>
-          </Flex>
+            </CurrentRecordContextProvider>
+          </PlaylistRecordsContextProvider>
         </UserContextProvider>
       </ApolloProvider>
     </WebsocketContextProvider>

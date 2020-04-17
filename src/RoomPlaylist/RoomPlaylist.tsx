@@ -1,41 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import moment from 'moment'
-import { useQuery } from '@apollo/react-hooks'
 import { Box, Flex, Text } from 'rebass'
 
-import { useUserContext, useWebsocketContext } from 'Context'
+import { usePlaylistRecordsContext } from 'Context'
 
-import { ROOM_PLAYLIST_QUERY, RoomPlaylistQuery, RoomPlaylistRecord } from './graphql'
 import { duration } from 'lib/formatters'
 import { MediaObject } from 'components'
 
 const RoomPlaylist: React.FC = () => {
-  const user = useUserContext()
-  const [playlistRecords, setPlaylistRecords] = useState<RoomPlaylistRecord[]>([])
-
-  const { data, loading } = useQuery<RoomPlaylistQuery['data'], RoomPlaylistQuery['vars']>(ROOM_PLAYLIST_QUERY, {
-    variables: { roomId: user.activeRoom.id },
-    fetchPolicy: 'network-only',
-  })
-
-  useEffect(() => {
-    if (data) {
-      setPlaylistRecords(data.roomPlaylist)
-    }
-  }, [data])
-
-  const websocket = useWebsocketContext()
-
-  useEffect(() => {
-    return websocket.subscribeToRoomPlaylist(roomPlaylist => {
-      setPlaylistRecords(roomPlaylist)
-    })
-  }, [websocket])
-
-  if (loading) {
-    return <p>Loading...</p>
-  }
-
+  const { playlistRecords } = usePlaylistRecordsContext()
   const records = playlistRecords.map(record => {
     const songDuration = moment.duration(record.song.durationInSeconds, 'seconds')
 

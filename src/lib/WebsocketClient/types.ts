@@ -136,13 +136,16 @@ export type RecordListensMessage = {
 type RecordForRoomPlaylist = {
   id: string
   order: number
+  playedAt: string
   song: {
     id: string
     durationInSeconds: number
     name: string
     thumbnailUrl: string
+    youtubeId: string
   }
   user: {
+    id: string
     email: string
     name: string
   }

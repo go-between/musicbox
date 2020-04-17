@@ -7,7 +7,7 @@ import { Search as SearchIcon, XCircle } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
 import { setString } from 'lib/setters'
-import { usePlaylistRecordContext } from 'Room'
+import { usePlaylistRecordsContext } from 'Context'
 
 import { useResultsContext } from './ResultsContextProvider'
 import { SongsQuery, TagsQuery, SONGS_QUERY, TAGS_QUERY, Song } from './graphql'
@@ -42,7 +42,7 @@ export const Search: React.FC = () => {
     tags,
     setTags,
   } = useResultsContext()
-  const { addRecord } = usePlaylistRecordContext()
+  const { addRecords } = usePlaylistRecordsContext()
   const { addToast } = useToasts()
 
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -114,7 +114,7 @@ export const Search: React.FC = () => {
       }
     } else if (ev.key === 'Enter' && resultIndex !== null) {
       const record = results[resultIndex]
-      addRecord(record.id)
+      addRecords(record.id)
       addToast(`Successfully added ${record.name}`, { appearance: 'success', autoDismiss: true })
     } else if (ev.key === 'Escape') {
       setQuery('')

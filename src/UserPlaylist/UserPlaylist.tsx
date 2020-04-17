@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import React from 'react'
 import { Box } from 'rebass'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 
-import { usePlaylistRecordContext } from 'Room'
+import { usePlaylistRecordsContext, PlaylistRecord } from 'Context'
 
-import { ROOM_PLAYLIST_FOR_USER_QUERY, RoomPlaylistForUserQuery, RoomPlaylistRecord } from './graphql'
 import UserPlaylistRecord from './UserPlaylistRecord'
 
-type Reorder = (list: RoomPlaylistRecord[], startIndex: number, endIndex: number) => RoomPlaylistRecord[]
+type Reorder = (list: PlaylistRecord[], startIndex: number, endIndex: number) => PlaylistRecord[]
 const reorder: Reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list)
   const [removed] = result.splice(startIndex, 1)
@@ -17,25 +15,10 @@ const reorder: Reorder = (list, startIndex, endIndex) => {
   return result
 }
 const UserPlaylist: React.FC = () => {
-  const { data, loading } = useQuery<RoomPlaylistForUserQuery['data']>(ROOM_PLAYLIST_FOR_USER_QUERY, {
-    fetchPolicy: 'network-only',
-  })
-  const { deleteRecord, playlistRecords, reorderRecords, setPlaylistRecords } = usePlaylistRecordContext()
+  const { deleteRecord, userPlaylistRecords, reorderRecords } = usePlaylistRecordsContext()
 
-  useEffect(() => {
-    if (!data) {
-      return
-    }
-
-    setPlaylistRecords(data.roomPlaylistForUser)
-  }, [data, setPlaylistRecords])
-
-  if (loading) {
-    return <p>Loading...</p>
-  }
-
-  const records = playlistRecords.map((record, index) => {
-    const onDelete = (): void => deleteRecord(record.id, { persist: true })
+  const records = userPlaylistRecords.map((record, index) => {
+    const onDelete = (): void => deleteRecord(record.id)
     return (
       <Draggable key={record.id} draggableId={record.id} index={index}>
         {provided => (
@@ -52,7 +35,7 @@ const UserPlaylist: React.FC = () => {
       return
     }
 
-    const reorderedRecords = reorder(playlistRecords, result.source.index, result.destination.index)
+    const reorderedRecords = reorder(userPlaylistRecords, result.source.index, result.destination.index)
     reorderRecords(reorderedRecords)
   }
   return (

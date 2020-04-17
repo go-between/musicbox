@@ -3,10 +3,9 @@ import Gravatar from 'react-gravatar'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { Box, Flex, Text } from 'rebass'
 
-import { useWebsocketContext } from 'Context'
+import { useCurrentRecordContext, useWebsocketContext } from 'Context'
 
 import Approval from './Approval'
-import { useCurrentRecordContext } from './CurrentRecordContextProvider'
 import { User, RecordListen, RecordListensQuery, RECORD_LISTENS } from './graphql'
 
 type Props = {
