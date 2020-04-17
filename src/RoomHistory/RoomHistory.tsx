@@ -3,11 +3,12 @@ import { useMutation, useQuery } from '@apollo/react-hooks'
 import { Box, Flex, Image, Text } from 'rebass'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
-import { Image as ImageIcon, Plus } from 'react-feather'
+import { Plus } from 'react-feather'
 
 import { useUserContext } from 'Context'
 
 import { ROOM_HISTORY_QUERY, SONG_CREATE, RoomHistoryQuery, SongCreateMutation } from './graphql'
+import { MediaObject } from 'components'
 
 const recordsFrom = moment()
   .subtract(2, 'days')
@@ -37,48 +38,13 @@ const RoomHistory: React.FC = () => {
       createSong({ variables: { youtubeId: record.song.youtubeId } })
     }
 
-    const renderThumbnail = (thumbnailUrl: string) => {
-      if (!thumbnailUrl) {
-        return(
-          <Flex
-            sx={{
-              alignItems: 'center',
-              border: '1px solid',
-              borderColor: 'accent',
-              borderRadius: 3,
-              boxShadow: 'xl',
-              height: '100%',
-              justifyContent: 'center',
-              p: 2,
-              width: '50px'
-            }}
-          >
-           <Box as={ImageIcon} size={20} color="muted" />
-          </Flex>
-        )
-      }
-      return (
-        <Image
-            src={thumbnailUrl}
-            sx={{
-              borderRadius: 3,
-              boxShadow: 'xl',
-              height: '100%',
-              width: '100%'
-            }}
-        />
-      )
-    }
-
     return (
       <Box
         as="li"
         key={record.id}
         sx={{
-          alignItems: 'center',
           borderBottom: '1px solid',
           borderColor: 'accent',
-          display: 'flex',
           listStyle: 'none',
           mx: 0,
           my: 3,
@@ -86,83 +52,56 @@ const RoomHistory: React.FC = () => {
           width: '100%'
         }}
       >
-        <Box
-          sx={{
-            width: '50px',
-          }}
-        >
-          {renderThumbnail(record.song.thumbnailUrl)}
-        </Box>
-
-        <Flex
-          sx={{
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            mx: 3,
-            width: '100%'
-          }}
-        >
-          <Box
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              mx: 3,
-            }}
-          >
-            <Text
+        <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
+          <Box sx={{flex: 1}}>
+            <Box
               sx={{
-                color: 'gray300',
+                display: 'inline-block',
                 fontSize: 1,
+                fontWeight: 300,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                width: '100%',
               }}
             >
               On {playDate.format('MMMM Do YYYY, h:mm:ss a')}, {record.user.name} played
-            </Text>
+            </Box>
 
-            <Text
+            <Box
               sx={{
-                color: 'gray300',
+                display: 'inline-block',
                 fontSize: 1,
+                fontWeight: 600,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                width: '100%',
               }}
             >
               {record.song.name}
-            </Text>
-
-            <Flex
-              sx={{
-                color: 'gray300',
-                fontSize: 1,
-              }}
-            >
-              {record.recordListens.map(l => {
-                return (
-                  <Text key={l.id} mr={1}>
-                    {l.user.name}: {l.approval}
-                  </Text>
-                )
-              })}
-            </Flex>
+            </Box>
           </Box>
 
-          {record.user.id !== user.id && (
-            <Box onClick={addSong}
+          <Flex
+            alignItems="center"
+            mx={3}
+          >
+            <Box
+              as={Plus}
+              onClick={addSong}
+              size={24}
               sx={{
-                alignItems: 'center',
                 color: 'text',
                 cursor: 'pointer',
-                display: 'flex',
-                height: '24px',
-                widht: '24px',
                 '&:hover': {
                   bg: 'muted',
                   borderRadius: 4,
                 },
               }}
-            >
-              <Plus size={20} />
-            </Box>
-          )}
-        </Flex>
+            />
+          </Flex>
+        </MediaObject>
       </Box>
     )
   })

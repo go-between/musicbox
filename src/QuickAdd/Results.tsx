@@ -9,6 +9,7 @@ import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 import { duration } from 'lib/formatters'
+import { MediaObject } from 'components'
 
 import { Song } from './graphql'
 import { useResultsContext } from './ResultsContextProvider'
@@ -77,8 +78,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
         bg: `${selected ? '#4A5568' : 'initial'}`,
         borderRadius: 3,
         cursor: 'pointer',
-        display: 'flex',
-        justifyContent: 'space-between',
         listStyle: 'none',
         mx: 0,
         my: 2,
@@ -90,76 +89,64 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
         },
       }}
     >
-      <Box
-        sx={{
-          width: '50px',
-        }}
-      >
-        <Image
-          src={result.thumbnailUrl}
-          sx={{
-            borderRadius: 3,
-            boxShadow: 'xl',
-            height: '100%',
-            width: '100%'
-          }}
-        />
-      </Box>
+      <MediaObject imageUrl={result.thumbnailUrl} alignment="center" placeholderImageColor="accent">
+        <Box flex={1}>
+          {nowPlaying ? <NowPlaying /> : <></>}
+          <Box
+            sx={{
+              fontSize: 1,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              mr: 2,
+            }}
+          >
+            {result.name}
+          </Box>
+        </Box>
 
-      <Box>
-        {nowPlaying ? <NowPlaying /> : <></>}
-        <Box
-          sx={{
-            fontSize: 1,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            mr: 2,
-          }}
-        >
-          {result.name}
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          alignItems: 'center',
-          color: 'text',
-          cursor: 'pointer',
-          display: 'flex',
-          p: 1,
-          mx: 1,
-        }}
-      >
-        <Box
-          sx={{
-            alignItems: 'center',
-            bg: 'accent',
-            borderRadius: 4,
-            color: 'text',
-            cursor: 'pointer',
-            display: 'flex',
-            p: 1,
-            mx: 1,
-          }}
-          onClick={openModal}
-        >
-          <Eye size={18} />
-        </Box>
-        <Box
-          sx={{
-            alignItems: 'center',
-            bg: 'accent',
-            borderRadius: 4,
-            color: 'text',
-            cursor: 'pointer',
-            display: 'flex',
-            p: 1,
-            mx: 1,
-          }}
-        >
-          {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
-        </Box>
-      </Box>
+        <Flex alignItems="center" justifyContent="space-between">
+          <Box
+            sx={{
+              color: 'gray400',
+              fontSize: 1,
+              px: 3,
+            }}
+          >
+            {duration(songDuration)}
+          </Box>
+
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 1,
+              mx: 1,
+            }}
+            onClick={openModal}
+          >
+            <Eye size={18} />
+          </Box>
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 1,
+              mx: 1,
+            }}
+          >
+            {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
+          </Box>
+        </Flex>
+      </MediaObject>
 
       <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
         <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} controls={true} />
