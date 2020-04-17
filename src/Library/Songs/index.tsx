@@ -11,8 +11,8 @@ const Songs: React.FC = () => {
       as="main"
       sx={{
         flexDirection: 'column',
-        height: '100vh',
         p: 4,
+        height: '100%',
         width: ['100%', '70%'],
       }}
     >

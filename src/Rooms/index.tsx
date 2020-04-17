@@ -8,7 +8,7 @@ const Rooms: React.FC = () => {
         alignItems: 'top',
         bg: 'background',
         flexDirection: ['column', 'row'],
-        minHeight: '100vh',
+        height: '100%',
         mx: 'auto',
         position: 'relative',
       }}

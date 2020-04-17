@@ -18,7 +18,7 @@ const Chat: React.FC = () => {
         borderColor: 'accent',
         color: 'text',
         flexDirection: 'column',
-        height: '100vh',
+        height: '100%',
         justifyContent: 'space-between',
         overflow: 'scroll',
         py: 4,

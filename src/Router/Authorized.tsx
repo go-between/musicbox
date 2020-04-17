@@ -70,38 +70,52 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
             sx={{
               alignItems: 'top',
               bg: 'background',
-              flexDirection: 'row',
-              minHeight: '100vh',
+              flexDirection: 'column',
+              height: '100vh',
               mx: 'auto',
               position: 'relative',
             }}
           >
-            <Box
-              as="aside"
-              sx={{
-                bg: 'background',
-                borderRight: '1px solid',
-                borderColor: 'accent',
-                display: ['none', 'flex'],
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '100vh',
-                overflow: 'hidden',
-                width: ['100%', '300px'],
-              }}
-            >
-              <SideNav />
-            </Box>
             <Flex
-              as="main"
               sx={{
-                flexDirection: 'column',
-                height: '100vh',
-                width: ['100%'],
+                flexDirection: 'row',
+                height: '100%',
+                overflow: 'hidden',
               }}
             >
-              <InnerRoutes />
+              <Box
+                as="aside"
+                sx={{
+                  bg: 'background',
+                  borderRight: '1px solid',
+                  borderColor: 'accent',
+                  display: ['none', 'flex'],
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  overflow: 'hidden',
+                  width: ['100%', '300px'],
+                }}
+              >
+                <SideNav />
+              </Box>
+              <Flex
+                as="main"
+                sx={{
+                  flexDirection: 'column',
+                  width: ['100%'],
+                }}
+              >
+                <InnerRoutes />
+              </Flex>
             </Flex>
+            <Box
+              sx={{
+                borderTop: '1px solid',
+                borderColor: 'accent',
+              }}
+            >
+              Footer
+            </Box>
           </Flex>
         </UserContextProvider>
       </ApolloProvider>

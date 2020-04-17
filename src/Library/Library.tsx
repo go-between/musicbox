@@ -15,10 +15,11 @@ const Library: React.FC = () => {
             alignItems: 'top',
             bg: 'background',
             flexDirection: ['column', 'row'],
-            minHeight: '100vh',
+            height: '100%',
             width: '100%',
             mx: 'auto',
             position: 'relative',
+            overflowY: 'scroll',
           }}
         >
           <Songs />

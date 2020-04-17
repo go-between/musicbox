@@ -39,7 +39,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
       as="main"
       sx={{
         flexDirection: 'column',
-        height: '100vh',
+        height: '100%',
         p: 4,
         width: ['100%'],
       }}

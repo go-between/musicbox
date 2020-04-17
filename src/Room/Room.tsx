@@ -45,6 +45,7 @@ const Room: React.FC = () => {
               <Flex
                 sx={{
                   flexDirection: ['column', 'row'],
+                  height: '100%',
                   width: ['100%'],
                 }}
               >
