@@ -56,6 +56,7 @@ const RoomHistory: React.FC = () => {
           <Box sx={{flex: 1}}>
             <Box
               sx={{
+                color: 'gray500',
                 display: 'inline-block',
                 fontSize: 1,
                 fontWeight: 300,
@@ -81,6 +82,14 @@ const RoomHistory: React.FC = () => {
             >
               {record.song.name}
             </Box>
+
+            {record.recordListens.map(l => {
+              return (
+                <Text key={l.id} mr={1} color='gray500' fontSize={1}>
+                  {l.user.name}: {l.approval}
+                </Text>
+              )
+            })}
           </Box>
 
           <Flex

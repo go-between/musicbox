@@ -70,22 +70,6 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
               },
             }}
           />
-
-          {/* <Box
-            onClick={onDelete}
-            sx={{
-              border: '1px solid',
-              color: 'text',
-              cursor: 'pointer',
-              width: '24px',
-              '&:hover': {
-                bg: 'muted',
-                borderRadius: 4,
-              },
-            }}
-          >
-            <X size={24} />
-          </Box> */}
         </Flex>
       </MediaObject>
 
