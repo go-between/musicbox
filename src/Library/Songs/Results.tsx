@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Image } from 'rebass'
+import { Box } from 'rebass'
 import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
+
+import { MediaObject } from 'components'
 
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
@@ -65,8 +67,9 @@ const Result: React.FC<ResultProps> = ({ result }) => {
           </Label>
         </Box>
         <Box>
-          <Image src={result.thumbnailUrl} />
-          {result.name}
+          <MediaObject imageUrl={result.thumbnailUrl} alignment="center" placeholderImageColor="accent">
+            {result.name}
+          </MediaObject>
         </Box>
       </Box>
     </Box>

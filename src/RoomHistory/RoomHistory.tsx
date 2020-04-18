@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation, useQuery } from '@apollo/react-hooks'
-import { Box, Flex, Image, Text } from 'rebass'
+import { Box, Flex } from 'rebass'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
 import { Plus } from 'react-feather'
