@@ -6,6 +6,7 @@ type Props = {
   alignment?: string
   imageUrl: string
   placeholderImageColor?: string
+  thumbnail?: boolean | undefined
 }
 
 const ImagePlaceholder: React.FC<{ placeholderImageColor: string }> = ({ placeholderImageColor }) => {
@@ -33,6 +34,7 @@ export const MediaObject: React.FC<Props> = ({
   children,
   imageUrl,
   placeholderImageColor = 'accent',
+  thumbnail = true,
 }) => {
   const image = !imageUrl ? (
     <ImagePlaceholder placeholderImageColor={placeholderImageColor} />
@@ -53,7 +55,7 @@ export const MediaObject: React.FC<Props> = ({
       <Box
         sx={{
           mr: 3,
-          height: '50px',
+          height: thumbnail ? '50px' : 'auto',
           width: '50px',
         }}
       >
