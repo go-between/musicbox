@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation, useQuery } from '@apollo/react-hooks'
-import { Box, Flex } from 'rebass'
+import { Box, Flex, Text } from 'rebass'
 import moment from 'moment'
 import { useToasts } from 'react-toast-notifications'
 import { Plus } from 'react-feather'
@@ -56,6 +56,7 @@ const RoomHistory: React.FC = () => {
           <Box sx={{ flex: 1 }}>
             <Box
               sx={{
+                color: 'gray500',
                 display: 'inline-block',
                 fontSize: 1,
                 fontWeight: 300,
@@ -81,6 +82,14 @@ const RoomHistory: React.FC = () => {
             >
               {record.song.name}
             </Box>
+
+            {record.recordListens.map(l => {
+              return (
+                <Text key={l.id} mr={1} color="gray500" fontSize={1}>
+                  {l.user.name}: {l.approval}
+                </Text>
+              )
+            })}
           </Box>
 
           <Flex alignItems="center" mx={3}>
