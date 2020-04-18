@@ -53,6 +53,7 @@ export const MediaObject: React.FC<Props> = ({
       <Box
         sx={{
           mr: 3,
+          height: '50px',
           width: '50px',
         }}
       >
