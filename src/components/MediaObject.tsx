@@ -11,7 +11,7 @@ type Props = {
 export const MediaObject: React.FC<Props> = ({ alignment, children, imageUrl, placeholderImageColor }) => {
   const renderThumbnail = (imageUrl: string) => {
     if (!imageUrl) {
-      return(
+      return (
         <Flex
           sx={{
             alignItems: 'center',
@@ -25,19 +25,19 @@ export const MediaObject: React.FC<Props> = ({ alignment, children, imageUrl, pl
             width: '50px',
           }}
         >
-         <Box as={ImageIcon} size={20} color={placeholderImageColor === 'accent' ? 'gray600' : 'muted'} />
+          <Box as={ImageIcon} size={20} color={placeholderImageColor === 'accent' ? 'gray600' : 'muted'} />
         </Flex>
       )
     }
     return (
       <Image
-          src={imageUrl}
-          sx={{
-            borderRadius: 3,
-            boxShadow: 'xl',
-            height: '100%',
-            width: '100%'
-          }}
+        src={imageUrl}
+        sx={{
+          borderRadius: 3,
+          boxShadow: 'xl',
+          height: '100%',
+          width: '100%',
+        }}
       />
     )
   }

@@ -40,10 +40,14 @@ const UserPlaylist: React.FC = () => {
       <Draggable key={record.id} draggableId={record.id} index={index}>
         {provided => (
           <Box
-            ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-            sx={{
-              // bg:  ? 'blue' : 'red'
-            }}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            sx={
+              {
+                // bg:  ? 'blue' : 'red'
+              }
+            }
           >
             <UserPlaylistRecord record={record} onDelete={onDelete} />
           </Box>

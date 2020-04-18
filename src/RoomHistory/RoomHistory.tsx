@@ -49,11 +49,11 @@ const RoomHistory: React.FC = () => {
           mx: 0,
           my: 3,
           pb: 3,
-          width: '100%'
+          width: '100%',
         }}
       >
         <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
-          <Box sx={{flex: 1}}>
+          <Box sx={{ flex: 1 }}>
             <Box
               sx={{
                 color: 'gray500',
@@ -85,17 +85,14 @@ const RoomHistory: React.FC = () => {
 
             {record.recordListens.map(l => {
               return (
-                <Text key={l.id} mr={1} color='gray500' fontSize={1}>
+                <Text key={l.id} mr={1} color="gray500" fontSize={1}>
                   {l.user.name}: {l.approval}
                 </Text>
               )
             })}
           </Box>
 
-          <Flex
-            alignItems="center"
-            mx={3}
-          >
+          <Flex alignItems="center" mx={3}>
             <Box
               as={Plus}
               onClick={addSong}

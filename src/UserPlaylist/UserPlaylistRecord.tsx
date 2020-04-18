@@ -25,7 +25,7 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
         mx: 0,
         my: 3,
         pb: 3,
-        width: '100%'
+        width: '100%',
       }}
     >
       <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
@@ -43,9 +43,7 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
           {record.song.name}
         </Box>
 
-        <Flex
-          alignItems="center"
-        >
+        <Flex alignItems="center">
           <Box
             sx={{
               color: 'gray400',
@@ -72,7 +70,6 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
           />
         </Flex>
       </MediaObject>
-
     </Box>
   )
 }

@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react'
 import moment from 'moment'
-import { Box, Button, Image, Flex, Text } from 'rebass'
+import { Box, Button, Flex, Text } from 'rebass'
 import { Check, Eye, Plus } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
