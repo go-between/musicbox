@@ -58,7 +58,7 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
     return <></>
   }
 
-  const saidAt = moment.duration(messageCreated.diff(playedAt))
+  const saidAt = messageCreated.diff(playedAt, 'seconds')
 
   return (
     <Box

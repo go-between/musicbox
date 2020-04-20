@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import { Box, Flex, Text } from 'rebass'
 
 import { usePlaylistRecordsContext } from 'Context'
@@ -10,8 +9,6 @@ import { MediaObject } from 'components'
 const RoomPlaylist: React.FC = () => {
   const { playlistRecords } = usePlaylistRecordsContext()
   const records = playlistRecords.map(record => {
-    const songDuration = moment.duration(record.song.durationInSeconds, 'seconds')
-
     return (
       <Box
         as="li"
@@ -59,7 +56,7 @@ const RoomPlaylist: React.FC = () => {
                 px: 3,
               }}
             >
-              {duration(songDuration)}
+              {duration(record.song.durationInSeconds)}
             </Box>
           </Flex>
         </MediaObject>
