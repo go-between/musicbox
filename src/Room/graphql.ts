@@ -100,52 +100,6 @@ export const MESSAGE_PIN = gql`
   }
 `
 
-export type RecordListenCreate = {
-  data: {
-    recordListenCreate: {
-      recordListen: {
-        approval: number
-      }
-    }
-  }
-  vars: {
-    recordId: string
-    approval: number
-  }
-}
-
-export const RECORD_LISTEN_CREATE = gql`
-  mutation RecordListenCreate($recordId: ID!, $approval: Int!) {
-    recordListenCreate(input: { recordId: $recordId, approval: $approval }) {
-      recordListen {
-        id
-        approval
-      }
-      errors
-    }
-  }
-`
-
-export type RecordListensQuery = {
-  data: {
-    recordListens: RecordListen[]
-  }
-  vars: {
-    recordId: string
-  }
-}
-
-export const RECORD_LISTENS = gql`
-  query RecordListens($recordId: ID!) {
-    recordListens(recordId: $recordId) {
-      approval
-      user {
-        id
-      }
-    }
-  }
-`
-
 export type RoomActivate = {
   data: {
     roomActivate: {
@@ -166,7 +120,9 @@ export const ROOM_ACTIVATE = gql`
           playedAt
           song {
             id
+            durationInSeconds
             name
+            thumbnailUrl
             youtubeId
           }
           user {
@@ -214,7 +170,9 @@ export type Room = {
     playedAt: string
     song: {
       id: string
+      durationInSeconds: number
       name: string
+      thumbnailUrl: string
       youtubeId: string
     }
     user: {
@@ -225,13 +183,6 @@ export type Room = {
   } | null
   name: string
   users: User[]
-}
-
-export type RecordListen = {
-  approval: number
-  user: {
-    id: string
-  }
 }
 
 export type User = {

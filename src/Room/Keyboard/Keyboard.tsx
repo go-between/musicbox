@@ -6,7 +6,7 @@ import { Command } from 'react-feather'
 
 import { useCurrentRecordContext } from 'Context'
 
-import { useApprovalContext } from 'Room'
+import { useApprovalContext } from 'Approval'
 import { SongCreateMutation, SONG_CREATE } from './graphql'
 
 const Keyboard: React.FC = () => {
@@ -38,10 +38,7 @@ const Keyboard: React.FC = () => {
           createSong({ variables: { youtubeId: currentRecord.song.youtubeId } })
           return
         case 'p':
-          if (!currentRecord) {
-            return
-          }
-          incrementApproval(currentRecord.id)
+          incrementApproval()
           return
       }
     },

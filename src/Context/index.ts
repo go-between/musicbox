@@ -2,4 +2,5 @@ export { default as AuthContextProvider, useAuthContext } from './AuthContextPro
 export * from './CurrentRecordContextProvider'
 export * from './PlaylistRecordContextProvider'
 export * from './UserContextProvider'
+export * from './VideoContextProvider'
 export { default as WebsocketContextProvider, useWebsocketContext } from './WebsocketContextProvider'

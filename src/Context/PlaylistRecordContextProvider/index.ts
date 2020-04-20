@@ -1,2 +1,2 @@
 export { PlaylistRecordsContextProvider, usePlaylistRecordsContext } from './PlaylistRecordsContextProvider'
-export { PlaylistRecord } from './graphql'
+export * from './graphql'

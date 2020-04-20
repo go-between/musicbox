@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
 import { Clock, User as UserPlaylistIcon, Users as RoomPlaylistIcon } from 'react-feather'
 
-import Player from 'Player'
 import QuickAdd from 'QuickAdd'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
-import { useCurrentRecordContext } from 'Context'
+import { useCurrentRecordContext, useVideoContext } from 'Context'
 
-import Users from './Users'
 import { Room as RoomType } from './graphql'
 
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {
@@ -22,6 +20,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
   // TODO:  Sort of a hack to ensure current record is set after room has
   // been activated.  This should be pulled out.
   const { setCurrentRecord } = useCurrentRecordContext()
+  const { setVideoRef } = useVideoContext()
   const { currentRecord } = room
   useEffect(() => {
     setCurrentRecord(currentRecord)
@@ -33,6 +32,8 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
     roomHistory: RoomHistory,
   }
   const Component = components[tab]
+  const videoRef = useRef()
+  setVideoRef(videoRef)
 
   return (
     <Flex
@@ -53,13 +54,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           overflowY: 'scroll',
         }}
       >
-        <Box>
-          <Users initialUsers={room.users} />
-        </Box>
-
-        <Box>
-          <Player />
-        </Box>
+        <Box ref={videoRef} />
 
         <Box
           sx={{

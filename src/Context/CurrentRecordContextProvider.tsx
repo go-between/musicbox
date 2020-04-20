@@ -7,7 +7,9 @@ export type CurrentRecord = {
   playedAt: string
   song: {
     id: string
+    durationInSeconds: number
     name: string
+    thumbnailUrl: string
     youtubeId: string
   }
   user: {

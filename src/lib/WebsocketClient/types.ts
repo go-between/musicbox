@@ -110,7 +110,9 @@ export type NowPlayingChannelMessage = {
       playedAt: string
       song: {
         id: string
+        durationInSeconds: number
         name: string
+        thumbnailUrl: string
         youtubeId: string
       }
       user: {
@@ -126,6 +128,8 @@ type RecordListen = {
   approval: number
   user: {
     id: string
+    email: string
+    name: string
   }
 }
 

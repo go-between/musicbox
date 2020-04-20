@@ -4,12 +4,10 @@ import { useParams } from 'react-router-dom'
 import { Flex } from 'rebass'
 
 import { useWebsocketContext } from 'Context'
-import VolumeContextProvider from 'Player/VolumeContextProvider'
 
 import Chat from './Chat'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
-import ApprovalContextProvider from './ApprovalContextProvider'
 import MessagesContextProvider from './MessagesContextProvider'
 
 const Room: React.FC = () => {
@@ -35,22 +33,18 @@ const Room: React.FC = () => {
   }
 
   return (
-    <ApprovalContextProvider>
-      <MessagesContextProvider>
-        <VolumeContextProvider>
-          <Flex
-            sx={{
-              flexDirection: ['column', 'row'],
-              height: '100%',
-              width: ['100%'],
-            }}
-          >
-            <Main room={data.roomActivate.room} />
-            <Chat />
-          </Flex>
-        </VolumeContextProvider>
-      </MessagesContextProvider>
-    </ApprovalContextProvider>
+    <MessagesContextProvider>
+      <Flex
+        sx={{
+          flexDirection: ['column', 'row'],
+          height: '100%',
+          width: ['100%'],
+        }}
+      >
+        <Main room={data.roomActivate.room} />
+        <Chat />
+      </Flex>
+    </MessagesContextProvider>
   )
 }
 

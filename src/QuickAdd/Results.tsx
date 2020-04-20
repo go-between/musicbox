@@ -38,7 +38,7 @@ type SearchResultProps = {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selected }) => {
-  const { setUnmutedPlayer, volume } = useVolumeContext()
+  const { setUnmutedPlayer } = useVolumeContext()
   const { addRecords } = usePlaylistRecordsContext()
   const { addToast } = useToasts()
 
@@ -146,7 +146,13 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
       </MediaObject>
 
       <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
-        <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} controls={true} />
+        <PlayerPrimitive
+          playedAt=""
+          youtubeId={result.youtubeId}
+          controls={true}
+          playerIdentifier={PLAYERS.preview}
+          inline={true}
+        />
 
         <Button onClick={onClick}>Add</Button>
 
