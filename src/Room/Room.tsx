@@ -3,19 +3,12 @@ import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 import { Flex } from 'rebass'
 
-import SideNav from 'SideNav'
 import { useWebsocketContext } from 'Context'
 
-import VolumeContextProvider from 'Player/VolumeContextProvider'
-
 import Chat from './Chat'
-import Keyboard from './Keyboard'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
-import ApprovalContextProvider from './ApprovalContextProvider'
-import CurrentRecordContextProvider from './CurrentRecordContextProvider'
 import MessagesContextProvider from './MessagesContextProvider'
-import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
 
 const Room: React.FC = () => {
   const { id } = useParams()
@@ -27,45 +20,30 @@ const Room: React.FC = () => {
   })
 
   useEffect(() => {
+    websocket.unsubscribeForRoom()
     if (!id) {
       return
     }
-
     roomActivate({ variables: { roomId: id } })
-    return websocket.unsubscribeForRoom
-  }, [id, roomActivate, websocket.unsubscribeForRoom])
+  }, [id, roomActivate, websocket, websocket.unsubscribeForRoom])
 
   if (!data || loading) {
     return <p>Loading</p>
   }
 
   return (
-    <ApprovalContextProvider>
-      <PlaylistRecordContextProvider>
-        <CurrentRecordContextProvider>
-          <MessagesContextProvider>
-            <VolumeContextProvider>
-              <Flex
-                sx={{
-                  alignItems: 'top',
-                  bg: 'background',
-                  flexDirection: ['column', 'row'],
-                  minHeight: '100vh',
-                  mx: 'auto',
-                  position: 'relative',
-                }}
-              >
-                <SideNav>
-                  <Keyboard />
-                </SideNav>
-                <Main room={data.roomActivate.room} />
-                <Chat />
-              </Flex>
-            </VolumeContextProvider>
-          </MessagesContextProvider>
-        </CurrentRecordContextProvider>
-      </PlaylistRecordContextProvider>
-    </ApprovalContextProvider>
+    <MessagesContextProvider>
+      <Flex
+        sx={{
+          flexDirection: ['column', 'row'],
+          height: '100%',
+          width: ['100%'],
+        }}
+      >
+        <Main room={data.roomActivate.room} />
+        <Chat />
+      </Flex>
+    </MessagesContextProvider>
   )
 }
 

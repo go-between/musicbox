@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { Box } from 'rebass'
 
-import { useCurrentRecordContext } from 'Room'
+import { useCurrentRecordContext } from 'Context'
 
 import { PINNED_MESSAGES_QUERY, PinnedMessagesQuery } from './graphql'
 import Message from './Message'

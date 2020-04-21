@@ -1,27 +1,20 @@
 import React from 'react'
-import { Box } from 'rebass'
+import { Box, Flex } from 'rebass'
+import { useRouteMatch } from 'react-router-dom'
+
+import { Logo } from 'components'
+import Keyboard from 'Room/Keyboard'
 
 import Teams from './Teams'
 
-import { Logo } from 'components'
+export const SideNav: React.FC = () => {
+  const inRoom = useRouteMatch('/room/:id')
 
-export const SideNav: React.FC = ({ children }) => {
+  const roomKeyboardShortcuts = inRoom && <Box px={3}>{!!inRoom && <Keyboard />}</Box>
+
   return (
-    <Box
-      as="aside"
-      sx={{
-        bg: 'background',
-        borderRight: '1px solid',
-        borderColor: 'accent',
-        display: ['none', 'flex'],
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        height: '100vh',
-        overflow: 'hidden',
-        width: ['100%', '300px'],
-      }}
-    >
-      <Box mb={4}>
+    <Flex justifyContent="space-between" flexDirection="column" height="100%">
+      <Box>
         <Box px={3} py={4}>
           <Logo />
         </Box>
@@ -31,9 +24,7 @@ export const SideNav: React.FC = ({ children }) => {
         </Box>
       </Box>
 
-      <Box px={3} mb={3}>
-        {children}
-      </Box>
-    </Box>
+      {roomKeyboardShortcuts}
+    </Flex>
   )
 }

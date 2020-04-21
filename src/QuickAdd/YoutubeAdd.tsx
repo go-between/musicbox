@@ -5,7 +5,7 @@ import { Input } from '@rebass/forms'
 import { useToasts } from 'react-toast-notifications'
 
 import { setString } from 'lib/setters'
-import { usePlaylistRecordContext } from 'Room'
+import { usePlaylistRecordsContext } from 'Context'
 
 import { SongCreateMutation, SONG_CREATE } from './graphql'
 
@@ -13,10 +13,10 @@ export const YoutubeAdd: React.FC = () => {
   const { addToast } = useToasts()
   const [youtubeUrl, setYoutubeUrl] = useState('')
   const [youtubeId, setYoutubeId] = useState('')
-  const { addRecord } = usePlaylistRecordContext()
+  const { addRecords } = usePlaylistRecordsContext()
   const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
     onCompleted: ({ songCreate: { song } }) => {
-      addRecord(song.id)
+      addRecords(song.id)
       setYoutubeId('')
       setYoutubeUrl('')
       addToast(`Successfully added ${song.name}`, { appearance: 'success', autoDismiss: true })

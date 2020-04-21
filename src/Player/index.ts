@@ -1,5 +1,5 @@
 import Player from './Player'
 
-export { useVolumeContext } from './VolumeContextProvider'
-
+export { PlayerContextProvider } from './PlayerContextProvider'
+export { useVolumeContext, VolumeContextProvider } from './VolumeContextProvider'
 export default Player
