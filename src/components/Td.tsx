@@ -15,10 +15,10 @@ export const Td = styled('td')(
       float: 'left',
       fontWeight: 600,
       mr: 4,
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     },
     '&:last-child': {
-      borderBottom: 0
-    }
-  })
+      borderBottom: 0,
+    },
+  }),
 )

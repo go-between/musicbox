@@ -11,9 +11,9 @@ export const Thead = styled('thead')(
     padding: 0,
     position: ['absolute', 'relative'],
     width: ['1px', 'auto'],
-    'tr': {
+    tr: {
       borderBottom: [0, '1px solid'],
-      borderColor: ['transparent', 'accent']
-    }
-  })
+      borderColor: ['transparent', 'accent'],
+    },
+  }),
 )

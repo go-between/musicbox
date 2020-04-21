@@ -7,6 +7,6 @@ export const Th = styled('th')(
     textAlign: 'left',
     fontSize: 1,
     letterSpacing: '.1em',
-    textTransform: 'uppercase'
-  })
+    textTransform: 'uppercase',
+  }),
 )

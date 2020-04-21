@@ -3,7 +3,7 @@ import css from '@styled-system/css'
 
 export const Tbody = styled('tbody')(
   css({
-    'tr': {
+    tr: {
       borderBottom: ['1px solid', '1px solid'],
       borderLeft: ['1px solid', 0],
       borderRight: ['1px solid', 0],
@@ -13,7 +13,7 @@ export const Tbody = styled('tbody')(
       '&:last-child': {
         borderBottom: ['1px solid', 0],
         borderColor: ['accent', 'transparent'],
-      }
-    }
-  })
+      },
+    },
+  }),
 )

@@ -8,5 +8,5 @@ export const TableWrapper = styled('div')(
     borderRadius: [0, 6],
     boxShadow: ['none', 'xl'],
     overflowX: ['none', 'auto'],
-  })
+  }),
 )

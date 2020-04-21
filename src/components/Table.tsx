@@ -11,5 +11,5 @@ export const Table = styled('table')(
     p: 0,
     tableLayout: 'fixed',
     width: '100%',
-  })
+  }),
 )

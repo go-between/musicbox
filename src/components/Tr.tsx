@@ -6,5 +6,5 @@ export const Tr = styled('tr')(
     bg: ['transparent', 'transparent'],
     display: ['block', 'table-row'],
     mb: 4,
-  })
+  }),
 )
