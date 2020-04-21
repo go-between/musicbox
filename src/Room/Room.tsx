@@ -20,13 +20,12 @@ const Room: React.FC = () => {
   })
 
   useEffect(() => {
+    websocket.unsubscribeForRoom()
     if (!id) {
       return
     }
-
     roomActivate({ variables: { roomId: id } })
-    return websocket.unsubscribeForRoom
-  }, [id, roomActivate, websocket.unsubscribeForRoom])
+  }, [id, roomActivate, websocket, websocket.unsubscribeForRoom])
 
   if (!data || loading) {
     return <p>Loading</p>
