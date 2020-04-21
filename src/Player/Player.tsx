@@ -7,7 +7,7 @@ import { MediaObject } from 'components'
 import Approval from 'Approval'
 
 import PlayerPrimitive from './PlayerPrimitive'
-import Progres from './Progress'
+import Progress from './Progress'
 import Settings from './Settings'
 import Volume from './Volume'
 import { PLAYERS } from './VolumeContextProvider'
@@ -37,8 +37,9 @@ const Player: React.FC = () => {
         </Box>
 
         <Flex width={['100%', '50%']} alignItems="center">
-          <Progres />
+          <Progress />
           <Volume />
+          <Box mx={2} />
           <Settings />
         </Flex>
         <Flex width={['100%', '25%']}>
