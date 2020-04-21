@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Box } from 'rebass'
+import moment from 'moment'
+import { Box, Flex, Text } from 'rebass'
 import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 
-import { MediaObject } from 'components'
+import { Table, TableWrapper, Tbody, Thead, Tr, Td, Th, MediaObject } from 'components'
 
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
 import { SongsQuery, Song as SongType, SONGS_QUERY } from '../graphql'
+import { duration } from 'lib/formatters'
 
 type ResultProps = {
   result: SongType
@@ -31,48 +33,46 @@ const Result: React.FC<ResultProps> = ({ result }) => {
     (existingTag && !songsToRemove.find(s => s === result.id)) ||
     (!existingTag && !!songsToAdd.find(s => s === result.id))
 
+  const songDuration = moment.duration(result.durationInSeconds, 'seconds')
+
   return (
-    <Box
-      as="li"
-      sx={{
-        alignItems: 'center',
-        borderRadius: 3,
-        display: 'flex',
-        listStyle: 'none',
-        mx: 0,
-        my: 2,
-        px: 2,
-        py: 3,
-        bg: activeSongId === result.id ? 'accent' : 'initial',
-        cursor: 'pointer',
-        '&:hover': {
-          bg: '#4A5568',
-        },
-      }}
-      onClick={selectSong}
-    >
-      <Box
-        display="flex"
-        sx={{
-          alignItems: 'center',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-          ml: 3,
-        }}
-      >
-        <Box>
-          <Label sx={{ m: 0, visibility: modifyTags ? 'visible' : 'hidden' }}>
-            <Checkbox checked={checked} onChange={toggleTag} sx={{ cursor: 'pointer' }} />
-          </Label>
-        </Box>
-        <Box>
-          <MediaObject imageUrl={result.thumbnailUrl} alignment="center" placeholderImageColor="accent">
-            {result.name}
-          </MediaObject>
-        </Box>
-      </Box>
-    </Box>
+    <Tr>
+      <Td>
+        <Label sx={{ m: 0 }}>
+          <Checkbox checked={checked} onChange={toggleTag} sx={{ cursor: 'pointer' }} />
+        </Label>
+      </Td>
+
+      <Td data-label="Song">
+        <Flex alignItems="center">
+          <Box sx={{
+            backgroundImage: `url(${result.thumbnailUrl})`,
+            backgroundSize: 'cover',
+            borderRadius: 6,
+            p: '24px',
+            mr: 3,
+          }}/>
+
+          <Box>
+            <Text
+              sx={{
+                fontSize: 1,
+                fontWeight: 600,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {result.name}
+            </Text>
+          </Box>
+        </Flex>
+      </Td>
+
+      <Td data-label="Duration">{duration(songDuration)}</Td>
+
+      <Td data-label="Actions">Edit / Etc.</Td>
+    </Tr>
   )
 }
 
@@ -102,17 +102,19 @@ const Songs: React.FC = () => {
 
   const resultItems = results.map(result => <Result key={result.id} result={result} />)
   return (
-    <Box
-      as="ul"
-      sx={{
-        m: 0,
-        overflow: 'scroll',
-        p: 0,
-        position: 'relative',
-      }}
-    >
-      {resultItems}
-    </Box>
+    <TableWrapper>
+      <Table>
+        <Thead>
+          <Tr>
+            <Th>Select</Th>
+            <Th>Song</Th>
+            <Th>Duration</Th>
+            <Th>Actions</Th>
+          </Tr>
+        </Thead>
+        <Tbody>{resultItems}</Tbody>
+      </Table>
+    </TableWrapper>
   )
 }
 

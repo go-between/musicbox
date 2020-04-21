@@ -8,5 +8,12 @@ export const Th = styled('th')(
     fontSize: 1,
     letterSpacing: '.1em',
     textTransform: 'uppercase',
+    width: 'auto',
+    '&:first-child': {
+      width: '10%'
+    },
+    '&:last-child': {
+      width: '10%'
+    }
   }),
 )
