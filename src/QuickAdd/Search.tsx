@@ -190,6 +190,7 @@ export const Search: React.FC = () => {
             value={query}
             onChange={setString(setQuery)}
             onKeyDown={navigateResult}
+            placeholder="Type to search, or paste YouTube URL"
             sx={{
               bg: 'accent',
               boxShadow: 'none',
