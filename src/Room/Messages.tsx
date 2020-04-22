@@ -1,9 +1,10 @@
 import React, { createRef, useEffect } from 'react'
 import { Box } from 'rebass'
 
-import { useMessagesContext } from './MessagesContextProvider'
 import { Message as MessageType } from './graphql'
 import Message from './Message'
+import { useMessagesContext } from './MessagesContextProvider'
+import { usePinnedMessagesContext } from './PinnedMessagesContextProvider'
 
 type MessageGroup = [string, MessageType[]]
 const groupMessagesByRecord = (messages: MessageType[]): MessageGroup[] => {
@@ -25,7 +26,10 @@ const groupMessagesByRecord = (messages: MessageType[]): MessageGroup[] => {
   return messageGroups
 }
 
-const MessageGroup: React.FC<{ messageGroup: MessageGroup }> = ({ messageGroup }) => {
+const MessageGroup: React.FC<{ messageGroup: MessageGroup; pinnedMessages: MessageType[] }> = ({
+  messageGroup,
+  pinnedMessages,
+}) => {
   const [recordId, messages] = messageGroup
   const songName = !!recordId && messages[0].song?.name
 
@@ -79,15 +83,19 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup }> = ({ messageGroup }
           {songName || 'No Song Playing'}
         </Box>
       </Box>
-      {messages.map(message => (
-        <Message key={message.id} message={message} />
-      ))}
+      {messages.map(message => {
+        // Override message pin with data we get from the
+        // pinned message websocket
+        const overriddenMessage = { ...message, pinned: !!pinnedMessages.find(pm => pm.id === message.id) }
+        return <Message key={message.id} message={overriddenMessage} />
+      })}
     </>
   )
 }
 
 const Messages: React.FC = () => {
   const { messages } = useMessagesContext()
+  const { pinnedMessages } = usePinnedMessagesContext()
   const chat = createRef<HTMLDivElement>()
 
   useEffect(() => {
@@ -101,7 +109,7 @@ const Messages: React.FC = () => {
   const groupedMessages = groupMessagesByRecord(messages)
 
   const messageLines = groupedMessages.map((messageGroup, idx) => (
-    <MessageGroup key={idx} messageGroup={messageGroup} />
+    <MessageGroup key={idx} messageGroup={messageGroup} pinnedMessages={pinnedMessages} />
   ))
   return (
     <Box

@@ -9,6 +9,7 @@ import Chat from './Chat'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
 import MessagesContextProvider from './MessagesContextProvider'
+import PinnedMessagesContextProvider from './PinnedMessagesContextProvider'
 
 const Room: React.FC = () => {
   const { id } = useParams()
@@ -32,18 +33,20 @@ const Room: React.FC = () => {
   }
 
   return (
-    <MessagesContextProvider>
-      <Flex
-        sx={{
-          flexDirection: ['column', 'row'],
-          height: '100%',
-          width: ['100%'],
-        }}
-      >
-        <Main room={data.roomActivate.room} />
-        <Chat />
-      </Flex>
-    </MessagesContextProvider>
+    <PinnedMessagesContextProvider>
+      <MessagesContextProvider>
+        <Flex
+          sx={{
+            flexDirection: ['column', 'row'],
+            height: '100%',
+            width: ['100%'],
+          }}
+        >
+          <Main room={data.roomActivate.room} />
+          <Chat />
+        </Flex>
+      </MessagesContextProvider>
+    </PinnedMessagesContextProvider>
   )
 }
 

@@ -5,6 +5,7 @@ import {
   Options,
   MessageChannelMessage,
   NowPlayingChannelMessage,
+  PinnedMessagesChannelMessage,
   RecordListensMessage,
   RoomPlaylistMessage,
   TeamMessage,
@@ -35,6 +36,11 @@ export class Client {
   private nowPlayingMessages: Array<NowPlayingChannelMessage['room']> = []
   private nowPlayingSubscription: ((currentRecord: NowPlayingChannelMessage['room']) => void) | null = null
 
+  private pinnedMessagesMessages: Array<PinnedMessagesChannelMessage['pinnedMessages']> = []
+  private pinnedMessagesSubscription:
+    | ((pinnedMessages: PinnedMessagesChannelMessage['pinnedMessages']) => void)
+    | null = null
+
   private recordListensMessages: Array<RecordListensMessage['recordListens']> = []
   private recordListensSubscription: ((recordListens: RecordListensMessage['recordListens']) => void) | null = null
 
@@ -63,6 +69,7 @@ export class Client {
   public subscribeForRoom = (): void => {
     this.send(this.generateSubscription(channels.MESSAGE_CHANNEL, {}))
     this.send(this.generateSubscription(channels.NOW_PLAYING_CHANNEL, {}))
+    this.send(this.generateSubscription(channels.PINNED_MESSAGES_CHANNEL, {}))
     this.send(this.generateSubscription(channels.RECORD_LISTENS_CHANNEL, {}))
     this.send(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
     this.send(this.generateSubscription(channels.USERS_CHANNEL, {}))
@@ -71,6 +78,7 @@ export class Client {
   public unsubscribeForRoom = (): void => {
     this.send(this.generateUnsubscription(channels.MESSAGE_CHANNEL))
     this.send(this.generateUnsubscription(channels.NOW_PLAYING_CHANNEL))
+    this.send(this.generateUnsubscription(channels.PINNED_MESSAGES_CHANNEL))
     this.send(this.generateUnsubscription(channels.RECORD_LISTENS_CHANNEL))
     this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
     this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
@@ -98,6 +106,15 @@ export class Client {
     this.nowPlayingMessages.forEach(this.nowPlayingSubscription)
     this.nowPlayingMessages = []
     return () => (this.nowPlayingSubscription = null)
+  }
+
+  public subscribeToPinnedMessages = (
+    callback: (pinnedMessages: PinnedMessagesChannelMessage['pinnedMessages']) => void,
+  ): (() => void) => {
+    this.pinnedMessagesSubscription = callback
+    this.pinnedMessagesMessages.forEach(this.pinnedMessagesSubscription)
+    this.pinnedMessagesMessages = []
+    return () => (this.pinnedMessagesSubscription = null)
   }
 
   public subscribeToRecordListens = (
@@ -174,6 +191,14 @@ export class Client {
           this.nowPlayingSubscription(currentRecord)
         } else {
           this.nowPlayingMessages.push(currentRecord)
+        }
+        return
+      case channels.PINNED_MESSAGES_CHANNEL:
+        const pinnedMessages = websocketMessage.message.data.pinnedMessages
+        if (!!this.pinnedMessagesSubscription) {
+          this.pinnedMessagesSubscription(pinnedMessages)
+        } else {
+          this.pinnedMessagesMessages.push(pinnedMessages)
         }
         return
       case channels.RECORD_LISTENS_CHANNEL:
