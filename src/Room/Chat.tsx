@@ -4,11 +4,13 @@ import { Box, Flex, Heading } from 'rebass'
 import Messages from './Messages'
 import MessageEntry from './MessageEntry'
 import PinnedMessages from './PinnedMessages'
+import { usePinnedMessagesContext } from './PinnedMessagesContextProvider'
 
 const Chat: React.FC = () => {
   const [tab, setTab] = useState<'chat' | 'pinned'>('chat')
   const selectChat = (): void => setTab('chat')
   const selectPinned = (): void => setTab('pinned')
+  const { pinnedMessages } = usePinnedMessagesContext()
 
   return (
     <Flex
@@ -54,7 +56,7 @@ const Chat: React.FC = () => {
             '&:hover': { bg: 'accent' },
           }}
         >
-          <Heading>Pinned</Heading>
+          <Heading>Pinned ({pinnedMessages.length})</Heading>
         </Box>
       </Flex>
       {tab === 'chat' ? (

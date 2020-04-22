@@ -20,6 +20,7 @@ const PinnedMessagesContextProvider: React.FC = ({ children }) => {
   const { currentRecord } = useCurrentRecordContext()
   useEffect(() => {
     if (!currentRecord) {
+      setPinnedMessages([])
       return
     }
 
