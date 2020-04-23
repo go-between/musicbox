@@ -1,8 +1,6 @@
 import React from 'react'
 import { Flex } from 'rebass'
 
-import SideNav from 'SideNav'
-
 import Songs from './Songs'
 import SongDetails from './SongDetails'
 import SearchContextProvider from './SearchContextProvider'
@@ -17,12 +15,13 @@ const Library: React.FC = () => {
             alignItems: 'top',
             bg: 'background',
             flexDirection: ['column', 'row'],
-            minHeight: '100vh',
+            height: '100%',
+            width: '100%',
             mx: 'auto',
             position: 'relative',
+            overflowY: 'scroll',
           }}
         >
-          <SideNav />
           <Songs />
           <SongDetails />
         </Flex>

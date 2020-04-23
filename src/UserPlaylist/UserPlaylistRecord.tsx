@@ -1,19 +1,16 @@
 import React from 'react'
-import moment from 'moment'
 import { Box, Flex } from 'rebass'
 import { X } from 'react-feather'
 
-import { RoomPlaylistRecord } from './graphql'
+import { PlaylistRecord } from 'Context'
 import { duration } from 'lib/formatters'
 import { MediaObject } from 'components'
 
 type Props = {
-  record: RoomPlaylistRecord
+  record: PlaylistRecord
   onDelete: () => void
 }
 const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
-  const songDuration = moment.duration(record.song.durationInSeconds, 'seconds')
-
   return (
     <Box
       as="li"
@@ -51,7 +48,7 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
               px: 3,
             }}
           >
-            {duration(songDuration)}
+            {duration(record.song.durationInSeconds)}
           </Box>
 
           <Box

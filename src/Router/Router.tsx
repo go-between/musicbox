@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAuthContext } from 'Context'
+import { BrowserRouter } from 'react-router-dom'
 
 import Authorized from './Authorized'
 import Unauthorized from './Unauthorized'
@@ -8,10 +9,18 @@ const Router: React.FC = () => {
   const { token } = useAuthContext()
 
   if (!token) {
-    return <Unauthorized />
+    return (
+      <BrowserRouter>
+        <Unauthorized />
+      </BrowserRouter>
+    )
   }
 
-  return <Authorized token={token} />
+  return (
+    <BrowserRouter>
+      <Authorized token={token} />
+    </BrowserRouter>
+  )
 }
 
 export default Router

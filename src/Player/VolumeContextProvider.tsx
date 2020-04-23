@@ -1,23 +1,32 @@
 import React, { createContext, useContext, useState } from 'react'
 
-import { retrieveVolume } from 'lib/localStore'
+import { retrieveVolume, persistVolume } from 'lib/localStore'
 
-export const PLAYERS = {
+export type PlayerTypes = {
+  main: 'main'
+  preview: 'preview'
+}
+export const PLAYERS: PlayerTypes = {
   main: 'main',
   preview: 'preview',
 }
 
 type VolumeContext = {
-  unmutedPlayer: string
-  setUnmutedPlayer: (player: string) => void
-  volume: number | null
-  setVolume: (idx: number | null) => void
+  unmutedPlayer: keyof PlayerTypes
+  setUnmutedPlayer: (player: keyof PlayerTypes) => void
+  volume: number
+  setVolume: (idx: number) => void
 }
 
 const VolumeContext = createContext<Partial<VolumeContext>>({})
-const VolumeContextProvider: React.FC = ({ children }) => {
-  const [unmutedPlayer, setUnmutedPlayer] = useState<string>(PLAYERS.main)
-  const [volume, setVolume] = useState<number | null>(retrieveVolume())
+export const VolumeContextProvider: React.FC = ({ children }) => {
+  const [unmutedPlayer, setUnmutedPlayer] = useState<keyof PlayerTypes>(PLAYERS.main)
+  const [volume, setInnerVolume] = useState<number>(retrieveVolume())
+
+  const setVolume = (volume: number): void => {
+    persistVolume(volume)
+    setInnerVolume(volume)
+  }
 
   return (
     <VolumeContext.Provider value={{ setUnmutedPlayer, setVolume, unmutedPlayer, volume }}>
@@ -40,4 +49,3 @@ export const useVolumeContext: () => VolumeContext = () => {
 
   return { setUnmutedPlayer, setVolume, unmutedPlayer, volume }
 }
-export default VolumeContextProvider

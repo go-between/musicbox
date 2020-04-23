@@ -23,6 +23,8 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
       <Heading
         sx={{
           mb: 4,
+          ml: 3,
+          fontSize: 2,
         }}
       >
         {teams[0].name}

@@ -1,15 +1,14 @@
 import React, { createRef, useEffect, useState } from 'react'
-import moment from 'moment'
 import { Box, Button, Flex, Text } from 'rebass'
 import { Check, Eye, Plus } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
-import { Modal } from 'components'
-import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
+import { useCurrentRecordContext } from 'Context'
+import { MediaObject, Modal } from 'components'
+import { usePlaylistRecordsContext } from 'Context'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 import { duration } from 'lib/formatters'
-import { MediaObject } from 'components'
 
 import { Song } from './graphql'
 import { useResultsContext } from './ResultsContextProvider'
@@ -39,8 +38,8 @@ type SearchResultProps = {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selected }) => {
-  const { setUnmutedPlayer, volume } = useVolumeContext()
-  const { addRecord } = usePlaylistRecordContext()
+  const { setUnmutedPlayer } = useVolumeContext()
+  const { addRecords } = usePlaylistRecordsContext()
   const { addToast } = useToasts()
 
   const [showModal, setShowModal] = useState(false)
@@ -60,14 +59,12 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
 
   const onClick = (ev: React.MouseEvent): void => {
     ev.stopPropagation()
-    addRecord(result.id)
+    addRecords(result.id)
     addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
     if (showModal) {
       closeModal()
     }
   }
-
-  const songDuration = moment.duration(result.durationInSeconds, 'seconds')
 
   return (
     <Box
@@ -113,7 +110,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
               px: 3,
             }}
           >
-            {duration(songDuration)}
+            {duration(result.durationInSeconds)}
           </Box>
 
           <Box
@@ -149,7 +146,13 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
       </MediaObject>
 
       <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
-        <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} controls={true} />
+        <PlayerPrimitive
+          playedAt=""
+          youtubeId={result.youtubeId}
+          controls={true}
+          playerIdentifier={PLAYERS.preview}
+          inline={true}
+        />
 
         <Button onClick={onClick}>Add</Button>
 
@@ -182,7 +185,7 @@ const FloatingResults: React.FC = ({ children }) => {
 
 const Results: React.FC = () => {
   const { error, results, resultIndex, setQuery, setResults } = useResultsContext()
-  const { playlistRecords } = usePlaylistRecordContext()
+  const { playlistRecords } = usePlaylistRecordsContext()
   const { currentRecord } = useCurrentRecordContext()
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()

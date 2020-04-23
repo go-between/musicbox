@@ -1,31 +1,11 @@
-import React, { useEffect } from 'react'
-import { useLazyQuery } from '@apollo/react-hooks'
+import React from 'react'
 import { Box } from 'rebass'
 
-import { useCurrentRecordContext } from 'Room'
-
-import { PINNED_MESSAGES_QUERY, PinnedMessagesQuery } from './graphql'
+import { usePinnedMessagesContext } from './PinnedMessagesContextProvider'
 import Message from './Message'
 
 const PinnedMessages: React.FC = () => {
-  const [loadPinnedMessages, { data }] = useLazyQuery<PinnedMessagesQuery['data'], PinnedMessagesQuery['vars']>(
-    PINNED_MESSAGES_QUERY,
-    { fetchPolicy: 'network-only' },
-  )
-
-  const { currentRecord } = useCurrentRecordContext()
-
-  useEffect(() => {
-    if (!currentRecord) {
-      return
-    }
-
-    loadPinnedMessages({ variables: { songId: currentRecord.song.id } })
-  }, [currentRecord, loadPinnedMessages])
-
-  if (currentRecord === null || !data) {
-    return <></>
-  }
+  const { pinnedMessages } = usePinnedMessagesContext()
 
   return (
     <Box
@@ -34,7 +14,7 @@ const PinnedMessages: React.FC = () => {
         overflowY: 'scroll',
       }}
     >
-      {data.pinnedMessages.map(m => (
+      {pinnedMessages.map(m => (
         <Message key={m.id} message={m} />
       ))}
     </Box>
