@@ -44,7 +44,7 @@ const NewUserInvitation: React.FC<Props> = ({ invitation, token }) => {
 
     if (accessToken) {
       setToken(accessToken)
-      history.push('/home')
+      history.push('/rooms')
     }
   }, [history, invitationData, setToken])
 

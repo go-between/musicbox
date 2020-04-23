@@ -34,7 +34,7 @@ const Signup: React.FC = () => {
 
     if (!!data.teamCreate.accessToken) {
       setToken(data.teamCreate.accessToken)
-      history.push('/home')
+      history.push('/rooms')
     }
   }, [data, history, setToken])
 

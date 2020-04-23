@@ -9,11 +9,13 @@ import Invitation from 'Invitation'
 import Invitations from 'Invitations'
 import Library from 'Library'
 import Login from 'Login'
+import PasswordReset from 'PasswordReset'
 import Player, { PlayerContextProvider, VolumeContextProvider } from 'Player'
 import Room from 'Room'
 import Rooms from 'Rooms'
 import SideNav from 'SideNav'
 import Signup from 'Signup'
+import UserSettings from 'UserSettings'
 import { API_HOST } from 'lib/constants'
 
 import {
@@ -42,6 +44,10 @@ const InnerRoutes: React.FC = () => (
       <Login />
     </Route>
 
+    <Route key="password-reset" path="/password-reset">
+      <PasswordReset />
+    </Route>
+
     <Route key="signup" path="/signup">
       <Signup />
     </Route>
@@ -52,6 +58,10 @@ const InnerRoutes: React.FC = () => (
 
     <Route path="/room/:id">
       <Room />
+    </Route>
+
+    <Route path="/user-settings">
+      <UserSettings />
     </Route>
 
     <Redirect
