@@ -62,7 +62,7 @@ const Login: React.FC = () => {
       }
       response.json().then(body => {
         setToken(body.access_token)
-        history.push('/home')
+        history.push('/rooms')
       })
     })
   }
