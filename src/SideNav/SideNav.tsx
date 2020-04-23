@@ -64,11 +64,6 @@ export const SideNav: React.FC = () => {
         <Box px={3} py={4}>
           <Logo />
         </Box>
-        <NavHeading>Settings</NavHeading>
-        <NavLink navigate={navigate('/user-settings')}>
-          <Box as={Sliders} size={[16, 20]} color="muted" mr={2} />
-          User Settings
-        </NavLink>
 
         <NavHeading>Music</NavHeading>
         <NavLink navigate={navigate('/library')}>
@@ -78,6 +73,13 @@ export const SideNav: React.FC = () => {
 
         <NavHeading>Teams</NavHeading>
         <Teams />
+
+        <Box my={4} />
+        <NavHeading>Settings</NavHeading>
+        <NavLink navigate={navigate('/user-settings')}>
+          <Box as={Sliders} size={[16, 20]} color="muted" mr={2} />
+          User Settings
+        </NavLink>
       </Box>
 
       {roomKeyboardShortcuts}
