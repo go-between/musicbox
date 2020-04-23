@@ -52,7 +52,7 @@ const RoomHistory: React.FC = () => {
           width: '100%',
         }}
       >
-        <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
+        <MediaObject imageUrl={record.song.thumbnailUrl} imageSize="50px" alignment="center">
           <Box sx={{ flex: 1 }}>
             <Box
               sx={{
