@@ -97,6 +97,21 @@ export const TAGS_QUERY = gql`
   }
 `
 
+export type RemoveFromLibrary = {
+  data: {}
+  vars: {
+    id: string
+  }
+}
+
+export const REMOVE_FROM_LIBRARY = gql`
+  mutation UserLibraryRecordDelete ($id: ID!) {
+    userLibraryRecordDelete(input: {id: $id}) {
+      errors
+    }
+  }
+`
+
 export type Song = {
   id: string
   durationInSeconds: number

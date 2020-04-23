@@ -85,7 +85,7 @@ const Tags: React.FC = () => {
               disabled={!activeTag}
               onClick={toggleModifyTags}
             >
-              {modifyTags ? 'Save Tags' : 'Start Tagging'}
+              {modifyTags ? 'Save Tags' : 'Update Tags'}
             </Button>
           </Box>
         </Flex>

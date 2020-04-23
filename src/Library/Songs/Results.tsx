@@ -2,22 +2,34 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { Box, Flex, Text } from 'rebass'
 import { Checkbox, Label } from '@rebass/forms'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation} from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 
 import { Table, TableWrapper, Tbody, Thead, Tr, Td, Th, MediaObject } from 'components'
 
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
-import { SongsQuery, Song as SongType, SONGS_QUERY } from '../graphql'
+import { SongsQuery, Song as SongType, SONGS_QUERY, RemoveFromLibrary, REMOVE_FROM_LIBRARY } from '../graphql'
 import { duration } from 'lib/formatters'
+import { Underline } from 'react-feather'
 
 type ResultProps = {
   result: SongType
 }
 const Result: React.FC<ResultProps> = ({ result }) => {
   const { activeTag, addSong, removeSong, modifyTags, songsToAdd, songsToRemove } = useTagsContext()
-  const { activeSongId, setActiveSongId } = useSearchContext()
+  const { setActiveSongId } = useSearchContext()
+
+  const [removeFromLibraryMutation] = useMutation<RemoveFromLibrary['data'], RemoveFromLibrary['vars']>(
+    REMOVE_FROM_LIBRARY,
+    {
+      refetchQueries: ['LibrarySongsQuery']
+    }
+  )
+
+  const removeFromLibrary = (): void => {
+    removeFromLibraryMutation({variables: {id: result.id}})
+  }
 
   const selectSong = (): void => setActiveSongId(result.id)
   const toggleTag = (ev: React.ChangeEvent<HTMLInputElement>): void => {
@@ -35,43 +47,91 @@ const Result: React.FC<ResultProps> = ({ result }) => {
 
   const songDuration = moment.duration(result.durationInSeconds, 'seconds')
 
+  const songTags = result.tags.map(tag => (
+    <Box
+      key={tag.id}
+      sx={{
+        bg: 'accent',
+        borderRadius: 3,
+        color: 'white',
+        fontSize: 1,
+        p: 1,
+        mx: 1
+      }}
+    >
+      {tag.name}
+    </Box>
+  ))
+
   return (
     <Tr>
-      <Td>
-        <Label sx={{ m: 0 }}>
-          <Checkbox checked={checked} onChange={toggleTag} sx={{ cursor: 'pointer' }} />
-        </Label>
+      <Td data-label="select">
+        <Flex alignItems="center" justifyContent={["flex-end", "flex-start"]}>
+          <Label sx={{ m: 0 }}>
+            <Checkbox checked={checked} onChange={toggleTag} sx={{ cursor: modifyTags ? 'pointer' : 'auto' }} disabled={!modifyTags}/>
+          </Label>
+        </Flex>
       </Td>
 
       <Td data-label="Song">
-        <Flex alignItems="center">
-          <Box sx={{
-            backgroundImage: `url(${result.thumbnailUrl})`,
-            backgroundSize: 'cover',
-            borderRadius: 6,
-            p: '24px',
-            mr: 3,
-          }}/>
+        <Flex alignItems="center" justifyContent={["flex-end", "flex-start"]}>
+          <MediaObject imageUrl={result.thumbnailUrl} imageSize={["24px", "50px"]} alignment="center">
+            <Box>
+              <Text
+                sx={{
+                  fontSize: 1,
+                  fontWeight: 600,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {result.name}
+              </Text>
+            </Box>
+          </MediaObject>
+        </Flex>
+      </Td>
 
-          <Box>
-            <Text
-              sx={{
-                fontSize: 1,
-                fontWeight: 600,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {result.name}
-            </Text>
-          </Box>
+      <Td data-label="Tags">
+        <Flex>
+          {songTags}
         </Flex>
       </Td>
 
       <Td data-label="Duration">{duration(songDuration)}</Td>
 
-      <Td data-label="Actions">Edit / Etc.</Td>
+      <Td data-label="Actions">
+        <Flex alignItems="center" justifyContent={["flex-end", "flex-start"]}>
+          <Box
+            onClick={selectSong}
+            sx={{
+              cursor: 'pointer',
+              color: 'gray400',
+              fontSize: 1,
+              textAlign: 'center',
+              textDecoration: 'underline',
+              width: '100%'
+            }}
+          >
+            view
+          </Box>
+
+          <Box
+            onClick={removeFromLibrary}
+            sx={{
+              cursor: 'pointer',
+              color: 'gray400',
+              fontSize: 1,
+              textAlign: 'center',
+              textDecoration: 'underline',
+              width: '100%'
+            }}
+          >
+            remove
+          </Box>
+        </Flex>
+      </Td>
     </Tr>
   )
 }
@@ -106,10 +166,11 @@ const Songs: React.FC = () => {
       <Table>
         <Thead>
           <Tr>
-            <Th>Select</Th>
-            <Th>Song</Th>
-            <Th>Duration</Th>
-            <Th>Actions</Th>
+            <Th width={['auto', '10%']}>Select</Th>
+            <Th width={['auto', '40%']}>Song</Th>
+            <Th width={['auto', '20%']}>Tags</Th>
+            <Th width={['auto', '15%']}>Duration</Th>
+            <Th width={['auto', '15%']}></Th>
           </Tr>
         </Thead>
         <Tbody>{resultItems}</Tbody>
