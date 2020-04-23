@@ -1,12 +1,33 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Button, Box, Heading } from 'rebass'
+import { Button, Box, Heading, Text } from 'rebass'
 import { Label, Input } from '@rebass/forms'
 import { Lock, Mail } from 'react-feather'
+import gql from 'graphql-tag'
+import { useMutation } from '@apollo/react-hooks'
 
 import { setString } from 'lib/setters'
 import { API_HOST } from 'lib/constants'
 import { useAuthContext } from 'Context'
+
+type PasswordResetInitiate = {
+  data: {
+    passwordResetInitiate: {
+      errors: string[]
+    }
+  }
+  vars: {
+    email: string
+  }
+}
+
+const PASSWORD_RESET_INITIATE = gql`
+  mutation PasswordResetInitiate($email: Email!) {
+    passwordResetInitiate(input: { email: $email }) {
+      errors
+    }
+  }
+`
 
 const request = (email: string, password: string): Promise<Response> => {
   const url = `${API_HOST}/api/v1/oauth/token`
@@ -44,6 +65,14 @@ const Login: React.FC = () => {
         history.push('/home')
       })
     })
+  }
+
+  const [passwordResetInitiate, { data }] = useMutation<PasswordResetInitiate['data'], PasswordResetInitiate['vars']>(
+    PASSWORD_RESET_INITIATE,
+  )
+
+  const passwordReset = (): void => {
+    passwordResetInitiate({ variables: { email } })
   }
 
   return (
@@ -119,6 +148,20 @@ const Login: React.FC = () => {
             >
               Log In
             </Button>
+          </Box>
+          <Box sx={{ textAlign: 'center' }}>
+            {email && (
+              <Text onClick={passwordReset} sx={{ textDecoration: 'underline', cursor: 'pointer', mt: 4 }}>
+                Reset Password for {email}
+              </Text>
+            )}
+            {data && (
+              <Text>
+                {data.passwordResetInitiate.errors.length === 0
+                  ? 'Reset initiated, check your email!'
+                  : data.passwordResetInitiate.errors[0]}
+              </Text>
+            )}
           </Box>
           <Box>{errors}</Box>
         </Box>
