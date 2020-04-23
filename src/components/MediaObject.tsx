@@ -6,7 +6,7 @@ type Props = {
   alignment?: string
   imageUrl: string
   placeholderImageColor?: string
-  imageSize?: Array<string>
+  imageSize?: string | Array<string>
 }
 
 const ImagePlaceholder: React.FC<{ placeholderImageColor: string }> = ({ placeholderImageColor }) => {

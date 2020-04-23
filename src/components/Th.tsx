@@ -2,10 +2,10 @@ import React from 'react'
 import { Box } from 'rebass'
 
 type Props = {
-  width?: Array<string>
+  width?: string | Array<string>
 }
 
-export const Th: React.FC<Props> = ({children, width= 'auto'}) => (
+export const Th: React.FC<Props> = ({ children, width = 'auto' }) => (
   <Box
     as="th"
     sx={{
@@ -14,7 +14,7 @@ export const Th: React.FC<Props> = ({children, width= 'auto'}) => (
       fontSize: 1,
       letterSpacing: '.1em',
       textTransform: 'uppercase',
-      width: width
+      width: width,
     }}
   >
     {children}
