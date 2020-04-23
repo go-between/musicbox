@@ -1,19 +1,22 @@
-import styled from '@emotion/styled'
-import css from '@styled-system/css'
+import React from 'react'
+import { Box } from 'rebass'
 
-export const Th = styled('th')(
-  css({
-    p: 3,
-    textAlign: 'left',
-    fontSize: 1,
-    letterSpacing: '.1em',
-    textTransform: 'uppercase',
-    width: 'auto',
-    '&:first-child': {
-      width: '10%'
-    },
-    '&:last-child': {
-      width: '10%'
-    }
-  }),
+type Props = {
+  width?: Array<string>
+}
+
+export const Th: React.FC<Props> = ({children, width= 'auto'}) => (
+  <Box
+    as="th"
+    sx={{
+      p: 3,
+      textAlign: 'left',
+      fontSize: 1,
+      letterSpacing: '.1em',
+      textTransform: 'uppercase',
+      width: width
+    }}
+  >
+    {children}
+  </Box>
 )

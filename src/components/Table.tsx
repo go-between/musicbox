@@ -9,7 +9,7 @@ export const Table = styled('table')(
     borderSpacing: '0',
     m: 0,
     p: 0,
-    tableLayout: 'fixed',
+    tableLayout: ['fixed', 'auto', 'fixed'],
     width: '100%',
   }),
 )
