@@ -1,12 +1,12 @@
 import React from 'react'
-import { Box, Flex, Image } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { Image as ImageIcon } from 'react-feather'
 
 type Props = {
   alignment?: string
   imageUrl: string
   placeholderImageColor?: string
-  thumbnail?: boolean | undefined
+  imageSize?: string | Array<string>
 }
 
 const ImagePlaceholder: React.FC<{ placeholderImageColor: string }> = ({ placeholderImageColor }) => {
@@ -34,18 +34,20 @@ export const MediaObject: React.FC<Props> = ({
   children,
   imageUrl,
   placeholderImageColor = 'accent',
-  thumbnail = true,
+  imageSize,
 }) => {
   const image = !imageUrl ? (
     <ImagePlaceholder placeholderImageColor={placeholderImageColor} />
   ) : (
-    <Image
-      src={imageUrl}
+    <Box
       sx={{
+        backgroundImage: `url(${imageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         borderRadius: 3,
         boxShadow: 'xl',
-        height: '100%',
-        width: '100%',
+        height: imageSize,
+        width: imageSize,
       }}
     />
   )
@@ -55,8 +57,6 @@ export const MediaObject: React.FC<Props> = ({
       <Box
         sx={{
           mr: 3,
-          height: thumbnail ? '50px' : 'auto',
-          width: '50px',
         }}
       >
         {image}

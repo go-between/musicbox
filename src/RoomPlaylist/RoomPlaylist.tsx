@@ -23,7 +23,7 @@ const RoomPlaylist: React.FC = () => {
           width: '100%',
         }}
       >
-        <MediaObject imageUrl={record.song.thumbnailUrl} alignment="center">
+        <MediaObject imageUrl={record.song.thumbnailUrl} imageSize="50px" alignment="center">
           <Box
             sx={{
               display: 'inline-block',
