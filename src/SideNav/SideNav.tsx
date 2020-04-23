@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { Inbox } from 'react-feather'
+import { Inbox, Sliders } from 'react-feather'
 
 import { Logo } from 'components'
 import Keyboard from 'Room/Keyboard'
@@ -28,7 +28,7 @@ const NavHeading: React.FC = ({ children }) => (
   </Flex>
 )
 
-const NavLink: React.FC<{ navigate: (url: string) => (ev: React.MouseEvent) => void }> = ({ children, navigate }) => (
+const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ children, navigate }) => (
   <Box width="100%" mb={4} px={3}>
     <Link
       sx={{
@@ -40,7 +40,7 @@ const NavLink: React.FC<{ navigate: (url: string) => (ev: React.MouseEvent) => v
         width: '100%',
       }}
       color="text"
-      onClick={navigate('/library')}
+      onClick={navigate}
       href="#"
     >
       {children}
@@ -65,9 +65,13 @@ export const SideNav: React.FC = () => {
           <Logo />
         </Box>
         <NavHeading>Settings</NavHeading>
+        <NavLink navigate={navigate('/user-settings')}>
+          <Box as={Sliders} size={[16, 20]} color="muted" mr={2} />
+          User Settings
+        </NavLink>
 
         <NavHeading>Music</NavHeading>
-        <NavLink navigate={navigate}>
+        <NavLink navigate={navigate('/library')}>
           <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
           Library
         </NavLink>
