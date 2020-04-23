@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import moment from 'moment'
 import { Box, Flex, Text } from 'rebass'
 import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
@@ -44,7 +43,9 @@ const Result: React.FC<ResultProps> = ({ result }) => {
     (existingTag && !songsToRemove.find(s => s === result.id)) ||
     (!existingTag && !!songsToAdd.find(s => s === result.id))
 
-  const songDuration = moment.duration(result.durationInSeconds, 'seconds')
+  // const songDuration = moment.duration(result.durationInSeconds, 'seconds')
+
+  // console.log(songDuration)
 
   const songTags = result.tags.map(tag => (
     <Box
@@ -101,7 +102,7 @@ const Result: React.FC<ResultProps> = ({ result }) => {
         <Flex>{songTags}</Flex>
       </Td>
 
-      <Td data-label="Duration">{duration(songDuration)}</Td>
+      <Td data-label="Duration">{duration(result.durationInSeconds)}</Td>
 
       <Td data-label="Actions">
         <Flex alignItems="center" justifyContent={['flex-end', 'flex-start']}>
