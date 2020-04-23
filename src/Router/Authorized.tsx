@@ -15,6 +15,7 @@ import Room from 'Room'
 import Rooms from 'Rooms'
 import SideNav from 'SideNav'
 import Signup from 'Signup'
+import UserSettings from 'UserSettings'
 import { API_HOST } from 'lib/constants'
 
 import {
@@ -57,6 +58,10 @@ const InnerRoutes: React.FC = () => (
 
     <Route path="/room/:id">
       <Room />
+    </Route>
+
+    <Route path="/user-settings">
+      <UserSettings />
     </Route>
 
     <Redirect
