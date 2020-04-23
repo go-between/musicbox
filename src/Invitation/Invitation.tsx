@@ -1,14 +1,11 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { useLocation } from 'react-router-dom'
+
+import { useQueryParams } from 'lib/useQueryParams'
 
 import ExistingUserInvitation from './ExistingUserInvitation'
 import NewUserInvitation from './NewUserInvitation'
 import { INVITATION_QUERY, InvitationQuery } from './graphql'
-
-const useQueryParams = (): URLSearchParams => {
-  return new URLSearchParams(useLocation().search)
-}
 
 const Invitation: React.FC = () => {
   const params = useQueryParams()

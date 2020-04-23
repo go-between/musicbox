@@ -7,6 +7,7 @@ import { API_HOST } from 'lib/constants'
 
 import Invitation from 'Invitation'
 import Login from 'Login'
+import PasswordReset from 'PasswordReset'
 import Signup from 'Signup'
 
 const Unauthorized: React.FC = () => {
@@ -23,6 +24,10 @@ const Unauthorized: React.FC = () => {
 
         <Route key="login" path="/login">
           <Login />
+        </Route>
+
+        <Route key="password-reset" path="/password-reset">
+          <PasswordReset />
         </Route>
 
         <Route key="signup" path="/signup">

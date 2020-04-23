@@ -9,6 +9,7 @@ import Invitation from 'Invitation'
 import Invitations from 'Invitations'
 import Library from 'Library'
 import Login from 'Login'
+import PasswordReset from 'PasswordReset'
 import Player, { PlayerContextProvider, VolumeContextProvider } from 'Player'
 import Room from 'Room'
 import Rooms from 'Rooms'
@@ -40,6 +41,10 @@ const InnerRoutes: React.FC = () => (
 
     <Route key="login" path="/login">
       <Login />
+    </Route>
+
+    <Route key="password-reset" path="/password-reset">
+      <PasswordReset />
     </Route>
 
     <Route key="signup" path="/signup">
