@@ -86,7 +86,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
         },
       }}
     >
-      <MediaObject imageUrl={result.thumbnailUrl} alignment="center" placeholderImageColor="accent">
+      <MediaObject imageUrl={result.thumbnailUrl} imageSize="50px" alignment="center" placeholderImageColor="accent">
         <Box flex={1}>
           {nowPlaying ? <NowPlaying /> : <></>}
           <Box
