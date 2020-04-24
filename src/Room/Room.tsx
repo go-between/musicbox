@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
-import { Flex } from 'rebass'
 
 import { useWebsocketContext } from 'Context'
 

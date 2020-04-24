@@ -27,8 +27,6 @@ const Volume: React.FC = () => {
     setUnmutedPlayer(PLAYERS.main)
   }
 
-
-
   return (
     <Flex sx={{ cursor: 'pointer', position: 'relative', '&:hover > *': { visibility: 'visible' } }}>
       <Box
@@ -45,10 +43,7 @@ const Volume: React.FC = () => {
       >
         <Slider onChange={changeVolume} value={volume} width="100%" />
       </Box>
-      <Box
-        onClick={toggleMute}
-        sx={{ zIndex: 100
-      }}>
+      <Box onClick={toggleMute} sx={{ zIndex: 100 }}>
         <VolumeIcon />
       </Box>
     </Flex>

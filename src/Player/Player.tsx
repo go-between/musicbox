@@ -21,9 +21,18 @@ const Player: React.FC = () => {
 
   return (
     <>
-      <Flex width="100%" flexDirection={['column', 'row']} sx={{ alignItems: 'center', justifyContent: 'space-between', p: 2 }}>
+      <Flex
+        width="100%"
+        flexDirection={['column', 'row']}
+        sx={{ alignItems: 'center', justifyContent: 'space-between', p: 2 }}
+      >
         <Box>
-          <MediaObject imageUrl={currentRecord.song.thumbnailUrl} imageSize={['20px', '50px']} alignment="center" placeholderImageColor="accent">
+          <MediaObject
+            imageUrl={currentRecord.song.thumbnailUrl}
+            imageSize={['20px', '50px']}
+            alignment="center"
+            placeholderImageColor="accent"
+          >
             <Flex flexDirection="column">
               <Box mb={1}>
                 <Text color="muted">Played By</Text>
