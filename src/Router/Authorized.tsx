@@ -125,7 +125,8 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                           <Flex
                             as="main"
                             sx={{
-                              flexDirection: 'column',
+                              flexDirection: ['column', 'row'],
+                              height: '100%',
                               width: ['100%'],
                             }}
                           >

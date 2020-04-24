@@ -37,12 +37,11 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
 
   return (
     <Flex
-      as="main"
       sx={{
         flexDirection: 'column',
         height: '100%',
         p: 4,
-        width: ['100%'],
+        width: ['100%', '50%', '65%'],
       }}
     >
       <Box>

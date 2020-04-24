@@ -24,7 +24,7 @@ const Chat: React.FC = () => {
         justifyContent: 'space-between',
         overflow: 'scroll',
         py: 4,
-        width: ['100%'],
+        width: ['100%', '50%', '35%'],
       }}
     >
       <Flex

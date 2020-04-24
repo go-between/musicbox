@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
-import { Flex } from 'rebass'
 
 import { useWebsocketContext } from 'Context'
 
@@ -35,16 +34,8 @@ const Room: React.FC = () => {
   return (
     <PinnedMessagesContextProvider>
       <MessagesContextProvider>
-        <Flex
-          sx={{
-            flexDirection: ['column', 'row'],
-            height: '100%',
-            width: ['100%'],
-          }}
-        >
-          <Main room={data.roomActivate.room} />
-          <Chat />
-        </Flex>
+        <Main room={data.roomActivate.room} />
+        <Chat />
       </MessagesContextProvider>
     </PinnedMessagesContextProvider>
   )

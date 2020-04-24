@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { Inbox, Sliders } from 'react-feather'
+import { Inbox, Settings } from 'react-feather'
 
 import { Logo } from 'components'
 import Keyboard from 'Room/Keyboard'
@@ -77,7 +77,7 @@ export const SideNav: React.FC = () => {
         <Box my={4} />
         <NavHeading>Settings</NavHeading>
         <NavLink navigate={navigate('/user-settings')}>
-          <Box as={Sliders} size={[16, 20]} color="muted" mr={2} />
+          <Box as={Settings} size={[16, 20]} color="muted" mr={2} />
           User Settings
         </NavLink>
       </Box>
