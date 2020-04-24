@@ -35,9 +35,7 @@ export type RecommendationAccept = {
 
 export const RECOMMENDATION_ACCEPT = gql`
   mutation RecommendationAccept($libraryRecordId: ID!) {
-    recommendationAccept(input:{
-      libraryRecordId: $libraryRecordId
-    }) {
+    recommendationAccept(input: { libraryRecordId: $libraryRecordId }) {
       errors
     }
   }

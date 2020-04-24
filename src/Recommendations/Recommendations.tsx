@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Flex, Text } from 'rebass'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import Gravatar from 'react-gravatar'
@@ -6,7 +6,15 @@ import Gravatar from 'react-gravatar'
 import { MediaObject, Modal, Table, TableWrapper, Tbody, Thead, Tr, Td, Th } from 'components'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
-import { RecommendationAccept, RECOMMENDATION_ACCEPT, Recommendation, RecommendationsQuery, RECOMMENDATIONS_QUERY, RecommendatioReject, RECOMMENDATION_REJECT } from './graphql'
+import {
+  RecommendationAccept,
+  RECOMMENDATION_ACCEPT,
+  Recommendation,
+  RecommendationsQuery,
+  RECOMMENDATIONS_QUERY,
+  RecommendatioReject,
+  RECOMMENDATION_REJECT,
+} from './graphql'
 
 type RecommendedSongProps = {
   recommendedSong: Recommendation
@@ -36,7 +44,7 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
   )
 
   const acceptRecommendation = (): void => {
-    recommendationAcceptMutation({variables: { libraryRecordId: recommendedSong.id}})
+    recommendationAcceptMutation({ variables: { libraryRecordId: recommendedSong.id } })
   }
 
   const [recommendationRejectMutation] = useMutation<RecommendatioReject['data'], RecommendatioReject['vars']>(
@@ -47,7 +55,7 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
   )
 
   const rejectRecommendation = (): void => {
-    recommendationRejectMutation({variables: {id: recommendedSong.song.id}})
+    recommendationRejectMutation({ variables: { id: recommendedSong.song.id } })
   }
 
   return (
@@ -75,10 +83,8 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
 
         <Td data-label="Team Member">
           <Flex alignItems="center">
-            <Gravatar email={recommendedSong.fromUser.email} size={32} style={{ borderRadius: '100%'}} />
-            <Box mx={2}>
-              {recommendedSong.fromUser.name}
-            </Box>
+            <Gravatar email={recommendedSong.fromUser.email} size={32} style={{ borderRadius: '100%' }} />
+            <Box mx={2}>{recommendedSong.fromUser.name}</Box>
           </Flex>
         </Td>
 
@@ -93,7 +99,7 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
                 textAlign: 'center',
                 textDecoration: 'underline',
                 width: '100%',
-            }}
+              }}
             >
               Preview
             </Box>
