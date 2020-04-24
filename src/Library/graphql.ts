@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { User } from 'react-feather'
 
 export type SongQuery = {
   data: {
@@ -112,6 +113,44 @@ export const REMOVE_FROM_LIBRARY = gql`
   }
 `
 
+export type RecommendationCreate = {
+  data: {}
+  vars: {
+    youtubeId: string
+    recommendToUser: string
+  }
+}
+
+export const RECOMMENDATION_CREATE = gql`
+  mutation RecommendationCreate($youtubeId: ID!, $recommendToUser: ID!) {
+    recommendationCreate(input: { youtubeId: $youtubeId, recommendToUser: $recommendToUser }) {
+      errors
+    }
+  }
+`
+
+export type TeamQuery = {
+  data: {
+    team: {
+      users: User[]
+    }
+  }
+  vars: {
+    id: string
+  }
+}
+
+export const TEAM_QUERY = gql`
+  query Team($id: ID!) {
+    team(id: $id) {
+      users {
+        id
+        name
+      }
+    }
+  }
+`
+
 export type Song = {
   id: string
   durationInSeconds: number
@@ -122,6 +161,11 @@ export type Song = {
 }
 
 export type Tag = {
+  id: string
+  name: string
+}
+
+export type User = {
   id: string
   name: string
 }
