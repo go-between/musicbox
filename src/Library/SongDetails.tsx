@@ -90,7 +90,7 @@ const SongDetails: React.FC = () => {
         <Text>{data.song.name}</Text>
         <Box>Duration: {data.song.durationInSeconds}</Box>
         <Box>
-          <Link color="text" href={`https://youtube.com?v=${data.song.youtubeId}`} target="_blank">
+          <Link color="text" href={`https://youtube.com/watch?v=${data.song.youtubeId}`} target="_blank">
             Youtube
           </Link>
         </Box>
