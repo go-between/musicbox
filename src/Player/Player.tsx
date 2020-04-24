@@ -21,9 +21,9 @@ const Player: React.FC = () => {
 
   return (
     <>
-      <Flex width="100%" flexDirection={['column', 'row']} sx={{ alignItems: 'center', p: 2 }}>
-        <Box width={['100%', '25%']}>
-          <MediaObject imageUrl={currentRecord.song.thumbnailUrl} alignment="center" placeholderImageColor="accent">
+      <Flex width="100%" flexDirection={['column', 'row']} sx={{ alignItems: 'center', justifyContent: 'space-between', p: 2 }}>
+        <Box>
+          <MediaObject imageUrl={currentRecord.song.thumbnailUrl} imageSize={['20px', '50px']} alignment="center" placeholderImageColor="accent">
             <Flex flexDirection="column">
               <Box mb={1}>
                 <Text color="muted">Played By</Text>
@@ -36,16 +36,17 @@ const Player: React.FC = () => {
           </MediaObject>
         </Box>
 
-        <Flex width={['100%', '50%']} alignItems="center">
+        <Flex alignItems="center">
           <Progress />
           <Volume />
           <Box mx={2} />
           <Settings />
         </Flex>
-        <Flex width={['100%', '25%']}>
+        <Flex>
           <Approval />
         </Flex>
       </Flex>
+
       <PlayerPrimitive
         playedAt={currentRecord.playedAt}
         youtubeId={currentRecord.song.youtubeId}

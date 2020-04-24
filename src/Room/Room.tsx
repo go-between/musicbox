@@ -35,16 +35,8 @@ const Room: React.FC = () => {
   return (
     <PinnedMessagesContextProvider>
       <MessagesContextProvider>
-        <Flex
-          sx={{
-            flexDirection: ['column', 'row'],
-            height: '100%',
-            width: ['100%'],
-          }}
-        >
-          <Main room={data.roomActivate.room} />
-          <Chat />
-        </Flex>
+        <Main room={data.roomActivate.room} />
+        <Chat />
       </MessagesContextProvider>
     </PinnedMessagesContextProvider>
   )
