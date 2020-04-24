@@ -1,9 +1,11 @@
-import React from 'react'
-import { Box, Flex, Text } from 'rebass'
+import React, { useState} from 'react'
+import { Box, Button, Flex, Text } from 'rebass'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import Gravatar from 'react-gravatar'
 
-import { Table, TableWrapper, Tbody, Thead, Tr, Td, Th, MediaObject } from 'components'
+import { MediaObject, Modal, Table, TableWrapper, Tbody, Thead, Tr, Td, Th } from 'components'
+import PlayerPrimitive from 'Player/PlayerPrimitive'
+import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 import { RecommendationAccept, RECOMMENDATION_ACCEPT, Recommendation, RecommendationsQuery, RECOMMENDATIONS_QUERY, RecommendatioReject, RECOMMENDATION_REJECT } from './graphql'
 
 type RecommendedSongProps = {
@@ -11,6 +13,21 @@ type RecommendedSongProps = {
 }
 
 const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) => {
+  const { setUnmutedPlayer } = useVolumeContext()
+  const [showModal, setShowModal] = useState(false)
+  const openModal = (ev: React.MouseEvent): void => {
+    ev.stopPropagation()
+    setShowModal(true)
+    setUnmutedPlayer(PLAYERS.preview)
+  }
+  const closeModal = (ev?: React.MouseEvent): void => {
+    if (ev) {
+      ev.stopPropagation()
+    }
+    setShowModal(false)
+    setUnmutedPlayer(PLAYERS.main)
+  }
+
   const [recommendationAcceptMutation] = useMutation<RecommendationAccept['data'], RecommendationAccept['vars']>(
     RECOMMENDATION_ACCEPT,
     {
@@ -34,82 +51,94 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
   }
 
   return (
-    <Tr>
-      <Td data-label="Song">
-        <Flex alignItems="center" justifyContent={['flex-end', 'flex-start']}>
-          <MediaObject imageUrl={recommendedSong.song.thumbnailUrl} imageSize={['24px', '50px']} alignment="center">
-            <Box>
-              <Text
-                sx={{
-                  fontSize: 1,
-                  fontWeight: 600,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {recommendedSong.song.name}
-              </Text>
+    <>
+      <Tr>
+        <Td data-label="Song">
+          <Flex alignItems="center" justifyContent={['flex-end', 'flex-start']}>
+            <MediaObject imageUrl={recommendedSong.song.thumbnailUrl} imageSize={['24px', '50px']} alignment="center">
+              <Box>
+                <Text
+                  sx={{
+                    fontSize: 1,
+                    fontWeight: 600,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {recommendedSong.song.name}
+                </Text>
+              </Box>
+            </MediaObject>
+          </Flex>
+        </Td>
+
+        <Td data-label="Team Member">
+          <Flex alignItems="center">
+            <Gravatar email={recommendedSong.fromUser.email} size={32} style={{ borderRadius: '100%'}} />
+            <Box mx={2}>
+              {recommendedSong.fromUser.name}
             </Box>
-          </MediaObject>
-        </Flex>
-      </Td>
+          </Flex>
+        </Td>
 
-      <Td data-label="Team Member">
-        <Flex alignItems="center">
-          <Gravatar email={recommendedSong.fromUser.email} size={32} style={{ borderRadius: '100%'}} />
-          <Box mx={2}>
-            {recommendedSong.fromUser.name}
-          </Box>
-        </Flex>
-      </Td>
-
-      <Td data-label="Actions">
-        <Flex alignItems="center" justifyContent={['flex-end', 'flex-start']}>
-          <Box
-            onClick={rejectRecommendation}
-            sx={{
-              cursor: 'pointer',
-              color: 'gray400',
-              fontSize: 1,
-              textAlign: 'center',
-              textDecoration: 'underline',
-              width: '100%',
-          }}
-          >
-            Preview
-          </Box>
-
-          <Box
-            onClick={rejectRecommendation}
-            sx={{
-              cursor: 'pointer',
-              color: 'gray400',
-              fontSize: 1,
-              textAlign: 'center',
-              textDecoration: 'underline',
-              width: '100%',
+        <Td data-label="Actions">
+          <Flex alignItems="center" justifyContent={['flex-end', 'flex-start']}>
+            <Box
+              onClick={openModal}
+              sx={{
+                cursor: 'pointer',
+                color: 'gray400',
+                fontSize: 1,
+                textAlign: 'center',
+                textDecoration: 'underline',
+                width: '100%',
             }}
-          >
-            Reject!
-          </Box>
+            >
+              Preview
+            </Box>
 
-          <Box
-            onClick={acceptRecommendation}
-            sx={{
-              cursor: 'pointer',
-              color: 'gray400',
-              fontSize: 1,
-              textAlign: 'center',
-              textDecoration: 'underline',
-              width: '100%',
-            }}
-          >
-            Add To Library
-          </Box>
-        </Flex>
-      </Td>
-    </Tr>
+            <Box
+              onClick={rejectRecommendation}
+              sx={{
+                cursor: 'pointer',
+                color: 'gray400',
+                fontSize: 1,
+                textAlign: 'center',
+                textDecoration: 'underline',
+                width: '100%',
+              }}
+            >
+              Reject!
+            </Box>
+
+            <Box
+              onClick={acceptRecommendation}
+              sx={{
+                cursor: 'pointer',
+                color: 'gray400',
+                fontSize: 1,
+                textAlign: 'center',
+                textDecoration: 'underline',
+                width: '100%',
+              }}
+            >
+              Add To Library
+            </Box>
+          </Flex>
+        </Td>
+      </Tr>
+      <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
+        <PlayerPrimitive
+          playedAt=""
+          youtubeId={recommendedSong.song.youtubeId}
+          controls={true}
+          playerIdentifier={PLAYERS.preview}
+          inline={true}
+        />
+        <Button onClick={closeModal}>close</Button>
+      </Modal>
+    </>
   )
 }
 
