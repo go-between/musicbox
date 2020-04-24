@@ -43,10 +43,6 @@ const Result: React.FC<ResultProps> = ({ result }) => {
     (existingTag && !songsToRemove.find(s => s === result.id)) ||
     (!existingTag && !!songsToAdd.find(s => s === result.id))
 
-  // const songDuration = moment.duration(result.durationInSeconds, 'seconds')
-
-  // console.log(songDuration)
-
   const songTags = result.tags.map(tag => (
     <Box
       key={tag.id}
