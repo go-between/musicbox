@@ -11,6 +11,7 @@ import Library from 'Library'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
 import Player, { PlayerContextProvider, VolumeContextProvider } from 'Player'
+import Recommendations from 'Recommendations'
 import Room from 'Room'
 import Rooms from 'Rooms'
 import SideNav from 'SideNav'
@@ -50,6 +51,10 @@ const InnerRoutes: React.FC = () => (
 
     <Route key="signup" path="/signup">
       <Signup />
+    </Route>
+
+    <Route path="/recommendations">
+      <Recommendations />
     </Route>
 
     <Route path="/rooms">

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { Inbox, Settings } from 'react-feather'
+import { Inbox, Send, Settings } from 'react-feather'
 
 import { Logo } from 'components'
 import Keyboard from 'Room/Keyboard'
@@ -29,7 +29,7 @@ const NavHeading: React.FC = ({ children }) => (
 )
 
 const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ children, navigate }) => (
-  <Box width="100%" mb={4} px={3}>
+  <Box width="100%" mb={2} px={3}>
     <Link
       sx={{
         alignItems: 'center',
@@ -70,6 +70,13 @@ export const SideNav: React.FC = () => {
           <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
           Library
         </NavLink>
+
+        <NavLink navigate={navigate('/recommendations')}>
+          <Box as={Send} size={[16, 20]} color="muted" mr={2} />
+          Recommendations
+        </NavLink>
+
+        <Box my={4} />
 
         <NavHeading>Teams</NavHeading>
         <Teams />
