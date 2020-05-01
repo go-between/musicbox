@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Flex, Link, Text } from 'rebass'
-import { Label, Select } from '@rebass/forms'
+import { Box, Button, Flex, Text } from 'rebass'
+import { Select } from '@rebass/forms'
 import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks'
 import { XCircle } from 'react-feather'
 import ReactPlayer from 'react-player'
@@ -9,7 +9,6 @@ import { duration } from 'lib/formatters'
 import { useUserContext } from 'Context'
 import { RecommendationCreate, RECOMMENDATION_CREATE, SongQuery, SONG_QUERY, TeamQuery, TEAM_QUERY } from './graphql'
 import { useSearchContext } from './SearchContextProvider'
-import { right, width } from 'styled-system'
 
 const SongDetails: React.FC = () => {
   const { activeSongId, setActiveSongId } = useSearchContext()
@@ -98,7 +97,7 @@ const SongDetails: React.FC = () => {
             '&:hover': {
               bg: 'accent',
               borderRadius: 6,
-            }
+            },
           }}
         >
           Close
@@ -134,9 +133,11 @@ const SongDetails: React.FC = () => {
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}
-        >{data.song.name}</Text>
+        >
+          {data.song.name}
+        </Text>
 
-        <Box sx={{fontSize: 2, minWidth: 'auto'}}>{duration(data.song.durationInSeconds)}</Box>
+        <Box sx={{ fontSize: 2, minWidth: 'auto' }}>{duration(data.song.durationInSeconds)}</Box>
       </Flex>
 
       <Flex
@@ -146,7 +147,7 @@ const SongDetails: React.FC = () => {
           flexWrap: 'wrap',
           mb: 3,
           p: 0,
-          width: '100%'
+          width: '100%',
         }}
       >
         {data.song.tags.map(t => (
@@ -163,7 +164,7 @@ const SongDetails: React.FC = () => {
               listStyle: 'none',
               '&:not(:last-child)': {
                 mr: 2,
-              }
+              },
             }}
           >
             {t.name}
@@ -172,15 +173,20 @@ const SongDetails: React.FC = () => {
       </Flex>
 
       <Box mb={2}>
-        <Text
-          fontSize={2}
-          color="gray400"
-        >Recommend this song to someone on your team!</Text>
+        <Text fontSize={2} color="gray400">
+          Recommend this song to someone on your team!
+        </Text>
       </Box>
 
       <Flex alignItems="center" justifyContent="space-between" width="100%">
-        <Box sx={{flex: 1, mr: 2}}>
-          <Select id="team-members" name="team members" defaultValue="select-team-member" onChange={selectTeamMember} sx={{fontSize: 2}}>
+        <Box sx={{ flex: 1, mr: 2 }}>
+          <Select
+            id="team-members"
+            name="team members"
+            defaultValue="select-team-member"
+            onChange={selectTeamMember}
+            sx={{ fontSize: 2 }}
+          >
             <option id="select-team-member">Select a Team Member</option>
             {teamMemberOptions}
           </Select>

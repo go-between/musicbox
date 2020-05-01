@@ -159,9 +159,7 @@ const Recommendations: React.FC = () => {
 
   const recommendedSongPlaceholder = (
     <Tr>
-      <Td>
-        There are no recommendations to review at this time.
-      </Td>
+      <Td>There are no recommendations to review at this time.</Td>
     </Tr>
   )
 

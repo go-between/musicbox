@@ -120,7 +120,7 @@ const Result: React.FC<ResultProps> = ({ result }) => {
               whiteSpace: 'nowrap',
               '&::-webkit-scrollbar': {
                 display: 'none',
-              }
+              },
             }}
           >
             {songTags}
