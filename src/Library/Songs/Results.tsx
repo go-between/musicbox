@@ -4,7 +4,7 @@ import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 
-import { Table, TableWrapper, Tbody, Thead, Tr, Td, Th, MediaObject } from 'components'
+import { MediaObject, Table, TableWrapper, Tbody, Thead, Tr, Td, Th } from 'components'
 
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
@@ -30,6 +30,7 @@ const Result: React.FC<ResultProps> = ({ result }) => {
   }
 
   const selectSong = (): void => setActiveSongId(result.id)
+
   const toggleTag = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     if (ev.target.checked) {
       addSong(result.id)
@@ -49,10 +50,11 @@ const Result: React.FC<ResultProps> = ({ result }) => {
       sx={{
         bg: 'accent',
         borderRadius: 3,
-        color: 'white',
+        display: 'inline-block',
         fontSize: 1,
-        p: 1,
+        fontWeight: 600,
         mx: 1,
+        p: 1,
       }}
     >
       {tag.name}
@@ -95,7 +97,35 @@ const Result: React.FC<ResultProps> = ({ result }) => {
       </Td>
 
       <Td data-label="Tags">
-        <Flex>{songTags}</Flex>
+        <Box
+          sx={{
+            position: 'relative',
+            '&:after': {
+              content: "' '",
+              position: 'absolute',
+              zIndex: '1',
+              top: '0',
+              right: '0',
+              bottom: '0',
+              pointerEvents: 'none',
+              backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0), #1A202C 85%)',
+              width: '15%',
+            },
+          }}
+        >
+          <Box
+            sx={{
+              overflow: 'auto',
+              position: 'relative',
+              whiteSpace: 'nowrap',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+            }}
+          >
+            {songTags}
+          </Box>
+        </Box>
       </Td>
 
       <Td data-label="Duration">{duration(result.durationInSeconds)}</Td>

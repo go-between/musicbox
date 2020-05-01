@@ -129,7 +129,9 @@ export default {
       fontWeight: 800,
     },
     select: {
-      borderRadius: 9999,
+      borderRadius: 6,
+      borderColor: 'accent',
+      color: 'text',
     },
     textarea: {
       '::-webkit-input-placeholder': {

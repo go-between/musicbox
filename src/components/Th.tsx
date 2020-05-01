@@ -9,9 +9,10 @@ export const Th: React.FC<Props> = ({ children, width = 'auto' }) => (
   <Box
     as="th"
     sx={{
+      color: 'gray400',
+      fontSize: 1,
       p: 3,
       textAlign: 'left',
-      fontSize: 1,
       letterSpacing: '.1em',
       textTransform: 'uppercase',
       width: width,

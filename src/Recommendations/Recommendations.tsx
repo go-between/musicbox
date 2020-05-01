@@ -157,6 +157,12 @@ const Recommendations: React.FC = () => {
     return <Box>Loading</Box>
   }
 
+  const recommendedSongPlaceholder = (
+    <Tr>
+      <Td>There are no recommendations to review at this time.</Td>
+    </Tr>
+  )
+
   const recommendedSongs = data.recommendations.map(r => <RecommendedSong key={r.id} recommendedSong={r} />)
 
   return (
@@ -175,7 +181,7 @@ const Recommendations: React.FC = () => {
               <Th width={['auto', 'auto']}></Th>
             </Tr>
           </Thead>
-          <Tbody>{recommendedSongs}</Tbody>
+          <Tbody>{recommendedSongs.length > 0 ? recommendedSongs : recommendedSongPlaceholder}</Tbody>
         </Table>
       </TableWrapper>
     </Flex>
