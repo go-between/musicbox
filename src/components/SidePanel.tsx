@@ -1,23 +1,22 @@
 import React, { useCallback, useEffect } from 'react'
-import { Box, Flex, Heading } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { XCircle } from 'react-feather'
 
 type Props = {
-  closeModal: (ev?: React.MouseEvent) => void
-  showModal: boolean
-  title: string
+  closeSidePanel: (ev?: React.MouseEvent) => void
+  showSidePanel: boolean
 }
 
-export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title }) => {
+export const SidePanel: React.FC<Props> = ({ children, closeSidePanel, showSidePanel }) => {
   const preventBubble = (ev: React.MouseEvent): void => ev.stopPropagation()
 
   const escapeKeyPress = useCallback(
     (ev: KeyboardEvent): void => {
       if (ev.key === 'Escape') {
-        closeModal()
+        closeSidePanel()
       }
     },
-    [closeModal],
+    [closeSidePanel],
   )
 
   useEffect(() => {
@@ -26,10 +25,11 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
     return () => window.removeEventListener('keydown', escapeKeyPress)
   }, [escapeKeyPress])
 
-  if (!showModal) return <></>
+  if (!showSidePanel) return <></>
+
   return (
     <Box
-      onClick={closeModal}
+      onClick={closeSidePanel}
       sx={{
         position: 'fixed',
         display: 'flex',
@@ -39,31 +39,35 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
         left: 0,
         right: 0,
         bg: 'rgba(0, 0, 0, 0.5)',
-        visibility: showModal ? 'visible' : 'hidden',
+        visibility: showSidePanel ? 'visible' : 'hidden',
         zIndex: 1000,
       }}
     >
       <Box
         onClick={preventBubble}
         sx={{
-          bg: 'accent',
-          borderRadius: 6,
-          m: 'auto',
-          p: 3,
-          width: '600px',
+          bg: 'background',
+          border: '1px solid',
+          borderColor: 'accent',
+          boxShadow: 'xl',
+          color: 'text',
+          flexDirection: 'column',
+          height: '100%',
+          overflow: 'scroll',
+          p: 4,
+          position: 'absolute',
+          right: 0,
+          width: '400px',
         }}
       >
         <Flex
           sx={{
-            borderBottom: '2px solid',
-            borderColor: 'muted',
             pb: 3,
           }}
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent="flex-end"
         >
-          <Heading>{title}</Heading>
-          <Box onClick={closeModal} sx={{ cursor: 'pointer' }}>
+          <Box onClick={closeSidePanel} sx={{ cursor: 'pointer' }}>
             <XCircle />
           </Box>
         </Flex>
