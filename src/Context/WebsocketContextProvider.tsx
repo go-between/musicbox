@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 import { Client } from 'lib/WebsocketClient/client'
 
@@ -7,11 +7,14 @@ const WebsocketContext = createContext<WebsocketContext | null>(null)
 
 const WebsocketContextProvider: React.FC<{ token: string }> = ({ children, token }) => {
   const [socketConnected, setSocketConnected] = useState(false)
-  const socketClient = new Client(token, { debug: true })
+  const socketClient = useMemo(() => {
+    return new Client(token, setSocketConnected, { debug: true })
+  }, [token])
 
   useEffect(() => {
-    socketClient.connect().then(() => setSocketConnected(true))
-  }, [socketClient, setSocketConnected])
+    socketClient.connect()
+    return () => socketClient.disconnect()
+  }, [socketClient])
 
   if (!socketConnected) {
     return <p>Loading...</p>

@@ -19,6 +19,7 @@ export class Client {
   private debug: boolean
   private monitor: ReturnType<typeof setTimeout> | null = null
   private token: string
+  private setSocketConnected: (connected: boolean) => void
   private websocket: WebSocket | null = null
 
   private messageMessages: Array<MessageChannelMessage['message']> = []
@@ -44,8 +45,9 @@ export class Client {
   private userMessages: Array<UserChannelMessage['room']> = []
   private userSubscription: ((room: UserChannelMessage['room']) => void) | null = null
 
-  constructor(token: string, options: Options) {
+  constructor(token: string, setSocketConnected: (connected: boolean) => void, options: Options) {
     this.token = token
+    this.setSocketConnected = setSocketConnected
     this.debug = options.debug
   }
 
@@ -57,7 +59,16 @@ export class Client {
       this.websocket.onmessage = (event: MessageEvent) => {
         this.parse(event)
       }
+
+      this.setSocketConnected(true)
     })
+  }
+
+  public disconnect = (): void => {
+    if (this.websocket) {
+      this.websocket.close()
+    }
+    this.setSocketConnected(false)
   }
 
   public subscribeForRoom = (): void => {
@@ -250,6 +261,11 @@ export class Client {
     const parsedData: Message = data
     switch (parsedData.type) {
       case 'ping':
+        if (this.monitor !== null) {
+          clearTimeout(this.monitor)
+        }
+        this.monitor = setTimeout(this.reconnect, 10000)
+
         return
       case 'confirm_subscription':
         this.log(parsedData.type, parsedData)
@@ -265,6 +281,11 @@ export class Client {
         this.log('unknown message', parsedData)
         return
     }
+  }
+
+  private reconnect = (): void => {
+    this.disconnect()
+    this.connect()
   }
 
   private send = (msg: object): void => {
