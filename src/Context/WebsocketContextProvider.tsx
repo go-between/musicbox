@@ -1,20 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-import { Client, awaitWebsocket } from 'lib/WebsocketClient/client'
+import { Client } from 'lib/WebsocketClient/client'
 
-const socketClient = new Client({ debug: true })
 type WebsocketContext = InstanceType<typeof Client>
-const WebsocketContext = createContext<WebsocketContext>(socketClient)
+const WebsocketContext = createContext<WebsocketContext | null>(null)
 
 const WebsocketContextProvider: React.FC<{ token: string }> = ({ children, token }) => {
   const [socketConnected, setSocketConnected] = useState(false)
+  const socketClient = new Client(token, { debug: true })
 
   useEffect(() => {
-    awaitWebsocket(token).then(websocket => {
-      socketClient.bind(websocket)
-      setSocketConnected(true)
-    })
-  }, [token])
+    socketClient.connect().then(() => setSocketConnected(true))
+  }, [socketClient, setSocketConnected])
 
   if (!socketConnected) {
     return <p>Loading...</p>
@@ -24,6 +21,12 @@ const WebsocketContextProvider: React.FC<{ token: string }> = ({ children, token
 }
 
 export const useWebsocketContext = (): WebsocketContext => {
-  return useContext(WebsocketContext)
+  const websocket = useContext(WebsocketContext)
+
+  if (websocket === null) {
+    throw new Error('Websocket called outside of context')
+  }
+
+  return websocket
 }
 export default WebsocketContextProvider

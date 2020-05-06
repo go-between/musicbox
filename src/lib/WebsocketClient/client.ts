@@ -15,19 +15,10 @@ import {
 
 import { WEBSOCKET_HOST } from 'lib/constants'
 
-export const awaitWebsocket = (token: string): Promise<WebSocket> => {
-  return new Promise((resolve, reject) => {
-    const formData = new URLSearchParams()
-    formData.append('token', token)
-    const socket = new WebSocket(`${WEBSOCKET_HOST}?${formData.toString()}`)
-
-    socket.onopen = () => resolve(socket)
-    socket.onerror = () => reject(socket)
-  })
-}
-
 export class Client {
   private debug: boolean
+  private monitor: ReturnType<typeof setTimeout> | null = null
+  private token: string
   private websocket: WebSocket | null = null
 
   private messageMessages: Array<MessageChannelMessage['message']> = []
@@ -53,17 +44,20 @@ export class Client {
   private userMessages: Array<UserChannelMessage['room']> = []
   private userSubscription: ((room: UserChannelMessage['room']) => void) | null = null
 
-  constructor(options: Options) {
+  constructor(token: string, options: Options) {
+    this.token = token
     this.debug = options.debug
   }
 
-  public bind = (websocket: WebSocket): void => {
-    this.websocket = websocket
+  public connect = (): Promise<void> => {
+    return this.awaitWebsocket().then(websocket => {
+      this.websocket = websocket
 
-    this.websocket.onerror = this.error
-    this.websocket.onmessage = (event: MessageEvent) => {
-      this.parse(event)
-    }
+      this.websocket.onerror = this.error
+      this.websocket.onmessage = (event: MessageEvent) => {
+        this.parse(event)
+      }
+    })
   }
 
   public subscribeForRoom = (): void => {
@@ -147,6 +141,17 @@ export class Client {
     this.userMessages.forEach(this.userSubscription)
     this.userMessages = []
     return () => (this.userSubscription = null)
+  }
+
+  private awaitWebsocket = (): Promise<WebSocket> => {
+    return new Promise((resolve, reject) => {
+      const formData = new URLSearchParams()
+      formData.append('token', this.token)
+      const socket = new WebSocket(`${WEBSOCKET_HOST}?${formData.toString()}`)
+
+      socket.onopen = () => resolve(socket)
+      socket.onerror = () => reject(socket)
+    })
   }
 
   private error: (event: Event) => void = event => {
