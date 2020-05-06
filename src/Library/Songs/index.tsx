@@ -8,7 +8,6 @@ import Results from './Results'
 const Songs: React.FC = () => {
   return (
     <Flex
-      as="main"
       sx={{
         flexDirection: 'column',
         p: 4,

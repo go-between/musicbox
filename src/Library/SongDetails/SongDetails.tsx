@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Box, Flex, Text } from 'rebass'
 import { useLazyQuery } from '@apollo/react-hooks'
-import { XCircle } from 'react-feather'
 import ReactPlayer from 'react-player'
 
+import { SidePanel } from 'components'
 import { duration } from 'lib/formatters'
 import { SongQuery, SONG_QUERY } from './graphql'
 import { useSearchContext } from '../SearchContextProvider'
@@ -31,49 +31,7 @@ const SongDetails: React.FC = () => {
   }
 
   return (
-    <Flex
-      as="aside"
-      sx={{
-        bg: 'background',
-        border: '1px solid',
-        borderColor: 'accent',
-        boxShadow: 'xl',
-        color: 'text',
-        flexDirection: 'column',
-        height: '100%',
-        overflow: 'scroll',
-        p: 4,
-        position: 'absolute',
-        right: 0,
-        width: '400px',
-      }}
-    >
-      <Box
-        onClick={closeSongDetails}
-        sx={{
-          textAlign: 'right',
-          mb: 3,
-        }}
-      >
-        <Text
-          sx={{
-            alignItems: 'center',
-            cursor: 'pointer',
-            display: 'inline-flex',
-            py: 1,
-            px: 2,
-            mr: 2,
-            '&:hover': {
-              bg: 'accent',
-              borderRadius: 6,
-            },
-          }}
-        >
-          Close
-          <Box as={XCircle} ml={2} />
-        </Text>
-      </Box>
-
+    <SidePanel closeSidePanel={closeSongDetails} showSidePanel={!!activeSongId}>
       <Flex
         sx={{
           border: '1px solid',
@@ -142,7 +100,7 @@ const SongDetails: React.FC = () => {
       </Flex>
 
       <Recommendations songId={data.song.id} youtubeId={data.song.youtubeId} />
-    </Flex>
+    </SidePanel>
   )
 }
 
