@@ -1,3 +1,5 @@
+import { Notifier } from '@airbrake/browser'
+
 import {
   channels,
   DataMessage,
@@ -13,9 +15,10 @@ import {
   UserChannelMessage,
 } from './types'
 
-import { WEBSOCKET_HOST } from 'lib/constants'
+import { AIRBRAKE_KEY, AIRBRAKE_PROJECT_ID, WEBSOCKET_HOST } from 'lib/constants'
 
 export class Client {
+  private airbrake: Notifier | null = null
   private debug: boolean
   private monitor: ReturnType<typeof setTimeout> | null = null
   private token: string
@@ -49,6 +52,13 @@ export class Client {
     this.token = token
     this.setSocketConnected = setSocketConnected
     this.debug = options.debug
+
+    if (!!AIRBRAKE_KEY) {
+      this.airbrake = new Notifier({
+        projectId: AIRBRAKE_PROJECT_ID,
+        projectKey: AIRBRAKE_KEY,
+      })
+    }
   }
 
   public connect = (): Promise<void> => {
@@ -284,6 +294,12 @@ export class Client {
   }
 
   private reconnect = (): void => {
+    if (this.airbrake !== null) {
+      this.airbrake.notify({
+        error: 'Websocket is reconnecting',
+        params: { token: this.token },
+      })
+    }
     this.disconnect()
     this.connect()
   }
