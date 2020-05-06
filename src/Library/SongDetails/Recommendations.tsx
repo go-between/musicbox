@@ -4,7 +4,66 @@ import { Select } from '@rebass/forms'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 
 import { useUserContext } from 'Context'
-import { RecommendationCreate, RECOMMENDATION_CREATE, TeamQuery, TEAM_QUERY } from './graphql'
+import {
+  RecommendationCreate,
+  RECOMMENDATION_CREATE,
+  RecommendationsQuery,
+  RECOMMENDATIONS_QUERY,
+  TeamQuery,
+  TEAM_QUERY,
+  Recommendation,
+} from './graphql'
+
+const YourRecommendations: React.FC<{ recommendations?: Recommendation[] }> = ({ recommendations }) => {
+  if (!recommendations || recommendations.length === 0) {
+    return <></>
+  }
+
+  /* eslint-disable @typescript-eslint/camelcase */
+  const sourceMap: { [k: string]: string } = {
+    pending_recommendation: 'pending',
+    accepted_recommendation: 'accepted',
+  }
+  /* eslint-enable @typescript-eslint/camelcase */
+
+  const recommendationItems = recommendations.map(r => {
+    return (
+      <Box
+        key={r.user.id}
+        as="li"
+        sx={{
+          listStyle: 'none',
+          pb: 2,
+          width: '100%',
+        }}
+      >
+        <Text>
+          {r.user.name} ({sourceMap[r.source]})
+        </Text>
+      </Box>
+    )
+  })
+
+  return (
+    <>
+      <Text fontSize={2} color="gray400">
+        You&apos;ve recommended this song to:
+      </Text>
+
+      <Box my={1} />
+
+      <Box
+        as="ul"
+        sx={{
+          m: 0,
+          p: 0,
+        }}
+      >
+        {recommendationItems}
+      </Box>
+    </>
+  )
+}
 
 type Props = {
   songId: string
@@ -17,22 +76,31 @@ const Recommendations: React.FC<Props> = ({ songId, youtubeId }) => {
   const [selectedTeamMember, setSelectedTeamMember] = useState('')
   const [recommendationCreateMutation] = useMutation<RecommendationCreate['data'], RecommendationCreate['vars']>(
     RECOMMENDATION_CREATE,
+    { refetchQueries: ['RecommendedToQuery'] },
   )
 
-  const { data } = useQuery<TeamQuery['data'], TeamQuery['vars']>(TEAM_QUERY, {
+  const { data: teamData } = useQuery<TeamQuery['data'], TeamQuery['vars']>(TEAM_QUERY, {
     fetchPolicy: 'network-only',
     variables: { id: activeTeam?.id },
     skip: !activeTeam,
   })
 
+  const { data: recommendationsData } = useQuery<RecommendationsQuery['data'], RecommendationsQuery['vars']>(
+    RECOMMENDATIONS_QUERY,
+    {
+      fetchPolicy: 'network-only',
+      variables: { songId },
+    },
+  )
+
   const recommendSong = (): void => {
-    if (!data) {
-      return
-    }
     recommendationCreateMutation({ variables: { youtubeId: youtubeId, recommendToUser: selectedTeamMember } })
   }
 
-  const teamMembers = data?.team.users.filter(teamMember => userID !== teamMember.id)
+  const teamMembers = teamData?.team.users.filter(teamMember => {
+    const hasRecommendation = recommendationsData?.recommendations.find(r => r.user.id === teamMember.id)
+    return userID !== teamMember.id && !hasRecommendation
+  })
 
   const teamMemberOptions = teamMembers?.map(teamMember => (
     <option key={teamMember.id} value={teamMember.id}>
@@ -76,6 +144,9 @@ const Recommendations: React.FC<Props> = ({ songId, youtubeId }) => {
           Recommend
         </Button>
       </Flex>
+
+      <Box my={2} />
+      <YourRecommendations recommendations={recommendationsData?.recommendations} />
     </>
   )
 }

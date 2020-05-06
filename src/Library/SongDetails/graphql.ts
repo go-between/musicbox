@@ -26,11 +26,12 @@ export type RecommendationsQuery = {
 }
 
 export const RECOMMENDATIONS_QUERY = gql`
-  query Recommendations($songId: ID) {
+  query RecommendedToQuery($songId: ID) {
     recommendations(songId: $songId) {
       id
       source
       user {
+        id
         name
         email
       }
@@ -88,6 +89,7 @@ export type Recommendation = {
   id: string
   source: string
   user: {
+    id: string
     name: string
     email: string
   }
