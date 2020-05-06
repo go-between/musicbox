@@ -1,3 +1,5 @@
+import { Notifier } from '@airbrake/browser'
+
 import {
   channels,
   DataMessage,
@@ -13,21 +15,14 @@ import {
   UserChannelMessage,
 } from './types'
 
-import { WEBSOCKET_HOST } from 'lib/constants'
-
-export const awaitWebsocket = (token: string): Promise<WebSocket> => {
-  return new Promise((resolve, reject) => {
-    const formData = new URLSearchParams()
-    formData.append('token', token)
-    const socket = new WebSocket(`${WEBSOCKET_HOST}?${formData.toString()}`)
-
-    socket.onopen = () => resolve(socket)
-    socket.onerror = () => reject(socket)
-  })
-}
+import { AIRBRAKE_KEY, AIRBRAKE_PROJECT_ID, WEBSOCKET_HOST } from 'lib/constants'
 
 export class Client {
+  private airbrake: Notifier | null = null
   private debug: boolean
+  private monitor: ReturnType<typeof setTimeout> | null = null
+  private token: string
+  private setSocketConnected: (connected: boolean) => void
   private websocket: WebSocket | null = null
 
   private messageMessages: Array<MessageChannelMessage['message']> = []
@@ -53,17 +48,37 @@ export class Client {
   private userMessages: Array<UserChannelMessage['room']> = []
   private userSubscription: ((room: UserChannelMessage['room']) => void) | null = null
 
-  constructor(options: Options) {
+  constructor(token: string, setSocketConnected: (connected: boolean) => void, options: Options) {
+    this.token = token
+    this.setSocketConnected = setSocketConnected
     this.debug = options.debug
+
+    if (!!AIRBRAKE_KEY) {
+      this.airbrake = new Notifier({
+        projectId: AIRBRAKE_PROJECT_ID,
+        projectKey: AIRBRAKE_KEY,
+      })
+    }
   }
 
-  public bind = (websocket: WebSocket): void => {
-    this.websocket = websocket
+  public connect = (): Promise<void> => {
+    return this.awaitWebsocket().then(websocket => {
+      this.websocket = websocket
 
-    this.websocket.onerror = this.error
-    this.websocket.onmessage = (event: MessageEvent) => {
-      this.parse(event)
+      this.websocket.onerror = this.error
+      this.websocket.onmessage = (event: MessageEvent) => {
+        this.parse(event)
+      }
+
+      this.setSocketConnected(true)
+    })
+  }
+
+  public disconnect = (): void => {
+    if (this.websocket) {
+      this.websocket.close()
     }
+    this.setSocketConnected(false)
   }
 
   public subscribeForRoom = (): void => {
@@ -147,6 +162,17 @@ export class Client {
     this.userMessages.forEach(this.userSubscription)
     this.userMessages = []
     return () => (this.userSubscription = null)
+  }
+
+  private awaitWebsocket = (): Promise<WebSocket> => {
+    return new Promise((resolve, reject) => {
+      const formData = new URLSearchParams()
+      formData.append('token', this.token)
+      const socket = new WebSocket(`${WEBSOCKET_HOST}?${formData.toString()}`)
+
+      socket.onopen = () => resolve(socket)
+      socket.onerror = () => reject(socket)
+    })
   }
 
   private error: (event: Event) => void = event => {
@@ -245,6 +271,11 @@ export class Client {
     const parsedData: Message = data
     switch (parsedData.type) {
       case 'ping':
+        if (this.monitor !== null) {
+          clearTimeout(this.monitor)
+        }
+        this.monitor = setTimeout(this.reconnect, 10000)
+
         return
       case 'confirm_subscription':
         this.log(parsedData.type, parsedData)
@@ -260,6 +291,17 @@ export class Client {
         this.log('unknown message', parsedData)
         return
     }
+  }
+
+  private reconnect = (): void => {
+    if (this.airbrake !== null) {
+      this.airbrake.notify({
+        error: 'Websocket is reconnecting',
+        params: { token: this.token },
+      })
+    }
+    this.disconnect()
+    this.connect()
   }
 
   private send = (msg: object): void => {
