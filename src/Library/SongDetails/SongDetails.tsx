@@ -1,51 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Button, Flex, Text } from 'rebass'
-import { Select } from '@rebass/forms'
-import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks'
+import React, { useEffect } from 'react'
+import { Box, Flex, Text } from 'rebass'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { XCircle } from 'react-feather'
 import ReactPlayer from 'react-player'
 
 import { duration } from 'lib/formatters'
-import { useUserContext } from 'Context'
-import { RecommendationCreate, RECOMMENDATION_CREATE, SongQuery, SONG_QUERY, TeamQuery, TEAM_QUERY } from './graphql'
-import { useSearchContext } from './SearchContextProvider'
+import { SongQuery, SONG_QUERY } from './graphql'
+import { useSearchContext } from '../SearchContextProvider'
+
+import Recommendations from './Recommendations'
 
 const SongDetails: React.FC = () => {
   const { activeSongId, setActiveSongId } = useSearchContext()
-  const [selectedTeamMember, setSelectedTeamMember] = useState('')
-  const { activeTeam, id: userID } = useUserContext()
   const [retrieveSong, { data }] = useLazyQuery<SongQuery['data'], SongQuery['vars']>(SONG_QUERY, {
     fetchPolicy: 'network-only',
   })
-
-  const [recommendationCreateMutation] = useMutation<RecommendationCreate['data'], RecommendationCreate['vars']>(
-    RECOMMENDATION_CREATE,
-  )
-
-  const { data: teamData } = useQuery<TeamQuery['data'], TeamQuery['vars']>(TEAM_QUERY, {
-    fetchPolicy: 'network-only',
-    variables: { id: activeTeam?.id },
-    skip: !activeTeam,
-  })
-
-  const recommendSong = (): void => {
-    if (!data) {
-      return
-    }
-    recommendationCreateMutation({ variables: { youtubeId: data.song.youtubeId, recommendToUser: selectedTeamMember } })
-  }
-
-  const teamMembers = teamData?.team.users.filter(teamMember => userID !== teamMember.id)
-
-  const teamMemberOptions = teamMembers?.map(teamMember => (
-    <option key={teamMember.id} value={teamMember.id}>
-      {teamMember.name}
-    </option>
-  ))
-
-  const selectTeamMember = (ev: React.ChangeEvent<HTMLSelectElement>): void => {
-    setSelectedTeamMember(ev.target.value)
-  }
 
   const closeSongDetails = (): void => setActiveSongId('')
 
@@ -172,36 +141,7 @@ const SongDetails: React.FC = () => {
         ))}
       </Flex>
 
-      <Box mb={2}>
-        <Text fontSize={2} color="gray400">
-          Recommend this song to someone on your team!
-        </Text>
-      </Box>
-
-      <Flex alignItems="center" justifyContent="space-between" width="100%">
-        <Box sx={{ flex: 1, mr: 2 }}>
-          <Select
-            id="team-members"
-            name="team members"
-            defaultValue="select-team-member"
-            onChange={selectTeamMember}
-            sx={{ fontSize: 2 }}
-          >
-            <option id="select-team-member">Select a Team Member</option>
-            {teamMemberOptions}
-          </Select>
-        </Box>
-
-        <Button
-          onClick={recommendSong}
-          sx={{
-            fontSize: 2,
-            p: 2,
-          }}
-        >
-          Recommend
-        </Button>
-      </Flex>
+      <Recommendations songId={data.song.id} youtubeId={data.song.youtubeId} />
     </Flex>
   )
 }
