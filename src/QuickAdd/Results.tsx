@@ -1,18 +1,17 @@
-import React, { createRef, useEffect, MouseEvent } from 'react'
-import { Box, Flex, Text } from 'rebass'
-import { Check, Plus, ZoomIn } from 'react-feather'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import React, { createRef, useEffect, useState } from 'react'
+import { Box, Button, Flex, Text } from 'rebass'
+import { Check, Eye, Plus } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
-import { useCurrentRecordContext, usePlaylistRecordContext } from 'Room'
+import { useCurrentRecordContext } from 'Context'
+import { MediaObject, Modal } from 'components'
+import { usePlaylistRecordsContext } from 'Context'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
+import { duration } from 'lib/formatters'
 
 import { Song } from './graphql'
 import { useResultsContext } from './ResultsContextProvider'
-
-const ReactSwal = withReactContent(Swal)
 
 const NowPlaying: React.FC = () => {
   return (
@@ -39,35 +38,32 @@ type SearchResultProps = {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selected }) => {
-  const { setUnmutedPlayer, volume } = useVolumeContext()
-  const { addRecord } = usePlaylistRecordContext()
+  const { setUnmutedPlayer } = useVolumeContext()
+  const { addRecords } = usePlaylistRecordsContext()
   const { addToast } = useToasts()
+
+  const [showModal, setShowModal] = useState(false)
+
+  const openModal = (ev: React.MouseEvent): void => {
+    ev.stopPropagation()
+    setShowModal(true)
+    setUnmutedPlayer(PLAYERS.preview)
+  }
+  const closeModal = (ev?: React.MouseEvent): void => {
+    if (ev) {
+      ev.stopPropagation()
+    }
+    setShowModal(false)
+    setUnmutedPlayer(PLAYERS.main)
+  }
 
   const onClick = (ev: React.MouseEvent): void => {
     ev.stopPropagation()
-    addRecord(result.id)
+    addRecords(result.id)
     addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
-  }
-
-  const showPreview = (e: MouseEvent): void => {
-    e.stopPropagation()
-    setUnmutedPlayer(PLAYERS.preview)
-    ReactSwal.fire({
-      allowOutsideClick: () => true,
-      animation: true,
-      cancelButtonText: 'Cancel',
-      confirmButtonText: 'Add',
-      showCancelButton: true,
-      title: result.name,
-      html: <PlayerPrimitive playedAt="" youtubeId={result.youtubeId} volume={volume} />,
-      width: '30%',
-    }).then(userAction => {
-      if (userAction.value) {
-        addRecord(result.id)
-        addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
-      }
-      setUnmutedPlayer(PLAYERS.main)
-    })
+    if (showModal) {
+      closeModal()
+    }
   }
 
   return (
@@ -76,75 +72,92 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
       onClick={onClick}
       sx={{
         alignItems: 'center',
+        bg: `${selected ? '#4A5568' : 'initial'}`,
         borderRadius: 3,
         cursor: 'pointer',
-        display: 'flex',
-        justifyContent: 'space-between',
         listStyle: 'none',
         mx: 0,
         my: 2,
         px: 2,
         py: 3,
-        bg: `${selected ? '#4A5568' : 'initial'}`,
+        width: '100%',
         '&:hover': {
           bg: '#4A5568',
         },
       }}
     >
-      <Box>
-        {nowPlaying ? <NowPlaying /> : <></>}
-        <Box
-          sx={{
-            fontSize: 1,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            mr: 2,
-          }}
-        >
-          {result.name}
+      <MediaObject imageUrl={result.thumbnailUrl} imageSize="50px" alignment="center" placeholderImageColor="accent">
+        <Box flex={1}>
+          {nowPlaying ? <NowPlaying /> : <></>}
+          <Box
+            sx={{
+              fontSize: 1,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              mr: 2,
+            }}
+          >
+            {result.name}
+          </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          alignItems: 'center',
-          color: 'text',
-          cursor: 'pointer',
-          display: 'flex',
-          p: 1,
-          mx: 1,
-        }}
-      >
-        <Box
-          sx={{
-            alignItems: 'center',
-            bg: 'accent',
-            borderRadius: 4,
-            color: 'text',
-            cursor: 'pointer',
-            display: 'flex',
-            p: 1,
-            mx: 1,
-          }}
-          onClick={showPreview}
-        >
-          <ZoomIn size={18} />
-        </Box>
-        <Box
-          sx={{
-            alignItems: 'center',
-            bg: 'accent',
-            borderRadius: 4,
-            color: 'text',
-            cursor: 'pointer',
-            display: 'flex',
-            p: 1,
-            mx: 1,
-          }}
-        >
-          {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
-        </Box>
-      </Box>
+
+        <Flex alignItems="center" justifyContent="space-between">
+          <Box
+            sx={{
+              color: 'gray400',
+              fontSize: 1,
+              px: 3,
+            }}
+          >
+            {duration(result.durationInSeconds)}
+          </Box>
+
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 1,
+              mx: 1,
+            }}
+            onClick={openModal}
+          >
+            <Eye size={18} />
+          </Box>
+          <Box
+            sx={{
+              alignItems: 'center',
+              bg: 'accent',
+              borderRadius: 4,
+              color: 'text',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 1,
+              mx: 1,
+            }}
+          >
+            {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
+          </Box>
+        </Flex>
+      </MediaObject>
+
+      <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
+        <PlayerPrimitive
+          playedAt=""
+          youtubeId={result.youtubeId}
+          controls={true}
+          playerIdentifier={PLAYERS.preview}
+          inline={true}
+        />
+
+        <Button onClick={onClick}>Add</Button>
+
+        <Button onClick={closeModal}>Close</Button>
+      </Modal>
     </Box>
   )
 }
@@ -172,7 +185,7 @@ const FloatingResults: React.FC = ({ children }) => {
 
 const Results: React.FC = () => {
   const { error, results, resultIndex, setQuery, setResults } = useResultsContext()
-  const { playlistRecords } = usePlaylistRecordContext()
+  const { playlistRecords } = usePlaylistRecordsContext()
   const { currentRecord } = useCurrentRecordContext()
   const resultsRef = createRef<HTMLUListElement>()
   const selectedRef = createRef<HTMLDivElement>()

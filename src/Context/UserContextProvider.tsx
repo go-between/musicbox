@@ -2,12 +2,25 @@ import React, { createContext, useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
+type Room = {
+  id: string
+  name: string
+  currentSong: {
+    name: string
+  } | null
+  users: Array<{
+    id: string
+    email: string
+    name: string
+  }>
+}
+
 type Team = {
   id: string
   name: string
 }
 
-type User = {
+export type User = {
   id: string
   email: string
   name: string
@@ -17,6 +30,7 @@ type User = {
   activeTeam: {
     id: string
     name: string
+    rooms: Room[]
   }
   teams: Team[]
 }
@@ -38,6 +52,18 @@ const USER_QUERY = gql`
       activeTeam {
         id
         name
+        rooms {
+          id
+          name
+          currentSong {
+            name
+          }
+          users {
+            id
+            email
+            name
+          }
+        }
       }
       teams {
         id
@@ -48,7 +74,7 @@ const USER_QUERY = gql`
 `
 
 const UserContext = createContext<User | null>(null)
-const UserContextProvider: React.FC = ({ children }) => {
+export const UserContextProvider: React.FC = ({ children }) => {
   const { loading, data } = useQuery<UserQuery['data']>(USER_QUERY, { fetchPolicy: 'network-only' })
 
   if (!data || loading) {
@@ -67,4 +93,3 @@ export const useUserContext: () => User = () => {
 
   return user
 }
-export default UserContextProvider

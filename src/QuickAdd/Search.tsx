@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLazyQuery, useQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 import { Box, Flex } from 'rebass'
 import { Input, Select } from '@rebass/forms'
@@ -7,10 +7,10 @@ import { Search as SearchIcon, XCircle } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
 import { setString } from 'lib/setters'
-import { usePlaylistRecordContext } from 'Room'
+import { usePlaylistRecordsContext } from 'Context'
 
 import { useResultsContext } from './ResultsContextProvider'
-import { SongsQuery, TagsQuery, SONGS_QUERY, TAGS_QUERY, Song } from './graphql'
+import { SongCreateMutation, SongsQuery, TagsQuery, SONG_CREATE, SONGS_QUERY, TAGS_QUERY, Song } from './graphql'
 
 const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, query }) => {
   if (query.length === 0) {
@@ -30,6 +30,19 @@ const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, qu
   )
 }
 
+const extractYoutubeId = (urlString: string): string | null => {
+  try {
+    const url = new URL(urlString)
+    if (url.hostname === 'youtube.com' || url.hostname === 'www.youtube.com') {
+      return url.searchParams.get('v')
+    }
+
+    return null
+  } catch (TypeError) {
+    return null
+  }
+}
+
 export const Search: React.FC = () => {
   const {
     query,
@@ -42,7 +55,7 @@ export const Search: React.FC = () => {
     tags,
     setTags,
   } = useResultsContext()
-  const { addRecord } = usePlaylistRecordContext()
+  const { addRecords } = usePlaylistRecordsContext()
   const { addToast } = useToasts()
 
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -85,6 +98,14 @@ export const Search: React.FC = () => {
     },
   })
 
+  const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
+    onCompleted: ({ songCreate: { song } }) => {
+      addRecords(song.id)
+      setQuery('')
+      addToast(`Successfully added ${song.name}`, { appearance: 'success', autoDismiss: true })
+    },
+  })
+
   useEffect(() => {
     setResultIndex(null)
     setResults([])
@@ -94,8 +115,13 @@ export const Search: React.FC = () => {
       return
     }
 
-    searchLibrary({ variables: { query: debouncedQuery, tagIds: selectedTags } })
-  }, [debouncedQuery, searchLibrary, setError, setResultIndex, setResults, selectedTags])
+    const youtubeId = extractYoutubeId(debouncedQuery)
+    if (youtubeId === null) {
+      searchLibrary({ variables: { query: debouncedQuery, tagIds: selectedTags } })
+    } else {
+      createSong({ variables: { youtubeId } })
+    }
+  }, [debouncedQuery, searchLibrary, setError, setResultIndex, setResults, selectedTags, createSong])
 
   const navigateResult = (ev: React.KeyboardEvent): void => {
     if (ev.key === 'ArrowUp') {
@@ -114,7 +140,7 @@ export const Search: React.FC = () => {
       }
     } else if (ev.key === 'Enter' && resultIndex !== null) {
       const record = results[resultIndex]
-      addRecord(record.id)
+      addRecords(record.id)
       addToast(`Successfully added ${record.name}`, { appearance: 'success', autoDismiss: true })
     } else if (ev.key === 'Escape') {
       setQuery('')
@@ -132,7 +158,12 @@ export const Search: React.FC = () => {
       }}
     >
       <Flex
-        sx={{ borderRadius: 6 }}
+        sx={{
+          borderRadius: 6,
+          '&:focus-within': {
+            boxShadow: 'outline',
+          },
+        }}
         bg="accent"
         width="100%"
         px={3}
@@ -159,6 +190,7 @@ export const Search: React.FC = () => {
             value={query}
             onChange={setString(setQuery)}
             onKeyDown={navigateResult}
+            placeholder="Type to search, or paste YouTube URL"
             sx={{
               bg: 'accent',
               boxShadow: 'none',

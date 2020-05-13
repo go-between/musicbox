@@ -1,38 +1,48 @@
 // Channels
 export const MESSAGE_CHANNEL = 'MessageChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
+export const PINNED_MESSAGES_CHANNEL = 'PinnedMessagesChannel'
 export const RECORD_LISTENS_CHANNEL = 'RecordListensChannel'
 export const ROOM_PLAYLIST_CHANNEL = 'RoomPlaylistChannel'
+export const TEAM_CHANNEL = 'TeamChannel'
 export const USERS_CHANNEL = 'UsersChannel'
 
 export type Channel =
   | typeof MESSAGE_CHANNEL
   | typeof NOW_PLAYING_CHANNEL
+  | typeof PINNED_MESSAGES_CHANNEL
   | typeof RECORD_LISTENS_CHANNEL
   | typeof ROOM_PLAYLIST_CHANNEL
+  | typeof TEAM_CHANNEL
   | typeof USERS_CHANNEL
 
 export type Channels = {
   MESSAGE_CHANNEL: typeof MESSAGE_CHANNEL
   NOW_PLAYING_CHANNEL: typeof NOW_PLAYING_CHANNEL
+  PINNED_MESSAGES_CHANNEL: typeof PINNED_MESSAGES_CHANNEL
   RECORD_LISTENS_CHANNEL: typeof RECORD_LISTENS_CHANNEL
   ROOM_PLAYLIST_CHANNEL: typeof ROOM_PLAYLIST_CHANNEL
+  TEAM_CHANNEL: typeof TEAM_CHANNEL
   USERS_CHANNEL: typeof USERS_CHANNEL
 }
 
 export const channels: Channels = {
   MESSAGE_CHANNEL,
   NOW_PLAYING_CHANNEL,
+  PINNED_MESSAGES_CHANNEL,
   RECORD_LISTENS_CHANNEL,
   ROOM_PLAYLIST_CHANNEL,
+  TEAM_CHANNEL,
   USERS_CHANNEL,
 }
 
 export type Subscriptions = {
   [MESSAGE_CHANNEL]: {}
   [NOW_PLAYING_CHANNEL]: {}
+  [PINNED_MESSAGES_CHANNEL]: {}
   [RECORD_LISTENS_CHANNEL]: {}
   [ROOM_PLAYLIST_CHANNEL]: {}
+  [TEAM_CHANNEL]: {}
   [USERS_CHANNEL]: {}
 }
 
@@ -69,8 +79,10 @@ type WebsocketMessage<T, K> = {
 export type DataMessage =
   | WebsocketMessage<typeof MESSAGE_CHANNEL, MessageChannelMessage>
   | WebsocketMessage<typeof NOW_PLAYING_CHANNEL, NowPlayingChannelMessage>
+  | WebsocketMessage<typeof PINNED_MESSAGES_CHANNEL, PinnedMessagesChannelMessage>
   | WebsocketMessage<typeof RECORD_LISTENS_CHANNEL, RecordListensMessage>
   | WebsocketMessage<typeof ROOM_PLAYLIST_CHANNEL, RoomPlaylistMessage>
+  | WebsocketMessage<typeof TEAM_CHANNEL, TeamMessage>
   | WebsocketMessage<typeof USERS_CHANNEL, UserChannelMessage>
 
 export type Message = SystemMessage | DataMessage
@@ -104,7 +116,9 @@ export type NowPlayingChannelMessage = {
       playedAt: string
       song: {
         id: string
+        durationInSeconds: number
         name: string
+        thumbnailUrl: string
         youtubeId: string
       }
       user: {
@@ -116,10 +130,34 @@ export type NowPlayingChannelMessage = {
   }
 }
 
+type PinnedMessage = {
+  id: string
+  createdAt: string
+  message: string
+  pinned: boolean
+  roomPlaylistRecord: {
+    id: string
+    playedAt: string
+  } | null
+  song: {
+    name: string
+  } | null
+  user: {
+    id: string
+    email: string
+    name: string
+  }
+}
+export type PinnedMessagesChannelMessage = {
+  pinnedMessages: PinnedMessage[]
+}
+
 type RecordListen = {
   approval: number
   user: {
     id: string
+    email: string
+    name: string
   }
 }
 
@@ -130,11 +168,16 @@ export type RecordListensMessage = {
 type RecordForRoomPlaylist = {
   id: string
   order: number
+  playedAt: string
   song: {
     id: string
+    durationInSeconds: number
     name: string
+    thumbnailUrl: string
+    youtubeId: string
   }
   user: {
+    id: string
     email: string
     name: string
   }
@@ -142,6 +185,24 @@ type RecordForRoomPlaylist = {
 
 export type RoomPlaylistMessage = {
   roomPlaylist: RecordForRoomPlaylist[]
+}
+
+type RoomForTeamMessage = {
+  id: string
+  name: string
+  currentSong: {
+    name: string
+  } | null
+  users: Array<{
+    id: string
+    email: string
+    name: string
+  }>
+}
+export type TeamMessage = {
+  team: {
+    rooms: RoomForTeamMessage[]
+  }
 }
 
 type UserForUserChannel = {

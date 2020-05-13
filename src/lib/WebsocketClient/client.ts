@@ -1,3 +1,5 @@
+import { Notifier } from '@airbrake/browser'
+
 import {
   channels,
   DataMessage,
@@ -5,27 +7,22 @@ import {
   Options,
   MessageChannelMessage,
   NowPlayingChannelMessage,
+  PinnedMessagesChannelMessage,
   RecordListensMessage,
   RoomPlaylistMessage,
+  TeamMessage,
   Subscriptions,
   UserChannelMessage,
 } from './types'
 
-import { WEBSOCKET_HOST } from 'lib/constants'
-
-export const awaitWebsocket = (token: string): Promise<WebSocket> => {
-  return new Promise((resolve, reject) => {
-    const formData = new URLSearchParams()
-    formData.append('token', token)
-    const socket = new WebSocket(`${WEBSOCKET_HOST}?${formData.toString()}`)
-
-    socket.onopen = () => resolve(socket)
-    socket.onerror = () => reject(socket)
-  })
-}
+import { AIRBRAKE_KEY, AIRBRAKE_PROJECT_ID, WEBSOCKET_HOST } from 'lib/constants'
 
 export class Client {
+  private airbrake: Notifier | null = null
   private debug: boolean
+  private monitor: ReturnType<typeof setTimeout> | null = null
+  private token: string
+  private setSocketConnected: (connected: boolean) => void
   private websocket: WebSocket | null = null
 
   private messageMessages: Array<MessageChannelMessage['message']> = []
@@ -34,31 +31,60 @@ export class Client {
   private nowPlayingMessages: Array<NowPlayingChannelMessage['room']> = []
   private nowPlayingSubscription: ((currentRecord: NowPlayingChannelMessage['room']) => void) | null = null
 
+  private pinnedMessagesMessages: Array<PinnedMessagesChannelMessage['pinnedMessages']> = []
+  private pinnedMessagesSubscription:
+    | ((pinnedMessages: PinnedMessagesChannelMessage['pinnedMessages']) => void)
+    | null = null
+
   private recordListensMessages: Array<RecordListensMessage['recordListens']> = []
   private recordListensSubscription: ((recordListens: RecordListensMessage['recordListens']) => void) | null = null
 
   private roomPlaylistMessages: Array<RoomPlaylistMessage['roomPlaylist']> = []
   private roomPlaylistSubscription: ((roomPlaylist: RoomPlaylistMessage['roomPlaylist']) => void) | null = null
 
+  private teamMessages: Array<TeamMessage['team']> = []
+  private teamSubscription: ((team: TeamMessage['team']) => void) | null = null
+
   private userMessages: Array<UserChannelMessage['room']> = []
   private userSubscription: ((room: UserChannelMessage['room']) => void) | null = null
 
-  constructor(options: Options) {
+  constructor(token: string, setSocketConnected: (connected: boolean) => void, options: Options) {
+    this.token = token
+    this.setSocketConnected = setSocketConnected
     this.debug = options.debug
+
+    if (!!AIRBRAKE_KEY) {
+      this.airbrake = new Notifier({
+        projectId: AIRBRAKE_PROJECT_ID,
+        projectKey: AIRBRAKE_KEY,
+      })
+    }
   }
 
-  public bind = (websocket: WebSocket): void => {
-    this.websocket = websocket
+  public connect = (): Promise<void> => {
+    return this.awaitWebsocket().then(websocket => {
+      this.websocket = websocket
 
-    this.websocket.onerror = this.error
-    this.websocket.onmessage = (event: MessageEvent) => {
-      this.parse(event)
+      this.websocket.onerror = this.error
+      this.websocket.onmessage = (event: MessageEvent) => {
+        this.parse(event)
+      }
+
+      this.setSocketConnected(true)
+    })
+  }
+
+  public disconnect = (): void => {
+    if (this.websocket) {
+      this.websocket.close()
     }
+    this.setSocketConnected(false)
   }
 
   public subscribeForRoom = (): void => {
     this.send(this.generateSubscription(channels.MESSAGE_CHANNEL, {}))
     this.send(this.generateSubscription(channels.NOW_PLAYING_CHANNEL, {}))
+    this.send(this.generateSubscription(channels.PINNED_MESSAGES_CHANNEL, {}))
     this.send(this.generateSubscription(channels.RECORD_LISTENS_CHANNEL, {}))
     this.send(this.generateSubscription(channels.ROOM_PLAYLIST_CHANNEL, {}))
     this.send(this.generateSubscription(channels.USERS_CHANNEL, {}))
@@ -67,9 +93,18 @@ export class Client {
   public unsubscribeForRoom = (): void => {
     this.send(this.generateUnsubscription(channels.MESSAGE_CHANNEL))
     this.send(this.generateUnsubscription(channels.NOW_PLAYING_CHANNEL))
+    this.send(this.generateUnsubscription(channels.PINNED_MESSAGES_CHANNEL))
     this.send(this.generateUnsubscription(channels.RECORD_LISTENS_CHANNEL))
     this.send(this.generateUnsubscription(channels.ROOM_PLAYLIST_CHANNEL))
     this.send(this.generateUnsubscription(channels.USERS_CHANNEL))
+  }
+
+  public subscribeForTeam = (): void => {
+    this.send(this.generateSubscription(channels.TEAM_CHANNEL, {}))
+  }
+
+  public unsubscribeForTeam = (): void => {
+    this.send(this.generateUnsubscription(channels.TEAM_CHANNEL))
   }
 
   public subscribeToMessage = (callback: (currentRecord: MessageChannelMessage['message']) => void): (() => void) => {
@@ -86,6 +121,15 @@ export class Client {
     this.nowPlayingMessages.forEach(this.nowPlayingSubscription)
     this.nowPlayingMessages = []
     return () => (this.nowPlayingSubscription = null)
+  }
+
+  public subscribeToPinnedMessages = (
+    callback: (pinnedMessages: PinnedMessagesChannelMessage['pinnedMessages']) => void,
+  ): (() => void) => {
+    this.pinnedMessagesSubscription = callback
+    this.pinnedMessagesMessages.forEach(this.pinnedMessagesSubscription)
+    this.pinnedMessagesMessages = []
+    return () => (this.pinnedMessagesSubscription = null)
   }
 
   public subscribeToRecordListens = (
@@ -106,11 +150,29 @@ export class Client {
     return () => (this.roomPlaylistSubscription = null)
   }
 
+  public subscribeToTeam = (callback: (team: TeamMessage['team']) => void): (() => void) => {
+    this.teamSubscription = callback
+    this.teamMessages.forEach(this.teamSubscription)
+    this.teamMessages = []
+    return () => (this.teamSubscription = null)
+  }
+
   public subscribeToUsers = (callback: (room: UserChannelMessage['room']) => void): (() => void) => {
     this.userSubscription = callback
     this.userMessages.forEach(this.userSubscription)
     this.userMessages = []
     return () => (this.userSubscription = null)
+  }
+
+  private awaitWebsocket = (): Promise<WebSocket> => {
+    return new Promise((resolve, reject) => {
+      const formData = new URLSearchParams()
+      formData.append('token', this.token)
+      const socket = new WebSocket(`${WEBSOCKET_HOST}?${formData.toString()}`)
+
+      socket.onopen = () => resolve(socket)
+      socket.onerror = () => reject(socket)
+    })
   }
 
   private error: (event: Event) => void = event => {
@@ -157,6 +219,14 @@ export class Client {
           this.nowPlayingMessages.push(currentRecord)
         }
         return
+      case channels.PINNED_MESSAGES_CHANNEL:
+        const pinnedMessages = websocketMessage.message.data.pinnedMessages
+        if (!!this.pinnedMessagesSubscription) {
+          this.pinnedMessagesSubscription(pinnedMessages)
+        } else {
+          this.pinnedMessagesMessages.push(pinnedMessages)
+        }
+        return
       case channels.RECORD_LISTENS_CHANNEL:
         const recordListens = websocketMessage.message.data.recordListens
         if (!!this.recordListensSubscription) {
@@ -171,6 +241,14 @@ export class Client {
           this.roomPlaylistSubscription(roomPlaylist)
         } else {
           this.roomPlaylistMessages.push(roomPlaylist)
+        }
+        return
+      case channels.TEAM_CHANNEL:
+        const team = websocketMessage.message.data.team
+        if (!!this.teamSubscription) {
+          this.teamSubscription(team)
+        } else {
+          this.teamMessages.push(team)
         }
         return
       case channels.USERS_CHANNEL:
@@ -193,6 +271,11 @@ export class Client {
     const parsedData: Message = data
     switch (parsedData.type) {
       case 'ping':
+        if (this.monitor !== null) {
+          clearTimeout(this.monitor)
+        }
+        this.monitor = setTimeout(this.reconnect, 10000)
+
         return
       case 'confirm_subscription':
         this.log(parsedData.type, parsedData)
@@ -208,6 +291,17 @@ export class Client {
         this.log('unknown message', parsedData)
         return
     }
+  }
+
+  private reconnect = (): void => {
+    if (this.airbrake !== null) {
+      this.airbrake.notify({
+        error: 'Websocket is reconnecting',
+        params: { token: this.token },
+      })
+    }
+    this.disconnect()
+    this.connect()
   }
 
   private send = (msg: object): void => {

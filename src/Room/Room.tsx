@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
-import { Flex } from 'rebass'
 
-import { SideNav } from 'components'
 import { useWebsocketContext } from 'Context'
 
-import VolumeContextProvider from 'Player/VolumeContextProvider'
-
 import Chat from './Chat'
-import Keyboard from './Keyboard'
 import Main from './Main'
 import { ROOM_ACTIVATE, RoomActivate } from './graphql'
-import ApprovalContextProvider from './ApprovalContextProvider'
-import CurrentRecordContextProvider from './CurrentRecordContextProvider'
-import PlaylistRecordContextProvider from './PlaylistRecordContextProvider'
+import MessagesContextProvider from './MessagesContextProvider'
+import PinnedMessagesContextProvider from './PinnedMessagesContextProvider'
 
 const Room: React.FC = () => {
   const { id } = useParams()
@@ -22,46 +16,28 @@ const Room: React.FC = () => {
   const websocket = useWebsocketContext()
   const [roomActivate, { data, loading }] = useMutation<RoomActivate['data'], RoomActivate['vars']>(ROOM_ACTIVATE, {
     onCompleted: websocket.subscribeForRoom,
+    refetchQueries: ['UserQuery'],
   })
 
   useEffect(() => {
+    websocket.unsubscribeForRoom()
     if (!id) {
       return
     }
-
     roomActivate({ variables: { roomId: id } })
-    return websocket.unsubscribeForRoom
-  }, [id, roomActivate, websocket.unsubscribeForRoom])
+  }, [id, roomActivate, websocket, websocket.unsubscribeForRoom])
 
   if (!data || loading) {
     return <p>Loading</p>
   }
 
   return (
-    <ApprovalContextProvider>
-      <PlaylistRecordContextProvider>
-        <CurrentRecordContextProvider>
-          <VolumeContextProvider>
-            <Flex
-              sx={{
-                alignItems: 'top',
-                bg: 'background',
-                flexDirection: ['column', 'row'],
-                minHeight: '100vh',
-                mx: 'auto',
-                position: 'relative',
-              }}
-            >
-              <SideNav>
-                <Keyboard />
-              </SideNav>
-              <Main room={data.roomActivate.room} />
-              <Chat />
-            </Flex>
-          </VolumeContextProvider>
-        </CurrentRecordContextProvider>
-      </PlaylistRecordContextProvider>
-    </ApprovalContextProvider>
+    <PinnedMessagesContextProvider>
+      <MessagesContextProvider>
+        <Main room={data.roomActivate.room} />
+        <Chat />
+      </MessagesContextProvider>
+    </PinnedMessagesContextProvider>
   )
 }
 

@@ -19,8 +19,6 @@ const Header: React.FC = () => {
         sx={{
           bg: 'modes.light.background',
           color: 'modes.light.text',
-          // borderBottom: '1px solid',
-          // borderColor: 'modes.light.accent',
           boxShadow: 'base',
           py: 3,
         }}

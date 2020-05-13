@@ -37,6 +37,7 @@ const Search: React.FC = () => {
         <Input
           type="text"
           value={query}
+          placeholder="Search library"
           onChange={setString(setQuery)}
           sx={{
             bg: 'accent',

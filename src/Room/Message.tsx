@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import moment, { Moment } from 'moment'
 import Gravatar from 'react-gravatar'
 import { Star } from 'react-feather'
@@ -6,20 +6,17 @@ import { Box, Flex, Text } from 'rebass'
 import { useMutation } from '@apollo/react-hooks'
 
 import { useUserContext } from 'Context'
+import { duration } from 'lib/formatters'
 
 import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
 
 type PinProps = {
   showPin: boolean
-  previouslyPinned: boolean
+  pinned: boolean
   messageId: string
 }
-const Pin: React.FC<PinProps> = ({ showPin, previouslyPinned, messageId }) => {
-  const [pinned, setPinned] = useState(previouslyPinned)
-
-  const [messagePin] = useMutation<MessagePin['data'], MessagePin['vars']>(MESSAGE_PIN, {
-    onCompleted: () => setPinned(!pinned),
-  })
+const Pin: React.FC<PinProps> = ({ showPin, pinned, messageId }) => {
+  const [messagePin] = useMutation<MessagePin['data'], MessagePin['vars']>(MESSAGE_PIN)
 
   const pinOrUnpin = (): void => {
     messagePin({ variables: { messageId, pin: !pinned } })
@@ -57,7 +54,7 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
     return <></>
   }
 
-  const saidAt = moment.duration(messageCreated.diff(playedAt))
+  const saidAt = messageCreated.diff(playedAt, 'seconds')
 
   return (
     <Box
@@ -74,15 +71,7 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
     >
       @{' '}
       <Box as="span" sx={{ textDecoration: 'underline' }}>
-        {saidAt
-          .minutes()
-          .toString()
-          .padStart(2, '0')}
-        :
-        {saidAt
-          .seconds()
-          .toString()
-          .padStart(2, '0')}
+        {duration(saidAt)}
       </Box>
       <Box
         sx={{
@@ -133,7 +122,7 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
           right: 4,
         }}
       >
-        <Pin messageId={message.id} previouslyPinned={message.pinned} showPin={showPin} />
+        <Pin messageId={message.id} pinned={message.pinned} showPin={showPin} />
       </Box>
 
       <Flex
