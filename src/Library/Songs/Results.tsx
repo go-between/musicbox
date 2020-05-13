@@ -9,12 +9,40 @@ import { MediaObject, Table, TableWrapper, Tbody, Thead, Tr, Td, Th } from 'comp
 
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
-import { SongsQuery, Song as SongType, SONGS_QUERY, RemoveFromLibrary, REMOVE_FROM_LIBRARY } from '../graphql'
+import {
+  SongsQuery,
+  Song as SongType,
+  SONGS_QUERY,
+  RemoveFromLibrary,
+  REMOVE_FROM_LIBRARY,
+  UserLibraryRecord,
+} from '../graphql'
 import { duration } from 'lib/formatters'
+
+/* eslint-disable @typescript-eslint/camelcase */
+const sourceMap: { [k: string]: string } = {
+  saved_from_history: 'Added from room',
+  accepted_recommendation: 'Accepted',
+}
+/* eslint-enable @typescript-eslint/camelcase */
+
+const SourceDetails: React.FC<{ libraryRecord: UserLibraryRecord }> = ({ libraryRecord }) => {
+  if (libraryRecord.fromUser === null) {
+    return <Box>User Added!</Box>
+  }
+
+  return (
+    <>
+      <Box>{libraryRecord.fromUser?.name}</Box>
+      <Box>{sourceMap[libraryRecord.source]}</Box>
+    </>
+  )
+}
 
 type ResultProps = {
   result: SongType
 }
+
 const Result: React.FC<ResultProps> = ({ result }) => {
   const { activeTag, addSong, removeSong, modifyTags, songsToAdd, songsToRemove } = useTagsContext()
   const { setActiveSongId } = useSearchContext()
@@ -129,6 +157,9 @@ const Result: React.FC<ResultProps> = ({ result }) => {
         </Box>
       </Td>
 
+      <Td data-label="Source">
+        <SourceDetails libraryRecord={result.userLibraryRecords[0]} />
+      </Td>
       <Td data-label="Date Added">{moment(result.userLibraryRecords[0].createdAt).format('L')}</Td>
       <Td data-label="Duration">{duration(result.durationInSeconds)}</Td>
 
@@ -197,12 +228,19 @@ const Songs: React.FC = () => {
       <Table>
         <Thead>
           <Tr>
-            <Th width={['auto', '10%']}>Select</Th>
+            <Th>Select</Th>
+            <Th>Song</Th>
+            <Th>Tags</Th>
+            <Th>Source</Th>
+            <Th>Date Added</Th>
+            <Th>Duration</Th>
+            <Th>Actions</Th>
+            {/* <Th width={['auto', '10%']}>Select</Th>
             <Th width={['auto', '40%']}>Song</Th>
             <Th width={['auto', '20%']}>Tags</Th>
             <Th width={['auto', '10%']}>Date Added</Th>
             <Th width={['auto', '10%']}>Duration</Th>
-            <Th width={['auto', '10%']}></Th>
+            <Th width={['auto', '10%']}></Th> */}
           </Tr>
         </Thead>
         <Tbody>{resultItems}</Tbody>
