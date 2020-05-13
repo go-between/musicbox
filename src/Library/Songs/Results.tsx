@@ -3,6 +3,7 @@ import { Box, Flex, Text } from 'rebass'
 import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
+import moment from 'moment'
 
 import { MediaObject, Table, TableWrapper, Tbody, Thead, Tr, Td, Th } from 'components'
 
@@ -128,6 +129,7 @@ const Result: React.FC<ResultProps> = ({ result }) => {
         </Box>
       </Td>
 
+      <Td data-label="Date Added">{moment(result.userLibraryRecords[0].createdAt).format('L')}</Td>
       <Td data-label="Duration">{duration(result.durationInSeconds)}</Td>
 
       <Td data-label="Actions">
@@ -198,8 +200,9 @@ const Songs: React.FC = () => {
             <Th width={['auto', '10%']}>Select</Th>
             <Th width={['auto', '40%']}>Song</Th>
             <Th width={['auto', '20%']}>Tags</Th>
-            <Th width={['auto', '15%']}>Duration</Th>
-            <Th width={['auto', '15%']}></Th>
+            <Th width={['auto', '10%']}>Date Added</Th>
+            <Th width={['auto', '10%']}>Duration</Th>
+            <Th width={['auto', '10%']}></Th>
           </Tr>
         </Thead>
         <Tbody>{resultItems}</Tbody>
