@@ -54,14 +54,14 @@ export type TagToggle = {
   data: {}
   vars: {
     tagId: string
-    addSongIds: string[]
-    removeSongIds: string[]
+    addIds: string[]
+    removeIds: string[]
   }
 }
 
 export const TAG_TOGGLE = gql`
-  mutation TagToggle($tagId: ID!, $addSongIds: [ID!]!, $removeSongIds: [ID!]!) {
-    tagToggle(input: { tagId: $tagId, addSongIds: $addSongIds, removeSongIds: $removeSongIds }) {
+  mutation TagToggle($tagId: ID!, $addIds: [ID!]!, $removeIds: [ID!]!) {
+    tagToggle(input: { tagId: $tagId, addIds: $addIds, removeIds: $removeIds }) {
       errors
     }
   }

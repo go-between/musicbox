@@ -43,7 +43,7 @@ type ResultProps = {
 }
 
 const Result: React.FC<ResultProps> = ({ result }) => {
-  const { activeTag, addSong, removeSong, modifyTags, songsToAdd, songsToRemove } = useTagsContext()
+  const { activeTag, addTagToRecord, removeTagFromRecord, modifyTags, recordsToAdd, recordsToRemove } = useTagsContext()
   const { setActiveSongId } = useSearchContext()
 
   const [removeFromLibraryMutation] = useMutation<RemoveFromLibrary['data'], RemoveFromLibrary['vars']>(
@@ -61,16 +61,16 @@ const Result: React.FC<ResultProps> = ({ result }) => {
 
   const toggleTag = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     if (ev.target.checked) {
-      addSong(result.id)
+      addTagToRecord(result.id)
     } else {
-      removeSong(result.id)
+      removeTagFromRecord(result.id)
     }
   }
 
   const existingTag = !!result.tags.find(t => t.id === activeTag?.id)
   const checked =
-    (existingTag && !songsToRemove.find(s => s === result.id)) ||
-    (!existingTag && !!songsToAdd.find(s => s === result.id))
+    (existingTag && !recordsToRemove.find(r => r === result.id)) ||
+    (!existingTag && !!recordsToAdd.find(r => r === result.id))
 
   const songTags = result.tags.map(tag => (
     <Box
