@@ -6,12 +6,16 @@ export type LibraryRecordsQuery = {
   }
   vars: {
     query: string
+    order: {
+      field: string
+      direction: 'asc' | 'desc'
+    }
   }
 }
 
 export const LIBRARY_RECORDS_QUERY = gql`
-  query LibraryLibraryRecordsQuery($query: String) {
-    libraryRecords(query: $query) {
+  query LibraryLibraryRecordsQuery($query: String, $order: Order) {
+    libraryRecords(query: $query, order: $order) {
       id
       source
       createdAt

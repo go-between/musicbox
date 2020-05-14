@@ -35,7 +35,7 @@ const Keyboard: React.FC = () => {
             return
           }
 
-          createSong({ variables: { youtubeId: currentRecord.song.youtubeId } })
+          createSong({ variables: { youtubeId: currentRecord.song.youtubeId, fromUserId: currentRecord.user.id } })
           return
         case 'p':
           incrementApproval()

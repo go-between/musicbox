@@ -55,7 +55,7 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
   )
 
   const rejectRecommendation = (): void => {
-    recommendationRejectMutation({ variables: { id: recommendedSong.song.id } })
+    recommendationRejectMutation({ variables: { id: recommendedSong.id } })
   }
 
   return (

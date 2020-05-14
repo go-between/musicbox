@@ -3,6 +3,7 @@ import { Box, Flex, Text } from 'rebass'
 import { Checkbox, Label } from '@rebass/forms'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
+import { Triangle } from 'react-feather'
 import moment from 'moment'
 
 import { MediaObject, Table, TableWrapper, Tbody, Thead, Tr, Td, Th } from 'components'
@@ -197,10 +198,44 @@ const Result: React.FC<ResultProps> = ({ result }) => {
   )
 }
 
+type OrderProps = {
+  field: string
+  order: {
+    field: string
+    direction: 'asc' | 'desc'
+  }
+  setOrder: (obj: { field: string; direction: 'asc' | 'desc' }) => void
+}
+const Order: React.FC<OrderProps> = ({ field, order, setOrder }) => {
+  const upFill = field === order.field && order.direction === 'asc' ? '#CBD5E0' : ''
+  const downFill = field === order.field && order.direction === 'desc' ? '#CBD5E0' : ''
+  const orderAsc = (): void => {
+    setOrder({ field, direction: 'asc' })
+  }
+  const orderDesc = (): void => {
+    setOrder({ field, direction: 'desc' })
+  }
+
+  return (
+    <Flex display="inline-block" flexDirection="column">
+      <Box onClick={orderAsc} sx={{ cursor: 'pointer' }}>
+        <Triangle size={10} color="#CBD5E0" fill={upFill} />
+      </Box>
+      <Box onClick={orderDesc} sx={{ cursor: 'pointer', transform: 'scaleY(-1)' }}>
+        <Triangle size={10} color="#CBD5E0" fill={downFill} />
+      </Box>
+    </Flex>
+  )
+}
+
 const Songs: React.FC = () => {
   const { query } = useSearchContext()
   const [debouncedQuery] = useDebounce(query, 500)
   const [results, setResults] = useState<LibraryRecord[]>([])
+  const [order, setOrder] = useState<{ field: string; direction: 'asc' | 'desc' }>({
+    field: 'createdAt',
+    direction: 'asc',
+  })
   const [searchLibrary, { data }] = useLazyQuery<LibraryRecordsQuery['data'], LibraryRecordsQuery['vars']>(
     LIBRARY_RECORDS_QUERY,
     {
@@ -217,8 +252,8 @@ const Songs: React.FC = () => {
   }, [data, setResults])
 
   useEffect(() => {
-    searchLibrary({ variables: { query: debouncedQuery } })
-  }, [debouncedQuery, searchLibrary])
+    searchLibrary({ variables: { query: debouncedQuery, order } })
+  }, [debouncedQuery, searchLibrary, order])
 
   if (results.length === 0) {
     return <></>
@@ -231,11 +266,39 @@ const Songs: React.FC = () => {
         <Thead>
           <Tr>
             <Th>Select</Th>
-            <Th>Song</Th>
+            <Th>
+              <Flex sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text>Song</Text>
+                <Box>
+                  <Order field="song.name" order={order} setOrder={setOrder} />
+                </Box>
+              </Flex>
+            </Th>
             <Th>Tags</Th>
-            <Th>Source</Th>
-            <Th>Date Added</Th>
-            <Th>Duration</Th>
+            <Th>
+              <Flex sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text>Source</Text>
+                <Box>
+                  <Order field="source" order={order} setOrder={setOrder} />
+                </Box>
+              </Flex>
+            </Th>
+            <Th>
+              <Flex sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text>Date Added</Text>
+                <Box>
+                  <Order field="createdAt" order={order} setOrder={setOrder} />
+                </Box>
+              </Flex>
+            </Th>
+            <Th>
+              <Flex sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text>Duration</Text>
+                <Box>
+                  <Order field="song.durationInSeconds" order={order} setOrder={setOrder} />
+                </Box>
+              </Flex>
+            </Th>
             <Th>Actions</Th>
           </Tr>
         </Thead>
