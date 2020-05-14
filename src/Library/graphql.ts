@@ -91,8 +91,8 @@ export type RemoveFromLibrary = {
 }
 
 export const REMOVE_FROM_LIBRARY = gql`
-  mutation UserLibraryRecordDelete($id: ID!) {
-    userLibraryRecordDelete(input: { id: $id }) {
+  mutation LibraryRecordDelete($id: ID!) {
+    libraryRecordDelete(input: { id: $id }) {
       errors
     }
   }
