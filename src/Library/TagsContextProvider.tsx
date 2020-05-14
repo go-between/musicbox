@@ -28,7 +28,7 @@ const TagsContextProvider: React.FC = ({ children }) => {
   const { addToast } = useToasts()
 
   const [tagToggleMutation] = useMutation<TagToggle['data'], TagToggle['vars']>(TAG_TOGGLE, {
-    refetchQueries: ['LibrarySongsQuery'],
+    refetchQueries: ['LibraryLibraryRecordsQuery'],
     onCompleted: (): void => {
       if (songsToAdd.length > 0) {
         addToast(`Successfully added ${activeTag?.name} to ${songsToAdd.length} song(s).`, {

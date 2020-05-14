@@ -10,12 +10,11 @@ import { MediaObject, Table, TableWrapper, Tbody, Thead, Tr, Td, Th } from 'comp
 import { useSearchContext } from '../SearchContextProvider'
 import { useTagsContext } from '../TagsContextProvider'
 import {
-  SongsQuery,
-  Song as SongType,
-  SONGS_QUERY,
+  LibraryRecordsQuery,
+  LIBRARY_RECORDS_QUERY,
   RemoveFromLibrary,
   REMOVE_FROM_LIBRARY,
-  UserLibraryRecord,
+  LibraryRecord,
 } from '../graphql'
 import { duration } from 'lib/formatters'
 
@@ -26,7 +25,7 @@ const sourceMap: { [k: string]: string } = {
 }
 /* eslint-enable @typescript-eslint/camelcase */
 
-const SourceDetails: React.FC<{ libraryRecord: UserLibraryRecord }> = ({ libraryRecord }) => {
+const SourceDetails: React.FC<{ libraryRecord: LibraryRecord }> = ({ libraryRecord }) => {
   if (libraryRecord.fromUser === null) {
     return <Box>User Added!</Box>
   }
@@ -40,7 +39,7 @@ const SourceDetails: React.FC<{ libraryRecord: UserLibraryRecord }> = ({ library
 }
 
 type ResultProps = {
-  result: SongType
+  result: LibraryRecord
 }
 
 const Result: React.FC<ResultProps> = ({ result }) => {
@@ -50,7 +49,7 @@ const Result: React.FC<ResultProps> = ({ result }) => {
   const [removeFromLibraryMutation] = useMutation<RemoveFromLibrary['data'], RemoveFromLibrary['vars']>(
     REMOVE_FROM_LIBRARY,
     {
-      refetchQueries: ['LibrarySongsQuery'],
+      refetchQueries: ['LibraryLibraryRecordsQuery'],
     },
   )
 
@@ -107,7 +106,7 @@ const Result: React.FC<ResultProps> = ({ result }) => {
 
       <Td data-label="Song">
         <Flex alignItems="center" justifyContent={['flex-end', 'flex-start']}>
-          <MediaObject imageUrl={result.thumbnailUrl} imageSize={['24px', '50px']} alignment="center">
+          <MediaObject imageUrl={result.song.thumbnailUrl} imageSize={['24px', '50px']} alignment="center">
             <Box>
               <Text
                 sx={{
@@ -118,7 +117,7 @@ const Result: React.FC<ResultProps> = ({ result }) => {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {result.name}
+                {result.song.name}
               </Text>
             </Box>
           </MediaObject>
@@ -158,10 +157,10 @@ const Result: React.FC<ResultProps> = ({ result }) => {
       </Td>
 
       <Td data-label="Source">
-        <SourceDetails libraryRecord={result.userLibraryRecords[0]} />
+        <SourceDetails libraryRecord={result} />
       </Td>
-      <Td data-label="Date Added">{moment(result.userLibraryRecords[0].createdAt).format('L')}</Td>
-      <Td data-label="Duration">{duration(result.durationInSeconds)}</Td>
+      <Td data-label="Date Added">{moment(result.createdAt).format('L')}</Td>
+      <Td data-label="Duration">{duration(result.song.durationInSeconds)}</Td>
 
       <Td data-label="Actions">
         <Flex alignItems="center" justifyContent={['flex-end', 'flex-start']}>
@@ -201,17 +200,20 @@ const Result: React.FC<ResultProps> = ({ result }) => {
 const Songs: React.FC = () => {
   const { query } = useSearchContext()
   const [debouncedQuery] = useDebounce(query, 500)
-  const [results, setResults] = useState<SongType[]>([])
-  const [searchLibrary, { data }] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
-    fetchPolicy: 'network-only',
-  })
+  const [results, setResults] = useState<LibraryRecord[]>([])
+  const [searchLibrary, { data }] = useLazyQuery<LibraryRecordsQuery['data'], LibraryRecordsQuery['vars']>(
+    LIBRARY_RECORDS_QUERY,
+    {
+      fetchPolicy: 'network-only',
+    },
+  )
 
   useEffect(() => {
     if (!data) {
       return
     }
 
-    setResults(data.songs)
+    setResults(data.libraryRecords)
   }, [data, setResults])
 
   useEffect(() => {
@@ -235,12 +237,6 @@ const Songs: React.FC = () => {
             <Th>Date Added</Th>
             <Th>Duration</Th>
             <Th>Actions</Th>
-            {/* <Th width={['auto', '10%']}>Select</Th>
-            <Th width={['auto', '40%']}>Song</Th>
-            <Th width={['auto', '20%']}>Tags</Th>
-            <Th width={['auto', '10%']}>Date Added</Th>
-            <Th width={['auto', '10%']}>Duration</Th>
-            <Th width={['auto', '10%']}></Th> */}
           </Tr>
         </Thead>
         <Tbody>{resultItems}</Tbody>
