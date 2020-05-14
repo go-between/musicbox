@@ -48,8 +48,8 @@ export type RecommendatioReject = {
 }
 
 export const RECOMMENDATION_REJECT = gql`
-  mutation UserLibraryRecordDelete($id: ID!) {
-    userLibraryRecordDelete(input: { id: $id }) {
+  mutation LibraryRecordDelete($id: ID!) {
+    libraryRecordDelete(input: { id: $id }) {
       errors
     }
   }
