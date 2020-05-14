@@ -25,20 +25,23 @@ export const SONG_CREATE = gql`
     }
   }
 `
-export const SONGS_QUERY = gql`
-  query SongsQuery($query: String, $tagIds: [ID!]) {
-    songs(query: $query, tagIds: $tagIds) {
+export const LIBRARY_RECORDS_QUERY = gql`
+  query QuickAddLibraryRecordsQuery($query: String, $tagIds: [ID!]) {
+    libraryRecords(query: $query, tagIds: $tagIds) {
       id
-      durationInSeconds
-      name
-      youtubeId
-      thumbnailUrl
+      song {
+        id
+        durationInSeconds
+        name
+        youtubeId
+        thumbnailUrl
+      }
     }
   }
 `
-export type SongsQuery = {
+export type LibraryRecordsQuery = {
   data: {
-    songs: Song[]
+    libraryRecords: LibraryRecord[]
   }
   vars: {
     query: string
@@ -63,6 +66,11 @@ export const TAGS_QUERY = gql`
 `
 
 // Entities
+export type LibraryRecord = {
+  id: string
+  song: Song
+}
+
 export type OrderedRecord = {
   roomPlaylistRecordId?: string
   songId: string

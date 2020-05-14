@@ -10,7 +10,15 @@ import { setString } from 'lib/setters'
 import { usePlaylistRecordsContext } from 'Context'
 
 import { useResultsContext } from './ResultsContextProvider'
-import { SongCreateMutation, SongsQuery, TagsQuery, SONG_CREATE, SONGS_QUERY, TAGS_QUERY, Song } from './graphql'
+import {
+  SongCreateMutation,
+  LibraryRecordsQuery,
+  TagsQuery,
+  SONG_CREATE,
+  LIBRARY_RECORDS_QUERY,
+  TAGS_QUERY,
+  Song,
+} from './graphql'
 
 const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, query }) => {
   if (query.length === 0) {
@@ -84,19 +92,22 @@ export const Search: React.FC = () => {
     }
   }
 
-  const [searchLibrary] = useLazyQuery<SongsQuery['data'], SongsQuery['vars']>(SONGS_QUERY, {
-    fetchPolicy: 'network-only',
-    onCompleted: data => {
-      const libraryResults: Song[] = data.songs.map(song => {
-        return {
-          ...song,
-          resultType: 'library',
-        }
-      })
+  const [searchLibrary] = useLazyQuery<LibraryRecordsQuery['data'], LibraryRecordsQuery['vars']>(
+    LIBRARY_RECORDS_QUERY,
+    {
+      fetchPolicy: 'network-only',
+      onCompleted: data => {
+        const libraryResults: Song[] = data.libraryRecords.map(record => {
+          return {
+            ...record.song,
+            resultType: 'library',
+          }
+        })
 
-      setResults(libraryResults)
+        setResults(libraryResults)
+      },
     },
-  })
+  )
 
   const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
     onCompleted: ({ songCreate: { song } }) => {
