@@ -39,22 +39,27 @@ export const RECOMMENDATIONS_QUERY = gql`
   }
 `
 
-export type SongQuery = {
+export type LibraryRecordQuery = {
   data: {
-    song: Song
+    libraryRecord: {
+      song: Song
+      tags: Tag[]
+    }
   }
   vars: {
     id: string
   }
 }
 
-export const SONG_QUERY = gql`
-  query Song($id: ID!) {
-    song(id: $id) {
-      id
-      durationInSeconds
-      name
-      youtubeId
+export const LIBRARY_RECORD_QUERY = gql`
+  query LibraryRecord($id: ID!) {
+    libraryRecord(id: $id) {
+      song {
+        id
+        durationInSeconds
+        name
+        youtubeId
+      }
       tags {
         id
         name
@@ -100,7 +105,6 @@ export type Song = {
   durationInSeconds: number
   name: string
   thumbnailUrl: string
-  tags: Tag[]
   youtubeId: string
 }
 

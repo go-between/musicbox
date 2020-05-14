@@ -5,16 +5,19 @@ import ReactPlayer from 'react-player'
 
 import { SidePanel } from 'components'
 import { duration } from 'lib/formatters'
-import { SongQuery, SONG_QUERY } from './graphql'
+import { LibraryRecordQuery, LIBRARY_RECORD_QUERY } from './graphql'
 import { useSearchContext } from '../SearchContextProvider'
 
 import Recommendations from './Recommendations'
 
 const SongDetails: React.FC = () => {
   const { activeSongId, setActiveSongId } = useSearchContext()
-  const [retrieveSong, { data }] = useLazyQuery<SongQuery['data'], SongQuery['vars']>(SONG_QUERY, {
-    fetchPolicy: 'network-only',
-  })
+  const [retrieveSong, { data }] = useLazyQuery<LibraryRecordQuery['data'], LibraryRecordQuery['vars']>(
+    LIBRARY_RECORD_QUERY,
+    {
+      fetchPolicy: 'network-only',
+    },
+  )
 
   const closeSongDetails = (): void => setActiveSongId('')
 
@@ -44,7 +47,7 @@ const SongDetails: React.FC = () => {
         }}
       >
         <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${data.song.youtubeId}`}
+          url={`https://www.youtube.com/watch?v=${data.libraryRecord.song.youtubeId}`}
           playing={false}
           height="100%"
           width="100%"
@@ -61,10 +64,10 @@ const SongDetails: React.FC = () => {
             whiteSpace: 'nowrap',
           }}
         >
-          {data.song.name}
+          {data.libraryRecord.song.name}
         </Text>
 
-        <Box sx={{ fontSize: 2, minWidth: 'auto' }}>{duration(data.song.durationInSeconds)}</Box>
+        <Box sx={{ fontSize: 2, minWidth: 'auto' }}>{duration(data.libraryRecord.song.durationInSeconds)}</Box>
       </Flex>
 
       <Flex
@@ -77,7 +80,7 @@ const SongDetails: React.FC = () => {
           width: '100%',
         }}
       >
-        {data.song.tags.map(t => (
+        {data.libraryRecord.tags.map(t => (
           <Box
             key={t.id}
             as="li"
@@ -99,7 +102,7 @@ const SongDetails: React.FC = () => {
         ))}
       </Flex>
 
-      <Recommendations songId={data.song.id} youtubeId={data.song.youtubeId} />
+      <Recommendations songId={data.libraryRecord.song.id} youtubeId={data.libraryRecord.song.youtubeId} />
     </SidePanel>
   )
 }
