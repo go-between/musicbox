@@ -6,13 +6,13 @@ import { Tag, TagCreate, TagToggle, TagsQuery, TAG_CREATE, TAGS_QUERY, TAG_TOGGL
 
 type TagsContext = {
   activeTag: Tag | null
-  addSong: (songId: string) => void
+  addTagToRecord: (recordId: string) => void
   modifyTags: boolean
-  removeSong: (songId: string) => void
+  removeTagFromRecord: (recordId: string) => void
   setActiveTag: (tag: Tag | null) => void
   setModifyTags: (modifyTags: boolean) => void
-  songsToAdd: string[]
-  songsToRemove: string[]
+  recordsToAdd: string[]
+  recordsToRemove: string[]
   tags: Tag[]
   tagCreate: (name: string) => void
 }
@@ -22,29 +22,29 @@ const TagsContextProvider: React.FC = ({ children }) => {
   const [activeTag, setActiveTag] = useState<Tag | null>(null)
   const [tags, setTags] = useState<Tag[]>([])
   const [modifyTags, internalSetModifyTags] = useState(false)
-  const [songsToAdd, setSongsToAdd] = useState<string[]>([])
-  const [songsToRemove, setSongsToRemove] = useState<string[]>([])
+  const [recordsToAdd, setRecordsToAdd] = useState<string[]>([])
+  const [recordsToRemove, setRecordsToRemove] = useState<string[]>([])
   const [tagCreateMutation] = useMutation<TagCreate['data'], TagCreate['vars']>(TAG_CREATE)
   const { addToast } = useToasts()
 
   const [tagToggleMutation] = useMutation<TagToggle['data'], TagToggle['vars']>(TAG_TOGGLE, {
-    refetchQueries: ['LibrarySongsQuery'],
+    refetchQueries: ['LibraryLibraryRecordsQuery'],
     onCompleted: (): void => {
-      if (songsToAdd.length > 0) {
-        addToast(`Successfully added ${activeTag?.name} to ${songsToAdd.length} song(s).`, {
+      if (recordsToAdd.length > 0) {
+        addToast(`Successfully added ${activeTag?.name} to ${recordsToAdd.length} song(s).`, {
           appearance: 'success',
           autoDismiss: true,
         })
       }
-      if (songsToRemove.length > 0) {
-        addToast(`Successfully removed ${activeTag?.name} from ${songsToRemove.length} song(s).`, {
+      if (recordsToRemove.length > 0) {
+        addToast(`Successfully removed ${activeTag?.name} from ${recordsToRemove.length} song(s).`, {
           appearance: 'success',
           autoDismiss: true,
         })
       }
 
-      setSongsToAdd([])
-      setSongsToRemove([])
+      setRecordsToAdd([])
+      setRecordsToRemove([])
     },
   })
 
@@ -54,26 +54,26 @@ const TagsContextProvider: React.FC = ({ children }) => {
     }
 
     if (modifyTags) {
-      setSongsToAdd([])
-      setSongsToRemove([])
+      setRecordsToAdd([])
+      setRecordsToRemove([])
     } else {
-      tagToggleMutation({ variables: { tagId: activeTag.id, addSongIds: songsToAdd, removeSongIds: songsToRemove } })
+      tagToggleMutation({ variables: { tagId: activeTag.id, addIds: recordsToAdd, removeIds: recordsToRemove } })
     }
     internalSetModifyTags(modifyTags)
   }
 
-  const addSong = (songId: string): void => {
-    if (!!songsToRemove.find(s => s === songId)) {
-      setSongsToRemove(songsToRemove.filter(s => s !== songId))
+  const addTagToRecord = (recordId: string): void => {
+    if (!!recordsToRemove.find(r => r === recordId)) {
+      setRecordsToRemove(recordsToRemove.filter(r => r !== recordId))
     } else {
-      setSongsToAdd([...songsToAdd, songId])
+      setRecordsToAdd([...recordsToAdd, recordId])
     }
   }
-  const removeSong = (songId: string): void => {
-    if (!!songsToAdd.find(s => s === songId)) {
-      setSongsToAdd(songsToAdd.filter(s => s !== songId))
+  const removeTagFromRecord = (recordId: string): void => {
+    if (!!recordsToAdd.find(r => r === recordId)) {
+      setRecordsToAdd(recordsToAdd.filter(r => r !== recordId))
     } else {
-      setSongsToRemove([...songsToRemove, songId])
+      setRecordsToRemove([...recordsToRemove, recordId])
     }
   }
 
@@ -101,13 +101,13 @@ const TagsContextProvider: React.FC = ({ children }) => {
     <TagsContext.Provider
       value={{
         activeTag,
-        addSong,
+        addTagToRecord,
         modifyTags,
-        removeSong,
+        removeTagFromRecord,
         setActiveTag,
         setModifyTags,
-        songsToAdd,
-        songsToRemove,
+        recordsToAdd,
+        recordsToRemove,
         tagCreate,
         tags,
       }}
@@ -120,26 +120,26 @@ const TagsContextProvider: React.FC = ({ children }) => {
 export const useTagsContext: () => TagsContext = () => {
   const {
     activeTag,
-    addSong,
+    addTagToRecord,
     modifyTags,
-    removeSong,
+    removeTagFromRecord,
     setActiveTag,
     setModifyTags,
-    songsToAdd,
-    songsToRemove,
+    recordsToAdd,
+    recordsToRemove,
     tagCreate,
     tags,
   } = useContext(TagsContext)
 
   if (
     activeTag === undefined ||
-    addSong === undefined ||
+    addTagToRecord === undefined ||
     modifyTags === undefined ||
-    removeSong === undefined ||
+    removeTagFromRecord === undefined ||
     setActiveTag === undefined ||
     setModifyTags === undefined ||
-    songsToAdd === undefined ||
-    songsToRemove === undefined ||
+    recordsToAdd === undefined ||
+    recordsToRemove === undefined ||
     tagCreate === undefined ||
     tags === undefined
   ) {
@@ -147,14 +147,14 @@ export const useTagsContext: () => TagsContext = () => {
   }
 
   return {
-    addSong,
+    addTagToRecord,
     activeTag,
     modifyTags,
-    removeSong,
+    removeTagFromRecord,
     setActiveTag,
     setModifyTags,
-    songsToAdd,
-    songsToRemove,
+    recordsToAdd,
+    recordsToRemove,
     tagCreate,
     tags,
   }

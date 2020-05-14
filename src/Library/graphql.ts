@@ -1,35 +1,35 @@
 import gql from 'graphql-tag'
 
-export type SongsQuery = {
+export type LibraryRecordsQuery = {
   data: {
-    songs: Song[]
+    libraryRecords: LibraryRecord[]
   }
   vars: {
     query: string
   }
 }
 
-export const SONGS_QUERY = gql`
-  query LibrarySongsQuery($query: String) {
-    songs(query: $query) {
+export const LIBRARY_RECORDS_QUERY = gql`
+  query LibraryLibraryRecordsQuery($query: String) {
+    libraryRecords(query: $query) {
       id
-      durationInSeconds
-      name
-      youtubeId
-      thumbnailUrl
+      source
+      createdAt
+      fromUser {
+        id
+        name
+        email
+      }
+      song {
+        id
+        durationInSeconds
+        name
+        youtubeId
+        thumbnailUrl
+      }
       tags {
         id
         name
-      }
-      userLibraryRecords {
-        id
-        source
-        createdAt
-        fromUser {
-          id
-          name
-          email
-        }
       }
     }
   }
@@ -54,14 +54,14 @@ export type TagToggle = {
   data: {}
   vars: {
     tagId: string
-    addSongIds: string[]
-    removeSongIds: string[]
+    addIds: string[]
+    removeIds: string[]
   }
 }
 
 export const TAG_TOGGLE = gql`
-  mutation TagToggle($tagId: ID!, $addSongIds: [ID!]!, $removeSongIds: [ID!]!) {
-    tagToggle(input: { tagId: $tagId, addSongIds: $addSongIds, removeSongIds: $removeSongIds }) {
+  mutation TagToggle($tagId: ID!, $addIds: [ID!]!, $removeIds: [ID!]!) {
+    tagToggle(input: { tagId: $tagId, addIds: $addIds, removeIds: $removeIds }) {
       errors
     }
   }
@@ -91,24 +91,14 @@ export type RemoveFromLibrary = {
 }
 
 export const REMOVE_FROM_LIBRARY = gql`
-  mutation UserLibraryRecordDelete($id: ID!) {
-    userLibraryRecordDelete(input: { id: $id }) {
+  mutation LibraryRecordDelete($id: ID!) {
+    libraryRecordDelete(input: { id: $id }) {
       errors
     }
   }
 `
 
-export type Song = {
-  id: string
-  durationInSeconds: number
-  name: string
-  thumbnailUrl: string
-  tags: Tag[]
-  youtubeId: string
-  userLibraryRecords: UserLibraryRecord[]
-}
-
-export type UserLibraryRecord = {
+export type LibraryRecord = {
   id: string
   source: string
   createdAt: string
@@ -116,6 +106,16 @@ export type UserLibraryRecord = {
     name: string
     email: string
   }
+  song: Song
+  tags: Tag[]
+}
+
+export type Song = {
+  id: string
+  durationInSeconds: number
+  name: string
+  thumbnailUrl: string
+  youtubeId: string
 }
 
 export type Tag = {
