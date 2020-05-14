@@ -21,6 +21,16 @@ export const SONGS_QUERY = gql`
         id
         name
       }
+      userLibraryRecords {
+        id
+        source
+        createdAt
+        fromUser {
+          id
+          name
+          email
+        }
+      }
     }
   }
 `
@@ -95,6 +105,17 @@ export type Song = {
   thumbnailUrl: string
   tags: Tag[]
   youtubeId: string
+  userLibraryRecords: UserLibraryRecord[]
+}
+
+export type UserLibraryRecord = {
+  id: string
+  source: string
+  createdAt: string
+  fromUser: {
+    name: string
+    email: string
+  }
 }
 
 export type Tag = {
