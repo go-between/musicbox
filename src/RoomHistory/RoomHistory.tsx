@@ -17,7 +17,7 @@ const recordsFrom = moment()
 const RoomHistory: React.FC = () => {
   const user = useUserContext()
   const { data, loading } = useQuery<RoomHistoryQuery['data'], RoomHistoryQuery['vars']>(ROOM_HISTORY_QUERY, {
-    variables: { roomId: user.activeRoom.id, from: recordsFrom },
+    variables: { roomId: user.activeRoom?.id, from: recordsFrom },
     fetchPolicy: 'no-cache',
   })
 
@@ -35,7 +35,7 @@ const RoomHistory: React.FC = () => {
   const records = data.roomPlaylist.map(record => {
     const playDate = moment(record.playedAt)
     const addSong = (): void => {
-      createSong({ variables: { youtubeId: record.song.youtubeId } })
+      createSong({ variables: { youtubeId: record.song.youtubeId, fromUserId: record.user.id } })
     }
 
     return (
@@ -93,19 +93,21 @@ const RoomHistory: React.FC = () => {
           </Box>
 
           <Flex alignItems="center" mx={3}>
-            <Box
-              as={Plus}
-              onClick={addSong}
-              size={24}
-              sx={{
-                color: 'text',
-                cursor: 'pointer',
-                '&:hover': {
-                  bg: 'muted',
-                  borderRadius: 4,
-                },
-              }}
-            />
+            {user.id !== record.user.id && (
+              <Box
+                as={Plus}
+                onClick={addSong}
+                size={24}
+                sx={{
+                  color: 'text',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    bg: 'muted',
+                    borderRadius: 4,
+                  },
+                }}
+              />
+            )}
           </Flex>
         </MediaObject>
       </Box>

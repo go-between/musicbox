@@ -9,11 +9,12 @@ export type SongCreateMutation = {
   }
   vars: {
     youtubeId: string
+    fromUserId: string
   }
 }
 export const SONG_CREATE = gql`
-  mutation SongCreateFromRoomHistory($youtubeId: ID!) {
-    songCreate(input: { youtubeId: $youtubeId }) {
+  mutation SongCreateFromRoomHistory($youtubeId: ID!, $fromUserId: ID) {
+    songCreate(input: { youtubeId: $youtubeId, fromUserId: $fromUserId }) {
       song {
         id
         durationInSeconds
