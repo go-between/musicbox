@@ -56,7 +56,7 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, inline = false, playedAt, 
   }, [videoRef])
 
   const position = inline || !videoRef ? 'inherit' : 'absolute'
-  const height = showVideo && videoRef ? 'auto' : '0'
+  const height = showVideo && videoRef ? '350px' : '0'
   const visibility = showVideo && videoRef ? 'visible' : 'hidden'
   const { top, right, bottom, left } = dimensions
 
