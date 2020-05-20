@@ -33,7 +33,11 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
   }
   const Component = components[tab]
   const videoRef = useRef()
+
   setVideoRef(videoRef)
+  useEffect(() => {
+    return () => setVideoRef(null)
+  }, [setVideoRef])
 
   return (
     <Flex
@@ -53,7 +57,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           overflowY: 'scroll',
         }}
       >
-        <Box ref={videoRef} />
+        <Box ref={videoRef} sx={{ bg: 'purple', height: '350px', width: '100%' }} />
 
         <Box
           sx={{
