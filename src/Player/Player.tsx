@@ -1,6 +1,7 @@
 import React from 'react'
-import { Box, Flex, Text } from 'rebass'
+import { Box, Flex, Link, Text } from 'rebass'
 import Gravatar from 'react-gravatar'
+import { Youtube } from 'react-feather'
 
 import { useCurrentRecordContext } from 'Context'
 import { MediaObject } from 'components'
@@ -47,9 +48,15 @@ const Player: React.FC = () => {
 
         <Flex alignItems="center">
           <Progress />
-          <Volume />
           <Box mx={2} />
+          <Volume />
+          <Box mx={1} />
           <Settings />
+          <Box mx={2} />
+          <Link color="text" href={`https://youtube.com/watch?v=${currentRecord.song.youtubeId}`} target="_blank">
+            <Youtube />
+          </Link>
+          <Box mx={2} />
         </Flex>
         <Flex>
           <Approval />
