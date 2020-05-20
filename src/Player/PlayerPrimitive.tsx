@@ -48,9 +48,7 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, inline = false, playedAt, 
 
   useEffect(() => {
     setVideoDimensions(videoRef?.current)
-  }, [videoRef])
 
-  useEffect(() => {
     const onResize = (): void => setVideoDimensions(videoRef?.current)
     window.addEventListener('resize', onResize)
 
