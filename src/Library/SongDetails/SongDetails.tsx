@@ -52,6 +52,7 @@ const SongDetails: React.FC = () => {
           height="100%"
           width="100%"
           style={{ display: 'flex' }}
+          controls={true}
         />
       </Flex>
 

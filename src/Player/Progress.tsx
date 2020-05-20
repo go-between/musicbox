@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
+import moment from 'moment'
 
 import { duration } from 'lib/formatters'
 import { useCurrentRecordContext } from 'Context'
 
-import { usePlayerContext } from './PlayerContextProvider'
-
 const Progress: React.FC = () => {
   const { currentRecord } = useCurrentRecordContext()
-  const { playedSeconds, progress } = usePlayerContext()
+  const [progress, setProgress] = useState(0)
+  const [playedSeconds, setPlayedSeconds] = useState(0)
+
+  useEffect(() => {
+    if (!currentRecord) {
+      return
+    }
+
+    const playedAt = moment(currentRecord.playedAt)
+    const endingAt = moment(currentRecord.playedAt).add(currentRecord.song.durationInSeconds, 'seconds')
+
+    const interval = setInterval(() => {
+      const now = moment()
+      const timeRemaining = endingAt.diff(now, 'seconds')
+      const percentPlayed = timeRemaining / currentRecord.song.durationInSeconds
+
+      const timePlayed = now.diff(playedAt, 'seconds')
+
+      setProgress((1 - percentPlayed) * 100)
+      setPlayedSeconds(timePlayed)
+    }, 500)
+
+    return () => clearInterval(interval)
+  }, [currentRecord])
 
   if (!currentRecord) {
     return <></>

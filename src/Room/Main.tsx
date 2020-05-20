@@ -19,12 +19,11 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
 
   // TODO:  Sort of a hack to ensure current record is set after room has
   // been activated.  This should be pulled out.
-  const { setCurrentRecord } = useCurrentRecordContext()
+  const { currentRecord, setCurrentRecord } = useCurrentRecordContext()
   const { setVideoRef } = useVideoContext()
-  const { currentRecord } = room
   useEffect(() => {
-    setCurrentRecord(currentRecord)
-  }, [currentRecord, setCurrentRecord])
+    setCurrentRecord(room.currentRecord)
+  }, [room, setCurrentRecord])
 
   const components: { [k: string]: React.FC } = {
     userPlaylist: UserPlaylist,
@@ -33,7 +32,11 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
   }
   const Component = components[tab]
   const videoRef = useRef()
+
   setVideoRef(videoRef)
+  useEffect(() => {
+    return () => setVideoRef(null)
+  }, [setVideoRef])
 
   return (
     <Flex
@@ -53,7 +56,19 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           overflowY: 'scroll',
         }}
       >
-        <Box ref={videoRef} />
+        <Flex
+          ref={videoRef}
+          sx={{
+            alignItems: 'center',
+            border: 'thin solid',
+            borderColor: 'primary',
+            height: '350px',
+            justifyContent: 'center',
+            width: '100%',
+          }}
+        >
+          <Text>{!!currentRecord ? 'Video Hidden' : 'Nothing Playing'}</Text>
+        </Flex>
 
         <Box
           sx={{

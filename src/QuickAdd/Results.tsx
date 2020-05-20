@@ -176,6 +176,7 @@ const FloatingResults: React.FC = ({ children }) => {
         overflow: 'scroll',
         px: 3,
         transition: 'all 2s ease-in',
+        zIndex: 10,
       }}
     >
       {children}
