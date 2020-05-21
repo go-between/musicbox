@@ -60,8 +60,10 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
           ref={videoRef}
           sx={{
             alignItems: 'center',
-            border: 'thin solid',
-            borderColor: 'primary',
+            border: '1px solid',
+            borderColor: 'accent',
+            borderRadius: 6,
+            boxShadow: 'xl',
             height: '350px',
             justifyContent: 'center',
             width: '100%',
