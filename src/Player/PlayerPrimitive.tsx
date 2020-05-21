@@ -61,11 +61,19 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, inline = false, playedAt, 
   const { top, right, bottom, left } = dimensions
 
   return (
-    <Box sx={{
-      position, top, right, bottom, left, height, visibility,
-      borderRadius: 6,
-      overflow: 'hidden',
-    }}>
+    <Box
+      sx={{
+        position,
+        top,
+        right,
+        bottom,
+        left,
+        height,
+        visibility,
+        borderRadius: 6,
+        overflow: 'hidden',
+      }}
+    >
       <ReactPlayer
         ref={setRefFromPlayer}
         controls={controls}
