@@ -1,0 +1,21 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "SearchResult",
+        "possibleTypes": [
+          {
+            "name": "LibraryRecord"
+          },
+          {
+            "name": "Song"
+          },
+          {
+            "name": "YoutubeResult"
+          }
+        ]
+      }
+    ]
+  }
+}
