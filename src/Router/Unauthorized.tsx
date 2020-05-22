@@ -6,6 +6,7 @@ import ApolloClient from 'apollo-boost'
 import { API_HOST } from 'lib/constants'
 
 import Home from 'Marketing/Home'
+import Manifesto from 'Marketing/Manifesto'
 import Invitation from 'Invitation'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
@@ -21,6 +22,10 @@ const Unauthorized: React.FC = () => {
       <Switch>
         <Route key="home" path="/home">
           <Home />
+        </Route>
+
+        <Route key="home" path="/manifesto">
+          <Manifesto />
         </Route>
 
         <Route key="invitation" path="/invitation">

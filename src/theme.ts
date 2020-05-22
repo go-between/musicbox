@@ -1,3 +1,5 @@
+import { fontSize } from "styled-system"
+
 const colors = {
   accent: '#2D3748', // a contrast color for emphasizing UI
   background: '#1A202C', // body background color
@@ -181,6 +183,10 @@ export default {
   },
   styles: {},
   space: [0, 4, 8, 16, 32, 64, 128, 256],
+  text: {
+    color: 'red',
+    fontSize: 3
+  },
   zIndices: {
     zNeg: -1,
     z0: 0,
