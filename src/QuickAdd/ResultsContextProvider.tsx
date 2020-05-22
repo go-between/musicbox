@@ -1,15 +1,15 @@
 import React, { createContext, useContext, useState } from 'react'
 
-import { Tag, Song } from './graphql'
+import { Tag, SearchResult } from './graphql'
 
 type ResultsContext = {
   error: string
   query: string
-  results: Song[]
+  results: SearchResult[]
   resultIndex: number | null
   setError: (error: string) => void
   setQuery: (query: string) => void
-  setResults: (results: Song[]) => void
+  setResults: (results: SearchResult[]) => void
   setResultIndex: (idx: number | null) => void
   tags: Tag[]
   setTags: (tags: Tag[]) => void
@@ -20,7 +20,7 @@ const ResultsContextProvider: React.FC = ({ children }) => {
   const [error, setError] = useState('')
   const [query, setQuery] = useState('')
   const [tags, setTags] = useState<Tag[]>([])
-  const [results, setResults] = useState<Song[]>([])
+  const [results, setResults] = useState<SearchResult[]>([])
   const [resultIndex, setResultIndex] = useState<number | null>(null)
 
   return (

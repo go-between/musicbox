@@ -10,7 +10,8 @@ import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 import { duration } from 'lib/formatters'
 
-import { Song } from './graphql'
+import deserialize from './resultDeserializer'
+import { SearchResult as SearchResultType } from './graphql'
 import { useResultsContext } from './ResultsContextProvider'
 
 const NowPlaying: React.FC = () => {
@@ -32,12 +33,12 @@ const NowPlaying: React.FC = () => {
 
 type SearchResultProps = {
   alreadyAdded: boolean
-  result: Song
+  searchResult: SearchResultType
   selected: boolean
   nowPlaying: boolean
 }
 
-const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selected }) => {
+const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, searchResult, selected }) => {
   const { setUnmutedPlayer } = useVolumeContext()
   const { addRecords } = usePlaylistRecordsContext()
   const { addToast } = useToasts()
@@ -57,13 +58,15 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, r
     setUnmutedPlayer(PLAYERS.main)
   }
 
+  const result = deserialize(searchResult)
+
   const onClick = (ev: React.MouseEvent): void => {
-    ev.stopPropagation()
-    addRecords(result.id)
-    addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
-    if (showModal) {
-      closeModal()
-    }
+    // ev.stopPropagation()
+    // addRecords(result.id)
+    // addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
+    // if (showModal) {
+    //   closeModal()
+    // }
   }
 
   return (
@@ -199,7 +202,7 @@ const Results: React.FC = () => {
     if (idx === resultIndex) {
       return (
         <Box key={result.id} ref={selectedRef}>
-          <SearchResult result={result} nowPlaying={nowPlaying} selected={true} alreadyAdded={alreadyAdded} />
+          <SearchResult searchResult={result} nowPlaying={nowPlaying} selected={true} alreadyAdded={alreadyAdded} />
         </Box>
       )
     }
@@ -208,7 +211,7 @@ const Results: React.FC = () => {
       <SearchResult
         key={result.id}
         nowPlaying={nowPlaying}
-        result={result}
+        searchResult={result}
         selected={false}
         alreadyAdded={alreadyAdded}
       />

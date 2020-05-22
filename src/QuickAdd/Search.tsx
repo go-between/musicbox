@@ -10,15 +10,7 @@ import { setString } from 'lib/setters'
 import { usePlaylistRecordsContext } from 'Context'
 
 import { useResultsContext } from './ResultsContextProvider'
-import {
-  SongCreateMutation,
-  LibraryRecordsQuery,
-  TagsQuery,
-  SONG_CREATE,
-  LIBRARY_RECORDS_QUERY,
-  TAGS_QUERY,
-  Song,
-} from './graphql'
+import { SongCreateMutation, SearchQuery, TagsQuery, SONG_CREATE, SEARCH_QUERY, TAGS_QUERY } from './graphql'
 
 const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, query }) => {
   if (query.length === 0) {
@@ -92,22 +84,10 @@ export const Search: React.FC = () => {
     }
   }
 
-  const [searchLibrary] = useLazyQuery<LibraryRecordsQuery['data'], LibraryRecordsQuery['vars']>(
-    LIBRARY_RECORDS_QUERY,
-    {
-      fetchPolicy: 'network-only',
-      onCompleted: data => {
-        const libraryResults: Song[] = data.libraryRecords.map(record => {
-          return {
-            ...record.song,
-            resultType: 'library',
-          }
-        })
-
-        setResults(libraryResults)
-      },
-    },
-  )
+  const [searchLibrary] = useLazyQuery<SearchQuery['data'], SearchQuery['vars']>(SEARCH_QUERY, {
+    fetchPolicy: 'network-only',
+    onCompleted: data => setResults(data.search),
+  })
 
   const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
     onCompleted: ({ songCreate: { song } }) => {
@@ -128,7 +108,7 @@ export const Search: React.FC = () => {
 
     const youtubeId = extractYoutubeId(debouncedQuery)
     if (youtubeId === null) {
-      searchLibrary({ variables: { query: debouncedQuery, tagIds: selectedTags } })
+      searchLibrary({ variables: { query: debouncedQuery } })
     } else {
       createSong({ variables: { youtubeId } })
     }
