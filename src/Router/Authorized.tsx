@@ -4,6 +4,10 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 import { Box, Flex } from 'rebass'
 
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import introspectionQueryResultData from '../../fragmentTypes.json'
+
 import { ApprovalContextProvider } from 'Approval'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
@@ -77,8 +81,14 @@ const InnerRoutes: React.FC = () => (
   </Switch>
 )
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData,
+})
+const cache = new InMemoryCache({ fragmentMatcher })
+
 const Authorized: React.FC<{ token: string }> = ({ token }) => {
   const apolloClient = new ApolloClient({
+    cache,
     uri: `${API_HOST}/api/v1/graphql`,
     headers: {
       Authorization: `Bearer ${token}`,
