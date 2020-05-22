@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Text } from 'rebass'
+import { Box, Heading, Text } from 'rebass'
 
 const Manifesto: React.FC = () => {
   return (
@@ -11,6 +11,7 @@ const Manifesto: React.FC = () => {
         px: [3, 4],
       }}
     >
+      <Heading>Hi, we're Musicbox and we love music. Like really, really love it.</Heading>
       <Text
         as="p"
         fontSize={4}

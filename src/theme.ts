@@ -184,8 +184,15 @@ export default {
   styles: {},
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   text: {
-    color: 'red',
-    fontSize: 3
+    text: {
+      color: 'red'
+    },
+    headline: {
+      fontSize: [7, 8, 9],
+      letterSpacing: '-0.045em',
+      textIndent: '-0.012em',
+      lineHeight: '1em',
+    }
   },
   zIndices: {
     zNeg: -1,
