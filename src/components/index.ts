@@ -1,4 +1,5 @@
 export { Container } from './Container'
+export { KeyboardSelectable } from './KeyboardSelectable'
 export { Logo } from './Logo'
 export { MediaObject } from './MediaObject'
 export { Modal } from './Modal'

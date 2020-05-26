@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
 import { Clock, User as UserPlaylistIcon, Users as RoomPlaylistIcon } from 'react-feather'
 
-import QuickAdd from 'QuickAdd'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
 import { useCurrentRecordContext, useVideoContext } from 'Context'
 
+import JumpMenuEntry from './JumpMenuEntry'
 import { Room as RoomType } from './graphql'
 
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {
@@ -48,7 +48,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
       }}
     >
       <Box>
-        <QuickAdd />
+        <JumpMenuEntry />
       </Box>
 
       <Box

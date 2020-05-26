@@ -1,4 +1,4 @@
-import { LibraryRecord, Song, YoutubeResult, SearchResult } from './graphql'
+import { LibraryRecord, Song, YoutubeResult, SearchResult } from '../graphql'
 
 export type Result = {
   type: 'LibraryRecord' | 'Song' | 'YoutubeResult'
@@ -40,7 +40,7 @@ const resultFromYoutubeResult = (youtubeResult: YoutubeResult): Result => ({
   durationInSeconds: youtubeResult.duration,
 })
 
-const deserialize = (result: SearchResult): Result => {
+export const deserialize = (result: SearchResult): Result => {
   switch (result.__typename) {
     case 'LibraryRecord':
       return resultFromLibraryRecord(result)
@@ -50,5 +50,3 @@ const deserialize = (result: SearchResult): Result => {
       return resultFromYoutubeResult(result)
   }
 }
-
-export default deserialize

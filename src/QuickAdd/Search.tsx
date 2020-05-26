@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLazyQuery, useMutation, useQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useQuery } from '@apollo/react-hooks'
 import { useDebounce } from 'use-debounce'
 import { Box, Flex } from 'rebass'
 import { Input, Select } from '@rebass/forms'
@@ -7,10 +7,11 @@ import { Search as SearchIcon, XCircle } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
 import { setString } from 'lib/setters'
-import { usePlaylistRecordsContext } from 'Context'
+import { useAddRecordContext } from 'Context'
 
+import deserialize from './resultDeserializer'
 import { useResultsContext } from './ResultsContextProvider'
-import { SongCreateMutation, SearchQuery, TagsQuery, SONG_CREATE, SEARCH_QUERY, TAGS_QUERY } from './graphql'
+import { SearchQuery, TagsQuery, SEARCH_QUERY, TAGS_QUERY } from './graphql'
 
 const CloseButton: React.FC<{ clear: () => void; query: string }> = ({ clear, query }) => {
   if (query.length === 0) {
@@ -55,7 +56,7 @@ export const Search: React.FC = () => {
     tags,
     setTags,
   } = useResultsContext()
-  const { addRecords } = usePlaylistRecordsContext()
+  const { addRecords, addSong } = useAddRecordContext()
   const { addToast } = useToasts()
 
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -86,23 +87,14 @@ export const Search: React.FC = () => {
 
   const [searchLibrary] = useLazyQuery<SearchQuery['data'], SearchQuery['vars']>(SEARCH_QUERY, {
     fetchPolicy: 'network-only',
-    onCompleted: data => setResults(data.search),
-  })
-
-  const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
-    onCompleted: ({ songCreate: { song } }) => {
-      addRecords(song.id)
-      setQuery('')
-      addToast(`Successfully added ${song.name}`, { appearance: 'success', autoDismiss: true })
-    },
+    onCompleted: data => setResults(data.search.map(deserialize)),
   })
 
   useEffect(() => {
+    setError('')
     setResultIndex(null)
     setResults([])
-    setError('')
-
-    if (debouncedQuery.length === 0 && selectedTags.length === 0) {
+    if (debouncedQuery.length === 0) {
       return
     }
 
@@ -110,9 +102,12 @@ export const Search: React.FC = () => {
     if (youtubeId === null) {
       searchLibrary({ variables: { query: debouncedQuery } })
     } else {
-      createSong({ variables: { youtubeId } })
+      addSong(youtubeId, song => {
+        addRecords(song.id)
+        addToast(`Successfully added ${song.name}`, { appearance: 'success', autoDismiss: true })
+      })
     }
-  }, [debouncedQuery, searchLibrary, setError, setResultIndex, setResults, selectedTags, createSong])
+  }, [addRecords, addSong, addToast, debouncedQuery, searchLibrary, setError, setResultIndex, setResults])
 
   const navigateResult = (ev: React.KeyboardEvent): void => {
     if (ev.key === 'ArrowUp') {
@@ -130,9 +125,15 @@ export const Search: React.FC = () => {
         setResultIndex(Math.min(resultIndex + 1, results.length - 1))
       }
     } else if (ev.key === 'Enter' && resultIndex !== null) {
-      const record = results[resultIndex]
-      addRecords(record.id)
-      addToast(`Successfully added ${record.name}`, { appearance: 'success', autoDismiss: true })
+      const result = results[resultIndex]
+      if (result.type === 'LibraryRecord') {
+        addRecords(result.songId)
+      } else {
+        addSong(result.youtubeId, song => {
+          addRecords(song.id)
+        })
+      }
+      addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
     } else if (ev.key === 'Escape') {
       setQuery('')
     }

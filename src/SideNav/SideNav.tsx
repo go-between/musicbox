@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Inbox, Send, Settings } from 'react-feather'
 
 import { Logo } from 'components'
@@ -55,9 +55,6 @@ export const SideNav: React.FC = () => {
     history.push(to)
   }
 
-  const inRoom = useRouteMatch('/room/:id')
-  const roomKeyboardShortcuts = inRoom && <Box px={3}>{!!inRoom && <Keyboard />}</Box>
-
   return (
     <Flex justifyContent="space-between" flexDirection="column" height="100%">
       <Box>
@@ -89,7 +86,7 @@ export const SideNav: React.FC = () => {
         </NavLink>
       </Box>
 
-      {roomKeyboardShortcuts}
+      <Keyboard />
     </Flex>
   )
 }

@@ -8,6 +8,7 @@ import { useCurrentRecordContext } from 'Context'
 
 import { useApprovalContext } from 'Approval'
 import { SongCreateMutation, SONG_CREATE } from './graphql'
+import { useJumpMenuContext } from 'JumpMenu'
 
 const Keyboard: React.FC = () => {
   const [showHelp, setShowHelp] = useState(false)
@@ -22,13 +23,21 @@ const Keyboard: React.FC = () => {
 
   const { currentRecord } = useCurrentRecordContext()
   const { incrementApproval } = useApprovalContext()
+  const { show } = useJumpMenuContext()
 
   const shortcutHandler = useCallback(
     (ev: KeyboardEvent): void => {
-      if ((!ev.ctrlKey && !ev.metaKey) || !ev.shiftKey) {
+      if (ev.altKey || ev.shiftKey || ev.metaKey || ev.ctrlKey) {
         return
       }
 
+      const target = ev?.target as HTMLElement
+      const fromEditableField = !!['TEXTAREA', 'INPUT', 'SELECT'].find(f => f === target?.tagName)
+      if (fromEditableField) {
+        return
+      }
+
+      ev.preventDefault()
       switch (ev.key) {
         case 'a':
           if (!currentRecord) {
@@ -37,12 +46,15 @@ const Keyboard: React.FC = () => {
 
           createSong({ variables: { youtubeId: currentRecord.song.youtubeId, fromUserId: currentRecord.user.id } })
           return
+        case 'j':
+          show()
+          return
         case 'p':
           incrementApproval()
           return
       }
     },
-    [currentRecord, createSong, incrementApproval],
+    [currentRecord, createSong, show, incrementApproval],
   )
 
   useEffect(() => {
@@ -90,11 +102,11 @@ const Keyboard: React.FC = () => {
           zIndex: 100,
         }}
       >
-        <Box as="li" sx={{ borderBottom: '1px solid', borderColor: 'gray700', pb: 1, mb: 2 }}>
-          All: Command/Control + Shift + [Letter]
-        </Box>
         <Box as="li">
           Add current song to library: <b>A</b>
+        </Box>
+        <Box as="li">
+          Open Jump Menu: <b>J</b>
         </Box>
         <Box as="li">
           Increase song approval: <b>P</b>

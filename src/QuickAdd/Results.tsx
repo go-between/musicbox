@@ -3,15 +3,13 @@ import { Box, Button, Flex, Text } from 'rebass'
 import { Check, Eye, Plus } from 'react-feather'
 import { useToasts } from 'react-toast-notifications'
 
-import { useCurrentRecordContext } from 'Context'
+import { useAddRecordContext, useCurrentRecordContext, usePlaylistRecordsContext } from 'Context'
 import { MediaObject, Modal } from 'components'
-import { usePlaylistRecordsContext } from 'Context'
 import PlayerPrimitive from 'Player/PlayerPrimitive'
 import { useVolumeContext, PLAYERS } from 'Player/VolumeContextProvider'
 import { duration } from 'lib/formatters'
 
-import deserialize from './resultDeserializer'
-import { SearchResult as SearchResultType } from './graphql'
+import { Result } from './resultDeserializer'
 import { useResultsContext } from './ResultsContextProvider'
 
 const NowPlaying: React.FC = () => {
@@ -33,14 +31,14 @@ const NowPlaying: React.FC = () => {
 
 type SearchResultProps = {
   alreadyAdded: boolean
-  searchResult: SearchResultType
+  result: Result
   selected: boolean
   nowPlaying: boolean
 }
 
-const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, searchResult, selected }) => {
+const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, result, selected }) => {
   const { setUnmutedPlayer } = useVolumeContext()
-  const { addRecords } = usePlaylistRecordsContext()
+  const { addRecords, addSong } = useAddRecordContext()
   const { addToast } = useToasts()
 
   const [showModal, setShowModal] = useState(false)
@@ -58,15 +56,20 @@ const SearchResult: React.FC<SearchResultProps> = ({ alreadyAdded, nowPlaying, s
     setUnmutedPlayer(PLAYERS.main)
   }
 
-  const result = deserialize(searchResult)
-
   const onClick = (ev: React.MouseEvent): void => {
-    // ev.stopPropagation()
-    // addRecords(result.id)
-    // addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
-    // if (showModal) {
-    //   closeModal()
-    // }
+    ev.stopPropagation()
+    if (result.type === 'LibraryRecord') {
+      addRecords(result.songId)
+    } else {
+      addSong(result.youtubeId, song => {
+        addRecords(song.id)
+      })
+    }
+    addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
+
+    if (showModal) {
+      closeModal()
+    }
   }
 
   return (
@@ -202,7 +205,7 @@ const Results: React.FC = () => {
     if (idx === resultIndex) {
       return (
         <Box key={result.id} ref={selectedRef}>
-          <SearchResult searchResult={result} nowPlaying={nowPlaying} selected={true} alreadyAdded={alreadyAdded} />
+          <SearchResult result={result} nowPlaying={nowPlaying} selected={true} alreadyAdded={alreadyAdded} />
         </Box>
       )
     }
@@ -211,7 +214,7 @@ const Results: React.FC = () => {
       <SearchResult
         key={result.id}
         nowPlaying={nowPlaying}
-        searchResult={result}
+        result={result}
         selected={false}
         alreadyAdded={alreadyAdded}
       />

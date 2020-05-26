@@ -11,6 +11,7 @@ import introspectionQueryResultData from '../../fragmentTypes.json'
 import { ApprovalContextProvider } from 'Approval'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
+import JumpMenu, { JumpMenuContextProvider } from 'JumpMenu'
 import Library from 'Library'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
@@ -24,6 +25,7 @@ import UserSettings from 'UserSettings'
 import { API_HOST } from 'lib/constants'
 
 import {
+  AddRecordContextProvider,
   CurrentRecordContextProvider,
   PlaylistRecordsContextProvider,
   UserContextProvider,
@@ -98,72 +100,78 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
   return (
     <WebsocketContextProvider token={token}>
       <ApolloProvider client={apolloClient}>
-        <VideoContextProvider>
-          <UserContextProvider>
-            <PlaylistRecordsContextProvider>
-              <CurrentRecordContextProvider>
-                <VolumeContextProvider>
-                  <ApprovalContextProvider>
-                    <PlayerContextProvider>
-                      <Flex
-                        sx={{
-                          alignItems: 'top',
-                          bg: 'background',
-                          flexDirection: 'column',
-                          height: '100vh',
-                          mx: 'auto',
-                          position: 'relative',
-                        }}
-                      >
-                        <Flex
-                          sx={{
-                            flexDirection: 'row',
-                            height: '100%',
-                            overflow: 'hidden',
-                          }}
-                        >
-                          <Box
-                            as="aside"
-                            sx={{
-                              bg: 'background',
-                              borderRight: '1px solid',
-                              borderColor: 'accent',
-                              display: ['none', 'flex'],
-                              flexDirection: 'column',
-                              justifyContent: 'space-between',
-                              overflow: 'hidden',
-                              width: ['100%', '300px'],
-                            }}
-                          >
-                            <SideNav />
-                          </Box>
+        <AddRecordContextProvider>
+          <VideoContextProvider>
+            <UserContextProvider>
+              <PlaylistRecordsContextProvider>
+                <CurrentRecordContextProvider>
+                  <VolumeContextProvider>
+                    <ApprovalContextProvider>
+                      <PlayerContextProvider>
+                        <JumpMenuContextProvider>
+                          <JumpMenu />
+
                           <Flex
-                            as="main"
                             sx={{
-                              flexDirection: ['column', 'row'],
-                              height: '100%',
-                              width: ['100%'],
+                              alignItems: 'top',
+                              bg: 'background',
+                              flexDirection: 'column',
+                              height: '100vh',
+                              mx: 'auto',
+                              position: 'relative',
                             }}
                           >
-                            <InnerRoutes />
+                            <Flex
+                              sx={{
+                                flexDirection: 'row',
+                                height: '100%',
+                                overflow: 'hidden',
+                              }}
+                            >
+                              <Box
+                                as="aside"
+                                sx={{
+                                  bg: 'background',
+                                  borderRight: '1px solid',
+                                  borderColor: 'accent',
+                                  display: ['none', 'flex'],
+                                  flexDirection: 'column',
+                                  justifyContent: 'space-between',
+                                  overflow: 'hidden',
+                                  width: ['100%', '300px'],
+                                }}
+                              >
+                                <SideNav />
+                              </Box>
+                              <Flex
+                                as="main"
+                                sx={{
+                                  flexDirection: ['column', 'row'],
+                                  height: '100%',
+                                  width: ['100%'],
+                                }}
+                              >
+                                <InnerRoutes />
+                              </Flex>
+                            </Flex>
+                            <Box
+                              sx={{
+                                borderTop: '1px solid',
+                                borderColor: 'accent',
+                              }}
+                            >
+                              <Player />
+                            </Box>
                           </Flex>
-                        </Flex>
-                        <Box
-                          sx={{
-                            borderTop: '1px solid',
-                            borderColor: 'accent',
-                          }}
-                        >
-                          <Player />
-                        </Box>
-                      </Flex>
-                    </PlayerContextProvider>
-                  </ApprovalContextProvider>
-                </VolumeContextProvider>
-              </CurrentRecordContextProvider>
-            </PlaylistRecordsContextProvider>
-          </UserContextProvider>
-        </VideoContextProvider>
+                        </JumpMenuContextProvider>
+                      </PlayerContextProvider>
+                    </ApprovalContextProvider>
+                  </VolumeContextProvider>
+                </CurrentRecordContextProvider>
+              </PlaylistRecordsContextProvider>
+            </UserContextProvider>
+          </VideoContextProvider>
+        </AddRecordContextProvider>
       </ApolloProvider>
     </WebsocketContextProvider>
   )
