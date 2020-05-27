@@ -6,7 +6,7 @@ import { useToasts } from 'react-toast-notifications'
 import { useAddRecordContext } from 'Context'
 import { KeyboardSelectable } from 'components'
 
-import { useQuickResultsContext } from '../QuickResultsContextProvider'
+import { useJumpNavigationContext } from '../JumpNavigationContextProvider'
 import { useInputContext } from '../InputContextProvider'
 import { Result as ResultType } from './deserialize'
 import Result from './Result'
@@ -16,7 +16,7 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
   const [resultsToAdd, setResultsToAdd] = useState<string[]>([])
   const { addRecords } = useAddRecordContext()
   const { setYoutubePreviewId } = useInputContext()
-  const { forward } = useQuickResultsContext()
+  const { forward } = useJumpNavigationContext()
 
   const toggleSelection = useCallback(
     (songId: string): void => {
@@ -55,7 +55,7 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
     q: () => addSelectedRecords(),
     p: (i: number) => {
       setYoutubePreviewId(results[i].youtubeId)
-      forward('youtube-preview')
+      forward('youtubePreview')
     },
   }
   return (

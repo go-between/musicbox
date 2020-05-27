@@ -7,7 +7,7 @@ import { useCurrentRecordContext, usePlaylistRecordsContext, useAddRecordContext
 import { MediaObject } from 'components'
 import { duration } from 'lib/formatters'
 
-import { useQuickResultsContext } from '../QuickResultsContextProvider'
+import { useJumpNavigationContext } from '../JumpNavigationContextProvider'
 import { useInputContext } from '../InputContextProvider'
 import { Result as ResultType } from './deserialize'
 
@@ -33,7 +33,7 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
   const { currentRecord } = useCurrentRecordContext()
   const { addRecords } = useAddRecordContext()
   const { setYoutubePreviewId } = useInputContext()
-  const { forward } = useQuickResultsContext()
+  const { forward } = useJumpNavigationContext()
   const { addToast } = useToasts()
 
   const nowPlaying = currentRecord?.song.id === result.songId
@@ -47,7 +47,7 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
 
   const preview = (): void => {
     setYoutubePreviewId(result.youtubeId)
-    forward('youtube-preview')
+    forward('youtubePreview')
   }
 
   return (

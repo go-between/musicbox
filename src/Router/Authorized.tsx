@@ -11,7 +11,7 @@ import introspectionQueryResultData from '../../fragmentTypes.json'
 import { ApprovalContextProvider } from 'Approval'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
-import JumpMenu, { JumpMenuContextProvider } from 'JumpMenu'
+import JumpMenu, { JumpNavigationContextProvider } from 'JumpMenu'
 import Library from 'Library'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
@@ -108,7 +108,7 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                   <VolumeContextProvider>
                     <ApprovalContextProvider>
                       <PlayerContextProvider>
-                        <JumpMenuContextProvider>
+                        <JumpNavigationContextProvider>
                           <JumpMenu />
 
                           <Flex
@@ -163,7 +163,7 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                               <Player />
                             </Box>
                           </Flex>
-                        </JumpMenuContextProvider>
+                        </JumpNavigationContextProvider>
                       </PlayerContextProvider>
                     </ApprovalContextProvider>
                   </VolumeContextProvider>
