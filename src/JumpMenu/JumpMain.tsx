@@ -11,6 +11,7 @@ import MusicboxSearch from './MusicboxSearch'
 import Preview from './Preview'
 import QuickResults from './QuickResults'
 import RecordsByTag from './RecordsByTag'
+import KeyboardShortcuts from './KeyboardShortcuts'
 
 const JumpMenuRouter: React.FC<{ selectedMenu: Menus }> = ({ selectedMenu }) => {
   const jumpMenuRoutes = {
@@ -19,6 +20,7 @@ const JumpMenuRouter: React.FC<{ selectedMenu: Menus }> = ({ selectedMenu }) => 
     'musicbox-search': MusicboxSearch,
     'tagged-with': RecordsByTag,
     'youtube-preview': Preview,
+    'keyboard-shortcuts': KeyboardShortcuts
   }
 
   const RouteToRender = jumpMenuRoutes[selectedMenu]
@@ -42,9 +44,6 @@ const JumpMenu: React.FC = () => {
         sx={{
           position: 'relative',
           borderRadius: 6,
-          '&:focus-within': {
-            boxShadow: 'outline',
-          },
         }}
         width="100%"
         px={3}

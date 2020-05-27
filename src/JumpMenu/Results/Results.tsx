@@ -51,8 +51,8 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
   })
 
   const keyHandler = {
-    c: (i: number) => toggleSelection(results[i].songId),
-    e: () => addSelectedRecords(),
+    s: (i: number) => toggleSelection(results[i].songId),
+    q: () => addSelectedRecords(),
     p: (i: number) => {
       setYoutubePreviewId(results[i].youtubeId)
       forward('youtube-preview')

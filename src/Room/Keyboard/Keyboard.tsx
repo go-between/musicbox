@@ -11,9 +11,6 @@ import { SongCreateMutation, SONG_CREATE } from './graphql'
 import { useJumpMenuContext } from 'JumpMenu'
 
 const Keyboard: React.FC = () => {
-  const [showHelp, setShowHelp] = useState(false)
-  const toggleShowHelp = (): void => setShowHelp(!showHelp)
-
   const { addToast } = useToasts()
   const [createSong] = useMutation<SongCreateMutation['data'], SongCreateMutation['vars']>(SONG_CREATE, {
     onCompleted: ({ songCreate: { song } }) => {
@@ -49,7 +46,7 @@ const Keyboard: React.FC = () => {
         case 'j':
           show()
           return
-        case 'p':
+        case 'u':
           incrementApproval()
           return
       }
@@ -64,58 +61,7 @@ const Keyboard: React.FC = () => {
   }, [shortcutHandler])
 
   return (
-    <Flex
-      onClick={toggleShowHelp}
-      sx={{
-        alignItems: 'center',
-        color: 'text',
-        cursor: 'pointer',
-        display: 'flex',
-        fontSize: 2,
-        mb: 3,
-        position: 'relative',
-        textDecoration: 'none',
-        '&:hover > *': {
-          visibility: 'visible',
-        },
-      }}
-    >
-      <Box
-        as="ul"
-        sx={{
-          bg: 'black',
-          borderRadius: 6,
-          border: '1px solid',
-          borderColor: 'gray700',
-          boxShadow: 'xxl',
-          bottom: '150%',
-          cursor: 'text',
-          fontSize: 0,
-          left: '50%',
-          listStyleType: 'none',
-          ml: '-120px',
-          p: 2,
-          position: 'absolute',
-          textAlign: 'left',
-          visibility: showHelp ? 'visible' : 'hidden',
-          width: '240px',
-          zIndex: 100,
-        }}
-      >
-        <Box as="li">
-          Add current song to library: <b>A</b>
-        </Box>
-        <Box as="li">
-          Open Jump Menu: <b>J</b>
-        </Box>
-        <Box as="li">
-          Increase song approval: <b>P</b>
-        </Box>
-      </Box>
-      <Box as={Command} size={20} color="muted" />
-      <Box mr={2} />
-      Keyboard Shortcuts
-    </Flex>
+    <></>
   )
 }
 

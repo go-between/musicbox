@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex } from 'rebass'
-import { Search, Tag, Props as IconProps } from 'react-feather'
+import { Search, Tag, Props as IconProps, Command } from 'react-feather'
 
 import { KeyboardSelectable } from 'components'
 
@@ -36,6 +36,7 @@ const QuickResults: React.FC = () => {
   const { forward } = useQuickResultsContext()
   const selectMusicSearch = (): void => forward('musicbox-search')
   const selectAllTags = (): void => forward('all-tags')
+  const viewKeyboardShortcuts = (): void => forward('keyboard-shortcuts')
 
   const quickResults: QuickResultProps[] = [
     {
@@ -47,6 +48,11 @@ const QuickResults: React.FC = () => {
       callback: selectAllTags,
       Icon: Tag,
       title: 'Browse tags',
+    },
+    {
+      callback: viewKeyboardShortcuts,
+      Icon: Command,
+      title: 'View Keyboard Shortcuts',
     },
   ]
 

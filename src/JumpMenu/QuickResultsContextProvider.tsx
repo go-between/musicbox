@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 
-export type Menus = 'home' | 'musicbox-search' | 'all-tags' | 'tagged-with' | 'youtube-preview'
+export type Menus = 'home' | 'musicbox-search' | 'all-tags' | 'tagged-with' | 'youtube-preview' | 'keyboard-shortcuts'
 type QuickResultsContext = {
   back: () => void
   forward: (menu: Menus) => void

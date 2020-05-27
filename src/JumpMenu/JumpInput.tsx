@@ -40,7 +40,7 @@ const JumpInput: React.FC = () => {
         return
       }
 
-      if (ev.key === 'b') {
+      if (ev.key === 'ArrowLeft') {
         back()
       }
     },
