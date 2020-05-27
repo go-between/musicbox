@@ -1,5 +1,3 @@
-import { fontSize } from "styled-system"
-
 const colors = {
   accent: '#2D3748', // a contrast color for emphasizing UI
   background: '#1A202C', // body background color
@@ -184,8 +182,11 @@ export default {
   styles: {},
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   text: {
-    text: {
-      color: 'red'
+    body: {
+      color: 'text',
+      fontSize: 5,
+      mb: 4,
+      lineHeight: 1.5,
     },
     headline: {
       fontSize: [7, 8, 9],

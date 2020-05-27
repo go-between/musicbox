@@ -20,11 +20,11 @@ const Unauthorized: React.FC = () => {
   return (
     <ApolloProvider client={apolloClient}>
       <Switch>
-        <Route key="home" path="/home">
+        <Route key="home" path="/" exact={true}>
           <Home />
         </Route>
 
-        <Route key="home" path="/manifesto">
+        <Route key="manifesto" path="/manifesto">
           <Manifesto />
         </Route>
 

@@ -5,6 +5,8 @@ import ApolloClient from 'apollo-boost'
 import { Box, Flex } from 'rebass'
 
 import { ApprovalContextProvider } from 'Approval'
+import Home from 'Marketing/Home'
+import Manifesto from 'Marketing/Manifesto'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
 import Library from 'Library'
@@ -29,6 +31,14 @@ import {
 
 const InnerRoutes: React.FC = () => (
   <Switch>
+    <Route key="home" path="/" exact={true}>
+      <Home />
+    </Route>
+
+    <Route key="manifesto" path="/manifesto">
+      <Manifesto />
+    </Route>
+
     <Route key="invitation" path="/invitation">
       <Invitation />
     </Route>
