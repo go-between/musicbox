@@ -117,7 +117,6 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                               bg: 'background',
                               flexDirection: 'column',
                               height: '100vh',
-                              mx: 'auto',
                               position: 'relative',
                             }}
                           >
@@ -125,6 +124,8 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                               sx={{
                                 flexDirection: 'row',
                                 height: '100%',
+                                maxWidth: '1400px',
+                                m: '0 auto',
                                 overflow: 'hidden',
                               }}
                             >
@@ -160,7 +161,14 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                                 borderColor: 'accent',
                               }}
                             >
-                              <Player />
+                              <Box
+                                sx={{
+                                  maxWidth: '1400px',
+                                  m: '0 auto',
+                                }}
+                              >
+                                <Player />
+                              </Box>
                             </Box>
                           </Flex>
                         </JumpMenuContextProvider>

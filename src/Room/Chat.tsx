@@ -5,6 +5,7 @@ import Messages from './Messages'
 import MessageEntry from './MessageEntry'
 import PinnedMessages from './PinnedMessages'
 import { usePinnedMessagesContext } from './PinnedMessagesContextProvider'
+import { height } from 'styled-system'
 
 const Chat: React.FC = () => {
   const [tab, setTab] = useState<'chat' | 'pinned'>('chat')
@@ -16,57 +17,69 @@ const Chat: React.FC = () => {
     <Flex
       as="aside"
       sx={{
-        borderLeft: '1px solid',
-        borderColor: 'accent',
         color: 'text',
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
         overflow: 'scroll',
         py: 4,
-        width: ['100%', '50%', '35%'],
+        width: ['100%', '50%'],
       }}
     >
       <Flex
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ borderBottom: 'thin solid', borderBottomColor: 'accent' }}
+        sx={{
+          bg: 'accent',
+          borderRadius: 6,
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+          py: 4,
+        }}
       >
-        <Box
-          onClick={selectChat}
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
           sx={{
-            textAlign: 'center',
-            width: '100%',
-            cursor: tab === 'chat' ? 'default' : 'pointer',
-            bg: tab === 'chat' ? 'accent' : 'inherit',
-            p: 2,
-            '&:hover': { bg: 'accent' },
+            borderBottom: 'thin solid',
+            borderBottomColor: 'accent'
           }}
         >
-          <Heading>Chat</Heading>
-        </Box>
-        <Box
-          onClick={selectPinned}
-          sx={{
-            textAlign: 'center',
-            width: '100%',
-            cursor: tab === 'pinned' ? 'default' : 'pointer',
-            bg: tab === 'pinned' ? 'accent' : 'inherit',
-            p: 2,
-            '&:hover': { bg: 'accent' },
-          }}
-        >
-          <Heading>Pinned ({pinnedMessages.length})</Heading>
-        </Box>
+          <Box
+            onClick={selectChat}
+            sx={{
+              textAlign: 'center',
+              width: '100%',
+              cursor: tab === 'chat' ? 'default' : 'pointer',
+              bg: tab === 'chat' ? 'accent' : 'inherit',
+              p: 2,
+              '&:hover': { bg: 'accent' },
+            }}
+          >
+            <Heading>Chat</Heading>
+          </Box>
+          <Box
+            onClick={selectPinned}
+            sx={{
+              textAlign: 'center',
+              width: '100%',
+              cursor: tab === 'pinned' ? 'default' : 'pointer',
+              bg: tab === 'pinned' ? 'accent' : 'inherit',
+              p: 2,
+              '&:hover': { bg: 'accent' },
+            }}
+          >
+            <Heading>Pinned ({pinnedMessages.length})</Heading>
+          </Box>
+        </Flex>
+        {tab === 'chat' ? (
+          <>
+            <Messages />
+            <MessageEntry />
+          </>
+        ) : (
+          <PinnedMessages />
+        )}
       </Flex>
-      {tab === 'chat' ? (
-        <>
-          <Messages />
-          <MessageEntry />
-        </>
-      ) : (
-        <PinnedMessages />
-      )}
     </Flex>
   )
 }

@@ -7,7 +7,7 @@ import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
 import { useCurrentRecordContext, useVideoContext } from 'Context'
 
-import JumpMenuEntry from './JumpMenuEntry'
+// import JumpMenuEntry from './JumpMenuEntry'
 import { Room as RoomType } from './graphql'
 
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {
@@ -44,12 +44,12 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         flexDirection: 'column',
         height: '100%',
         p: 4,
-        width: ['100%', '50%', '65%'],
+        width: ['100%', '50%'],
       }}
     >
-      <Box>
+      {/* <Box>
         <JumpMenuEntry />
-      </Box>
+      </Box> */}
 
       <Box
         sx={{

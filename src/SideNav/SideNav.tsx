@@ -1,12 +1,13 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Inbox, Send, Settings } from 'react-feather'
+import { Inbox, Send, Search, Settings } from 'react-feather'
 
 import { Logo } from 'components'
 import Keyboard from 'Room/Keyboard'
 
 import Teams from './Teams'
+import { useJumpMenuContext } from 'JumpMenu'
 
 const NavHeading: React.FC = ({ children }) => (
   <Flex
@@ -33,13 +34,13 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
     <Link
       sx={{
         alignItems: 'center',
+        color: 'text',
         display: 'inline-flex',
         fontSize: 2,
         mb: 3,
         textDecoration: 'none',
         width: '100%',
       }}
-      color="text"
       onClick={navigate}
       href="#"
     >
@@ -50,6 +51,7 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
 
 export const SideNav: React.FC = () => {
   const history = useHistory()
+  const { show } = useJumpMenuContext()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()
     history.push(to)
@@ -62,7 +64,26 @@ export const SideNav: React.FC = () => {
           <Logo />
         </Box>
 
-        <NavHeading>Music</NavHeading>
+        {/* <NavHeading>Music</NavHeading> */}
+        <Box width="100%" mb={2} px={3}>
+          <Box
+            onClick={show}
+            sx={{
+              alignItems: 'center',
+              color: 'text',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              fontSize: 2,
+              mb: 3,
+              textDecoration: 'none',
+              width: '100%',
+            }}
+          >
+            <Box as={Search} size={[16, 20]} color="muted" mr={2} />
+            Search
+          </Box>
+        </Box>
+
         <NavLink navigate={navigate('/library')}>
           <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
           Library

@@ -56,7 +56,7 @@ const MessageEntry: React.FC = () => {
         value={message}
         id="chat-message-textarea"
         sx={{
-          bg: 'accent',
+          bg: 'background',
           border: '1px solid',
           borderColor: 'accent',
           borderRadius: 6,

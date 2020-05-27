@@ -1,14 +1,19 @@
 import React from 'react'
-import { Flex } from 'rebass'
+import { Box, Flex} from 'rebass'
 
 import PasswordUpdate from './PasswordUpdate'
 import UserUpdate from './UserUpdate'
 
 const UserSettings: React.FC = () => {
   return (
-    <Flex p={4}>
-      <PasswordUpdate />
-      <UserUpdate />
+    <Flex justifyContent="space-between" p={4} width="100%">
+      <Box pb={4}>
+        <UserUpdate />
+      </Box>
+
+      <Box>
+        <PasswordUpdate />
+      </Box>
     </Flex>
   )
 }
