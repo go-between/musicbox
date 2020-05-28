@@ -1,9 +1,8 @@
 import React from 'react'
 import { Box, Flex, Text } from 'rebass'
-import { Check, Eye, Plus } from 'react-feather'
-import { useToasts } from 'react-toast-notifications'
+import { Eye } from 'react-feather'
 
-import { useCurrentRecordContext, usePlaylistRecordsContext, useAddRecordContext } from 'Context'
+import { useCurrentRecordContext } from 'Context'
 import { MediaObject } from 'components'
 import { duration } from 'lib/formatters'
 
@@ -29,21 +28,11 @@ const NowPlaying: React.FC = () => {
 }
 
 const Result: React.FC<{ result: ResultType }> = ({ result }) => {
-  const { playlistRecords } = usePlaylistRecordsContext()
   const { currentRecord } = useCurrentRecordContext()
-  const { addRecords } = useAddRecordContext()
   const { setYoutubePreviewId } = useInputContext()
   const { forward } = useJumpNavigationContext()
-  const { addToast } = useToasts()
 
   const nowPlaying = currentRecord?.song.id === result.songId
-  const alreadyAdded = nowPlaying || !!playlistRecords.find(r => r.song.id === result.songId)
-
-  const enqueueRecord = (ev: React.MouseEvent): void => {
-    ev.stopPropagation()
-    addRecords(result.songId)
-    addToast(`Successfully added ${result.name}`, { appearance: 'success', autoDismiss: true })
-  }
 
   const preview = (): void => {
     setYoutubePreviewId(result.youtubeId)
@@ -104,22 +93,6 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
             onClick={preview}
           >
             <Eye size={18} />
-          </Box>
-
-          <Box
-            onClick={enqueueRecord}
-            sx={{
-              alignItems: 'center',
-              bg: 'accent',
-              borderRadius: 4,
-              color: 'text',
-              cursor: 'pointer',
-              display: 'flex',
-              p: 1,
-              mx: 1,
-            }}
-          >
-            {alreadyAdded ? <Check size={18} /> : <Plus size={18} />}
           </Box>
         </Flex>
       </MediaObject>

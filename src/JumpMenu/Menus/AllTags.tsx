@@ -43,6 +43,7 @@ const AllTags: React.FC = () => {
     }
   })
   const keyHandler = {
+    ArrowRight: (i: number) => tagItems[i].callback(),
     Enter: (i: number) => tagItems[i].callback(),
   }
   return (

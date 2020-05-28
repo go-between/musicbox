@@ -18,7 +18,7 @@ const Keyboard: React.FC = () => {
 
   const { currentRecord } = useCurrentRecordContext()
   const { incrementApproval } = useApprovalContext()
-  const { show } = useJumpNavigationContext()
+  const { show, forward } = useJumpNavigationContext()
 
   const shortcutHandler = useCallback(
     (ev: KeyboardEvent): void => {
@@ -44,12 +44,15 @@ const Keyboard: React.FC = () => {
         case 'j':
           show()
           return
+        case 'k':
+          forward('keyboardShortcuts')
+          show()
         case 'u':
           incrementApproval()
           return
       }
     },
-    [currentRecord, createSong, show, incrementApproval],
+    [currentRecord, createSong, show, forward, incrementApproval],
   )
 
   useEffect(() => {

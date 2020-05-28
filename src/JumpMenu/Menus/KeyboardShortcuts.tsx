@@ -10,7 +10,11 @@ const KeyboardShortcuts: React.FC = () => {
           <Text>Jump Menu Controls</Text>
           <Box as="ul">
             <Box as="li">
-              Open jump menu: <b>J</b>
+              Open jump menu: <b>j</b>
+            </Box>
+
+            <Box as="li">
+              Open keyboard shortcuts help: <b>k</b>
             </Box>
 
             <Box as="li">
@@ -39,11 +43,11 @@ const KeyboardShortcuts: React.FC = () => {
           <Text>Room Specific Shortcuts</Text>
           <Box as="ul">
             <Box as="li">
-              Add current song to library: <b>A</b>
+              Add current song to library: <b>a</b>
             </Box>
 
             <Box as="li">
-              Upvote current song: <b>U</b>
+              Upvote current song: <b>u</b>
             </Box>
           </Box>
         </Box>
@@ -52,15 +56,22 @@ const KeyboardShortcuts: React.FC = () => {
           <Text>Jump Menu Search Results</Text>
           <Box as="ul">
             <Box as="li">
-              Select search result(s): <b>S</b>
+              Select search result(s): <b>s</b>
             </Box>
 
             <Box as="li">
-              Queue selected song(s): <b>Q</b>
+              Toggle selection of all results:{' '}
+              <Text sx={{ display: 'inline', textDecoration: 'underline' }}>
+                <b>S</b>
+              </Text>
             </Box>
 
             <Box as="li">
-              Preview a selected song: <b>P</b>
+              Queue selected song(s): <b>q</b>
+            </Box>
+
+            <Box as="li">
+              Preview a selected song: <b>p</b>
             </Box>
           </Box>
         </Box>

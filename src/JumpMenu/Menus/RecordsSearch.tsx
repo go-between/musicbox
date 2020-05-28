@@ -21,7 +21,7 @@ const RecordsSearch: React.FC = () => {
 
   return (
     <>
-      <Heading>{!!input ? `Searching for ${input}` : 'Showing alll songs'}</Heading>
+      <Heading>{!!input ? `Searching for ${input}` : 'Showing all songs'}</Heading>
       <Results results={results} />
     </>
   )

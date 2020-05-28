@@ -7,7 +7,6 @@ import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
 import { useCurrentRecordContext, useVideoContext } from 'Context'
 
-import JumpMenuEntry from './JumpMenuEntry'
 import { Room as RoomType } from './graphql'
 
 const Main: React.FC<{ room: RoomType }> = ({ room }) => {
@@ -47,10 +46,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         width: ['100%', '50%', '65%'],
       }}
     >
-      <Box>
-        <JumpMenuEntry />
-      </Box>
-
       <Box
         sx={{
           overflowY: 'scroll',

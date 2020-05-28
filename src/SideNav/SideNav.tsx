@@ -1,10 +1,11 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Inbox, Send, Settings } from 'react-feather'
+import { Inbox, Search, Send, Settings } from 'react-feather'
 
 import { Logo } from 'components'
 import Keyboard from 'Room/Keyboard'
+import { useJumpNavigationContext } from 'JumpMenu'
 
 import Teams from './Teams'
 
@@ -49,6 +50,7 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
 )
 
 export const SideNav: React.FC = () => {
+  const { show } = useJumpNavigationContext()
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()
@@ -61,6 +63,11 @@ export const SideNav: React.FC = () => {
         <Box px={3} py={4}>
           <Logo />
         </Box>
+
+        <Flex onClick={show} width="100%" mb={3} px={3} color="text" alignItems="center" sx={{ cursor: 'pointer' }}>
+          <Box as={Search} size={[16, 20]} color="muted" mr={2} />
+          Open Jump Menu (j)
+        </Flex>
 
         <NavHeading>Music</NavHeading>
         <NavLink navigate={navigate('/library')}>

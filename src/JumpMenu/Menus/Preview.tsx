@@ -14,7 +14,6 @@ const Preview: React.FC = () => {
     setUnmutedPlayer(PLAYERS.preview)
     return () => setUnmutedPlayer(PLAYERS.main)
   })
-
   return (
     <>
       <Heading>Preview</Heading>
