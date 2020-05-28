@@ -28,6 +28,7 @@ const MessageEntry: React.FC = () => {
   }
 
   const onChange = (ev: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    ev.stopPropagation()
     setMessage(ev.target.value.trimLeft())
     autoExpand()
   }

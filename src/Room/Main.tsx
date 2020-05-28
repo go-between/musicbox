@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
 import { Clock, User as UserPlaylistIcon, Users as RoomPlaylistIcon } from 'react-feather'
 
-import QuickAdd from 'QuickAdd'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
@@ -47,10 +46,6 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         width: ['100%', '50%', '65%'],
       }}
     >
-      <Box>
-        <QuickAdd />
-      </Box>
-
       <Box
         sx={{
           overflowY: 'scroll',
