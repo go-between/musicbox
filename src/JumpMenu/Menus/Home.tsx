@@ -105,9 +105,13 @@ const Home: React.FC = () => {
       }
       return
     }
+    const escapedInput = input.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+    const startsWith = new RegExp(`^${escapedInput}`, 'i')
+    const includes = new RegExp(escapedInput, 'i')
+
     const additionalItems: MenuItemProps[] = []
     // To Library
-    if ('library'.match(new RegExp(`^${input}`, 'i'))) {
+    if ('library'.match(startsWith)) {
       additionalItems.push({
         callback: () => navigateTo('/library'),
         Icon: Inbox,
@@ -116,7 +120,7 @@ const Home: React.FC = () => {
     }
 
     // To Recommendations
-    if ('recommendations'.match(new RegExp(`^${input}`, 'i'))) {
+    if ('recommendations'.match(startsWith)) {
       additionalItems.push({
         callback: () => navigateTo('/recommendations'),
         Icon: Send,
@@ -125,7 +129,7 @@ const Home: React.FC = () => {
     }
 
     // To User Settings
-    if ('user settings'.match(new RegExp(`^${input}`, 'i')) || 'settings'.match(new RegExp(`^${input}`, 'i'))) {
+    if ('user settings'.match(startsWith) || 'settings'.match(startsWith)) {
       additionalItems.push({
         callback: () => navigateTo('/user-settings'),
         Icon: Settings,
@@ -135,7 +139,7 @@ const Home: React.FC = () => {
 
     // To Room
     user.activeTeam?.rooms.forEach(room => {
-      if (room.name.match(new RegExp(input, 'i'))) {
+      if (room.name.match(includes)) {
         additionalItems.push({
           callback: () => navigateTo(`/room/${room.id}`),
           Icon: Grid,
@@ -173,7 +177,7 @@ const Home: React.FC = () => {
 
     // Matching Tag
     tags.forEach(tag => {
-      if (tag.name.match(new RegExp(input, 'i'))) {
+      if (tag.name.match(includes)) {
         additionalItems.push({
           callback: () => {
             setSelectedTag(tag)
