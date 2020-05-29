@@ -43,6 +43,10 @@ const KeyboardShortcuts: React.FC = () => {
             </Box>
 
             <Box as="li">
+              Toggle song mute/unmute: <b>m</b>
+            </Box>
+
+            <Box as="li">
               Upvote current song: <b>u</b>
             </Box>
           </Box>

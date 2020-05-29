@@ -7,6 +7,7 @@ import { useCurrentRecordContext } from 'Context'
 import { useApprovalContext } from 'Approval'
 import { SongCreateMutation, SONG_CREATE } from './graphql'
 import { useJumpNavigationContext } from 'JumpMenu'
+import { useVolumeContext } from 'Player'
 
 const Keyboard: React.FC = () => {
   const { addToast } = useToasts()
@@ -19,6 +20,7 @@ const Keyboard: React.FC = () => {
   const { currentRecord } = useCurrentRecordContext()
   const { incrementApproval } = useApprovalContext()
   const { show, forward } = useJumpNavigationContext()
+  const { toggleMute } = useVolumeContext()
 
   const shortcutHandler = useCallback(
     (ev: KeyboardEvent): void => {
@@ -48,12 +50,15 @@ const Keyboard: React.FC = () => {
           forward('keyboardShortcuts')
           show()
           return
+        case 'm':
+          toggleMute()
+          return
         case 'u':
           incrementApproval()
           return
       }
     },
-    [currentRecord, createSong, show, forward, incrementApproval],
+    [currentRecord, createSong, show, forward, incrementApproval, toggleMute],
   )
 
   useEffect(() => {
