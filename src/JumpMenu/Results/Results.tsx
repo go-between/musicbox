@@ -6,6 +6,7 @@ import { Check, Plus } from 'react-feather'
 
 import { useAddRecordContext, usePlaylistRecordsContext, useUserContext } from 'Context'
 import { KeyboardSelectable } from 'components'
+import { shuffle } from 'lib/array'
 
 import { useJumpNavigationContext } from '../JumpNavigationContextProvider'
 import { useInputContext } from '../InputContextProvider'
@@ -37,12 +38,16 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
     [resultsToAdd],
   )
 
-  const addSelectedRecords = useCallback((): void => {
-    addRecords(...resultsToAdd)
-    addToast(`Successfully added ${resultsToAdd.length} songs.`, { appearance: 'success', autoDismiss: true })
-    setResultsToAdd([])
-    setAllSelected(false)
-  }, [addRecords, addToast, resultsToAdd])
+  const addSelectedRecords = useCallback(
+    (shuffleResults = false): void => {
+      const records = shuffleResults ? shuffle(resultsToAdd) : resultsToAdd
+      addRecords(...records)
+      addToast(`Successfully added ${records.length} songs.`, { appearance: 'success', autoDismiss: true })
+      setResultsToAdd([])
+      setAllSelected(false)
+    },
+    [addRecords, addToast, resultsToAdd],
+  )
 
   const resultItems = results.map(r => {
     const checked = !!resultsToAdd.find(rta => rta === r.songId)
@@ -94,6 +99,7 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
     S: () => toggleAllSelected(),
     s: (i: number) => inRoom && toggleSelection(results[i].songId),
     q: () => inRoom && addSelectedRecords(),
+    Q: () => inRoom && addSelectedRecords(true),
     p: (i: number) => {
       setYoutubePreviewId(results[i].youtubeId)
       forward('youtubePreview')

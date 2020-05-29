@@ -22,7 +22,7 @@ const KeyboardShortcuts: React.FC = () => {
             </Box>
 
             <Box as="li">
-              Navigate forward within jump menu: <b>Right Arrow</b>
+              Navigate forward within jump menu: <b>Right Arrow</b> or <b>Enter</b>
             </Box>
 
             <Box as="li">
@@ -31,10 +31,6 @@ const KeyboardShortcuts: React.FC = () => {
 
             <Box as="li">
               Navigate down within jump menu: <b>Down Arrow</b>
-            </Box>
-
-            <Box as="li">
-              Select item within jump menu: <b>Enter</b>
             </Box>
           </Box>
         </Box>
@@ -68,6 +64,13 @@ const KeyboardShortcuts: React.FC = () => {
 
             <Box as="li">
               Queue selected song(s): <b>q</b>
+            </Box>
+
+            <Box as="li">
+              Shuffle and queue selected song(s):{' '}
+              <Text sx={{ display: 'inline', textDecoration: 'underline' }}>
+                <b>Q</b>
+              </Text>
             </Box>
 
             <Box as="li">
