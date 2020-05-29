@@ -47,6 +47,7 @@ const Keyboard: React.FC = () => {
         case 'k':
           forward('keyboardShortcuts')
           show()
+          return
         case 'u':
           incrementApproval()
           return
