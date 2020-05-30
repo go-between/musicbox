@@ -13,7 +13,7 @@ const Rooms: React.FC = () => {
         position: 'relative',
       }}
     >
-      <Flex as="main" alignItems="center" justifyContent="center" width="100%">
+      <Flex alignItems="center" justifyContent="center" width="100%">
         <Heading>Please select a room on the left</Heading>
       </Flex>
     </Flex>

@@ -23,12 +23,15 @@ const Chat: React.FC = () => {
         justifyContent: 'space-between',
         overflow: 'scroll',
         py: 4,
-        width: ['100%', '50%'],
+        width: ['100%', '45%'],
       }}
     >
       <Flex
         sx={{
           bg: 'accent',
+          // border: '1px solid',
+          // borderColor: 'accent',
+          boxShadow: 'xl',
           borderRadius: 6,
           flexDirection: 'column',
           justifyContent: 'space-between',

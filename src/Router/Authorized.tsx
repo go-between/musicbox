@@ -117,6 +117,8 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                               bg: 'background',
                               flexDirection: 'column',
                               height: '100vh',
+                              maxWidth: '1400px',
+                              m: '0 auto',
                               position: 'relative',
                             }}
                           >
@@ -124,8 +126,7 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                               sx={{
                                 flexDirection: 'row',
                                 height: '100%',
-                                maxWidth: '1400px',
-                                m: '0 auto',
+                                width: '100%',
                                 overflow: 'hidden',
                               }}
                             >
@@ -133,8 +134,6 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                                 as="aside"
                                 sx={{
                                   bg: 'background',
-                                  borderRight: '1px solid',
-                                  borderColor: 'accent',
                                   display: ['none', 'flex'],
                                   flexDirection: 'column',
                                   justifyContent: 'space-between',
@@ -149,7 +148,7 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                                 sx={{
                                   flexDirection: ['column', 'row'],
                                   height: '100%',
-                                  width: ['100%'],
+                                  width: '100%',
                                 }}
                               >
                                 <InnerRoutes />
@@ -157,13 +156,14 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                             </Flex>
                             <Box
                               sx={{
+                                bg:'backgroundTint',
                                 borderTop: '1px solid',
                                 borderColor: 'accent',
                               }}
                             >
                               <Box
                                 sx={{
-                                  maxWidth: '1400px',
+                                  maxWidth: '1600px',
                                   m: '0 auto',
                                 }}
                               >

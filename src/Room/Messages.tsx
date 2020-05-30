@@ -61,7 +61,7 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup; pinnedMessages: Messa
       >
         <Box
           sx={{
-            bg: 'backgroundTint',
+            bg: 'background',
             border: '1px solid',
             borderColor: 'accent',
             borderRadius: 6,
