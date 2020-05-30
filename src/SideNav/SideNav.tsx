@@ -1,13 +1,13 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Inbox, Send, Search, Settings } from 'react-feather'
+import { Inbox, Search, Send, Settings } from 'react-feather'
 
 import { Logo } from 'components'
 import Keyboard from 'Room/Keyboard'
+import { useJumpNavigationContext } from 'JumpMenu'
 
 import Teams from './Teams'
-import { useJumpMenuContext } from 'JumpMenu'
 
 const NavHeading: React.FC = ({ children }) => (
   <Flex
@@ -50,8 +50,8 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
 )
 
 export const SideNav: React.FC = () => {
+  const { show } = useJumpNavigationContext()
   const history = useHistory()
-  const { show } = useJumpMenuContext()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()
     history.push(to)

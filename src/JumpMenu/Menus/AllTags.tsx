@@ -1,11 +1,11 @@
 import React from 'react'
-import { Box, Flex } from 'rebass'
+import { Box, Flex, Heading } from 'rebass'
 import { Tag } from 'react-feather'
 
 import { KeyboardSelectable } from 'components'
 
-import { useInputContext } from './InputContextProvider'
-import { useQuickResultsContext } from './QuickResultsContextProvider'
+import { useInputContext } from '../InputContextProvider'
+import { useJumpNavigationContext } from '../JumpNavigationContextProvider'
 
 const TagItem: React.FC<{ callback: () => void; title: string }> = ({ callback, title }) => {
   return (
@@ -30,37 +30,41 @@ const TagItem: React.FC<{ callback: () => void; title: string }> = ({ callback, 
 
 const AllTags: React.FC = () => {
   const { tags, setSelectedTag } = useInputContext()
-  const { forward } = useQuickResultsContext()
+  const { forward } = useJumpNavigationContext()
 
   const tagItems = tags.map(t => {
     return {
       callback: (): void => {
         setSelectedTag(t)
-        forward('tagged-with')
+        forward('taggedWith')
       },
       id: t.id,
       title: t.name,
     }
   })
   const keyHandler = {
+    ArrowRight: (i: number) => tagItems[i].callback(),
     Enter: (i: number) => tagItems[i].callback(),
   }
   return (
-    <KeyboardSelectable
-      keyHandler={keyHandler}
-      as="ul"
-      sx={{
-        m: 0,
-        p: 0,
-        height: '300px',
-        overflowY: 'scroll',
-        position: 'relative',
-      }}
-    >
-      {tagItems.map(ti => (
-        <TagItem key={ti.id} callback={ti.callback} title={ti.title} />
-      ))}
-    </KeyboardSelectable>
+    <>
+      <Heading>All tags</Heading>
+      <KeyboardSelectable
+        keyHandler={keyHandler}
+        as="ul"
+        sx={{
+          m: 0,
+          p: 0,
+          height: '300px',
+          overflowY: 'scroll',
+          position: 'relative',
+        }}
+      >
+        {tagItems.map(ti => (
+          <TagItem key={ti.id} callback={ti.callback} title={ti.title} />
+        ))}
+      </KeyboardSelectable>
+    </>
   )
 }
 

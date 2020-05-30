@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { Box, Flex } from 'rebass'
 import { useToasts } from 'react-toast-notifications'
-import { Command } from 'react-feather'
 
 import { useCurrentRecordContext } from 'Context'
 
 import { useApprovalContext } from 'Approval'
 import { SongCreateMutation, SONG_CREATE } from './graphql'
-import { useJumpMenuContext } from 'JumpMenu'
+import { useJumpNavigationContext } from 'JumpMenu'
+import { useVolumeContext } from 'Player'
 
 const Keyboard: React.FC = () => {
   const { addToast } = useToasts()
@@ -20,7 +19,8 @@ const Keyboard: React.FC = () => {
 
   const { currentRecord } = useCurrentRecordContext()
   const { incrementApproval } = useApprovalContext()
-  const { show } = useJumpMenuContext()
+  const { show, forward } = useJumpNavigationContext()
+  const { toggleMute } = useVolumeContext()
 
   const shortcutHandler = useCallback(
     (ev: KeyboardEvent): void => {
@@ -46,12 +46,19 @@ const Keyboard: React.FC = () => {
         case 'j':
           show()
           return
+        case 'k':
+          forward('keyboardShortcuts')
+          show()
+          return
+        case 'm':
+          toggleMute()
+          return
         case 'u':
           incrementApproval()
           return
       }
     },
-    [currentRecord, createSong, show, incrementApproval],
+    [currentRecord, createSong, show, forward, incrementApproval, toggleMute],
   )
 
   useEffect(() => {
@@ -60,9 +67,7 @@ const Keyboard: React.FC = () => {
     return () => window.removeEventListener('keydown', shortcutHandler)
   }, [shortcutHandler])
 
-  return (
-    <></>
-  )
+  return <></>
 }
 
 export default Keyboard

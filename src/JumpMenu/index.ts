@@ -1,4 +1,4 @@
 import JumpMenu from './JumpMenu'
 
-export { JumpMenuContextProvider, useJumpMenuContext } from './JumpMenuContextProvider'
+export { JumpNavigationContextProvider, useJumpNavigationContext } from './JumpNavigationContextProvider'
 export default JumpMenu

@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { TagsQuery, TAGS_QUERY, Tag } from './graphql'
 
 type InputContext = {
+  clear: () => void
   input: string
   setInput: (i: string) => void
   selectedTag: Tag | null
@@ -17,16 +18,23 @@ const InputContext = createContext<Partial<InputContext>>({})
 export const InputContextProvider: React.FC = ({ children }) => {
   const [input, setInput] = useState('')
   const [youtubePreviewId, setYoutubePreviewId] = useState('')
-  const [tags, setTags] = useState<Tag[]>([])
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null)
+
+  const [tags, setTags] = useState<Tag[]>([])
   useQuery<TagsQuery['data']>(TAGS_QUERY, {
     fetchPolicy: 'network-only',
     onCompleted: data => setTags(data.tags),
   })
 
+  const clear = (): void => {
+    setInput('')
+    setYoutubePreviewId('')
+    setSelectedTag(null)
+  }
+
   return (
     <InputContext.Provider
-      value={{ input, setInput, selectedTag, setSelectedTag, setYoutubePreviewId, tags, youtubePreviewId }}
+      value={{ clear, input, setInput, selectedTag, setSelectedTag, setYoutubePreviewId, tags, youtubePreviewId }}
     >
       {children}
     </InputContext.Provider>
@@ -34,11 +42,19 @@ export const InputContextProvider: React.FC = ({ children }) => {
 }
 
 export const useInputContext = (): InputContext => {
-  const { input, setInput, selectedTag, setSelectedTag, setYoutubePreviewId, tags, youtubePreviewId } = useContext(
-    InputContext,
-  )
+  const {
+    clear,
+    input,
+    setInput,
+    selectedTag,
+    setSelectedTag,
+    setYoutubePreviewId,
+    tags,
+    youtubePreviewId,
+  } = useContext(InputContext)
 
   if (
+    clear === undefined ||
     input === undefined ||
     setInput === undefined ||
     selectedTag === undefined ||
@@ -51,6 +67,7 @@ export const useInputContext = (): InputContext => {
   }
 
   return {
+    clear,
     input,
     setInput,
     selectedTag,

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import { Heading } from 'rebass'
 
-import { useInputContext } from './InputContextProvider'
-import { LibraryRecordsQuery, LIBRARY_RECORDS_QUERY } from './graphql'
-import Results, { deserialize, Result as ResultType } from './Results'
+import { useInputContext } from '../InputContextProvider'
+import { LibraryRecordsQuery, LIBRARY_RECORDS_QUERY } from '../graphql'
+import Results, { deserialize, Result as ResultType } from '../Results'
 
 const RecordsByTag: React.FC = () => {
   const [results, setResults] = useState<ResultType[]>([])
@@ -23,7 +24,12 @@ const RecordsByTag: React.FC = () => {
     return <p>Loading</p>
   }
 
-  return <Results results={results} />
+  return (
+    <>
+      <Heading>Songs tagged with {selectedTag?.name}</Heading>
+      <Results results={results} />
+    </>
+  )
 }
 
 export default RecordsByTag
