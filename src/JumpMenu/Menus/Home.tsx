@@ -113,10 +113,19 @@ const Home: React.FC = () => {
     const includes = new RegExp(escapedInput, 'i')
 
     const additionalItems: MenuItemProps[] = []
+    // Add a new song
+    if (!!input) {
+      additionalItems.push({
+        callback: () => forward('externalSearch'),
+        Icon: Search,
+        title: 'Add a new song',
+      })
+    }
+
     // To Library
     if ('library'.match(startsWith)) {
       additionalItems.push({
-        callback: () => navigateTo('/library'),
+        callback: () => push('/library'),
         Icon: Inbox,
         title: 'Navigate to Library',
       })
@@ -210,6 +219,7 @@ const Home: React.FC = () => {
     tags,
     setSelectedTag,
     forward,
+    push,
   ])
 
   const keyHandler = {

@@ -4,10 +4,9 @@ import { Eye } from 'react-feather'
 
 import { useCurrentRecordContext } from 'Context'
 import { MediaObject } from 'components'
-import { duration } from 'lib/formatters'
 
-import { useJumpNavigationContext } from '../JumpNavigationContextProvider'
-import { useInputContext } from '../InputContextProvider'
+import { useJumpNavigationContext } from 'JumpMenu/JumpNavigationContextProvider'
+import { useInputContext } from 'JumpMenu/InputContextProvider'
 import { Result as ResultType } from './deserialize'
 
 const NowPlaying: React.FC = () => {
@@ -32,7 +31,7 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
   const { setYoutubePreviewId } = useInputContext()
   const { forward } = useJumpNavigationContext()
 
-  const nowPlaying = currentRecord?.song.id === result.songId
+  const nowPlaying = currentRecord?.song.id === result.id
 
   const preview = (): void => {
     setYoutubePreviewId(result.youtubeId)
@@ -70,15 +69,6 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
         </Box>
 
         <Flex alignItems="center" justifyContent="space-between">
-          <Box
-            sx={{
-              color: 'gray400',
-              fontSize: 1,
-              px: 3,
-            }}
-          >
-            {duration(result.durationInSeconds)}
-          </Box>
           <Box
             sx={{
               alignItems: 'center',

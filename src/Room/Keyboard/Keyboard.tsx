@@ -36,7 +36,7 @@ const Keyboard: React.FC = () => {
 
       ev.preventDefault()
       switch (ev.key) {
-        case 'a':
+        case 't':
           if (!currentRecord) {
             return
           }

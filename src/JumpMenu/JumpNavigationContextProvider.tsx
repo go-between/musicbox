@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useState } from 'react'
 
-export type Menus = 'allTags' | 'home' | 'keyboardShortcuts' | 'musicboxSearch' | 'taggedWith' | 'youtubePreview'
+export type Menus =
+  | 'allTags'
+  | 'externalSearch'
+  | 'home'
+  | 'keyboardShortcuts'
+  | 'musicboxSearch'
+  | 'taggedWith'
+  | 'youtubePreview'
 
 type JumpNavigationContext = {
   back: () => void
