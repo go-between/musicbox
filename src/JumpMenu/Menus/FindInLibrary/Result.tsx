@@ -6,9 +6,9 @@ import { useCurrentRecordContext } from 'Context'
 import { MediaObject } from 'components'
 import { duration } from 'lib/formatters'
 
-import { useJumpNavigationContext } from '../JumpNavigationContextProvider'
-import { useInputContext } from '../InputContextProvider'
-import { Result as ResultType } from './deserialize'
+import { useJumpNavigationContext } from 'JumpMenu/JumpNavigationContextProvider'
+import { useInputContext } from 'JumpMenu/InputContextProvider'
+import { LibraryRecord } from './graphql'
 
 const NowPlaying: React.FC = () => {
   return (
@@ -27,15 +27,16 @@ const NowPlaying: React.FC = () => {
   )
 }
 
-const Result: React.FC<{ result: ResultType }> = ({ result }) => {
+const Result: React.FC<{ result: LibraryRecord }> = ({ result }) => {
+  const { song } = result
   const { currentRecord } = useCurrentRecordContext()
   const { setYoutubePreviewId } = useInputContext()
   const { forward } = useJumpNavigationContext()
 
-  const nowPlaying = currentRecord?.song.id === result.songId
+  const nowPlaying = currentRecord?.song.id === song.id
 
   const preview = (): void => {
-    setYoutubePreviewId(result.youtubeId)
+    setYoutubePreviewId(song.youtubeId)
     forward('youtubePreview')
   }
 
@@ -53,7 +54,7 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
         width: '100%',
       }}
     >
-      <MediaObject imageUrl={result.thumbnailUrl} imageSize="50px" alignment="center" placeholderImageColor="accent">
+      <MediaObject imageUrl={song.thumbnailUrl} imageSize="50px" alignment="center" placeholderImageColor="accent">
         <Box flex={1}>
           {nowPlaying ? <NowPlaying /> : <></>}
           <Box
@@ -65,7 +66,7 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
               mr: 2,
             }}
           >
-            {result.name}
+            {song.name}
           </Box>
         </Box>
 
@@ -77,7 +78,7 @@ const Result: React.FC<{ result: ResultType }> = ({ result }) => {
               px: 3,
             }}
           >
-            {duration(result.durationInSeconds)}
+            {duration(song.durationInSeconds)}
           </Box>
           <Box
             sx={{

@@ -8,12 +8,12 @@ import { useAddRecordContext, usePlaylistRecordsContext, useUserContext } from '
 import { KeyboardSelectable } from 'components'
 import { shuffle } from 'lib/array'
 
-import { useJumpNavigationContext } from '../JumpNavigationContextProvider'
-import { useInputContext } from '../InputContextProvider'
-import { Result as ResultType } from './deserialize'
+import { useJumpNavigationContext } from 'JumpMenu/JumpNavigationContextProvider'
+import { useInputContext } from 'JumpMenu/InputContextProvider'
+import { LibraryRecord } from './graphql'
 import Result from './Result'
 
-const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
+const Results: React.FC<{ results: LibraryRecord[] }> = ({ results }) => {
   const [resultsToAdd, setResultsToAdd] = useState<string[]>([])
   const [allSelected, setAllSelected] = useState(false)
 
@@ -50,9 +50,9 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
   )
 
   const resultItems = results.map(r => {
-    const checked = !!resultsToAdd.find(rta => rta === r.songId)
-    const toggle = (): void => toggleSelection(r.songId)
-    const isEnqueued = !!playlistRecords.find(plr => plr.song.id === r.songId)
+    const checked = !!resultsToAdd.find(rta => rta === r.song.id)
+    const toggle = (): void => toggleSelection(r.song.id)
+    const isEnqueued = !!playlistRecords.find(plr => plr.song.id === r.song.id)
 
     return (
       <Flex key={r.id} sx={{ alignItems: 'center' }}>
@@ -66,7 +66,7 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
 
         {inRoom && (
           <Box
-            onClick={() => addRecords(r.songId)}
+            onClick={() => addRecords(r.song.id)}
             sx={{
               alignItems: 'center',
               bg: 'accent',
@@ -90,18 +90,18 @@ const Results: React.FC<{ results: ResultType[] }> = ({ results }) => {
       setResultsToAdd([])
       setAllSelected(false)
     } else {
-      setResultsToAdd(results.map(r => r.songId))
+      setResultsToAdd(results.map(r => r.song.id))
       setAllSelected(true)
     }
   }
 
   const keyHandler = {
     S: () => toggleAllSelected(),
-    s: (i: number) => inRoom && toggleSelection(results[i].songId),
+    s: (i: number) => inRoom && toggleSelection(results[i].song.id),
     q: () => inRoom && addSelectedRecords(),
     Q: () => inRoom && addSelectedRecords(true),
     p: (i: number) => {
-      setYoutubePreviewId(results[i].youtubeId)
+      setYoutubePreviewId(results[i].song.youtubeId)
       forward('youtubePreview')
     },
   }

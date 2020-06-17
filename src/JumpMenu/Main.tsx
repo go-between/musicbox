@@ -4,11 +4,11 @@ import { Button, Flex } from 'rebass'
 import { useJumpNavigationContext } from './JumpNavigationContextProvider'
 import { useInputContext } from './InputContextProvider'
 
+import AddANewSong from './Menus/AddANewSong'
 import AllTags from './Menus/AllTags'
-import RecordsSearch from './Menus/RecordsSearch'
+import FindInLibrary from './Menus/FindInLibrary'
 import Preview from './Menus/Preview'
 import Home from './Menus/Home'
-import RecordsByTag from './Menus/RecordsByTag'
 import KeyboardShortcuts from './Menus/KeyboardShortcuts'
 
 const Main: React.FC = () => {
@@ -19,10 +19,11 @@ const Main: React.FC = () => {
 
   const Route = {
     allTags: AllTags,
+    externalSearch: AddANewSong,
     home: Home,
     keyboardShortcuts: KeyboardShortcuts,
-    musicboxSearch: RecordsSearch,
-    taggedWith: RecordsByTag,
+    musicboxSearch: FindInLibrary,
+    taggedWith: FindInLibrary,
     youtubePreview: Preview,
   }[selectedMenu]
 
@@ -33,7 +34,7 @@ const Main: React.FC = () => {
   return (
     <>
       <Route />
-      <Flex alignItems="center" justifyContent="space-between" flexDirection="row-reverse">
+      <Flex alignItems="center" justifyContent="space-between" flexDirection="row-reverse" my={2}>
         <Button onClick={close}>Close</Button>
         {selectedMenu !== 'home' && <Button onClick={back}>Back</Button>}
       </Flex>

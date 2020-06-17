@@ -39,7 +39,7 @@ const KeyboardShortcuts: React.FC = () => {
           <Text>Room Specific Shortcuts</Text>
           <Box as="ul">
             <Box as="li">
-              Add current song to library: <b>a</b>
+              Add current song to library: <b>t</b>
             </Box>
 
             <Box as="li">

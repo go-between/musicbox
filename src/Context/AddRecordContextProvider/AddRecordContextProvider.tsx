@@ -5,7 +5,7 @@ import { RoomPlaylistRecordsAdd, ROOM_PLAYLIST_RECORDS_ADD, Song, SongCreateMuta
 
 type AddRecordContext = {
   addRecords: (...ids: string[]) => void
-  addSong: (youtubeId: string, callback: (song: Song) => void) => void
+  addSong: (youtubeId: string, callback?: (song: Song) => void) => void
 }
 const AddRecordContext = createContext<Partial<AddRecordContext>>({})
 
@@ -28,7 +28,10 @@ export const AddRecordContextProvider: React.FC = ({ children }) => {
       if (!result.data) {
         return
       }
-      callback(result.data.songCreate.song)
+
+      if (!!callback) {
+        callback(result.data.songCreate.song)
+      }
     })
   }
 
