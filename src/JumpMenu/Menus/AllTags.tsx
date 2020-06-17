@@ -29,12 +29,13 @@ const TagItem: React.FC<{ callback: () => void; title: string }> = ({ callback, 
 }
 
 const AllTags: React.FC = () => {
-  const { tags, setSelectedTag } = useInputContext()
+  const { tags, setInput, setSelectedTag } = useInputContext()
   const { forward } = useJumpNavigationContext()
 
   const tagItems = tags.map(t => {
     return {
       callback: (): void => {
+        setInput('')
         setSelectedTag(t)
         forward('taggedWith')
       },

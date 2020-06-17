@@ -2,8 +2,8 @@ import gql from 'graphql-tag'
 
 // Queries & Mutations
 export const LIBRARY_RECORDS_QUERY = gql`
-  query QuickAddLibraryRecordsQuery($tagIds: [ID!]) {
-    libraryRecords(tagIds: $tagIds) {
+  query JumpMenuLibraryRecords($query: String, $tagIds: [ID!]) {
+    libraryRecords(query: $query, tagIds: $tagIds) {
       id
       song {
         id
@@ -20,7 +20,8 @@ export type LibraryRecordsQuery = {
     libraryRecords: LibraryRecord[]
   }
   vars: {
-    tagIds: string[]
+    query?: string
+    tagIds?: string[]
   }
 }
 
@@ -28,16 +29,6 @@ export const SEARCH_QUERY = gql`
   query Search($query: String!) {
     search(query: $query) {
       __typename
-      ... on LibraryRecord {
-        id
-        song {
-          id
-          durationInSeconds
-          name
-          youtubeId
-          thumbnailUrl
-        }
-      }
       ... on Song {
         id
         durationInSeconds

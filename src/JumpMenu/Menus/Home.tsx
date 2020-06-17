@@ -72,14 +72,17 @@ const Home: React.FC = () => {
 
   const initialMenuItems: MenuItemProps[] = [
     {
-      callback: () => forward('musicboxSearch'),
+      callback: () => {
+        setSelectedTag(null)
+        forward('musicboxSearch')
+      },
       Icon: Search,
-      title: 'Search',
+      title: 'Find in your Library',
     },
     {
       callback: () => forward('allTags'),
       Icon: Tag,
-      title: 'Browse tags',
+      title: 'Browse your tags',
     },
     {
       callback: () => forward('keyboardShortcuts'),
@@ -180,6 +183,7 @@ const Home: React.FC = () => {
       if (tag.name.match(includes)) {
         additionalItems.push({
           callback: () => {
+            setInput('')
             setSelectedTag(tag)
             forward('taggedWith')
           },

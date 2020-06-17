@@ -8,7 +8,7 @@ type InputContext = {
   input: string
   setInput: (i: string) => void
   selectedTag: Tag | null
-  setSelectedTag: (t: Tag) => void
+  setSelectedTag: (t: Tag | null) => void
   setYoutubePreviewId: (y: string) => void
   tags: Tag[]
   youtubePreviewId: string

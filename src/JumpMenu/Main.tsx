@@ -5,10 +5,9 @@ import { useJumpNavigationContext } from './JumpNavigationContextProvider'
 import { useInputContext } from './InputContextProvider'
 
 import AllTags from './Menus/AllTags'
-import RecordsSearch from './Menus/RecordsSearch'
+import FindInLibrary from './Menus/FindInLibrary'
 import Preview from './Menus/Preview'
 import Home from './Menus/Home'
-import RecordsByTag from './Menus/RecordsByTag'
 import KeyboardShortcuts from './Menus/KeyboardShortcuts'
 
 const Main: React.FC = () => {
@@ -21,8 +20,8 @@ const Main: React.FC = () => {
     allTags: AllTags,
     home: Home,
     keyboardShortcuts: KeyboardShortcuts,
-    musicboxSearch: RecordsSearch,
-    taggedWith: RecordsByTag,
+    musicboxSearch: FindInLibrary,
+    taggedWith: FindInLibrary,
     youtubePreview: Preview,
   }[selectedMenu]
 
