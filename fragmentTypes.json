@@ -6,9 +6,6 @@
         "name": "SearchResult",
         "possibleTypes": [
           {
-            "name": "LibraryRecord"
-          },
-          {
             "name": "Song"
           },
           {
