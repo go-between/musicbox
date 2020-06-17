@@ -2,9 +2,9 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Heading } from 'rebass'
 
-import { useInputContext } from '../InputContextProvider'
-import { LibraryRecordsQuery, LIBRARY_RECORDS_QUERY } from '../graphql'
-import Results, { deserialize } from '../Results'
+import { useInputContext } from 'JumpMenu/InputContextProvider'
+import { LibraryRecordsQuery, LIBRARY_RECORDS_QUERY } from './graphql'
+import Results from './Results'
 
 const FindInLibrary: React.FC = () => {
   const { input, selectedTag } = useInputContext()
@@ -25,11 +25,19 @@ const FindInLibrary: React.FC = () => {
     return <p>Loading</p>
   }
 
-  const results = data.libraryRecords.map(deserialize)
+  let heading = ''
+  if (!input && !selectedTag) {
+    heading = 'Showing all songs'
+  } else if (!!input) {
+    heading = `Searching for ${input}`
+  } else if (!!selectedTag) {
+    heading = `Showing songs tagged with ${selectedTag.name}`
+  }
+
   return (
     <>
-      <Heading>{!!input ? `Searching for ${input}` : 'Showing all songs'}</Heading>
-      <Results results={results} />
+      <Heading>{heading}</Heading>
+      <Results results={data.libraryRecords} />
     </>
   )
 }
