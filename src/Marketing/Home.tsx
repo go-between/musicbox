@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Flex, Heading, Text } from 'rebass'
 
+import { Logo } from 'components/Logo'
 // import Container from 'components/Container'
 // import Header from 'components/Header'
 // import Footer from 'components/Footer'
@@ -9,12 +10,32 @@ const Home: React.FC = () => {
   return (
     <Box
       sx={{
-        bg: 'modes.light.background',
+        bg: 'white',
         color: 'modes.light.text',
       }}
     >
       {/* <Header />
       <Container> */}
+      <Box
+        as="header"
+        sx={{
+          borderBottom: '1px solid',
+          borderColor: 'gray200',
+          py: 3,
+          px: 4
+        }}
+      >
+        <Logo />
+        <Box as="ul">
+          <Box as="li">
+            <Box>About</Box>
+          </Box>
+
+          <Box as="li">
+            <Box>About</Box>
+          </Box>
+        </Box>
+      </Box>
         <Box
           sx={{
             alignItems: 'center',
