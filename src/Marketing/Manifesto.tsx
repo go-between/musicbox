@@ -1,5 +1,7 @@
 import React from 'react'
-import { Box, Heading, Text } from 'rebass'
+import { Box, Heading, Link, Text } from 'rebass'
+
+import { Header } from 'components'
 
 const Manifesto: React.FC = () => {
   return (
@@ -9,6 +11,14 @@ const Manifesto: React.FC = () => {
         color: 'modes.light.text'
       }}
     >
+      <Header>
+        <Box as="nav">
+          <Link>Manifesto</Link>
+          <Link>Sign In</Link>
+          <Link>Sign Up</Link>
+        </Box>
+      </Header>
+
       <Box
         sx={{
           maxWidth: 780,

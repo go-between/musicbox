@@ -1,4 +1,5 @@
 export { Container } from './Container'
+export { Header } from './Header'
 export { Logo } from './Logo'
 export { MediaObject } from './MediaObject'
 export { Modal } from './Modal'
