@@ -3,6 +3,7 @@ import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { Inbox, Send, Settings } from 'react-feather'
 
+import { Logo } from 'components'
 import LogoDarkMode from 'images/musicbox-logo.svg'
 import Keyboard from 'Room/Keyboard'
 
@@ -62,7 +63,7 @@ export const SideNav: React.FC = () => {
     <Flex justifyContent="space-between" flexDirection="column" height="100%">
       <Box>
         <Box px={3} py={4}>
-          <Logo imageSrc={LogoDarkMode}/>
+          <Logo imageSrc={LogoDarkMode} />
         </Box>
 
         <NavHeading>Music</NavHeading>

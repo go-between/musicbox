@@ -6,7 +6,8 @@ import { Box, Flex } from 'rebass'
 
 import { ApprovalContextProvider } from 'Approval'
 import Home from 'Marketing/Home'
-import Manifesto from 'Marketing/Manifesto'
+import LinerNotes from 'Marketing/LinerNotes'
+import Features from 'Marketing/Features'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
 import Library from 'Library'
@@ -35,9 +36,13 @@ const InnerRoutes: React.FC = () => (
       <Home />
     </Route>
 
-    <Route key="manifesto" path="/manifesto">
-      <Manifesto />
+    <Route key="LinerNotes" path="/LinerNotes">
+      <LinerNotes />
     </Route>
+
+    <Route key="Features" path="/features">
+      <Features />
+    </Route>         
 
     <Route key="invitation" path="/invitation">
       <Invitation />

@@ -6,7 +6,8 @@ import ApolloClient from 'apollo-boost'
 import { API_HOST } from 'lib/constants'
 
 import Home from 'Marketing/Home'
-import Manifesto from 'Marketing/Manifesto'
+import LinerNotes from 'Marketing/LinerNotes'
+import Features from 'Marketing/Features'
 import Invitation from 'Invitation'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
@@ -24,9 +25,13 @@ const Unauthorized: React.FC = () => {
           <Home />
         </Route>
 
-        <Route key="manifesto" path="/manifesto">
-          <Manifesto />
+        <Route key="LinerNotes" path="/liner-notes">
+          <LinerNotes />
         </Route>
+
+        <Route key="Features" path="/features">
+          <Features />
+        </Route>        
 
         <Route key="invitation" path="/invitation">
           <Invitation />
