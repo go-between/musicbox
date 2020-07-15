@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from 'rebass'
+import { Box, Button, Flex } from 'rebass'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 
 import { usePlaylistRecordsContext, PlaylistRecord } from 'Context'
@@ -16,6 +16,8 @@ const reorder: Reorder = (list, startIndex, endIndex) => {
 }
 const UserPlaylist: React.FC = () => {
   const { deleteRecord, userPlaylistRecords, reorderRecords } = usePlaylistRecordsContext()
+
+  const removeAll = (): void => reorderRecords([])
 
   const records = userPlaylistRecords.map((record, index) => {
     const onDelete = (): void => deleteRecord(record.id)
@@ -39,24 +41,27 @@ const UserPlaylist: React.FC = () => {
     reorderRecords(reorderedRecords)
   }
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="list">
-        {provided => (
-          <Box
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            as="ul"
-            sx={{
-              m: 0,
-              p: 0,
-            }}
-          >
-            {records}
-            {provided.placeholder}
-          </Box>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <Flex flexDirection="column">
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="list">
+          {provided => (
+            <Box
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              as="ul"
+              sx={{
+                m: 0,
+                p: 0,
+              }}
+            >
+              {records}
+              {provided.placeholder}
+            </Box>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <Flex justifyContent="flex-end">{records.length > 0 && <Button onClick={removeAll}>Remove All</Button>}</Flex>
+    </Flex>
   )
 }
 
