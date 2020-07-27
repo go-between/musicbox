@@ -2,7 +2,14 @@ import React from 'react'
 import { Box, Button, Flex, Heading, Image, Text } from 'rebass'
 
 import { Container, Header } from 'components'
-import Hero from 'images/hero.svg'
+import Hero from 'images/hero.png'
+import Listen from 'images/listen.png'
+import Share from 'images/share.png'
+import Discuss from 'images/discuss.png'
+
+const signalPath = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%232d3748' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
+
+
 
 const Home: React.FC = () => {
   return (
@@ -14,9 +21,9 @@ const Home: React.FC = () => {
     >
       <Header />
 
-      <Container verticalSpace={6}>
-        <Flex alignItems="center">
-          <Box width="50%">
+      <Container verticalSpace={[5,6]}>
+        <Flex alignItems="center" flexDirection={['column', 'row']}>
+          <Box width={["100%", "50%"]}>
             <Heading
               as="h2"
               variant="headline"
@@ -32,13 +39,13 @@ const Home: React.FC = () => {
             </Text>
           </Box>
 
-          <Box width="50%">
-            <Image src= {Hero} width="100%" pl={4} />
+          <Box width={["100%", "50%"]}>
+            <Image src= {Hero} width="100%" pl={[0,4]} />
           </Box>
         </Flex>
       </Container>
 
-      <Box bg="gray200">
+      <Box bg="gray100">
         <Container verticalSpace={6} width="800px">
           <Box sx={{ textAlign: 'center'}}>
             <Heading
@@ -48,7 +55,7 @@ const Home: React.FC = () => {
             >
               Don't copy &amp; paste your office
             </Heading>
-            <Text sx={{fontSize: [3,4,5], color: 'gray700',}}>
+            <Text sx={{fontSize: [4,5,6], color: 'gray700',}}>
               Musicbox provides a less awkward alternative to all those zoom calls, #random slack channels, and virtual happy hours.
             </Text>
             {/* <Text sx={{fontSize: [3,4,5], color: 'gray700'}} >
@@ -58,31 +65,31 @@ const Home: React.FC = () => {
         </Container>
 
         <Container verticalSpace={6}>
-          <Flex>
-            <Box px={3} width="50%">
+          <Flex alignItems="center" flexDirection={["column", "row", "row"]}>
+            <Box width={["100%", "50%", "50%"]}>
               <Text sx={{color: 'primary', fontSize: [0,1], fontWeight: 'bold', mb: 2, textTransform: 'uppercase'}}>Listen</Text>
               <Heading variant="subHeadline" mb={3}>Music is better together</Heading>
-              <Text sx={{fontSize: [3,4], color: 'gray700'}}>
-                Musicbox lets remote teams listen to music together in real-time from the comfort of their home office, coffee shop, or beach—if that's your thing. Create rooms based on your team's listening preferenes and easily add songs from Youtube.
+              <Text sx={{fontSize: [3,4,5], color: 'gray700'}}>
+                Musicbox lets remote teams listen to music together in real-time from the comfort of their home office, coffee shop, or beach—if that's your thing. Create rooms based on your team's listening preferences and easily add songs from YouTube.
               </Text>
             </Box>
 
-            <Box px={3} width="50%">
-              <Image src="https://via.placeholder.com/450x250" />
+            <Box width={["100%", "50%", "50%"]}>
+              <Image src= {Listen} width="100%" pl={[0,4]} py={[4,0]}/>
             </Box>
           </Flex>
         </Container>
 
         <Container verticalSpace={6}>
-          <Flex>
-            <Box px={3} width="50%">
-              <Image src="https://via.placeholder.com/450x250" />
+          <Flex alignItems="center" flexDirection={["column", "row", "row"]}>
+            <Box width={["100%", "50%", "50%"]}>
+              <Image src= {Share} width="100%" pr={[0,4]} py={[4,0]}/>
             </Box>
 
-            <Box px={3} width="50%">
+            <Box width={["100%", "50%", "50%"]}>
               <Text sx={{color: 'primary', fontSize: [0,1], fontWeight: 'bold', mb: 2, textTransform: 'uppercase'}}>Share</Text>
               <Heading variant="subHeadline" mb={3}>Music is personal</Heading>
-                <Text sx={{fontSize: [3,4], color: 'gray700', mb: 3}}>
+              <Text sx={{fontSize: [3,4,5], color: 'gray700'}}>
                 Musicbox provides an alternative to Spotify's faceless suggestion algorithm, because nothing compares to the feeling you get when an actual human suggests the perfect song. Asynchronously share music with your teammates, whether they're listening in real-time or catching back up on your recommendation after a meeting.</Text>
               {/* <Text sx={{fontSize: [3,4], color: 'gray700'}}>Queue up a song that someone inspired to you. Or you come across a song that your friend will like, but he's in a meeting. No worries, send them your recommendation and they can listen later, etc.</Text> */}
               {/* <Text sx={{fontSize: [3,4], color: 'gray700', mb: 3}}>Sure, Spotify's artificially intelligent super computers are really good at suggesting new music. And yes, the feeling you get when a faceless algortithm sends you a new song can be quite enjoyable. But that feeling is nothing compared to the one you get when a real, actual human, personally suggests the perfect song.</Text> */}
@@ -93,14 +100,14 @@ const Home: React.FC = () => {
         </Container>
 
         <Container verticalSpace={6}>
-          <Flex>
-            <Box px={3} width="50%">
+          <Flex alignItems="center" flexDirection={["column", "row", "row"]}>
+            <Box width={["100%", "50%", "50%"]}>
               <Text sx={{color: 'primary', fontSize: [0,1], fontWeight: 'bold', mb: 2, textTransform: 'uppercase'}}>Discuss</Text>
               {/* <Text sx={{bg: 'indigo100', borderRadius: 3, color: 'primary', display: 'inline-block', fontSize: [1], fontWeight: '600', mb: 2, p:1, textTransform: 'uppercase'}}>Discuss</Text> */}
               <Heading variant="subHeadline" mb={3}>Music is a great conversation starter</Heading>
               {/* <Text sx={{fontSize: [3,4], color: 'gray700'}}>This is where I want to talk about the things that music reminds me of: memories, concerts, experiences, etc.</Text>
               <Text sx={{fontSize: [3,4], color: 'gray700'}}>You totally saw this band in concert six years ago and something crazy happened. Share that memory with the rest of your team. Pin it to the song so the memory resurfaces every time the song is played.</Text> */}
-              <Text sx={{fontSize: [3,4], color: 'gray700'}}>
+              <Text sx={{fontSize: [3,4,5], color: 'gray700'}}>
 
               Musicbox adds fun and meaningful context to your teams conversations--creating a living history for each song. Messages shared with the room are automatically tied to the current song and can be saved so they reappear when that song is played again.
 
@@ -110,27 +117,19 @@ const Home: React.FC = () => {
               </Text>
             </Box>
 
-            <Box px={3} width="50%">
-              <Image src="https://via.placeholder.com/450x250" />
+            <Box width={["100%", "50%", "50%"]}>
+              <Image src= {Discuss} width="100%" pl={[0,4]} py={[4,0]}/>
             </Box>
           </Flex>
         </Container>
       </Box>
 
-      {/* <Container verticalSpace={6}>
-        <Flex>
-          <Image src="https://via.placeholder.com/450x250" />
-
-          <Box width="50%">
-            <Text sx={{color: 'primary', fontSize: [1, 2], fontWeight: 'bold', mb: 2, textTransform: 'uppercase'}}>Discuss</Text>
-            <Heading>Feel less alone</Heading>
-            <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus accusantium amet quae debitis enim tenetur earum, aliquam quis aspernatur vitae, labore beatae? Culpa architecto quis, officiis accusantium fugiat delectus id?</Text>
-          </Box>
-
-        </Flex>
-      </Container> */}
-
-      <Box bg="gray900" color="gray400">
+      <Box color="gray400"
+        sx={{
+          backgroundColor: 'gray900',
+          backgroundImage: `url(${signalPath})`
+        }}
+      >
         <Container verticalSpace={6} width="800px">
           <Box sx={{textAlign: 'center'}}>
             <Heading
@@ -141,18 +140,21 @@ const Home: React.FC = () => {
             >
               Start Jamming today.
             </Heading>
-            <Text sx={{fontSize: [3,4,5], color: 'gray500', mb: 4,}}>Musicbox is a fun and informal way for you and your team to feel a little closer, a little less lonely, and a lot more connected.</Text>
+            <Text sx={{fontSize: [4,5,6], color: 'gray500', mb: 4,}}>Musicbox is a fun and informal way for your team to feel a little less lonely, and a lot more connected.</Text>
             <Button>Request Access</Button>
           </Box>
         </Container>
       </Box>
 
 
-      {/* <Box bg="background">
+      <Box bg="background">
         <Container verticalSpace={6}>
-
+          <Flex>
+            <Text>About Us</Text>
+            <Text>Musicbox is </Text>
+          </Flex>
         </Container>
-      </Box> */}
+      </Box>
     </Box>
   )
 }

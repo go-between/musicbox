@@ -64,7 +64,7 @@ const colors = {
 
 export default {
   borders: [0, '1px solid', '2px solid'],
-  breakpoints: ['960px', '1200px', '1400px'],
+  breakpoints: ['550px', '750px', '950px'],
   buttons: {
     primary: {
       bg: 'primary',
@@ -196,14 +196,14 @@ export default {
     },
     headline: {
       color: 'gray800',
-      fontSize: [6, 7, 8],
+      fontSize: [6, 8, 8],
       letterSpacing: '-0.045em',
       textIndent: '-0.012em',
       lineHeight: '1em',
     },
     subHeadline: {
       color: 'gray800',
-      fontSize: [4, 5, 6],
+      fontSize: [5, 6, 7],
       letterSpacing: '-0.045em',
       textIndent: '-0.012em',
       lineHeight: '1em',
