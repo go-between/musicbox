@@ -1,15 +1,16 @@
 import React from 'react'
 import { Box, Button, Flex, Heading, Image, Text } from 'rebass'
 
-import { Container, Header } from 'components'
+import { Container, Header, Footer, } from 'components'
 import Hero from 'images/hero.png'
-import Listen from 'images/listen.png'
-import Share from 'images/share.png'
-import Discuss from 'images/discuss.png'
+import Listen from 'images/listen-dots.png'
+import Share from 'images/share-dots.png'
+import Discuss from 'images/discuss-dots.png'
+import Waves from 'images/waves-2.svg'
 
-const signalPath = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%232d3748' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
+const signalPathDark = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%232d3748' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
 
-
+const signalPathPurple = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%233c366b' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
 
 const Home: React.FC = () => {
   return (
@@ -45,26 +46,43 @@ const Home: React.FC = () => {
         </Flex>
       </Container>
 
-      <Box bg="gray100">
+      {/* <Box
+        sx={{
+          bg: 'indigo800',
+          color: 'indigo200'
+        }}
+      >
         <Container verticalSpace={6} width="800px">
           <Box sx={{ textAlign: 'center'}}>
             <Heading
               as="h2"
               variant="headline"
-              sx={{mb: 3,}}
+              sx={{color: 'indigo200', mb: 3,}}
             >
               Don't copy &amp; paste your office
             </Heading>
-            <Text sx={{fontSize: [4,5,6], color: 'gray700',}}>
+            <Text sx={{fontSize: [4,5,6], color: 'indigo200',}}>
               Musicbox provides a less awkward alternative to all those zoom calls, #random slack channels, and virtual happy hours.
             </Text>
-            {/* <Text sx={{fontSize: [3,4,5], color: 'gray700'}} >
-              In a tradtional office setting, connection is built incidentally, when you share a personal story on a coffee break or recap the weekend during team lunch. Informal conversations bring employees closer together and add to the culture of your company, but trying to recreate the physical world in a digital envrionment is the wrong approach.
-            </Text> */}
           </Box>
         </Container>
+      </Box> */}
 
-        <Container verticalSpace={6}>
+      <Box
+        sx={{
+          bg: 'gray100',
+          backgroundImage: [
+            `url(${Waves}), linear-gradient(to bottom, #fff 2%, #F7Fafc 2%)`,
+            `url(${Waves}), linear-gradient(to bottom, #fff 3%, #F7Fafc 3%)`,
+            `url(${Waves}), linear-gradient(to bottom, #fff 5%, #F7Fafc 5%)`,
+            `url(${Waves}), linear-gradient(to bottom, #fff 7%, #F7Fafc 7%)`
+          ],
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          backgroundPosition: 'top',
+        }}
+      >
+        <Container verticalSpace={[4,6]}>
           <Flex alignItems="center" flexDirection={["column", "row", "row"]}>
             <Box width={["100%", "50%", "50%"]}>
               <Text sx={{color: 'primary', fontSize: [0,1], fontWeight: 'bold', mb: 2, textTransform: 'uppercase'}}>Listen</Text>
@@ -80,13 +98,23 @@ const Home: React.FC = () => {
           </Flex>
         </Container>
 
-        <Container verticalSpace={6}>
+        <Container verticalSpace={[4,6]}>
           <Flex alignItems="center" flexDirection={["column", "row", "row"]}>
-            <Box width={["100%", "50%", "50%"]}>
+            <Box
+              sx={{
+                order: [2,1],
+                width: ["100%", "50%", "50%"],
+              }}
+            >
               <Image src= {Share} width="100%" pr={[0,4]} py={[4,0]}/>
             </Box>
 
-            <Box width={["100%", "50%", "50%"]}>
+            <Box
+              sx={{
+                order: [1,2],
+                width: ["100%", "50%", "50%"],
+              }}
+            >
               <Text sx={{color: 'primary', fontSize: [0,1], fontWeight: 'bold', mb: 2, textTransform: 'uppercase'}}>Share</Text>
               <Heading variant="subHeadline" mb={3}>Music is personal</Heading>
               <Text sx={{fontSize: [3,4,5], color: 'gray700'}}>
@@ -99,7 +127,7 @@ const Home: React.FC = () => {
           </Flex>
         </Container>
 
-        <Container verticalSpace={6}>
+        <Container verticalSpace={[4,6]}>
           <Flex alignItems="center" flexDirection={["column", "row", "row"]}>
             <Box width={["100%", "50%", "50%"]}>
               <Text sx={{color: 'primary', fontSize: [0,1], fontWeight: 'bold', mb: 2, textTransform: 'uppercase'}}>Discuss</Text>
@@ -126,8 +154,8 @@ const Home: React.FC = () => {
 
       <Box color="gray400"
         sx={{
-          backgroundColor: 'gray900',
-          backgroundImage: `url(${signalPath})`
+          backgroundColor: 'background',
+          backgroundImage: `url(${signalPathDark})`
         }}
       >
         <Container verticalSpace={6} width="800px">
@@ -146,15 +174,7 @@ const Home: React.FC = () => {
         </Container>
       </Box>
 
-
-      <Box bg="background">
-        <Container verticalSpace={6}>
-          <Flex>
-            <Text>About Us</Text>
-            <Text>Musicbox is </Text>
-          </Flex>
-        </Container>
-      </Box>
+      <Footer />
     </Box>
   )
 }
@@ -164,3 +184,7 @@ export default Home
 
 // Musicbox offers provides a new, remote first way to listen to music.
 // is designed to help remote teams connect with their co-workers through music.
+
+{/* <Text sx={{fontSize: [3,4,5], color: 'gray700'}} >
+  In a tradtional office setting, connection is built incidentally, when you share a personal story on a coffee break or recap the weekend during team lunch. Informal conversations bring employees closer together and add to the culture of your company, but trying to recreate the physical world in a digital envrionment is the wrong approach.
+</Text> */}

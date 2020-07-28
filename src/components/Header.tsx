@@ -46,7 +46,7 @@ export const Header: React.FC = () => {
               Features
             </Link> */}
 
-            <Link
+            {/* <Link
               onClick={navigate('liner-notes')}
               variant="link"
               sx={{
@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
                 pl: [3, 4],
             }}>
               Liner Notes
-            </Link>
+            </Link> */}
 
             <Link
               onClick={navigate('login')}
