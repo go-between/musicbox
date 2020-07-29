@@ -50,7 +50,7 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
   </Box>
 )
 
-export const SideNav: React.FC = ({children}) => {
+export const SideNav: React.FC = ({ children }) => {
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()

@@ -121,7 +121,7 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                 <VolumeContextProvider>
                   <ApprovalContextProvider>
                     <PlayerContextProvider>
-                      <InnerRoutes/>
+                      <InnerRoutes />
                     </PlayerContextProvider>
                   </ApprovalContextProvider>
                 </VolumeContextProvider>

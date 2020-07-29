@@ -42,27 +42,36 @@ const Home: React.FC = () => {
         </Flex>
       </Container>
 
-      {/* <Box
-        sx={{
-          bg: 'indigo800',
-          color: 'indigo200'
-        }}
+      <Box
+        // sx={{
+        //   bg: 'indigo700',
+        //   color: 'indigo200'
+        // }}
       >
-        <Container verticalSpace={6} width="800px">
-          <Box sx={{ textAlign: 'center'}}>
+        <Container verticalSpace={4}>
+          <Box
+            sx={{
+              bg: 'indigo700',
+              borderRadius: 6,
+              color: 'indigo200',
+              py: [4,5],
+              px: [2,5],
+              textAlign: 'center',
+            }}
+          >
             <Heading
               as="h2"
               variant="headline"
-              sx={{color: 'indigo200', mb: 3,}}
+              sx={{color: 'white', mb: 3,}}
             >
               Don't copy &amp; paste your office
             </Heading>
-            <Text sx={{fontSize: [4,5,6], color: 'indigo200',}}>
+            <Text sx={{fontSize: [4,5,6], color: 'indigo100',}}>
               Musicbox provides a less awkward alternative to all those zoom calls, #random slack channels, and virtual happy hours.
             </Text>
           </Box>
         </Container>
-      </Box> */}
+      </Box>
 
       <Box
         sx={{
@@ -129,10 +138,6 @@ const Home: React.FC = () => {
                 teammates, whether they're listening in real-time or catching back up on your recommendation after a
                 meeting.
               </Text>
-              {/* <Text sx={{fontSize: [3,4], color: 'gray700'}}>Queue up a song that someone inspired to you. Or you come across a song that your friend will like, but he's in a meeting. No worries, send them your recommendation and they can listen later, etc.</Text> */}
-              {/* <Text sx={{fontSize: [3,4], color: 'gray700', mb: 3}}>Sure, Spotify's artificially intelligent super computers are really good at suggesting new music. And yes, the feeling you get when a faceless algortithm sends you a new song can be quite enjoyable. But that feeling is nothing compared to the one you get when a real, actual human, personally suggests the perfect song.</Text> */}
-              {/* <Text>Sure, it's nice when Spotify's faceless algortithm suggests new music. But that feeling is nothing compared to the one you get when a real, actual human, personally suggests the perfect song. </Text> */}
-              {/* <Text>Musicbox makes it easy to asynchronously share music with your teammates, whether they're listening in real-time or catching back up on your recommendation after a meeting. I mean, it's nice when Spotify's faceless algortithm suggests new music, that feeling is nothing compared to the one you get when an actual human suggests the perfect song.</Text> */}
             </Box>
           </Flex>
         </Container>
@@ -143,19 +148,13 @@ const Home: React.FC = () => {
               <Text sx={{ color: 'primary', fontSize: [0, 1], fontWeight: 'bold', mb: 2, textTransform: 'uppercase' }}>
                 Discuss
               </Text>
-              {/* <Text sx={{bg: 'indigo100', borderRadius: 3, color: 'primary', display: 'inline-block', fontSize: [1], fontWeight: '600', mb: 2, p:1, textTransform: 'uppercase'}}>Discuss</Text> */}
               <Heading variant="subHeadline" mb={3}>
                 Music is a great conversation starter
               </Heading>
-              {/* <Text sx={{fontSize: [3,4], color: 'gray700'}}>This is where I want to talk about the things that music reminds me of: memories, concerts, experiences, etc.</Text>
-              <Text sx={{fontSize: [3,4], color: 'gray700'}}>You totally saw this band in concert six years ago and something crazy happened. Share that memory with the rest of your team. Pin it to the song so the memory resurfaces every time the song is played.</Text> */}
               <Text sx={{ fontSize: [3, 4, 5], color: 'gray700' }}>
                 Musicbox adds fun and meaningful context to your teams conversations--creating a living history for each
                 song. Messages shared with the room are automatically tied to the current song and can be saved so they
                 reappear when that song is played again.
-                {/* helps teams enhance your conversations with fun stories and meaninful context. Like that Bon Iver concert that reminded you why they're the greatest band of all time. Or how the Space Jam theme song brings back some of your favorite childhood memories.
-
-              Musicbox turns your giving each song it's own living history. Each message You can even pin messgages to a song so it gets re-surfaced every time it's played! */}
               </Text>
             </Box>
 
@@ -186,7 +185,7 @@ const Home: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                <Heading>Remote First Design</Heading>
+                <Heading>Keyboard Shortcuts</Heading>
                 <Text>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus id rem maiores animi sit
                   cupiditate neque.
@@ -204,7 +203,7 @@ const Home: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                <Heading>Remote First Design</Heading>
+                <Heading>Library Management</Heading>
                 <Text>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus id rem maiores animi sit
                   cupiditate neque.
@@ -222,7 +221,7 @@ const Home: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                <Heading>Remote First Design</Heading>
+                <Heading>Living Song History</Heading>
                 <Text>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus id rem maiores animi sit
                   cupiditate neque.
@@ -240,7 +239,7 @@ const Home: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                <Heading>Remote First Design</Heading>
+                <Heading></Heading>
                 <Text>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus id rem maiores animi sit
                   cupiditate neque.
@@ -301,12 +300,3 @@ const Home: React.FC = () => {
 }
 
 export default Home
-
-// Musicbox offers provides a new, remote first way to listen to music.
-// is designed to help remote teams connect with their co-workers through music.
-
-{
-  /* <Text sx={{fontSize: [3,4,5], color: 'gray700'}} >
-  In a tradtional office setting, connection is built incidentally, when you share a personal story on a coffee break or recap the weekend during team lunch. Informal conversations bring employees closer together and add to the culture of your company, but trying to recreate the physical world in a digital envrionment is the wrong approach.
-</Text> */
-}
