@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { Inbox, Send, Settings } from 'react-feather'

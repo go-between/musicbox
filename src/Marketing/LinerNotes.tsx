@@ -24,9 +24,9 @@ const LinerNotes: React.FC = () => {
             Music is better together
           </Heading>
           <Text as="p" variant="intro">
-            Hi, we're Musicbox, a fun and collaborative way for remote teams to enjoy music together without needing to
-            be in the same room. Think of it as a dedicated place to listen, discuss, and share music with the folks on
-            your team.
+            Hi, we&#39;re Musicbox, a fun and collaborative way for remote teams to enjoy music together without needing
+            to be in the same room. Think of it as a dedicated place to listen, discuss, and share music with the folks
+            on your team.
           </Text>
         </Box>
       </Container>
@@ -109,19 +109,19 @@ const LinerNotes: React.FC = () => {
         </Text>
 
         <Text as="p" variant="body">
-          What we have today doesn’t work. It’s the well-intentioned, but unbearably awkward Zoom happy hours, the
-          hundreds of disjointed “#food,” “#cat-pictures,” and “#off-topic” Slack channels. It’s so, so many shared
+          What we have today doesn’t work. It&#39;s the well-intentioned, but unbearably awkward Zoom happy hours, the
+          hundreds of disjointed “#food,” “#cat-pictures,” and “#off-topic” Slack channels. It&#39;s so, so many shared
           memes. Trying to recreate the physical world in a digital environment is the wrong approach.
         </Text>
 
         <Text as="p" variant="body">
-          We think it’s time to explore the human side of remote work. This is why we’re building Musicbox. We love
-          music. It’s a familiar and personal part of our workday -- whether we’re writing code or finally getting
-          through a stack of unread emails, we find comfort and company in the perfect song. Musicbox helps us share
-          those moments while we listen together like we’re clustered together around the same office radio. And
-          Musicbox helps us share whatever else comes up along the way. We know that technology does not automatically
-          solve nuanced human problems, but we think music is a common and familiar thread that can help us feel a
-          little closer, a little less lonely, and a lot more connected.
+          We think it&#39;s time to explore the human side of remote work. This is why we&#39;re building Musicbox. We
+          love music. It&#39;s a familiar and personal part of our workday -- whether we’re writing code or finally
+          getting through a stack of unread emails, we find comfort and company in the perfect song. Musicbox helps us
+          share those moments while we listen together like we&#39;re clustered together around the same office radio.
+          And Musicbox helps us share whatever else comes up along the way. We know that technology does not
+          automatically solve nuanced human problems, but we think music is a common and familiar thread that can help
+          us feel a little closer, a little less lonely, and a lot more connected.
         </Text>
 
         <Box
@@ -140,7 +140,7 @@ const LinerNotes: React.FC = () => {
             <Box as="a" href="mailto:hello@musicbox.fm" sx={{ color: 'indigo600', fontWeight: 600 }}>
               hello@musicbox.fm
             </Box>{' '}
-            and we'll get you jamming in no time.
+            and we&#39;ll get you jamming in no time.
           </Text>
         </Box>
 

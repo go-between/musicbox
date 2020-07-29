@@ -9,9 +9,9 @@ import Discuss from 'images/discuss-dots.png'
 import Waves from 'images/waves-2.svg'
 import WavesPurple from 'images/wave-purple.svg'
 
-const signalPathDark = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%232d3748' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
+// const signalPathDark = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%232d3748' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
 
-const signalPathPurple = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%233c366b' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
+// const signalPathPurple = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%233c366b' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
 
 const Home: React.FC = () => {
   return (
@@ -43,10 +43,10 @@ const Home: React.FC = () => {
       </Container>
 
       <Box
-        // sx={{
-        //   bg: 'indigo700',
-        //   color: 'indigo200'
-        // }}
+      // sx={{
+      //   bg: 'indigo700',
+      //   color: 'indigo200'
+      // }}
       >
         <Container verticalSpace={4}>
           <Box
@@ -54,20 +54,17 @@ const Home: React.FC = () => {
               bg: 'indigo700',
               borderRadius: 6,
               color: 'indigo200',
-              py: [4,5],
-              px: [2,5],
+              py: [4, 5],
+              px: [2, 5],
               textAlign: 'center',
             }}
           >
-            <Heading
-              as="h2"
-              variant="headline"
-              sx={{color: 'white', mb: 3,}}
-            >
-              Don't copy &amp; paste your office
+            <Heading as="h2" variant="headline" sx={{ color: 'white', mb: 3 }}>
+              Don&#39;t copy &amp; paste your office
             </Heading>
-            <Text sx={{fontSize: [4,5,6], color: 'indigo100',}}>
-              Musicbox provides a less awkward alternative to all those zoom calls, #random slack channels, and virtual happy hours.
+            <Text sx={{ fontSize: [4, 5, 6], color: 'indigo100' }}>
+              Musicbox provides a less awkward alternative to all those zoom calls, #random slack channels, and virtual
+              happy hours.
             </Text>
           </Box>
         </Container>
@@ -98,8 +95,8 @@ const Home: React.FC = () => {
               </Heading>
               <Text sx={{ fontSize: [3, 4, 5], color: 'gray700' }}>
                 Musicbox lets remote teams listen to music together in real-time from the comfort of their home office,
-                coffee shop, or beach—if that's your thing. Create rooms based on your team's listening preferences and
-                easily add songs from YouTube.
+                coffee shop, or beach—if that&#39;s your thing. Create rooms based on your team&#39;s listening
+                preferences and easily add songs from YouTube.
               </Text>
             </Box>
 
@@ -133,10 +130,10 @@ const Home: React.FC = () => {
                 Music is personal
               </Heading>
               <Text sx={{ fontSize: [3, 4, 5], color: 'gray700' }}>
-                Musicbox provides an alternative to Spotify's faceless suggestion algorithm, because nothing compares to
-                the feeling you get when an actual human suggests the perfect song. Asynchronously share music with your
-                teammates, whether they're listening in real-time or catching back up on your recommendation after a
-                meeting.
+                Musicbox provides an alternative to Spotify&#39;s faceless suggestion algorithm, because nothing
+                compares to the feeling you get when an actual human suggests the perfect song. Asynchronously share
+                music with your teammates, whether they&#39;re listening in real-time or catching back up on your
+                recommendation after a meeting.
               </Text>
             </Box>
           </Flex>
@@ -168,7 +165,7 @@ const Home: React.FC = () => {
       <Box sx={{ bg: 'gray100', textAlign: 'center' }}>
         <Container verticalSpace={[4, 6]}>
           <Heading as="h2" variant="headline" mb={3}>
-            But wait, there's more!
+            But wait, there&#39;s more!
           </Heading>
           <Text sx={{ fontSize: [4, 5, 6], mb: 4, color: 'gray700' }}>
             Here are some additional features that you might find super cool.

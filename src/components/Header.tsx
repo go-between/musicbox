@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Box, Button, Flex, Link, Text } from 'rebass'
 
 import { Container, Logo } from '.'

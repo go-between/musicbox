@@ -1,16 +1,16 @@
 import React from 'react'
-import { useHistory, useRouteMatch } from 'react-router-dom'
-import { Box, Button, Flex, Image, Link, Text } from 'rebass'
+// import { useHistory } from 'react-router-dom'
+import { Box, Flex, Image, Text } from 'rebass'
 
 import { Container } from '.'
 import LogoDarkMode from 'images/musicbox-mark.svg'
 
 export const Footer: React.FC = () => {
-  const history = useHistory()
-  const navigate = (to: string) => (ev: React.MouseEvent) => {
-    ev.preventDefault()
-    history.push(to)
-  }
+  // const history = useHistory()
+  // const navigate = (to: string) => (ev: React.MouseEvent) => {
+  //   ev.preventDefault()
+  //   history.push(to)
+  // }
 
   return (
     <Box as="footer" bg="background" color="gray100">
@@ -26,9 +26,9 @@ export const Footer: React.FC = () => {
             </Box>
 
             <Text>
-              Hi, we're Musicbox, a fun and collaborative way for remote teams to enjoy music together without needing
-              to be in the same room. Think of it as a dedicated place to listen, discuss, and share music with the
-              folks on your team.{' '}
+              Hi, we&#39;re Musicbox, a fun and collaborative way for remote teams to enjoy music together without
+              needing to be in the same room. Think of it as a dedicated place to listen, discuss, and share music with
+              the folks on your team.
             </Text>
           </Box>
         </Flex>
