@@ -36,28 +36,27 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, inline = false, playedAt, 
     player.seekTo(start, 'seconds')
   }, [player, playedAt])
 
-  const setVideoDimensions = (ref: Element | undefined): void => {
-    if (!ref) {
-      return
+  useEffect(() => {
+    const setVideoDimensions = (ref: Element | undefined): void => {
+      if (!ref || inline) {
+        return
+      }
+
+      const { top, bottom, left, width } = ref.getBoundingClientRect()
+      const right = window.innerWidth - left - width
+      setDimensions({ top, right, bottom, left })
     }
 
-    const { top, bottom, left, width } = ref.getBoundingClientRect()
-    const right = window.innerWidth - left - width
-    setDimensions({ top, right, bottom, left })
-  }
-
-  useEffect(() => {
     setVideoDimensions(videoRef?.current)
-
     const onResize = (): void => setVideoDimensions(videoRef?.current)
     window.addEventListener('resize', onResize)
 
     return () => window.removeEventListener('resize', onResize)
-  }, [videoRef])
+  }, [videoRef, inline])
 
   const position = inline || !videoRef ? 'inherit' : 'absolute'
-  const height = showVideo && videoRef ? '350px' : '0'
-  const visibility = showVideo && videoRef ? 'visible' : 'hidden'
+  const height = inline || (showVideo && videoRef) ? '350px' : '0'
+  const visibility = inline || (showVideo && videoRef) ? 'visible' : 'hidden'
   const { top, right, bottom, left } = dimensions
 
   return (

@@ -5,7 +5,7 @@ import { XCircle } from 'react-feather'
 type Props = {
   closeModal: (ev?: React.MouseEvent) => void
   showModal: boolean
-  title: string
+  title?: string
 }
 
 export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title }) => {
@@ -53,20 +53,22 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
           width: '600px',
         }}
       >
-        <Flex
-          sx={{
-            borderBottom: '2px solid',
-            borderColor: 'muted',
-            pb: 3,
-          }}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Heading>{title}</Heading>
-          <Box onClick={closeModal} sx={{ cursor: 'pointer' }}>
-            <XCircle />
-          </Box>
-        </Flex>
+        {!!title && (
+          <Flex
+            sx={{
+              borderBottom: '2px solid',
+              borderColor: 'muted',
+              pb: 3,
+            }}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Heading>{title}</Heading>
+            <Box onClick={closeModal} sx={{ cursor: 'pointer' }}>
+              <XCircle />
+            </Box>
+          </Flex>
+        )}
 
         {children}
       </Box>

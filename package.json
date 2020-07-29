@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:prod": "webpack --config webpack.prod.js",
+    "graphql-gen": "graphql-codegen",
     "lint": "eslint './src/**/*.{ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
     "start": "webpack-dev-server --mode development --hot --open --config webpack.dev.js",
@@ -33,6 +34,9 @@
     "@babel/preset-react": "7.7.4",
     "@babel/preset-typescript": "7.7.7",
     "@babel/runtime": "^7.7.7",
+    "@graphql-codegen/cli": "^1.14.0",
+    "@graphql-codegen/fragment-matcher": "^1.14.0",
+    "@graphql-codegen/typescript": "^1.14.0",
     "@types/dotenv-webpack": "^1.7.0",
     "@types/react-beautiful-dnd": "^12.1.1",
     "@typescript-eslint/eslint-plugin": "^2.14.0",

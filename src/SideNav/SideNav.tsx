@@ -1,12 +1,13 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
-import { useHistory, useRouteMatch } from 'react-router-dom'
-import { Inbox, Send, Settings } from 'react-feather'
+import { useHistory } from 'react-router-dom'
+import { Inbox, Search, Send, Settings } from 'react-feather'
 
 import { Logo } from 'components'
 import LogoDarkMode from 'images/musicbox-logo.svg'
-import Keyboard from 'Room/Keyboard'
 import Player from 'Player'
+import JumpMenu, { useJumpNavigationContext } from 'JumpMenu'
+import Keyboard from 'Room/Keyboard'
 
 import Teams from './Teams'
 
@@ -51,14 +52,12 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
 )
 
 export const SideNav: React.FC = ({ children }) => {
+  const { show } = useJumpNavigationContext()
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()
     history.push(to)
   }
-
-  const inRoom = useRouteMatch('/room/:id')
-  const roomKeyboardShortcuts = inRoom && <Box px={3}>{!!inRoom && <Keyboard />}</Box>
 
   return (
     <Flex
@@ -97,6 +96,19 @@ export const SideNav: React.FC = ({ children }) => {
                 <Logo imageSrc={LogoDarkMode} />
               </Box>
 
+              <Flex
+                onClick={show}
+                width="100%"
+                mb={3}
+                px={3}
+                color="text"
+                alignItems="center"
+                sx={{ cursor: 'pointer' }}
+              >
+                <Box as={Search} size={[16, 20]} color="muted" mr={2} />
+                Open Jump Menu (j)
+              </Flex>
+
               <NavHeading>Music</NavHeading>
               <NavLink navigate={navigate('/library')}>
                 <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
@@ -120,8 +132,6 @@ export const SideNav: React.FC = ({ children }) => {
                 User Settings
               </NavLink>
             </Box>
-
-            {roomKeyboardShortcuts}
           </Flex>
         </Box>
 
@@ -145,6 +155,9 @@ export const SideNav: React.FC = ({ children }) => {
       >
         <Player />
       </Box>
+
+      <Keyboard />
+      <JumpMenu />
     </Flex>
   )
 }

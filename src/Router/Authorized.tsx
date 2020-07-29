@@ -3,12 +3,17 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import introspectionQueryResultData from '../../fragmentTypes.json'
+
 import { ApprovalContextProvider } from 'Approval'
 import Home from 'Marketing/Home'
 import LinerNotes from 'Marketing/LinerNotes'
 import Features from 'Marketing/Features'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
+import { JumpNavigationContextProvider } from 'JumpMenu'
 import Library from 'Library'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
@@ -22,6 +27,7 @@ import UserSettings from 'UserSettings'
 import { API_HOST } from 'lib/constants'
 
 import {
+  AddRecordContextProvider,
   CurrentRecordContextProvider,
   PlaylistRecordsContextProvider,
   UserContextProvider,
@@ -103,8 +109,14 @@ const InnerRoutes: React.FC = () => (
   </Switch>
 )
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData,
+})
+const cache = new InMemoryCache({ fragmentMatcher })
+
 const Authorized: React.FC<{ token: string }> = ({ token }) => {
   const apolloClient = new ApolloClient({
+    cache,
     uri: `${API_HOST}/api/v1/graphql`,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -114,21 +126,25 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
   return (
     <WebsocketContextProvider token={token}>
       <ApolloProvider client={apolloClient}>
-        <VideoContextProvider>
-          <UserContextProvider>
-            <PlaylistRecordsContextProvider>
-              <CurrentRecordContextProvider>
-                <VolumeContextProvider>
-                  <ApprovalContextProvider>
-                    <PlayerContextProvider>
-                      <InnerRoutes />
-                    </PlayerContextProvider>
-                  </ApprovalContextProvider>
-                </VolumeContextProvider>
-              </CurrentRecordContextProvider>
-            </PlaylistRecordsContextProvider>
-          </UserContextProvider>
-        </VideoContextProvider>
+        <AddRecordContextProvider>
+          <VideoContextProvider>
+            <UserContextProvider>
+              <PlaylistRecordsContextProvider>
+                <CurrentRecordContextProvider>
+                  <VolumeContextProvider>
+                    <ApprovalContextProvider>
+                      <PlayerContextProvider>
+                        <JumpNavigationContextProvider>
+                          <InnerRoutes />
+                        </JumpNavigationContextProvider>
+                      </PlayerContextProvider>
+                    </ApprovalContextProvider>
+                  </VolumeContextProvider>
+                </CurrentRecordContextProvider>
+              </PlaylistRecordsContextProvider>
+            </UserContextProvider>
+          </VideoContextProvider>
+        </AddRecordContextProvider>
       </ApolloProvider>
     </WebsocketContextProvider>
   )

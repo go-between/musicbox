@@ -1,4 +1,5 @@
 export { default as AuthContextProvider, useAuthContext } from './AuthContextProvider'
+export * from './AddRecordContextProvider'
 export * from './CurrentRecordContextProvider'
 export * from './PlaylistRecordContextProvider'
 export * from './UserContextProvider'
