@@ -2,7 +2,6 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
-import { Box, Flex } from 'rebass'
 
 import { ApprovalContextProvider } from 'Approval'
 import Home from 'Marketing/Home'
@@ -36,24 +35,28 @@ const InnerRoutes: React.FC = () => (
       <Home />
     </Route>
 
-    <Route key="LinerNotes" path="/LinerNotes">
+    <Route key="LinerNotes" path="/liner-notes">
       <LinerNotes />
     </Route>
 
     <Route key="Features" path="/features">
       <Features />
-    </Route>         
+    </Route>
 
     <Route key="invitation" path="/invitation">
       <Invitation />
     </Route>
 
     <Route path="/invitations">
-      <Invitations />
+      <SideNav>
+        <Invitations />
+      </SideNav>
     </Route>
 
     <Route path="/library">
-      <Library />
+      <SideNav>
+        <Library />
+      </SideNav>
     </Route>
 
     <Route key="login" path="/login">
@@ -69,19 +72,27 @@ const InnerRoutes: React.FC = () => (
     </Route>
 
     <Route path="/recommendations">
-      <Recommendations />
+      <SideNav>
+        <Recommendations />
+      </SideNav>
     </Route>
 
     <Route path="/rooms">
-      <Rooms />
+      <SideNav>
+        <Rooms />
+      </SideNav>
     </Route>
 
     <Route path="/room/:id">
-      <Room />
+      <SideNav>
+        <Room />
+      </SideNav>
     </Route>
 
     <Route path="/user-settings">
-      <UserSettings />
+      <SideNav>
+        <UserSettings />
+      </SideNav>
     </Route>
 
     <Redirect
@@ -110,58 +121,7 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                 <VolumeContextProvider>
                   <ApprovalContextProvider>
                     <PlayerContextProvider>
-                      <Flex
-                        sx={{
-                          alignItems: 'top',
-                          bg: 'background',
-                          flexDirection: 'column',
-                          height: '100vh',
-                          mx: 'auto',
-                          position: 'relative',
-                        }}
-                      >
-                        <Flex
-                          sx={{
-                            flexDirection: 'row',
-                            height: '100%',
-                            overflow: 'hidden',
-                          }}
-                        >
-                          <Box
-                            as="aside"
-                            sx={{
-                              bg: 'background',
-                              borderRight: '1px solid',
-                              borderColor: 'accent',
-                              display: ['none', 'flex'],
-                              flexDirection: 'column',
-                              justifyContent: 'space-between',
-                              overflow: 'hidden',
-                              width: ['100%', '300px'],
-                            }}
-                          >
-                            <SideNav />
-                          </Box>
-                          <Flex
-                            as="main"
-                            sx={{
-                              flexDirection: ['column', 'row'],
-                              height: '100%',
-                              width: ['100%'],
-                            }}
-                          >
-                            <InnerRoutes />
-                          </Flex>
-                        </Flex>
-                        <Box
-                          sx={{
-                            borderTop: '1px solid',
-                            borderColor: 'accent',
-                          }}
-                        >
-                          <Player />
-                        </Box>
-                      </Flex>
+                      <InnerRoutes/>
                     </PlayerContextProvider>
                   </ApprovalContextProvider>
                 </VolumeContextProvider>

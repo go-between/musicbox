@@ -13,19 +13,23 @@ export const Footer: React.FC = () => {
   }
 
   return (
-    <Box
-      as="footer"
-      bg="background"
-      color="gray100"
-    >
-      <Container verticalSpace={6}>
-        <Flex alignItems="space-between" flexDirection={['column', 'row']} sx={{borderBottom: '2px solid', borderColor: 'gray800', pb: 4, mb:4}}>
+    <Box as="footer" bg="background" color="gray100">
+      <Container verticalSpace={[4, 5]}>
+        <Flex
+          alignItems="space-between"
+          flexDirection={['column', 'row']}
+          sx={{ borderBottom: '2px solid', borderColor: 'gray800', pb: 4, mb: 4 }}
+        >
           <Box width={['100%', '50%']}>
             <Box width="50px">
               <Image src={LogoDarkMode} />
             </Box>
 
-            <Text>Hi, we're Musicbox, a fun and collaborative way for remote teams to enjoy music together without needing to be in the same room. Think of it as a dedicated place to listen, discuss, and share music with the folks on your team. </Text>
+            <Text>
+              Hi, we're Musicbox, a fun and collaborative way for remote teams to enjoy music together without needing
+              to be in the same room. Think of it as a dedicated place to listen, discuss, and share music with the
+              folks on your team.{' '}
+            </Text>
           </Box>
         </Flex>
         <Flex>

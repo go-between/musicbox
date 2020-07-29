@@ -31,7 +31,7 @@ const Unauthorized: React.FC = () => {
 
         <Route key="Features" path="/features">
           <Features />
-        </Route>        
+        </Route>
 
         <Route key="invitation" path="/invitation">
           <Invitation />

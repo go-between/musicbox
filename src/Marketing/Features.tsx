@@ -8,11 +8,11 @@ const Features: React.FC = () => {
     <Box
       sx={{
         bg: 'white',
-        color: 'modes.light.text'
+        color: 'modes.light.text',
       }}
     >
-      <Header />  
-      
+      <Header />
+
       <Box
         sx={{
           maxWidth: 680,
@@ -20,12 +20,13 @@ const Features: React.FC = () => {
           py: [5, 6],
           px: [4],
         }}
-      >Features!</Box>        
+      >
+        Features!
+      </Box>
     </Box>
   )
 }
 
 export default Features
-
 
 // Sure, I love getting that perfect, algorithmically recommended song as much the next person, but nothing beats either personally receiving or recommending the perfect song to a friend, family member, or co-worker. Nothing beats listening and sharing music with real, human people that learn your preferences

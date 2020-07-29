@@ -30,12 +30,14 @@ export const Header: React.FC = () => {
             py: 3,
           }}
         >
-          <Flex as="a" href="/" sx={{alignItems: 'center',  textDecoration: 'none'}}>
-            <Logo imageSrc={LogoLightMode} width='40px' />
-            <Text sx={{color: 'gray800', fontSize: 3, textTransform: 'uppercase', fontWeight: 800, px: 2}}>Musicbox</Text>
+          <Flex as="a" href="/" sx={{ alignItems: 'center', textDecoration: 'none' }}>
+            <Logo imageSrc={LogoLightMode} width="40px" />
+            <Text sx={{ color: 'gray800', fontSize: 3, textTransform: 'uppercase', fontWeight: 800, px: 2 }}>
+              Musicbox
+            </Text>
           </Flex>
 
-          <Flex as="nav" sx={{alignItems: 'center'}}>
+          <Flex as="nav" sx={{ alignItems: 'center' }}>
             {/* <Link
               onClick={navigate('features')}
               sx={{
@@ -59,9 +61,10 @@ export const Header: React.FC = () => {
             <Link
               onClick={navigate('login')}
               sx={{
-                fontSize: [2,3],
+                fontSize: [2, 3],
                 pl: [3, 4],
-            }}>
+              }}
+            >
               Login
             </Link>
 
@@ -69,7 +72,8 @@ export const Header: React.FC = () => {
               onClick={navigate('signup')}
               sx={{
                 pl: [3, 4],
-            }}>
+              }}
+            >
               <Button
                 sx={{
                   fontSize: [1, 2, 3],

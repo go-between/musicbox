@@ -190,7 +190,7 @@ export default {
   text: {
     body: {
       color: 'gray700',
-      fontSize: [3,4,5],
+      fontSize: [3, 4, 5],
       mb: 4,
       lineHeight: 1.5,
     },
@@ -210,17 +210,17 @@ export default {
     },
     intro: {
       color: 'gray700',
-      fontSize: [4,5,6],
+      fontSize: [4, 5, 6],
       fontWeight: 300,
       letterSpacing: '-0.045em',
       textIndent: '-0.012em',
       lineHeight: '1.4',
-    }
+    },
   },
   variants: {
     link: {
       cursor: 'pointer',
-    }
+    },
   },
   zIndices: {
     zNeg: -1,
