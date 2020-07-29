@@ -2,20 +2,22 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
-import { Box, Flex } from 'rebass'
 
 import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import introspectionQueryResultData from '../../fragmentTypes.json'
 
 import { ApprovalContextProvider } from 'Approval'
+import Home from 'Marketing/Home'
+import LinerNotes from 'Marketing/LinerNotes'
+import Features from 'Marketing/Features'
 import Invitation from 'Invitation'
 import Invitations from 'Invitations'
-import JumpMenu, { JumpNavigationContextProvider } from 'JumpMenu'
+import { JumpNavigationContextProvider } from 'JumpMenu'
 import Library from 'Library'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
-import Player, { PlayerContextProvider, VolumeContextProvider } from 'Player'
+import { PlayerContextProvider, VolumeContextProvider } from 'Player'
 import Recommendations from 'Recommendations'
 import Room from 'Room'
 import Rooms from 'Rooms'
@@ -35,16 +37,32 @@ import {
 
 const InnerRoutes: React.FC = () => (
   <Switch>
+    <Route key="home" path="/" exact={true}>
+      <Home />
+    </Route>
+
+    <Route key="LinerNotes" path="/liner-notes">
+      <LinerNotes />
+    </Route>
+
+    <Route key="Features" path="/features">
+      <Features />
+    </Route>
+
     <Route key="invitation" path="/invitation">
       <Invitation />
     </Route>
 
     <Route path="/invitations">
-      <Invitations />
+      <SideNav>
+        <Invitations />
+      </SideNav>
     </Route>
 
     <Route path="/library">
-      <Library />
+      <SideNav>
+        <Library />
+      </SideNav>
     </Route>
 
     <Route key="login" path="/login">
@@ -60,19 +78,27 @@ const InnerRoutes: React.FC = () => (
     </Route>
 
     <Route path="/recommendations">
-      <Recommendations />
+      <SideNav>
+        <Recommendations />
+      </SideNav>
     </Route>
 
     <Route path="/rooms">
-      <Rooms />
+      <SideNav>
+        <Rooms />
+      </SideNav>
     </Route>
 
     <Route path="/room/:id">
-      <Room />
+      <SideNav>
+        <Room />
+      </SideNav>
     </Route>
 
     <Route path="/user-settings">
-      <UserSettings />
+      <SideNav>
+        <UserSettings />
+      </SideNav>
     </Route>
 
     <Redirect
@@ -109,60 +135,7 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
                     <ApprovalContextProvider>
                       <PlayerContextProvider>
                         <JumpNavigationContextProvider>
-                          <JumpMenu />
-
-                          <Flex
-                            sx={{
-                              alignItems: 'top',
-                              bg: 'background',
-                              flexDirection: 'column',
-                              height: '100vh',
-                              mx: 'auto',
-                              position: 'relative',
-                            }}
-                          >
-                            <Flex
-                              sx={{
-                                flexDirection: 'row',
-                                height: '100%',
-                                overflow: 'hidden',
-                              }}
-                            >
-                              <Box
-                                as="aside"
-                                sx={{
-                                  bg: 'background',
-                                  borderRight: '1px solid',
-                                  borderColor: 'accent',
-                                  display: ['none', 'flex'],
-                                  flexDirection: 'column',
-                                  justifyContent: 'space-between',
-                                  overflow: 'hidden',
-                                  width: ['100%', '300px'],
-                                }}
-                              >
-                                <SideNav />
-                              </Box>
-                              <Flex
-                                as="main"
-                                sx={{
-                                  flexDirection: ['column', 'row'],
-                                  height: '100%',
-                                  width: ['100%'],
-                                }}
-                              >
-                                <InnerRoutes />
-                              </Flex>
-                            </Flex>
-                            <Box
-                              sx={{
-                                borderTop: '1px solid',
-                                borderColor: 'accent',
-                              }}
-                            >
-                              <Player />
-                            </Box>
-                          </Flex>
+                          <InnerRoutes />
                         </JumpNavigationContextProvider>
                       </PlayerContextProvider>
                     </ApprovalContextProvider>

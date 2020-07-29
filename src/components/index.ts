@@ -1,4 +1,6 @@
 export { Container } from './Container'
+export { Header } from './Header'
+export { Footer } from './Footer'
 export { KeyboardSelectable } from './KeyboardSelectable'
 export { Logo } from './Logo'
 export { MediaObject } from './MediaObject'

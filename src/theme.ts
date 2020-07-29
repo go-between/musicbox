@@ -10,6 +10,12 @@ const colors = {
   accentHover: 'rgba(45, 55, 72, .3)',
   highlight: 'rgba(90, 103, 216, .1)',
   modes: {
+    // dark: {
+    //   accent: '#2D3748', // a contrast color for emphasizing UI
+    //   background: '#1A202C', // body background color
+    //   text: '#E2E8F0', // body color
+    //   muted: '#4A5568', // a gray or subdued color for decorative purposes
+    // },
     light: {
       accent: '#718096',
       background: '#F7FAFC',
@@ -58,7 +64,7 @@ const colors = {
 
 export default {
   borders: [0, '1px solid', '2px solid'],
-  breakpoints: ['960px', '1200px', '1400px'],
+  breakpoints: ['550px', '750px', '950px'],
   buttons: {
     primary: {
       bg: 'primary',
@@ -181,6 +187,41 @@ export default {
   },
   styles: {},
   space: [0, 4, 8, 16, 32, 64, 128, 256],
+  text: {
+    body: {
+      color: 'gray700',
+      fontSize: [3, 4, 5],
+      mb: 4,
+      lineHeight: 1.5,
+    },
+    headline: {
+      color: 'gray800',
+      fontSize: [6, 8, 8],
+      letterSpacing: '-0.045em',
+      textIndent: '-0.012em',
+      lineHeight: '1em',
+    },
+    subHeadline: {
+      color: 'gray800',
+      fontSize: [5, 6, 7],
+      letterSpacing: '-0.045em',
+      textIndent: '-0.012em',
+      lineHeight: '1em',
+    },
+    intro: {
+      color: 'gray700',
+      fontSize: [4, 5, 6],
+      fontWeight: 300,
+      letterSpacing: '-0.045em',
+      textIndent: '-0.012em',
+      lineHeight: '1.4',
+    },
+  },
+  variants: {
+    link: {
+      cursor: 'pointer',
+    },
+  },
   zIndices: {
     zNeg: -1,
     z0: 0,

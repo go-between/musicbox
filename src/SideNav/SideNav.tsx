@@ -4,8 +4,10 @@ import { useHistory } from 'react-router-dom'
 import { Inbox, Search, Send, Settings } from 'react-feather'
 
 import { Logo } from 'components'
+import LogoDarkMode from 'images/musicbox-logo.svg'
+import Player from 'Player'
+import JumpMenu, { useJumpNavigationContext } from 'JumpMenu'
 import Keyboard from 'Room/Keyboard'
-import { useJumpNavigationContext } from 'JumpMenu'
 
 import Teams from './Teams'
 
@@ -49,7 +51,7 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
   </Box>
 )
 
-export const SideNav: React.FC = () => {
+export const SideNav: React.FC = ({ children }) => {
   const { show } = useJumpNavigationContext()
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
@@ -58,42 +60,104 @@ export const SideNav: React.FC = () => {
   }
 
   return (
-    <Flex justifyContent="space-between" flexDirection="column" height="100%">
-      <Box>
-        <Box px={3} py={4}>
-          <Logo />
+    <Flex
+      sx={{
+        alignItems: 'top',
+        bg: 'background',
+        flexDirection: 'column',
+        height: '100vh',
+        mx: 'auto',
+        position: 'relative',
+      }}
+    >
+      <Flex
+        sx={{
+          flexDirection: 'row',
+          height: '100%',
+          overflow: 'hidden',
+        }}
+      >
+        <Box
+          as="aside"
+          sx={{
+            bg: 'background',
+            borderRight: '1px solid',
+            borderColor: 'accent',
+            display: ['none', 'flex'],
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            overflow: 'hidden',
+            width: ['100%', '300px'],
+          }}
+        >
+          <Flex justifyContent="space-between" flexDirection="column" height="100%">
+            <Box>
+              <Box px={3} py={4}>
+                <Logo imageSrc={LogoDarkMode} />
+              </Box>
+
+              <Flex
+                onClick={show}
+                width="100%"
+                mb={3}
+                px={3}
+                color="text"
+                alignItems="center"
+                sx={{ cursor: 'pointer' }}
+              >
+                <Box as={Search} size={[16, 20]} color="muted" mr={2} />
+                Open Jump Menu (j)
+              </Flex>
+
+              <NavHeading>Music</NavHeading>
+              <NavLink navigate={navigate('/library')}>
+                <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
+                Library
+              </NavLink>
+
+              <NavLink navigate={navigate('/recommendations')}>
+                <Box as={Send} size={[16, 20]} color="muted" mr={2} />
+                Recommendations
+              </NavLink>
+
+              <Box my={4} />
+
+              <NavHeading>Teams</NavHeading>
+              <Teams />
+
+              <Box my={4} />
+              <NavHeading>Settings</NavHeading>
+              <NavLink navigate={navigate('/user-settings')}>
+                <Box as={Settings} size={[16, 20]} color="muted" mr={2} />
+                User Settings
+              </NavLink>
+            </Box>
+          </Flex>
         </Box>
 
-        <Flex onClick={show} width="100%" mb={3} px={3} color="text" alignItems="center" sx={{ cursor: 'pointer' }}>
-          <Box as={Search} size={[16, 20]} color="muted" mr={2} />
-          Open Jump Menu (j)
+        <Flex
+          as="main"
+          sx={{
+            flexDirection: ['column', 'row'],
+            height: '100%',
+            width: ['100%'],
+          }}
+        >
+          {children}
         </Flex>
+      </Flex>
 
-        <NavHeading>Music</NavHeading>
-        <NavLink navigate={navigate('/library')}>
-          <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
-          Library
-        </NavLink>
-
-        <NavLink navigate={navigate('/recommendations')}>
-          <Box as={Send} size={[16, 20]} color="muted" mr={2} />
-          Recommendations
-        </NavLink>
-
-        <Box my={4} />
-
-        <NavHeading>Teams</NavHeading>
-        <Teams />
-
-        <Box my={4} />
-        <NavHeading>Settings</NavHeading>
-        <NavLink navigate={navigate('/user-settings')}>
-          <Box as={Settings} size={[16, 20]} color="muted" mr={2} />
-          User Settings
-        </NavLink>
+      <Box
+        sx={{
+          borderTop: '1px solid',
+          borderColor: 'accent',
+        }}
+      >
+        <Player />
       </Box>
 
       <Keyboard />
+      <JumpMenu />
     </Flex>
   )
 }
