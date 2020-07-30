@@ -7,7 +7,8 @@ import Listen from 'images/listen-dots.png'
 import Share from 'images/share-dots.png'
 import Discuss from 'images/discuss-dots.png'
 import Waves from 'images/waves-2.svg'
-import WavesPurple from 'images/wave-purple.svg'
+import WavesPurple from 'images/wave-purple-2.svg'
+import CopyPaste from 'images/copy-paste.png'
 
 // const signalPathDark = `"data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%232d3748' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E"`
 
@@ -30,10 +31,12 @@ const Home: React.FC = () => {
               Discover the humans you work with one song at a time.
             </Heading>
 
-            <Text sx={{ fontSize: [3, 4, 5], color: 'gray700' }}>
+            <Text sx={{ fontSize: [3, 4, 5], color: 'gray700', mb: 4 }}>
               Music sparks conversations and memories that lead to deep, meaningful connections. And Musicbox is a
               remote-friendly place to listen, share, and discuss music with the folks on your team.
             </Text>
+
+            <Button>Get Started!</Button>
           </Box>
 
           <Box width={['100%', '100%', '50%']} my={[4, 4, 0]}>
@@ -42,17 +45,16 @@ const Home: React.FC = () => {
         </Flex>
       </Container>
 
-      <Box
-      // sx={{
-      //   bg: 'indigo700',
-      //   color: 'indigo200'
-      // }}
-      >
+      {/* <Box>
         <Container verticalSpace={4}>
           <Box
             sx={{
-              bg: 'indigo700',
+              bg: 'indigo800',
+              backgroundImage: [`url(${WavesPurple})`],
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
               borderRadius: 6,
+              boxShadow: 'xl',
               color: 'indigo200',
               py: [4, 5],
               px: [2, 5],
@@ -67,6 +69,21 @@ const Home: React.FC = () => {
               happy hours.
             </Text>
           </Box>
+        </Container>
+      </Box> */}
+
+      <Box>
+        <Container verticalSpace={5}>
+          <Box sx={{ textAlign: 'center' }}>
+            <Heading as="h2" variant="headline" sx={{ color: 'gray800', mb: 3 }}>
+              Don&#39;t copy &amp; paste your office
+            </Heading>
+            <Text sx={{ fontSize: [4, 5, 6], color: 'gray600', mb: 4, mx: 'auto', width: ['100%', '80%', '70%'] }}>
+              Musicbox is a better alternative to all those zoom calls, #random slack channels, and virtual happy hours.
+            </Text>
+          </Box>
+
+          <Image src={CopyPaste} />
         </Container>
       </Box>
 
@@ -162,15 +179,20 @@ const Home: React.FC = () => {
         </Container>
       </Box>
 
-      <Box sx={{ bg: 'gray100', textAlign: 'center' }}>
+      <Box
+        sx={{
+          backgroundColor: ['indigo700', 'gray100'],
+          backgroundImage: [`url(${WavesPurple})`],
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'top',
+          textAlign: 'center',
+        }}
+      >
         <Container verticalSpace={[4, 6]}>
-          <Heading as="h2" variant="headline" mb={3}>
+          <Heading as="h2" variant="headline" mb={[4]} mt={[4, 0]} color="white">
             But wait, there&#39;s more!
           </Heading>
-          <Text sx={{ fontSize: [4, 5, 6], mb: 4, color: 'gray700' }}>
-            Here are some additional features that you might find super cool.
-          </Text>
-
           <Flex sx={{ flexDirection: ['column', 'row'], flexWrap: 'wrap' }}>
             <Box sx={{ flex: [1, '50%', '25%'], px: 2, py: [2, 2, 0] }}>
               <Box
@@ -236,7 +258,7 @@ const Home: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                <Heading></Heading>
+                <Heading>Remote First Design</Heading>
                 <Text>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus id rem maiores animi sit
                   cupiditate neque.
@@ -247,7 +269,7 @@ const Home: React.FC = () => {
         </Container>
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           backgroundColor: 'gray100',
           backgroundImage: [`url(${WavesPurple})`],
@@ -267,7 +289,7 @@ const Home: React.FC = () => {
             <Button>Request Access</Button>
           </Box>
         </Container>
-      </Box>
+      </Box> */}
 
       {/* <Box color="gray400"
         sx={{

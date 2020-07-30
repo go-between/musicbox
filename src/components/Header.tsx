@@ -79,7 +79,7 @@ export const Header: React.FC = () => {
                   fontSize: [1, 2, 3],
                 }}
               >
-                Get Started
+                Sign Up
               </Button>
             </Link>
           </Flex>
