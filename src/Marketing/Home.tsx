@@ -31,10 +31,12 @@ const Home: React.FC = () => {
               Discover the humans you work with one song at a time.
             </Heading>
 
-            <Text sx={{ fontSize: [3, 4, 5], color: 'gray700' }}>
+            <Text sx={{ fontSize: [3, 4, 5], color: 'gray700', mb: 4 }}>
               Music sparks conversations and memories that lead to deep, meaningful connections. And Musicbox is a
               remote-friendly place to listen, share, and discuss music with the folks on your team.
             </Text>
+
+            <Button>Get Started!</Button>
           </Box>
 
           <Box width={['100%', '100%', '50%']} my={[4, 4, 0]}>
@@ -72,13 +74,12 @@ const Home: React.FC = () => {
 
       <Box>
         <Container verticalSpace={5}>
-          <Box sx={{textAlign: 'center'}}>
+          <Box sx={{ textAlign: 'center' }}>
             <Heading as="h2" variant="headline" sx={{ color: 'gray800', mb: 3 }}>
               Don&#39;t copy &amp; paste your office
             </Heading>
             <Text sx={{ fontSize: [4, 5, 6], color: 'gray600', mb: 4, mx: 'auto', width: ['100%', '80%', '70%'] }}>
-              Musicbox is a better alternative to all those zoom calls, #random slack channels, and virtual
-              happy hours.
+              Musicbox is a better alternative to all those zoom calls, #random slack channels, and virtual happy hours.
             </Text>
           </Box>
 
@@ -257,7 +258,7 @@ const Home: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                <Heading></Heading>
+                <Heading>Remote First Design</Heading>
                 <Text>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus id rem maiores animi sit
                   cupiditate neque.
