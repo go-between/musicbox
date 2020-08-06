@@ -53,6 +53,7 @@ const colors = {
   indigo600: '#5A67D8',
   indigo700: '#4C51BF',
   indigo800: '#434190',
+  indigo900: '#3C366B',
   red: '#E53E3E',
   redDark: '#C53030',
   redLight: '#FFF5F5',
@@ -64,7 +65,7 @@ const colors = {
 
 export default {
   borders: [0, '1px solid', '2px solid'],
-  breakpoints: ['550px', '750px', '950px'],
+  breakpoints: ['600px', '750px', '950px'],
   buttons: {
     primary: {
       bg: 'primary',
@@ -196,7 +197,7 @@ export default {
     },
     headline: {
       color: 'gray800',
-      fontSize: [6, 8, 8],
+      fontSize: [6, 7, 8],
       letterSpacing: '-0.045em',
       textIndent: '-0.012em',
       lineHeight: '1em',
@@ -218,8 +219,16 @@ export default {
     },
   },
   variants: {
-    link: {
+    footerLink: {
+      borderRadius: 6,
       cursor: 'pointer',
+      color: 'gray500',
+      display: 'inline-block',
+      p: 2,
+      '&:hover': {
+        // bg: 'gray800',
+        color: 'gray200',
+      }
     },
   },
   zIndices: {
