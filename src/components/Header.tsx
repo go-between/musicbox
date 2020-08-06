@@ -48,15 +48,16 @@ export const Header: React.FC = () => {
               Features
             </Link> */}
 
-            {/* <Link
+            <Link
               onClick={navigate('liner-notes')}
               variant="link"
               sx={{
-                fontSize: [2,3],
+                fontSize: [2, 3],
                 pl: [3, 4],
-            }}>
-              Liner Notes
-            </Link> */}
+              }}
+            >
+              About Us
+            </Link>
 
             <Link
               onClick={navigate('login')}
@@ -76,7 +77,15 @@ export const Header: React.FC = () => {
             >
               <Button
                 sx={{
-                  fontSize: [1, 2, 3],
+                  bg: 'transparent',
+                  border: '2px solid',
+                  borderColor: 'primary',
+                  color: 'primary',
+                  fontSize: [1, 2],
+                  '&:hover': {
+                    bg: 'primary',
+                    color: 'white',
+                  },
                 }}
               >
                 Sign Up
