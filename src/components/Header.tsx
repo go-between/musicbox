@@ -52,9 +52,10 @@ export const Header: React.FC = () => {
               onClick={navigate('liner-notes')}
               variant="link"
               sx={{
-                fontSize: [2,3],
+                fontSize: [2, 3],
                 pl: [3, 4],
-            }}>
+              }}
+            >
               About Us
             </Link>
 
@@ -84,7 +85,7 @@ export const Header: React.FC = () => {
                   '&:hover': {
                     bg: 'primary',
                     color: 'white',
-                  }
+                  },
                 }}
               >
                 Sign Up

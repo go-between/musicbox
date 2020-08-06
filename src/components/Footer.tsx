@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
   //   ev.preventDefault()
   //   history.push(to)
   // }
-var foo = moment().format("YYYY")
+  const foo = moment().format('YYYY')
 
   return (
     <Box as="footer" bg="background" color="gray100">
@@ -28,7 +28,7 @@ var foo = moment().format("YYYY")
               <Image src={LogoDarkMode} />
             </Box>
 
-            <Text sx={{color: 'gray500', fontSize: 3}}>
+            <Text sx={{ color: 'gray500', fontSize: 3 }}>
               Hi, we&#39;re Musicbox, a fun and collaborative way for remote teams to enjoy music together without
               needing to be in the same room. Think of it as a dedicated place to listen, discuss, and share music with
               the folks on your team.
@@ -37,7 +37,7 @@ var foo = moment().format("YYYY")
         </Flex>
         <Flex alignItems="center" justifyContent="space-between">
           <Box>
-            <Text sx={{color: 'gray500'}}>&copy;Copyright {foo}</Text>
+            <Text sx={{ color: 'gray500' }}>&copy;Copyright {foo}</Text>
           </Box>
 
           <Box>

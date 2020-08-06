@@ -228,7 +228,7 @@ export default {
       '&:hover': {
         // bg: 'gray800',
         color: 'gray200',
-      }
+      },
     },
   },
   zIndices: {
