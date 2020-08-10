@@ -2,14 +2,16 @@ import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import { Inbox, Search, Send, Settings } from 'react-feather'
+import Gravatar from 'react-gravatar'
 
 import { Logo } from 'components'
-import LogoDarkMode from 'images/musicbox-logo.svg'
+import LogoDarkMode from 'images/musicbox-mark-purple.svg'
 import Player from 'Player'
 import JumpMenu, { useJumpNavigationContext } from 'JumpMenu'
 import Keyboard from 'Room/Keyboard'
 
 import Teams from './Teams'
+import { overflow } from 'styled-system'
 
 const NavHeading: React.FC = ({ children }) => (
   <Flex
@@ -68,8 +70,53 @@ export const SideNav: React.FC = ({ children }) => {
         height: '100vh',
         mx: 'auto',
         position: 'relative',
+        maxWidth: '1440px',
       }}
     >
+      <Flex
+        as="header"
+        sx={{
+          alignItems: 'center',
+          borderBottom: '1px solid',
+          borderColor: 'accent',
+          justifyContent: 'space-between',
+          p: 3,
+          width: '100%',
+        }}
+      >
+        <Logo imageSrc={LogoDarkMode} width='36px' />
+
+        <Box
+          onClick={show}
+          sx={{
+            bg:'accent',
+            borderRadius: 6,
+            cursor: 'pointer',
+            py: 2,
+            px: 3,
+            mx: 3,
+            flex: [1],
+          }}
+        >
+          <Text
+            sx={{
+              color: 'gray500',
+              fontSize: 2,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >Search songs, change rooms, manage your library, etc</Text>
+        </Box>
+
+        <Box>
+          <NavLink navigate={navigate('/user-settings')}>
+            {/* Replace hardcoded email */}
+            <Gravatar email='daniel.e.lavin@gmail.com' size={32} style={{ borderRadius: '100%' }} />
+          </NavLink>
+        </Box>
+      </Flex>
+
       <Flex
         sx={{
           flexDirection: 'row',
@@ -93,10 +140,10 @@ export const SideNav: React.FC = ({ children }) => {
           <Flex justifyContent="space-between" flexDirection="column" height="100%">
             <Box>
               <Box px={3} py={4}>
-                <Logo imageSrc={LogoDarkMode} />
+                {/* <Logo imageSrc={LogoDarkMode} /> */}
               </Box>
 
-              <Flex
+              {/* <Flex
                 onClick={show}
                 width="100%"
                 mb={3}
@@ -107,7 +154,7 @@ export const SideNav: React.FC = ({ children }) => {
               >
                 <Box as={Search} size={[16, 20]} color="muted" mr={2} />
                 Open Jump Menu (j)
-              </Flex>
+              </Flex> */}
 
               <NavHeading>Music</NavHeading>
               <NavLink navigate={navigate('/library')}>
