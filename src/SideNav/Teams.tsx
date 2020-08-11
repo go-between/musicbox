@@ -22,7 +22,6 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
       <Heading
         sx={{
           mb: 4,
-          ml: 3,
           fontSize: 2,
         }}
       >
@@ -47,9 +46,9 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
         onChange={changeTeam}
         defaultValue={activeTeamId}
         sx={{
-          bg: 'background',
-          borderRadius: 0,
-          borderColor: 'transparent',
+          borderRadius: 6,
+
+          boxShadow: 'md',
           cursor: 'pointer',
           fontSize: 2,
           px: 3,
@@ -133,7 +132,7 @@ const Teams: React.FC = () => {
     <>
       <TeamSelector activeTeamId={user.activeTeam.id} changeTeam={changeTeam} teams={user.teams} />
 
-      <Flex alignItems="center" justifyContent="space-between" mb={3} px={3} display="inline-flex">
+      <Flex alignItems="center" justifyContent="space-between" mb={3} display="inline-flex">
         <Text
           sx={{
             color: 'gray500',

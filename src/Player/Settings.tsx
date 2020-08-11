@@ -23,55 +23,31 @@ const Settings: React.FC = () => {
 
   const userOwnsCurrentRecord = currentRecord.user.id === user.id
   const skipSong = userOwnsCurrentRecord ? (
-    <Text
-      sx={{
-        alignItems: 'center',
-        display: 'flex',
-        fontSize: 2,
-        mr: 3,
-        textDecoration: 'underline',
-      }}
+    <Box
       onClick={() => roomPlaylistRecordAbandon()}
     >
-      <SkipForward size={16} />
-      <Box px={1} />
-      Skip Song
-    </Text>
+      <SkipForward size={20} />
+    </Box>
   ) : (
     <></>
   )
 
   return (
-    <Flex sx={{ cursor: 'pointer', position: 'relative', '&:hover > *': { visibility: 'visible' } }}>
+    <Flex
+      alignItems='center'
+    >
+      {skipSong}
       <Box
         sx={{
-          bg: 'background',
-          position: 'absolute',
-          left: 0,
-          bottom: '100%',
-          p: 2,
-          width: '160px',
-          visibility: 'hidden',
+          alignItems: 'center',
+          display: 'flex',
+          fontSize: 2,
+          mr: 3,
+          textDecoration: 'underline',
         }}
+        onClick={toggleShowVideo}
       >
-        {skipSong}
-        <Text
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            fontSize: 2,
-            mr: 3,
-            textDecoration: 'underline',
-          }}
-          onClick={toggleShowVideo}
-        >
-          <EyeOff size={16} />
-          <Box px={1} />
-          {showVideo ? 'Hide Video' : 'Show Video'}
-        </Text>
-      </Box>
-      <Box sx={{ zIndex: 100 }}>
-        <SettingsIcon />
+        <EyeOff size={20} />
       </Box>
     </Flex>
   )

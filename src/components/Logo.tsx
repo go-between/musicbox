@@ -5,6 +5,7 @@ export const Logo: React.FC<{ imageSrc: string; width?: string }> = ({ imageSrc,
   <Image
     src={imageSrc}
     sx={{
+      p: 1,
       width: width || '125px',
     }}
   />

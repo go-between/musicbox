@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Inbox, Search, Send, Settings } from 'react-feather'
+import { Inbox, Grid, Search, Send, Settings } from 'react-feather'
 import Gravatar from 'react-gravatar'
 
 import { Logo } from 'components'
@@ -11,14 +11,9 @@ import JumpMenu, { useJumpNavigationContext } from 'JumpMenu'
 import Keyboard from 'Room/Keyboard'
 
 import Teams from './Teams'
-import { overflow } from 'styled-system'
 
 const NavHeading: React.FC = ({ children }) => (
-  <Flex
-    sx={{
-      px: 3,
-    }}
-  >
+  <Flex>
     <Text
       sx={{
         color: 'gray500',
@@ -34,15 +29,20 @@ const NavHeading: React.FC = ({ children }) => (
 )
 
 const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ children, navigate }) => (
-  <Box width="100%" mb={2} px={3}>
+  <Box width="100%" mb={2}>
     <Link
       sx={{
         alignItems: 'center',
         display: 'inline-flex',
         fontSize: 2,
-        mb: 3,
+        px: 2,
+        py: 1,
         textDecoration: 'none',
         width: '100%',
+        '&:hover': {
+          bg: 'accent',
+          borderRadius: 6,
+        }
       }}
       color="text"
       onClick={navigate}
@@ -77,44 +77,44 @@ export const SideNav: React.FC = ({ children }) => {
         as="header"
         sx={{
           alignItems: 'center',
-          borderBottom: '1px solid',
-          borderColor: 'accent',
+          bg: 'backgroundTint',
           justifyContent: 'space-between',
-          p: 3,
+          p: [3],
           width: '100%',
         }}
       >
-        <Logo imageSrc={LogoDarkMode} width='36px' />
+        <Logo imageSrc={LogoDarkMode} width='42px' />
 
-        <Box
+        <Flex
           onClick={show}
           sx={{
+            alignItems: 'center',
             bg:'accent',
             borderRadius: 6,
+            color: 'gray500',
             cursor: 'pointer',
             py: 2,
             px: 3,
             mx: 3,
             flex: [1],
+            maxWidth: ['100%', '50%']
           }}
         >
+          <Box as={Search} size={18} />
           <Text
             sx={{
-              color: 'gray500',
               fontSize: 2,
+              mx: 2,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
             }}
-          >Search songs, change rooms, manage your library, etc</Text>
-        </Box>
+          >Search for Music</Text>
+        </Flex>
 
-        <Box>
-          <NavLink navigate={navigate('/user-settings')}>
-            {/* Replace hardcoded email */}
-            <Gravatar email='daniel.e.lavin@gmail.com' size={32} style={{ borderRadius: '100%' }} />
-          </NavLink>
-        </Box>
+        <Flex as={Link} onClick={navigate('user-settings')}>
+          <Gravatar email='daniel.e.lavin@gmail.com' size={36} style={{ borderRadius: '100%' }} />
+        </Flex>
       </Flex>
 
       <Flex
@@ -125,11 +125,9 @@ export const SideNav: React.FC = ({ children }) => {
         }}
       >
         <Box
-          as="aside"
+          as="nav"
           sx={{
             bg: 'background',
-            borderRight: '1px solid',
-            borderColor: 'accent',
             display: ['none', 'flex'],
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -138,46 +136,24 @@ export const SideNav: React.FC = ({ children }) => {
           }}
         >
           <Flex justifyContent="space-between" flexDirection="column" height="100%">
-            <Box>
-              <Box px={3} py={4}>
-                {/* <Logo imageSrc={LogoDarkMode} /> */}
+            <Box py={4} px={[3]}>
+              <Box pb={4}>
+                <NavHeading>Music</NavHeading>
+                <NavLink navigate={navigate('/library')}>
+                  <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
+                  Library
+                </NavLink>
+
+                <NavLink navigate={navigate('/recommendations')}>
+                  <Box as={Send} size={[16, 20]} color="muted" mr={2} />
+                  Recommendations
+                </NavLink>
               </Box>
 
-              {/* <Flex
-                onClick={show}
-                width="100%"
-                mb={3}
-                px={3}
-                color="text"
-                alignItems="center"
-                sx={{ cursor: 'pointer' }}
-              >
-                <Box as={Search} size={[16, 20]} color="muted" mr={2} />
-                Open Jump Menu (j)
-              </Flex> */}
-
-              <NavHeading>Music</NavHeading>
-              <NavLink navigate={navigate('/library')}>
-                <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
-                Library
-              </NavLink>
-
-              <NavLink navigate={navigate('/recommendations')}>
-                <Box as={Send} size={[16, 20]} color="muted" mr={2} />
-                Recommendations
-              </NavLink>
-
-              <Box my={4} />
-
-              <NavHeading>Teams</NavHeading>
-              <Teams />
-
-              <Box my={4} />
-              <NavHeading>Settings</NavHeading>
-              <NavLink navigate={navigate('/user-settings')}>
-                <Box as={Settings} size={[16, 20]} color="muted" mr={2} />
-                User Settings
-              </NavLink>
+              <Box pb={4}>
+                <NavHeading>Teams</NavHeading>
+                <Teams />
+              </Box>
             </Box>
           </Flex>
         </Box>
@@ -185,7 +161,7 @@ export const SideNav: React.FC = ({ children }) => {
         <Flex
           as="main"
           sx={{
-            flexDirection: ['column', 'row'],
+            flexDirection: ['column', 'column', 'row'],
             height: '100%',
             width: ['100%'],
           }}
@@ -195,10 +171,7 @@ export const SideNav: React.FC = ({ children }) => {
       </Flex>
 
       <Box
-        sx={{
-          borderTop: '1px solid',
-          borderColor: 'accent',
-        }}
+        sx={{}}
       >
         <Player />
       </Box>

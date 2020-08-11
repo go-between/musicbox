@@ -25,7 +25,15 @@ const Player: React.FC = () => {
       <Flex
         width="100%"
         flexDirection={['column', 'row']}
-        sx={{ alignItems: 'center', justifyContent: 'space-between', p: 2 }}
+        sx={{
+          alignItems: 'center',
+          bg: 'backgroundTint',
+          borderRadius: 6,
+          boxShadow: 'xl',
+          justifyContent: 'space-between',
+          py: 3,
+          px: 3,
+        }}
       >
         <Box>
           <MediaObject

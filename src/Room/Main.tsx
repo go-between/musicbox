@@ -42,8 +42,8 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
       sx={{
         flexDirection: 'column',
         height: '100%',
-        p: 4,
-        width: ['100%', '50%', '65%'],
+        p: [3,4],
+        width: ['100%', '100%', '60%'],
       }}
     >
       <Box
@@ -54,9 +54,8 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         <Flex
           ref={videoRef}
           sx={{
+            bg: 'backgroundTint',
             alignItems: 'center',
-            border: '1px solid',
-            borderColor: 'accent',
             borderRadius: 6,
             boxShadow: 'xl',
             height: '350px',

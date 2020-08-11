@@ -9,6 +9,7 @@ import { useUserContext } from 'Context'
 import { duration } from 'lib/formatters'
 
 import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
+import { verticalAlign } from 'styled-system'
 
 type PinProps = {
   showPin: boolean
@@ -126,28 +127,27 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
       </Box>
 
       <Flex
-        alignItems="flex-start"
-        justifyContent="space-between"
         sx={{
+          alignItems: 'center',
+          mb: 1,
           position: 'relative',
           overflow: 'visible',
         }}
       >
-        <Text
+        <Box
+          as='span'
           sx={{
-            alignItems: 'center',
-            display: 'flex',
+            color: 'text',
+            display: 'inline',
             fontSize: 2,
-            mb: 1,
-            overflow: 'visible',
-            width: '100%',
+            fontWeight: '600',
+            verticalAlign: 'middle',
           }}
         >
-          <Box sx={{ color: 'text', fontWeight: '800' }}>{message.user.name}</Box>
-
-          <Box sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>{createdAt.format('ddd h:mm a')}</Box>
-          <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} />
-        </Text>
+          {message.user.name}
+          <Box as='span' sx={{ color: 'gray500', fontSize: 1, fontWeight: '400', px: 2 }}>{createdAt.format('h:mm a')}</Box>
+          {/* <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} /> */}
+        </Box>
       </Flex>
     </>
   )
@@ -179,8 +179,9 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
         key={message.id}
         sx={{
           bg: message.pinned ? 'highlight' : 'inherit',
+          borderRadius: 6,
           position: 'relative',
-          px: 4,
+          px: [2, 3],
           py: 3,
           '&:hover': {
             bg: message.pinned ? 'highlight' : 'accentHover',

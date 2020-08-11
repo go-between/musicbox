@@ -16,18 +16,17 @@ const Chat: React.FC = () => {
     <Flex
       as="aside"
       sx={{
-        borderLeft: '1px solid',
-        borderColor: 'accent',
         color: 'text',
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
         overflow: 'scroll',
         py: 4,
-        width: ['100%', '50%', '35%'],
+        px: [3, 0],
+        width: ['100%', '100%', '40%'],
       }}
     >
-      <Flex
+      {/* <Flex
         alignItems="center"
         justifyContent="space-between"
         sx={{ borderBottom: 'thin solid', borderBottomColor: 'accent' }}
@@ -58,7 +57,7 @@ const Chat: React.FC = () => {
         >
           <Heading>Pinned ({pinnedMessages.length})</Heading>
         </Box>
-      </Flex>
+      </Flex> */}
       {tab === 'chat' ? (
         <>
           <Messages />

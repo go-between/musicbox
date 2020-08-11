@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box } from 'rebass'
+import { Box, Flex, Link} from 'rebass'
 import { useHistory } from 'react-router-dom'
 import Gravatar from 'react-gravatar'
 import { Grid } from 'react-feather'
@@ -7,6 +7,7 @@ import { Grid } from 'react-feather'
 import { User } from 'Context'
 
 import { Modal } from 'components'
+import { height } from 'styled-system'
 
 type RoomDetailsProps = {
   activeRoomId?: string
@@ -35,43 +36,45 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
         as="li"
         sx={{
           alignItems: 'center',
-          bg: activeRoomId === room.id ? 'accent' : 'initial',
-          boxShadow: activeRoomId === room.id ? 'inset 4px 0 0 #5A67D8' : 'none',
-          display: 'flex',
-          color: activeRoomId === room.id ? '#7F9CF5' : 'text',
+          // bg: activeRoomId === room.id ? 'accent' : 'initial',
+          // boxShadow: activeRoomId === room.id ? 'inset 4px 0 0 #5A67D8' : 'none',
+          color: activeRoomId === room.id ? 'primary' : 'text',
           cursor: 'pointer',
+          display: 'flex',
           fontSize: 2,
-          fontWeight: activeRoomId === room.id ? '600' : '400',
-          px: 3,
-          py: 2,
+          justifyContent: 'space-between',
           mb: 2,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
+          px: 2,
+          py: 1,
+          width: '100%',
           '&:hover': {
             bg: 'accent',
+            borderRadius: 6,
           },
         }}
       >
         <Box
-          onClick={openModal}
-          as={Grid}
-          size={20}
           sx={{
-            color: activeRoomId === room.id ? '#7F9CF5' : 'muted',
+            alignItems: 'center',
+            display: 'flex',
+            color: activeRoomId === room.id ? 'primary' : 'muted',
             mr: 2,
-            width: '20px',
+
           }}
-        />
+        >
+          <Grid size={20} />
+        </Box>
 
         <Box
+          as='span'
           onClick={() => navigateToRoom(room.id)}
           sx={{
+            display: 'inline',
+            flex: 1,
             minWidth: '0',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            width: '100%',
           }}
         >
           {room.name}
