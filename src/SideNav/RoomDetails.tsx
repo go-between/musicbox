@@ -36,8 +36,8 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
         as="li"
         sx={{
           alignItems: 'center',
-          // bg: activeRoomId === room.id ? 'accent' : 'initial',
-          // boxShadow: activeRoomId === room.id ? 'inset 4px 0 0 #5A67D8' : 'none',
+          // bg: activeRoomId === room.id ? 'primaryHover' : 'initial',
+          // boxShadow: activeRoomId === room.id ? 'inset -4px 0 0 #5A67D8' : 'none',
           color: activeRoomId === room.id ? 'primary' : 'text',
           cursor: 'pointer',
           display: 'flex',
@@ -48,8 +48,9 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
           py: 1,
           width: '100%',
           '&:hover': {
-            bg: 'accent',
+            bg: 'primaryHover',
             borderRadius: 6,
+            boxShadow: 'none',
           },
         }}
       >

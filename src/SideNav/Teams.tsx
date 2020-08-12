@@ -57,7 +57,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ activeTeamId, changeTeam, t
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           '&:hover': {
-            bg: 'accent',
+            bg: 'primaryHover',
           },
         }}
       >

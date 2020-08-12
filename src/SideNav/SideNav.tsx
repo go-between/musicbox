@@ -40,7 +40,7 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
         textDecoration: 'none',
         width: '100%',
         '&:hover': {
-          bg: 'accent',
+          bg: 'primaryHover',
           borderRadius: 6,
         }
       }}
@@ -77,7 +77,7 @@ export const SideNav: React.FC = ({ children }) => {
         as="header"
         sx={{
           alignItems: 'center',
-          bg: 'backgroundTint',
+          bg: 'accentHover',
           justifyContent: 'space-between',
           p: [3],
           width: '100%',

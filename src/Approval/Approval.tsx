@@ -11,7 +11,7 @@ const Approval: React.FC = () => {
 
   const approvals = recordListens.map(a => {
     return (
-      <Flex key={a.user.id} sx={{ position: 'relative', mr: 2 }}>
+      <Flex key={a.user.id} sx={{ position: 'relative', ml: 3 }}>
         <Gravatar email={a.user.email} size={32} style={{ borderRadius: '100%' }} />
         <Text fontSize="24px" sx={{ position: 'absolute', left: '50%', ml: '-8px' }}>
           {a.approval}
@@ -22,7 +22,6 @@ const Approval: React.FC = () => {
   const updateApproval = (): void => incrementApproval()
   return (
     <Flex justifyContent="flex-end" width="100%" alignItems="center">
-      <Flex>{approvals}</Flex>
       <Box
         as='button'
         onClick={updateApproval}
@@ -38,8 +37,8 @@ const Approval: React.FC = () => {
         }}
       >
         <ThumbsUp size={20} />
-        {/* <Box as={ThumbsUp} size={16}sx={{display: 'flex',}}/> */}
       </Box>
+      <Flex>{approvals}</Flex>
     </Flex>
   )
 }
