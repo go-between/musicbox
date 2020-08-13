@@ -48,8 +48,10 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
         sx={{
           bg: 'accent',
           borderRadius: 6,
-          m: 'auto',
+          mx: [3, 'auto'],
+          overflowY: 'scroll',
           p: 3,
+          maxHeight: '600px',
           width: '600px',
         }}
       >

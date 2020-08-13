@@ -64,24 +64,6 @@ const Progress: React.FC = () => {
         <Box width={`${progress}%`} height='6px' bg="primary" sx={{borderRadius: 6, width: '100%',}}/>
       </Box>
 
-      {/* <Box
-        sx={{}}
-      > */}
-        {/* <Box>
-          <Text
-            fontSize={4}
-            sx={{
-              minWidth: 0,
-              width: '100%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {currentRecord.song.name}
-          </Text>
-        </Box> */}
-      {/* </Box> */}
       <Text
         sx={{
           color: 'muted',

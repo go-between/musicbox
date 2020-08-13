@@ -7,7 +7,6 @@ import { Grid } from 'react-feather'
 import { User } from 'Context'
 
 import { Modal } from 'components'
-import { height } from 'styled-system'
 
 type RoomDetailsProps = {
   activeRoomId?: string

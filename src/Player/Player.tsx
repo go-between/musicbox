@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
-// import Gravatar from 'react-gravatar'
 import { VideoOff, SkipForward, Youtube } from 'react-feather'
 import { useMutation } from '@apollo/react-hooks'
 
@@ -76,10 +75,6 @@ const Player: React.FC = () => {
         >
           <Flex flexDirection="column">
             <Approval />
-            {/* <Flex flexDirection="row" alignItems="center">
-              <Gravatar email={currentRecord.user.email} size={16} style={{ borderRadius: '100%' }} />
-              <Text ml={2}>{currentRecord.user.name}</Text>
-            </Flex> */}
           </Flex>
         </MediaObject>
 
@@ -105,48 +100,48 @@ const Player: React.FC = () => {
         </Flex>
 
         <Flex>
-            <Volume />
-            <Box mx={1} />
-            {skipSong}
-            <Box mx={1} />
-            <Box
-              onClick={toggleShowVideo}
-              sx={{
-                alignItems: 'center',
-                bg: showVideo ? 'background' : 'primaryHover',
-                borderRadius: 6,
-                color: showVideo ? 'muted' : 'primary',
-                cursor: 'pointer',
-                display: 'flex',
-                p: 2,
-                '&:hover': {
-                  bg: 'primaryHover',
-                  color: 'primary'
-                }
-              }}
-            >
-              <VideoOff size={20}/>
-            </Box>
-            <Box mx={1} />
-            <Link
-              href={`https://youtube.com/watch?v=${currentRecord.song.youtubeId}`}
-              target="_blank"
-              sx={{
-                alignItems: 'center',
-                bg: 'background',
-                borderRadius: 6,
-                color: 'muted',
-                display: 'flex',
-                p: 2,
-                '&:hover': {
-                  bg: 'primaryHover',
-                  color: 'primary'
-                }
-              }}
-            >
-              <Youtube size={20} />
-            </Link>
-          </Flex>
+          <Volume />
+          <Box mx={1} />
+          {skipSong}
+          <Box mx={1} />
+          <Box
+            onClick={toggleShowVideo}
+            sx={{
+              alignItems: 'center',
+              bg: showVideo ? 'background' : 'primaryHover',
+              borderRadius: 6,
+              color: showVideo ? 'muted' : 'primary',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 2,
+              '&:hover': {
+                bg: 'primaryHover',
+                color: 'primary'
+              }
+            }}
+          >
+            <VideoOff size={20}/>
+          </Box>
+          <Box mx={1} />
+          <Link
+            href={`https://youtube.com/watch?v=${currentRecord.song.youtubeId}`}
+            target="_blank"
+            sx={{
+              alignItems: 'center',
+              bg: 'background',
+              borderRadius: 6,
+              color: 'muted',
+              display: 'flex',
+              p: 2,
+              '&:hover': {
+                bg: 'primaryHover',
+                color: 'primary'
+              }
+            }}
+          >
+            <Youtube size={20} />
+          </Link>
+        </Flex>
       </Flex>
 
       <PlayerPrimitive
