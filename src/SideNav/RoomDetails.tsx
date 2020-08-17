@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Flex, Link} from 'rebass'
+import { Box} from 'rebass'
 import { useHistory } from 'react-router-dom'
 import Gravatar from 'react-gravatar'
 import { Grid } from 'react-feather'
@@ -35,8 +35,6 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
         as="li"
         sx={{
           alignItems: 'center',
-          // bg: activeRoomId === room.id ? 'primaryHover' : 'initial',
-          // boxShadow: activeRoomId === room.id ? 'inset -4px 0 0 #5A67D8' : 'none',
           color: activeRoomId === room.id ? 'primary' : 'text',
           cursor: 'pointer',
           display: 'flex',
@@ -54,12 +52,12 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
         }}
       >
         <Box
+          onClick={openModal}
           sx={{
             alignItems: 'center',
             display: 'flex',
             color: activeRoomId === room.id ? 'primary' : 'muted',
             mr: 2,
-
           }}
         >
           <Grid size={20} />

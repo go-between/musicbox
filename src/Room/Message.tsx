@@ -179,7 +179,6 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
         key={message.id}
         sx={{
           bg: message.pinned ? 'highlight' : 'inherit',
-          borderRadius: 6,
           position: 'relative',
           px: [2, 3],
           py: 3,

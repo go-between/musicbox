@@ -39,15 +39,33 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup; pinnedMessages: Messa
         sx={{
           my: 4,
           position: 'relative',
+          '&:before': {
+            bg: 'accent',
+            content: "''",
+            height: '1px',
+            left: 0,
+            position: 'absolute',
+            top: '50%',
+            width: '10%',
+          },
+          '&:after': {
+            bg: 'accent',
+            content: "''",
+            height: '1px',
+            right: 0,
+            position: 'absolute',
+            top: '50%',
+            width: '10%',
+          },
         }}
       >
         <Box
           sx={{
-            bg: 'backgroundTint',
+            bg: 'background',
             border: '1px solid',
-            borderColor: 'accent',
+            borderColor: 'background',
             borderRadius: 6,
-            boxShadow: 'xl',
+            boxShadow: 'md',
             color: 'gray500',
             fontSize: 0,
             fontWeight: 600,
@@ -97,14 +115,8 @@ const Messages: React.FC = () => {
     <Box
       ref={chat}
       sx={{
-        // bg: 'backgroundTint',
-        // border: '1px solid',
-        // borderColor: 'accent',
-        // boxShadow: 'xl',
-        // borderRadius: 6,
+        bg: 'transparent',
         overflowY: 'scroll',
-        // py: 4,
-        mb: 4,
       }}
     >
       {messageLines}

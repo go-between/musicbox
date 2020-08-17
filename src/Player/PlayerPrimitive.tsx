@@ -79,9 +79,9 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, inline = false, playedAt, 
         url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
         playing={true}
         volume={unmutedPlayer === playerIdentifier ? (volume || 0) / 100.0 : 0}
-        height="350px"
+        height="300px"
         width="100%"
-        // style={{ borderRadius: '6px',  }}
+        // style={{ }}
       />
     </Box>
   )

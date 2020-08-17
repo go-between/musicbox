@@ -55,31 +55,33 @@ const Player: React.FC = () => {
   return (
     <>
       <Flex
-        width="100%"
-        flexDirection={['column', 'row']}
         sx={{
-          alignItems: 'center',
+          alignItems: ['flex-start', 'center'],
           bg: 'accentHover',
           borderRadius: 6,
           boxShadow: 'xl',
+          flexDirection: ['column', 'row'],
           justifyContent: 'space-between',
           py: 3,
           px: 3,
+          width: '100%',
         }}
       >
-        <MediaObject
-          imageUrl={currentRecord.song.thumbnailUrl}
-          imageSize={['20px', '50px']}
-          alignment="center"
-          placeholderImageColor="accent"
-        >
-          <Flex flexDirection="column">
-            <Approval />
-          </Flex>
-        </MediaObject>
+        <Box>
+          <MediaObject
+            imageUrl={currentRecord.song.thumbnailUrl}
+            imageSize={['20px', '50px']}
+            alignment="center"
+            placeholderImageColor="accent"
+          >
+            <Flex flexDirection="column">
+              <Approval />
+            </Flex>
+          </MediaObject>
+        </Box>
 
-        <Flex alignItems="center" justifyContent='center' flexDirection='column' flex='1'>
-          <Box width='35%'>
+        <Flex alignItems={['flex-start', 'center']} justifyContent='center' flexDirection='column' flex='1' width='100%'>
+          <Box width={['100%', '35%']}>
             <Text
               sx={{
                 color: 'text',
@@ -94,7 +96,7 @@ const Player: React.FC = () => {
             >{currentRecord.song.name}</Text>
           </Box>
 
-          <Box mx={1} mb={2} width='55%'>
+          <Box mx={1} width={['100%', '55%']}>
             <Progress />
           </Box>
         </Flex>

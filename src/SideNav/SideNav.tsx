@@ -1,11 +1,9 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Inbox, Grid, Search, Send, Settings } from 'react-feather'
-import Gravatar from 'react-gravatar'
+import { Inbox, Send } from 'react-feather'
 
-import { Logo } from 'components'
-import LogoDarkMode from 'images/musicbox-mark-purple.svg'
+import { AppHeader } from 'components'
 import Player from 'Player'
 import JumpMenu, { useJumpNavigationContext } from 'JumpMenu'
 import Keyboard from 'Room/Keyboard'
@@ -73,61 +71,21 @@ export const SideNav: React.FC = ({ children }) => {
         maxWidth: '1440px',
       }}
     >
-      <Flex
-        as="header"
-        sx={{
-          alignItems: 'center',
-          bg: 'accentHover',
-          justifyContent: 'space-between',
-          p: [3],
-          width: '100%',
-        }}
-      >
-        <Logo imageSrc={LogoDarkMode} width='42px' />
 
-        <Flex
-          onClick={show}
-          sx={{
-            alignItems: 'center',
-            bg:'accent',
-            borderRadius: 6,
-            color: 'gray500',
-            cursor: 'pointer',
-            py: 2,
-            px: 3,
-            mx: 3,
-            flex: [1],
-            maxWidth: ['100%', '50%']
-          }}
-        >
-          <Box as={Search} size={18} />
-          <Text
-            sx={{
-              fontSize: 2,
-              mx: 2,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >Search for Music</Text>
-        </Flex>
-
-        <Flex as={Link} onClick={navigate('user-settings')}>
-          <Gravatar email='daniel.e.lavin@gmail.com' size={36} style={{ borderRadius: '100%' }} />
-        </Flex>
-      </Flex>
+      <AppHeader />
 
       <Flex
         sx={{
-          flexDirection: 'row',
+          flexDirection: ['column', 'row'],
           height: '100%',
           overflow: 'hidden',
+          py: 4,
+          px: 3,
         }}
       >
         <Box
           as="nav"
           sx={{
-            bg: 'background',
             display: ['none', 'flex'],
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -136,7 +94,7 @@ export const SideNav: React.FC = ({ children }) => {
           }}
         >
           <Flex justifyContent="space-between" flexDirection="column" height="100%">
-            <Box py={4} px={[3]}>
+            <Box>
               <Box pb={4}>
                 <NavHeading>Music</NavHeading>
                 <NavLink navigate={navigate('/library')}>
@@ -161,7 +119,9 @@ export const SideNav: React.FC = ({ children }) => {
         <Flex
           as="main"
           sx={{
-            flexDirection: ['column', 'column', 'row'],
+            flexDirection: ['column', 'column', 'column', 'row'],
+            pl: [0, 4, 4, 4],
+            pr: 0,
             height: '100%',
             width: ['100%'],
           }}
@@ -170,12 +130,7 @@ export const SideNav: React.FC = ({ children }) => {
         </Flex>
       </Flex>
 
-      <Box
-        sx={{}}
-      >
-        <Player />
-      </Box>
-
+      <Player />
       <Keyboard />
       <JumpMenu />
     </Flex>

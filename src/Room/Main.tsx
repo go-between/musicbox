@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Box, Flex, Text } from 'rebass'
+import React, { useEffect, useRef } from 'react'
+import { Flex, Text } from 'rebass'
 
 import { useCurrentRecordContext, useVideoContext } from 'Context'
 
@@ -21,45 +21,31 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
     return () => setVideoRef(null)
   }, [setVideoRef])
 
-  if (!currentRecord) {
-    return (
-      <>
-        something weird is going on here...
-      </>
-    )
-  }
-
   return (
     <Flex
       sx={{
         flexDirection: 'column',
-        height: '100%',
-        px: 3,
+        height: 'auto',
+        px: [0, 0, 0, 4],
         width: ['100%', '100%', '100%', '60%'],
       }}
     >
-      <Box
+      <Flex
+        ref={videoRef}
         sx={{
-          overflowY: 'scroll',
+          bg: 'accentHover',
+          alignItems: 'center',
+          borderRadius: 6,
+          boxShadow: 'xl',
+          height: '300px',
+          justifyContent: 'center',
+          width: '100%',
         }}
       >
-        <Flex
-          ref={videoRef}
-          sx={{
-            bg: 'backgroundTint',
-            alignItems: 'center',
-            borderRadius: 6,
-            boxShadow: 'xl',
-            height: '350px',
-            justifyContent: 'center',
-            width: '100%',
-          }}
-        >
-          <Text>{!!currentRecord ? 'Video Hidden' : 'Nothing Playing'}</Text>
-        </Flex>
+        <Text>{!!currentRecord ? 'Video Hidden' : 'Nothing Playing'}</Text>
+      </Flex>
 
-        <VideoDetails />
-      </Box>
+      <VideoDetails />
     </Flex>
   )
 }
