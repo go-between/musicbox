@@ -52,6 +52,7 @@ export const Header: React.FC = () => {
               onClick={navigate('liner-notes')}
               variant="link"
               sx={{
+                cursor: 'pointer',
                 fontSize: [2, 3],
                 pl: [3, 4],
               }}
@@ -62,6 +63,7 @@ export const Header: React.FC = () => {
             <Link
               onClick={navigate('login')}
               sx={{
+                cursor: 'pointer',
                 fontSize: [2, 3],
                 pl: [3, 4],
               }}
@@ -69,7 +71,7 @@ export const Header: React.FC = () => {
               Login
             </Link>
 
-            <Link
+            {/* <Link
               onClick={navigate('signup')}
               sx={{
                 pl: [3, 4],
@@ -90,7 +92,7 @@ export const Header: React.FC = () => {
               >
                 Sign Up
               </Button>
-            </Link>
+            </Link> */}
           </Flex>
         </Flex>
       </Container>
