@@ -3,9 +3,10 @@ import { Flex, Text } from 'rebass'
 import { Grid, Star } from 'react-feather'
 
 import { useUserContext } from 'Context'
+import { StateAction } from 'lib/types'
 
 type ChatDetailsProps = {
-  setTab: any
+  setTab: StateAction<boolean>
   tab: boolean
 }
 

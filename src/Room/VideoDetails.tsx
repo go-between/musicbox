@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
 import Gravatar from 'react-gravatar'
-import { Clock, List, Radio } from 'react-feather'
+import { Clock, List, Radio, X } from 'react-feather'
 
 import { Modal } from 'components'
-import { useCurrentRecordContext } from 'Context'
+import { useCurrentRecordContext, usePlaylistRecordsContext } from 'Context'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
@@ -13,6 +13,7 @@ type Tabs = 'userPlaylist' | 'roomPlaylist' | 'roomHistory'
 
 export const VideoDetails: React.FC = () => {
   const { currentRecord } = useCurrentRecordContext()
+  const { userPlaylistRecords, reorderRecords } = usePlaylistRecordsContext()
   const [showModal, setShowModal] = useState(false)
   const closeModal = (): void => setShowModal(false)
 
@@ -38,6 +39,34 @@ export const VideoDetails: React.FC = () => {
   }
 
   const Component = components[tab]
+
+  const removeAllSongs = (): void => reorderRecords([])
+
+  const removeAllSongsButton = (
+    <Box
+      as="button"
+      onClick={removeAllSongs}
+      sx={{
+        alignItems: 'center',
+        bg: 'background',
+        border: 'none',
+        borderRadius: 6,
+        color: 'muted',
+        cursor: 'pointer',
+        display: 'flex',
+        fontSize: 2,
+        px: 2,
+        py: 2,
+        '&:hover': {
+          bg: 'primaryHover',
+          color: 'primary',
+        },
+      }}
+    >
+      <Box as={X} size={16} sx={{ alignItems: 'center', display: 'flex', mr: 2 }} />
+      Remove All
+    </Box>
+  )
 
   if (!currentRecord) {
     return <></>
@@ -194,37 +223,44 @@ export const VideoDetails: React.FC = () => {
             alignItems: 'center',
             borderBottom: '1px solid',
             borderColor: 'accent',
+            justifyContent: 'space-between',
             py: 3,
             mb: 3,
           }}
         >
-          <Box
-            sx={{
-              alignItems: 'center',
-              color: 'muted',
-              display: 'flex',
-              px: 2,
-            }}
-          >
-            <List size={20} />
-          </Box>
-          <Text
-            sx={{
-              color: 'text',
-              fontSize: 1,
-              fontWeight: 600,
-              textTransform: 'uppercase',
-            }}
-          >
-            Manage Your Playlist
-          </Text>
+          <Flex>
+            <Box
+              sx={{
+                alignItems: 'center',
+                color: 'muted',
+                display: 'flex',
+                px: 2,
+              }}
+            >
+              <List size={20} />
+            </Box>
+            <Text
+              sx={{
+                color: 'text',
+                fontSize: 1,
+                fontWeight: 600,
+                textTransform: 'uppercase',
+              }}
+            >
+              Manage Your Playlist
+            </Text>
+          </Flex>
+
+          {userPlaylistRecords.length > 0 ? removeAllSongsButton : <></>}
         </Flex>
 
         <Box
-          sx={{
-            minHeight: 'auto',
-            overflowY: 'scroll',
-          }}
+          sx={
+            {
+              // height: '200px',
+              // overflowY: 'scroll',
+            }
+          }
         >
           <UserPlaylist />
         </Box>
