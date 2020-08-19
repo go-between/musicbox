@@ -72,10 +72,12 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title,
           </Flex>
         )}
 
-        <Box sx={{
-          overflowY: scroll ? 'scroll' : 'auto',
-          maxHeight: scroll ? '500px' : 'auto',
-        }}>
+        <Box
+          sx={{
+            overflowY: scroll ? 'scroll' : 'auto',
+            maxHeight: scroll ? '500px' : 'auto',
+          }}
+        >
           {children}
         </Box>
       </Box>

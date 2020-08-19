@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
 import Gravatar from 'react-gravatar'
-import { Clock, List, Radio, } from 'react-feather'
+import { Clock, List, Radio } from 'react-feather'
 
 import { Modal } from 'components'
 import { useCurrentRecordContext } from 'Context'
@@ -20,7 +20,6 @@ export const VideoDetails: React.FC = () => {
   const selectUserPlaylist = (): void => {
     setShowModal(true)
     setTab('userPlaylist')
-
   }
   const selectRoomPlaylist = (): void => {
     setShowModal(true)
@@ -41,9 +40,7 @@ export const VideoDetails: React.FC = () => {
   const Component = components[tab]
 
   if (!currentRecord) {
-    return (
-      <></>
-    )
+    return <></>
   }
 
   return (
@@ -67,14 +64,19 @@ export const VideoDetails: React.FC = () => {
               flex: 1,
             }}
           >
-            <Flex alignItems='center'>
-              <Gravatar email={currentRecord.user.email} size={36} style={{ borderRadius: '100%', }} alt={currentRecord.user.name} title={currentRecord.user.name}/>
+            <Flex alignItems="center">
+              <Gravatar
+                email={currentRecord.user.email}
+                size={36}
+                style={{ borderRadius: '100%' }}
+                alt={currentRecord.user.name}
+                title={currentRecord.user.name}
+              />
             </Flex>
 
-
-            <Box sx={{flex: 1, mx: 2,}}>
+            <Box sx={{ flex: 1, mx: 2 }}>
               <Text
-                as='span'
+                as="span"
                 sx={{
                   color: 'muted',
                   display: 'block',
@@ -87,7 +89,7 @@ export const VideoDetails: React.FC = () => {
               </Text>
 
               <Text
-                as='span'
+                as="span"
                 sx={{
                   color: 'text',
                   display: 'block',
@@ -107,12 +109,12 @@ export const VideoDetails: React.FC = () => {
           <Flex
             sx={{
               alignItems: 'center',
-              justifyContent: 'flex-end'
+              justifyContent: 'flex-end',
             }}
           >
             <Box
               onClick={selectUserPlaylist}
-              id='playlist'
+              id="playlist"
               sx={{
                 alignItems: 'center',
                 bg: 'background',
@@ -124,16 +126,16 @@ export const VideoDetails: React.FC = () => {
                 mx: 1,
                 '&:hover': {
                   bg: 'primaryHover',
-                  color: 'primary'
-                }
+                  color: 'primary',
+                },
               }}
             >
-              <List size={20}/>
+              <List size={20} />
             </Box>
 
             <Box
               onClick={selectRoomPlaylist}
-              id='queue'
+              id="queue"
               sx={{
                 alignItems: 'center',
                 bg: 'background',
@@ -145,16 +147,16 @@ export const VideoDetails: React.FC = () => {
                 mx: 1,
                 '&:hover': {
                   bg: 'primaryHover',
-                  color: 'primary'
-                }
+                  color: 'primary',
+                },
               }}
             >
-              <Radio size={20}/>
+              <Radio size={20} />
             </Box>
 
             <Box
               onClick={selectRoomHistory}
-              id='history'
+              id="history"
               sx={{
                 alignItems: 'center',
                 bg: 'background',
@@ -166,11 +168,11 @@ export const VideoDetails: React.FC = () => {
                 mx: 1,
                 '&:hover': {
                   bg: 'primaryHover',
-                  color: 'primary'
-                }
+                  color: 'primary',
+                },
               }}
             >
-              <Clock size={20}/>
+              <Clock size={20} />
             </Box>
           </Flex>
         </Flex>
@@ -204,7 +206,7 @@ export const VideoDetails: React.FC = () => {
               px: 2,
             }}
           >
-            <List size={20}/>
+            <List size={20} />
           </Box>
           <Text
             sx={{
@@ -220,7 +222,7 @@ export const VideoDetails: React.FC = () => {
 
         <Box
           sx={{
-            height: '825px',
+            minHeight: 'auto',
             overflowY: 'scroll',
           }}
         >

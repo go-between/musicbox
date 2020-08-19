@@ -40,13 +40,13 @@ const Progress: React.FC = () => {
       sx={{
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
       }}
     >
       <Text
         sx={{
           color: 'muted',
-          fontSize: [1,2],
+          fontSize: [1, 2],
         }}
       >
         {duration(playedSeconds)}
@@ -61,13 +61,13 @@ const Progress: React.FC = () => {
           mx: 2,
         }}
       >
-        <Box width={`${progress}%`} height='6px' bg="primary" sx={{borderRadius: 6, width: '100%',}}/>
+        <Box width={`${progress}%`} height="6px" bg="primary" sx={{ borderRadius: 6, width: '100%' }} />
       </Box>
 
       <Text
         sx={{
           color: 'muted',
-          fontSize: [1,2],
+          fontSize: [1, 2],
         }}
       >
         {duration(currentRecord.song.durationInSeconds)}

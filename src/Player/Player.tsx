@@ -23,7 +23,6 @@ const Player: React.FC = () => {
     ROOM_PLAYLIST_RECORD_ABANDON,
   )
 
-
   if (!currentRecord) {
     return <></>
   }
@@ -42,8 +41,8 @@ const Player: React.FC = () => {
         p: 2,
         '&:hover': {
           bg: `primaryHover`,
-          color: 'primary'
-        }
+          color: 'primary',
+        },
       }}
     >
       <SkipForward size={20} />
@@ -80,7 +79,13 @@ const Player: React.FC = () => {
           </MediaObject>
         </Box>
 
-        <Flex alignItems={['flex-start', 'center']} justifyContent='center' flexDirection='column' flex='1' width='100%'>
+        <Flex
+          alignItems={['flex-start', 'center']}
+          justifyContent="center"
+          flexDirection="column"
+          flex="1"
+          width="100%"
+        >
           <Box width={['100%', '35%']}>
             <Text
               sx={{
@@ -93,7 +98,9 @@ const Player: React.FC = () => {
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
               }}
-            >{currentRecord.song.name}</Text>
+            >
+              {currentRecord.song.name}
+            </Text>
           </Box>
 
           <Box mx={1} width={['100%', '55%']}>
@@ -118,11 +125,11 @@ const Player: React.FC = () => {
               p: 2,
               '&:hover': {
                 bg: 'primaryHover',
-                color: 'primary'
-              }
+                color: 'primary',
+              },
             }}
           >
-            <VideoOff size={20}/>
+            <VideoOff size={20} />
           </Box>
           <Box mx={1} />
           <Link
@@ -137,8 +144,8 @@ const Player: React.FC = () => {
               p: 2,
               '&:hover': {
                 bg: 'primaryHover',
-                color: 'primary'
-              }
+                color: 'primary',
+              },
             }}
           >
             <Youtube size={20} />

@@ -17,14 +17,26 @@ const reorder: Reorder = (list, startIndex, endIndex) => {
 }
 const UserPlaylist: React.FC = () => {
   const { deleteRecord, userPlaylistRecords, reorderRecords } = usePlaylistRecordsContext()
-
   const removeAll = (): void => reorderRecords([])
+
+  const records = userPlaylistRecords.map((record, index) => {
+    const onDelete = (): void => deleteRecord(record.id)
+    return (
+      <Draggable key={record.id} draggableId={record.id} index={index}>
+        {provided => (
+          <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+            <UserPlaylistRecord record={record} onDelete={onDelete} />
+          </Box>
+        )}
+      </Draggable>
+    )
+  })
 
   const removeAllSongs = () => {
     if (records.length > 0) {
       return (
         <Box
-          as='button'
+          as="button"
           onClick={removeAll}
           sx={{
             alignItems: 'center',
@@ -40,28 +52,15 @@ const UserPlaylist: React.FC = () => {
             '&:hover': {
               bg: 'primaryHover',
               color: 'primary',
-            }
+            },
           }}
         >
-          <Box as={X} size={16} sx={{alignItems: 'center', display: 'flex', mr: 2,}}/>
+          <Box as={X} size={16} sx={{ alignItems: 'center', display: 'flex', mr: 2 }} />
           Remove All
         </Box>
       )
     }
   }
-
-  const records = userPlaylistRecords.map((record, index) => {
-    const onDelete = (): void => deleteRecord(record.id)
-    return (
-      <Draggable key={record.id} draggableId={record.id} index={index}>
-        {provided => (
-          <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-            <UserPlaylistRecord record={record} onDelete={onDelete} />
-          </Box>
-        )}
-      </Draggable>
-    )
-  })
 
   const onDragEnd = (result: DropResult): void => {
     if (!result.destination || result.destination.index === result.source.index) {
@@ -73,10 +72,7 @@ const UserPlaylist: React.FC = () => {
   }
 
   if (!records) {
-    return(
-      <>
-      </>
-    )
+    return <></>
   }
 
   return (

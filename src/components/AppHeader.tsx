@@ -28,13 +28,13 @@ export const AppHeader: React.FC = () => {
           width: '100%',
         }}
       >
-        <Logo imageSrc={LogoDarkMode} width='42px' />
+        <Logo imageSrc={LogoDarkMode} width="42px" />
 
         <Flex
           onClick={show}
           sx={{
             alignItems: 'center',
-            bg:'accent',
+            bg: 'accent',
             borderRadius: 6,
             color: 'gray500',
             cursor: 'pointer',
@@ -42,7 +42,7 @@ export const AppHeader: React.FC = () => {
             px: 3,
             mx: 3,
             flex: [1],
-            maxWidth: ['100%', '50%']
+            maxWidth: ['100%', '50%'],
           }}
         >
           <Box as={Search} size={18} />
@@ -54,11 +54,13 @@ export const AppHeader: React.FC = () => {
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
             }}
-          >Search for Music</Text>
+          >
+            Search for Music
+          </Text>
         </Flex>
 
         <Flex as={Link} onClick={navigate('/user-settings')}>
-          <Gravatar email='daniel.e.lavin@gmail.com' size={36} style={{ borderRadius: '100%' }} />
+          <Gravatar email="daniel.e.lavin@gmail.com" size={36} style={{ borderRadius: '100%' }} />
         </Flex>
       </Flex>
     </>

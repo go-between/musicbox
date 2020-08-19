@@ -5,7 +5,7 @@ import { Inbox, Send } from 'react-feather'
 
 import { AppHeader } from 'components'
 import Player from 'Player'
-import JumpMenu, { useJumpNavigationContext } from 'JumpMenu'
+import JumpMenu from 'JumpMenu'
 import Keyboard from 'Room/Keyboard'
 
 import Teams from './Teams'
@@ -40,7 +40,7 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
         '&:hover': {
           bg: 'primaryHover',
           borderRadius: 6,
-        }
+        },
       }}
       color="text"
       onClick={navigate}
@@ -52,7 +52,6 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
 )
 
 export const SideNav: React.FC = ({ children }) => {
-  const { show } = useJumpNavigationContext()
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()
@@ -71,7 +70,6 @@ export const SideNav: React.FC = ({ children }) => {
         maxWidth: '1440px',
       }}
     >
-
       <AppHeader />
 
       <Flex

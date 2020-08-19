@@ -12,7 +12,7 @@ const Features: React.FC = () => {
       }}
     >
       <Box
-        as='header'
+        as="header"
         sx={{
           bg: 'red',
           height: '60px',
@@ -28,19 +28,19 @@ const Features: React.FC = () => {
         }}
       >
         <Flex
-          as='aside'
+          as="aside"
           sx={{
             bg: 'blue',
             flexDirection: 'column',
             height: '100%',
-            width: '300px'
+            width: '300px',
           }}
         >
           Side Nav
         </Flex>
 
         <Flex
-          as='main'
+          as="main"
           sx={{
             bg: 'purple',
             flexDirection: 'column',
@@ -50,44 +50,77 @@ const Features: React.FC = () => {
           }}
         >
           Main
-          <hr/>
+          <hr />
           <Box
             sx={{
               height: '100%',
               overflowY: 'scroll',
             }}
           >
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea
+            modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem
+            soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere
+            corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis,
+            quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae
+            nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam
+            corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti
+            recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio
+            quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae
+            deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam
+            distinctio quisquam corporis, quaerat quidem soluta ex. facere ducimus eius reiciendis, ullam distinctio
+            quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae
+            deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam
+            distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing
+            elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius
+            reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. facere ducimus eius reiciendis,
+            ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur
+            adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus
+            eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet
+            consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere
+            ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor
+            sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae
+            sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem
+            ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi
+            recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta
+            ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere
+            corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis,
+            quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae
+            nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam
+            corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti
+            recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio
+            quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae
+            deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam
+            distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing
+            elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius
+            reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet
+            consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere
+            ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor
+            sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae
+            sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem
+            ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi
+            recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta
+            ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere
+            corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis,
+            quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae
+            nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam
+            corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti
+            recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio
+            quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae
+            deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam
+            distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing
+            elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere ducimus eius
+            reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor sit, amet
+            consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae sunt facere
+            ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem ipsum dolor
+            sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi recusandae
+            sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta ex. Lorem
+            ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere corporis! Ea modi
+            recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis, quaerat quidem soluta
+            ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae nulla facere
+            corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam corporis,
+            quaerat quidem soluta ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae deleniti recusandae
+            nulla facere corporis! Ea modi recusandae sunt facere ducimus eius reiciendis, ullam distinctio quisquam
+            corporis, quaerat quidem soluta ex.
           </Box>
         </Flex>
 
@@ -104,10 +137,10 @@ const Features: React.FC = () => {
       </Flex>
 
       <Flex
-        as='footer'
+        as="footer"
         sx={{
           bg: 'gray',
-          height: '60px'
+          height: '60px',
         }}
       >
         Footer

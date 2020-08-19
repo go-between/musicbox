@@ -27,7 +27,7 @@ const Main: React.FC<{ room: RoomType }> = ({ room }) => {
         flexDirection: 'column',
         height: 'auto',
         px: [0, 0, 0, 4],
-        width: ['100%', '100%', '100%', '60%'],
+        width: ['100%', '100%', '100%', '55%'],
       }}
     >
       <Flex

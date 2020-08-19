@@ -1,6 +1,6 @@
 import React from 'react'
 import { Flex, Text } from 'rebass'
-import { Grid, Star} from 'react-feather'
+import { Grid, Star } from 'react-feather'
 
 import { useUserContext } from 'Context'
 
@@ -9,7 +9,7 @@ type ChatDetailsProps = {
   tab: boolean
 }
 
-const ChatDetails: React.FC<ChatDetailsProps> = ({setTab, tab}) => {
+const ChatDetails: React.FC<ChatDetailsProps> = ({ setTab, tab }) => {
   const user = useUserContext()
   const togglePinnedMessages = (): void => setTab(!tab)
 
@@ -50,7 +50,7 @@ const ChatDetails: React.FC<ChatDetailsProps> = ({setTab, tab}) => {
 
           <Text
             sx={{
-              fontSize: [1,2],
+              fontSize: [1, 2],
               fontWeight: 600,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -74,8 +74,8 @@ const ChatDetails: React.FC<ChatDetailsProps> = ({setTab, tab}) => {
               p: 2,
               '&:hover': {
                 bg: 'primaryHover',
-                color: 'primary'
-              }
+                color: 'primary',
+              },
             }}
           >
             <Star size={18} />

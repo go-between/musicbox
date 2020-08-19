@@ -1,13 +1,12 @@
 import React from 'react'
-import { Box, Button, Flex, Text } from 'rebass'
+import { Box, Flex, Text } from 'rebass'
 import Gravatar from 'react-gravatar'
 
 import { useApprovalContext } from './ApprovalContextProvider'
 import { ThumbsUp } from 'react-feather'
-import { Th } from '~/components'
 
 const Approval: React.FC = () => {
-  const { approval, incrementApproval, recordListens } = useApprovalContext()
+  const { incrementApproval, recordListens } = useApprovalContext()
 
   const approvals = recordListens.map(a => {
     return (
@@ -23,7 +22,7 @@ const Approval: React.FC = () => {
   return (
     <Flex justifyContent="flex-end" width="100%" alignItems="center">
       <Box
-        as='button'
+        as="button"
         onClick={updateApproval}
         sx={{
           alignItems: 'center',

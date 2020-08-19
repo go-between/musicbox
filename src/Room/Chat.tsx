@@ -20,11 +20,11 @@ const Chat: React.FC = () => {
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
-        width: ['100%', '100%', '100%', '40%'],
+        width: ['100%', '100%', '100%', '45%'],
       }}
     >
       <ChatDetails tab={tab} setTab={setTab} />
-      {tab ? <Messages /> : <PinnedMessages /> }
+      {tab ? <Messages /> : <PinnedMessages />}
       <MessageEntry />
     </Flex>
   )

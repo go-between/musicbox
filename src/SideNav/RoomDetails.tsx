@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box} from 'rebass'
+import { Box } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import Gravatar from 'react-gravatar'
 import { Grid } from 'react-feather'
@@ -64,7 +64,7 @@ export const RoomDetails: React.FC<RoomDetailsProps> = ({ activeRoomId, room }) 
         </Box>
 
         <Box
-          as='span'
+          as="span"
           onClick={() => navigateToRoom(room.id)}
           sx={{
             display: 'inline',

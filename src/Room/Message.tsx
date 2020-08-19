@@ -9,7 +9,6 @@ import { useUserContext } from 'Context'
 import { duration } from 'lib/formatters'
 
 import { MESSAGE_PIN, MessagePin, Message as MessageType } from './graphql'
-import { verticalAlign } from 'styled-system'
 
 type PinProps = {
   showPin: boolean
@@ -59,21 +58,19 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
 
   return (
     <Box
+      as="span"
       sx={{
         color: 'gray500',
         cursor: 'pointer',
         fontSize: 1,
-        fontWeight: '600',
+        fontWeight: '400',
         position: 'relative',
         '&:hover > *': {
           visibility: 'visible',
         },
       }}
     >
-      @{' '}
-      <Box as="span" sx={{ textDecoration: 'underline' }}>
-        {duration(saidAt)}
-      </Box>
+      @ {duration(saidAt)}
       <Box
         sx={{
           bg: 'black',
@@ -135,7 +132,7 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
         }}
       >
         <Box
-          as='span'
+          as="span"
           sx={{
             color: 'text',
             display: 'inline',
@@ -145,8 +142,11 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
           }}
         >
           {message.user.name}
-          <Box as='span' sx={{ color: 'gray500', fontSize: 1, fontWeight: '400', px: 2 }}>{createdAt.format('h:mm a')}</Box>
-          {/* <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} /> */}
+          <Box as="span" sx={{ color: 'gray500', fontSize: 1, fontWeight: '400', px: 2 }}>
+            {createdAt.format('h:mm a')}
+          </Box>
+
+          <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} />
         </Box>
       </Flex>
     </>

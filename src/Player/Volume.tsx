@@ -47,7 +47,7 @@ const Volume: React.FC = () => {
           '&:hover': {
             bg: 'primaryHover',
             color: 'primary',
-          }
+          },
         }}
       >
         <VolumeIcon size={20} />
