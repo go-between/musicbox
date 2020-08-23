@@ -165,6 +165,7 @@ const Player: React.FC = () => {
             playedAt={currentRecord.playedAt}
             youtubeId={currentRecord.song.youtubeId}
             playerIdentifier={PLAYERS.main}
+            pip={true}
           />
         </Box>
       </Draggable>

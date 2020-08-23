@@ -17,7 +17,7 @@ const Preview: React.FC = () => {
   return (
     <>
       <Heading>Preview</Heading>
-      <PlayerPrimitive playedAt="" youtubeId={youtubePreviewId} controls={true} playerIdentifier={PLAYERS.preview} />
+      <PlayerPrimitive youtubeId={youtubePreviewId} controls={true} playerIdentifier={PLAYERS.preview} />
     </>
   )
 }

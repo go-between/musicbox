@@ -6,18 +6,18 @@ import { useVolumeContext, PlayerTypes } from './VolumeContextProvider'
 
 type Props = {
   controls?: boolean
-  playedAt: string
+  playedAt?: string
+  pip?: boolean
   youtubeId: string | undefined
   playerIdentifier: keyof PlayerTypes
 }
 
-const PlayerPrimitive: React.FC<Props> = ({ controls, playedAt, youtubeId, playerIdentifier }) => {
+const PlayerPrimitive: React.FC<Props> = ({ controls, playedAt, pip = false, youtubeId, playerIdentifier }) => {
   const [player, setPlayer] = useState<ReactPlayer>()
-  const setRefFromPlayer = (player: ReactPlayer): void => setPlayer(player)
   const { unmutedPlayer, volume } = useVolumeContext()
 
   useEffect(() => {
-    if (!player) {
+    if (!player || !playedAt) {
       return
     }
     const start = Math.floor(moment.duration(moment().diff(playedAt)).as('seconds'))
@@ -30,13 +30,14 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, playedAt, youtubeId, playe
 
   return (
     <ReactPlayer
-      ref={setRefFromPlayer}
+      onReady={setPlayer}
       controls={controls}
       url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
       playing={true}
       volume={unmutedPlayer === playerIdentifier ? (volume || 0) / 100.0 : 0}
       height="300px"
       width="100%"
+      pip={pip}
     />
   )
 }
