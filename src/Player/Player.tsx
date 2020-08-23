@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { VideoOff, SkipForward, Youtube } from 'react-feather'
 import { useMutation } from '@apollo/react-hooks'
-import Draggable from 'react-draggable'
+import { Rnd } from 'react-rnd'
 
 import { useCurrentRecordContext, useUserContext } from 'Context'
 import { MediaObject } from 'components'
@@ -158,17 +158,15 @@ const Player: React.FC = () => {
         </Flex>
       </Flex>
 
-      <Draggable handle=".handle" defaultPosition={{ x: 0, y: 0 }} grid={[1, 1]} scale={1}>
-        <Box sx={{ position: 'absolute', height: '350px', width: '622px', visibility: showVideo ? '' : 'hidden' }}>
-          <Box className="handle">Drag from here</Box>
-          <PlayerPrimitive
-            playedAt={currentRecord.playedAt}
-            youtubeId={currentRecord.song.youtubeId}
-            playerIdentifier={PLAYERS.main}
-            pip={true}
-          />
-        </Box>
-      </Draggable>
+      <Rnd default={{ x: 0, y: 0, width: 400, height: 225 }} lockAspectRatio={true}>
+        <Box className="handle">Drag from here</Box>
+        <PlayerPrimitive
+          playedAt={currentRecord.playedAt}
+          youtubeId={currentRecord.song.youtubeId}
+          playerIdentifier={PLAYERS.main}
+          pip={true}
+        />
+      </Rnd>
     </>
   )
 }

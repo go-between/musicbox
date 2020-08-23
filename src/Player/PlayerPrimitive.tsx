@@ -34,9 +34,9 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, playedAt, pip = false, you
       url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
       playing={true}
       volume={unmutedPlayer === playerIdentifier ? (volume || 0) / 100.0 : 0}
-      height="300px"
-      width="100%"
       pip={pip}
+      height="100%"
+      width="100%"
     />
   )
 }
