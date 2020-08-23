@@ -17,7 +17,7 @@ import { JumpNavigationContextProvider } from 'JumpMenu'
 import Library from 'Library'
 import Login from 'Login'
 import PasswordReset from 'PasswordReset'
-import { PlayerContextProvider, VolumeContextProvider } from 'Player'
+import { VolumeContextProvider } from 'Player'
 import Recommendations from 'Recommendations'
 import Room from 'Room'
 import Rooms from 'Rooms'
@@ -32,7 +32,6 @@ import {
   PlaylistRecordsContextProvider,
   UserContextProvider,
   WebsocketContextProvider,
-  VideoContextProvider,
 } from 'Context'
 
 const InnerRoutes: React.FC = () => (
@@ -127,23 +126,19 @@ const Authorized: React.FC<{ token: string }> = ({ token }) => {
     <WebsocketContextProvider token={token}>
       <ApolloProvider client={apolloClient}>
         <AddRecordContextProvider>
-          <VideoContextProvider>
-            <UserContextProvider>
-              <PlaylistRecordsContextProvider>
-                <CurrentRecordContextProvider>
-                  <VolumeContextProvider>
-                    <ApprovalContextProvider>
-                      <PlayerContextProvider>
-                        <JumpNavigationContextProvider>
-                          <InnerRoutes />
-                        </JumpNavigationContextProvider>
-                      </PlayerContextProvider>
-                    </ApprovalContextProvider>
-                  </VolumeContextProvider>
-                </CurrentRecordContextProvider>
-              </PlaylistRecordsContextProvider>
-            </UserContextProvider>
-          </VideoContextProvider>
+          <UserContextProvider>
+            <PlaylistRecordsContextProvider>
+              <CurrentRecordContextProvider>
+                <VolumeContextProvider>
+                  <ApprovalContextProvider>
+                    <JumpNavigationContextProvider>
+                      <InnerRoutes />
+                    </JumpNavigationContextProvider>
+                  </ApprovalContextProvider>
+                </VolumeContextProvider>
+              </CurrentRecordContextProvider>
+            </PlaylistRecordsContextProvider>
+          </UserContextProvider>
         </AddRecordContextProvider>
       </ApolloProvider>
     </WebsocketContextProvider>

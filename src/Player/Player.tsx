@@ -1,23 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { VideoOff, SkipForward, Youtube } from 'react-feather'
 import { useMutation } from '@apollo/react-hooks'
+import Draggable from 'react-draggable'
 
 import { useCurrentRecordContext, useUserContext } from 'Context'
 import { MediaObject } from 'components'
 import Approval from 'Approval'
+import { persistShowVideo, retrieveShowVideo } from 'lib/localStore'
 
 import PlayerPrimitive from './PlayerPrimitive'
 import Progress from './Progress'
 import Volume from './Volume'
 import { PLAYERS } from './VolumeContextProvider'
-import { usePlayerContext } from './PlayerContextProvider'
 import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
 
 const Player: React.FC = () => {
   const { currentRecord } = useCurrentRecordContext()
   const user = useUserContext()
-  const { showVideo, toggleShowVideo } = usePlayerContext()
+  const [showVideo, setShowVideo] = useState(retrieveShowVideo())
+  const toggleShowVideo = (): void => {
+    persistShowVideo(!showVideo)
+    setShowVideo(!showVideo)
+  }
 
   const [roomPlaylistRecordAbandon] = useMutation<RoomPlaylistRecordAbandon['data'], RoomPlaylistRecordAbandon['vars']>(
     ROOM_PLAYLIST_RECORD_ABANDON,
@@ -153,11 +158,16 @@ const Player: React.FC = () => {
         </Flex>
       </Flex>
 
-      <PlayerPrimitive
-        playedAt={currentRecord.playedAt}
-        youtubeId={currentRecord.song.youtubeId}
-        playerIdentifier={PLAYERS.main}
-      />
+      <Draggable handle=".handle" defaultPosition={{ x: 0, y: 0 }} grid={[1, 1]} scale={1}>
+        <Box sx={{ position: 'absolute', height: '350px', width: '622px', visibility: showVideo ? '' : 'hidden' }}>
+          <Box className="handle">Drag from here</Box>
+          <PlayerPrimitive
+            playedAt={currentRecord.playedAt}
+            youtubeId={currentRecord.song.youtubeId}
+            playerIdentifier={PLAYERS.main}
+          />
+        </Box>
+      </Draggable>
     </>
   )
 }

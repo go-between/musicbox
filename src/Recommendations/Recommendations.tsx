@@ -140,7 +140,6 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
           youtubeId={recommendedSong.song.youtubeId}
           controls={true}
           playerIdentifier={PLAYERS.preview}
-          inline={true}
         />
         <Button onClick={closeModal}>close</Button>
       </Modal>
