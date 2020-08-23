@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import ReactPlayer from 'react-player'
 import moment from 'moment'
 
@@ -13,11 +13,10 @@ type Props = {
 }
 
 const PlayerPrimitive: React.FC<Props> = ({ controls, playedAt, pip = false, youtubeId, playerIdentifier }) => {
-  const [player, setPlayer] = useState<ReactPlayer>()
   const { unmutedPlayer, volume } = useVolumeContext()
 
-  useEffect(() => {
-    if (!player || !playedAt) {
+  const seekTo = (player: ReactPlayer): void => {
+    if (!playedAt) {
       return
     }
     const start = Math.floor(moment.duration(moment().diff(playedAt)).as('seconds'))
@@ -26,11 +25,11 @@ const PlayerPrimitive: React.FC<Props> = ({ controls, playedAt, pip = false, you
     }
 
     player.seekTo(start, 'seconds')
-  }, [player, playedAt])
+  }
 
   return (
     <ReactPlayer
-      onReady={setPlayer}
+      onReady={seekTo}
       controls={controls}
       url={`https://www.youtube.com/watch?v=${youtubeId}&nonce=${playedAt}`}
       playing={true}
