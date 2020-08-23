@@ -158,7 +158,13 @@ const Player: React.FC = () => {
         </Flex>
       </Flex>
 
-      <Rnd default={{ x: 0, y: 0, width: 400, height: 225 }} lockAspectRatio={true}>
+      <Rnd
+        default={{ x: 0, y: 0, width: 400, height: 225 }}
+        lockAspectRatio={true}
+        style={{
+          visibility: showVideo ? 'inherit' : 'hidden',
+        }}
+      >
         <Box className="handle">Drag from here</Box>
         <PlayerPrimitive
           playedAt={currentRecord.playedAt}
