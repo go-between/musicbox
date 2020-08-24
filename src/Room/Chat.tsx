@@ -20,7 +20,7 @@ const Chat: React.FC = () => {
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
-        width: ['100%', '100%', '100%', '40%'],
+        width: ['100%', '100%', '100%', '50%'],
       }}
     >
       <ChatDetails tab={tab} setTab={setTab} />

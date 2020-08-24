@@ -73,8 +73,8 @@ export const VideoDetails: React.FC = () => {
   }
 
   return (
-    <>
-      <Box>
+    <Flex flexDirection='column' width={['100%', '100%', '100%', '50%']} mb={[4, 0, 0, 0]}>
+      <Box mx={[0, 0, 0, 3]}>
         <Flex
           sx={{
             alignItems: 'center',
@@ -83,7 +83,7 @@ export const VideoDetails: React.FC = () => {
             justifyContent: 'space-between',
             px: 3,
             py: 3,
-            my: 3,
+            mb: [0,0,3,3],
             width: '100%',
           }}
         >
@@ -214,6 +214,7 @@ export const VideoDetails: React.FC = () => {
           display: ['none', 'block'],
           px: 3,
           mb: 3,
+          mx: [0, 0, 0, 3],
           height: '100%',
           overflowY: 'scroll',
         }}
@@ -257,8 +258,8 @@ export const VideoDetails: React.FC = () => {
         <Box
           sx={
             {
-              // height: '200px',
-              // overflowY: 'scroll',
+              minHeight: '200px',
+              overflowY: 'scroll',
             }
           }
         >
@@ -269,6 +270,6 @@ export const VideoDetails: React.FC = () => {
       <Modal showModal={showModal} closeModal={closeModal} title={tab} scroll={true}>
         <Component />
       </Modal>
-    </>
+    </Flex>
   )
 }
