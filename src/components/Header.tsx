@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Box, Button, Flex, Link, Text } from 'rebass'
+import { Box, Flex, Link, Text } from 'rebass'
 
 import { Container, Logo } from '.'
 import LogoLightMode from 'images/musicbox-mark.svg'

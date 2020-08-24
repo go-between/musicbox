@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Button, Flex, Heading, Image, Text } from 'rebass'
-import { Input } from '@rebass/forms'
+import { Box, Flex, Heading, Image, Text } from 'rebass'
+// import { Input } from '@rebass/forms'
 import { Command, Grid, Inbox, Music } from 'react-feather'
 
 import { Container, Header, Footer } from 'components'

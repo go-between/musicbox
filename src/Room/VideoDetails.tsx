@@ -8,7 +8,6 @@ import { useCurrentRecordContext, usePlaylistRecordsContext } from 'Context'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
-import { width } from 'styled-system'
 
 type Tabs = 'userPlaylist' | 'roomPlaylist' | 'roomHistory'
 
@@ -86,15 +85,16 @@ export const VideoDetails: React.FC = () => {
             justifyContent: 'center',
             height: '100%',
             width: '100%',
-          }}>
-            No song currently playing.
+          }}
+        >
+          No song currently playing.
         </Flex>
       </Flex>
     )
   }
 
   return (
-    <Flex flexDirection='column' width={['100%', '100%', '100%', '50%']} mb={[4, 0, 0, 0]}>
+    <Flex flexDirection="column" width={['100%', '100%', '100%', '50%']} mb={[4, 0, 0, 0]}>
       <Box mx={[0, 0, 0, 3]}>
         <Flex
           sx={{
@@ -104,7 +104,7 @@ export const VideoDetails: React.FC = () => {
             justifyContent: 'space-between',
             px: 3,
             py: 3,
-            mb: [0,0,3,3],
+            mb: [0, 0, 3, 3],
             width: '100%',
           }}
         >
@@ -277,12 +277,10 @@ export const VideoDetails: React.FC = () => {
         </Flex>
 
         <Box
-          sx={
-            {
-              minHeight: '200px',
-              overflowY: 'scroll',
-            }
-          }
+          sx={{
+            minHeight: '200px',
+            overflowY: 'scroll',
+          }}
         >
           <UserPlaylist />
         </Box>
