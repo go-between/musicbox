@@ -8,6 +8,7 @@ import { useCurrentRecordContext, usePlaylistRecordsContext } from 'Context'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
+import { width } from 'styled-system'
 
 type Tabs = 'userPlaylist' | 'roomPlaylist' | 'roomHistory'
 
@@ -69,7 +70,27 @@ export const VideoDetails: React.FC = () => {
   )
 
   if (!currentRecord) {
-    return <></>
+    return (
+      <Flex
+        sx={{
+          mx: 3,
+          width: '50%',
+        }}
+      >
+        <Flex
+          sx={{
+            alignItems: 'center',
+            bg: 'accentHover',
+            borderRadius: 6,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            height: '100%',
+            width: '100%',
+          }}>
+            No song currently playing.
+        </Flex>
+      </Flex>
+    )
   }
 
   return (
