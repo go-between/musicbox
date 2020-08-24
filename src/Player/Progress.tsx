@@ -36,33 +36,43 @@ const Progress: React.FC = () => {
     return <></>
   }
   return (
-    <>
-      <Flex color="muted" minWidth="80px" justifyContent="center">
+    <Flex
+      sx={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <Text
+        sx={{
+          color: 'muted',
+          fontSize: [1, 2],
+        }}
+      >
         {duration(playedSeconds)}
-      </Flex>
-      <Flex flexDirection="column" mx={3}>
-        <Box>
-          <Text
-            fontSize={4}
-            sx={{
-              minWidth: 0,
-              width: '100%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {currentRecord.song.name}
-          </Text>
-        </Box>
-        <Box width="100%" height="6px" mb={2}>
-          <Box width={`${progress}%`} height="100%" bg="text" />
-        </Box>
-      </Flex>
-      <Flex color="muted" minWidth="80px" justifyContent="center">
+      </Text>
+
+      <Box
+        sx={{
+          bg: 'primaryHover',
+          borderRadius: 6,
+          flex: 1,
+          height: '6px',
+          mx: 2,
+        }}
+      >
+        <Box width={`${progress}%`} height="6px" bg="primary" sx={{ borderRadius: 6, width: '100%' }} />
+      </Box>
+
+      <Text
+        sx={{
+          color: 'muted',
+          fontSize: [1, 2],
+        }}
+      >
         {duration(currentRecord.song.durationInSeconds)}
-      </Flex>
-    </>
+      </Text>
+    </Flex>
   )
 }
 export default Progress

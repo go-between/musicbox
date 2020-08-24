@@ -1,31 +1,75 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
-import Gravatar from 'react-gravatar'
-import { Youtube } from 'react-feather'
+import { VideoOff, SkipForward, Youtube } from 'react-feather'
+import { useMutation } from '@apollo/react-hooks'
+import { Rnd } from 'react-rnd'
 
-import { useCurrentRecordContext } from 'Context'
+import { useCurrentRecordContext, useUserContext } from 'Context'
 import { MediaObject } from 'components'
 import Approval from 'Approval'
+import { persistShowVideo, retrieveShowVideo } from 'lib/localStore'
 
 import PlayerPrimitive from './PlayerPrimitive'
 import Progress from './Progress'
-import Settings from './Settings'
 import Volume from './Volume'
 import { PLAYERS } from './VolumeContextProvider'
+import { ROOM_PLAYLIST_RECORD_ABANDON, RoomPlaylistRecordAbandon } from './graphql'
 
 const Player: React.FC = () => {
   const { currentRecord } = useCurrentRecordContext()
+  const user = useUserContext()
+  const [showVideo, setShowVideo] = useState(retrieveShowVideo())
+  const toggleShowVideo = (): void => {
+    persistShowVideo(!showVideo)
+    setShowVideo(!showVideo)
+  }
+
+  const [roomPlaylistRecordAbandon] = useMutation<RoomPlaylistRecordAbandon['data'], RoomPlaylistRecordAbandon['vars']>(
+    ROOM_PLAYLIST_RECORD_ABANDON,
+  )
 
   if (!currentRecord) {
     return <></>
   }
 
+  const userOwnsCurrentRecord = currentRecord.user.id === user.id
+  const skipSong = userOwnsCurrentRecord ? (
+    <Box
+      onClick={() => roomPlaylistRecordAbandon()}
+      sx={{
+        alignItems: 'center',
+        bg: 'background',
+        borderRadius: 6,
+        color: 'muted',
+        cursor: 'pointer',
+        display: 'flex',
+        p: 2,
+        '&:hover': {
+          bg: `primaryHover`,
+          color: 'primary',
+        },
+      }}
+    >
+      <SkipForward size={20} />
+    </Box>
+  ) : (
+    <></>
+  )
+
   return (
     <>
       <Flex
-        width="100%"
-        flexDirection={['column', 'row']}
-        sx={{ alignItems: 'center', justifyContent: 'space-between', p: 2 }}
+        sx={{
+          alignItems: ['flex-start', 'center'],
+          bg: 'accentHover',
+          borderRadius: 6,
+          boxShadow: 'xl',
+          flexDirection: ['column', 'row'],
+          justifyContent: 'space-between',
+          py: 3,
+          px: 3,
+          width: '100%',
+        }}
       >
         <Box>
           <MediaObject
@@ -35,39 +79,100 @@ const Player: React.FC = () => {
             placeholderImageColor="accent"
           >
             <Flex flexDirection="column">
-              <Box mb={1}>
-                <Text color="muted">Played By</Text>
-              </Box>
-              <Flex flexDirection="row" alignItems="center">
-                <Gravatar email={currentRecord.user.email} size={16} style={{ borderRadius: '100%' }} />
-                <Text ml={2}>{currentRecord.user.name}</Text>
-              </Flex>
+              <Approval />
             </Flex>
           </MediaObject>
         </Box>
 
-        <Flex alignItems="center">
-          <Progress />
-          <Box mx={2} />
+        <Flex
+          alignItems={['flex-start', 'center']}
+          justifyContent="center"
+          flexDirection="column"
+          flex="1"
+          width="100%"
+        >
+          <Box width={['100%', '35%']}>
+            <Text
+              sx={{
+                color: 'text',
+                fontSize: 2,
+                minWidth: 0,
+                width: '100%',
+                overflow: 'hidden',
+                textAlign: 'center',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {currentRecord.song.name}
+            </Text>
+          </Box>
+
+          <Box mx={1} width={['100%', '55%']}>
+            <Progress />
+          </Box>
+        </Flex>
+
+        <Flex>
           <Volume />
           <Box mx={1} />
-          <Settings />
-          <Box mx={2} />
-          <Link color="text" href={`https://youtube.com/watch?v=${currentRecord.song.youtubeId}`} target="_blank">
-            <Youtube />
+          {skipSong}
+          <Box mx={1} />
+          <Box
+            onClick={toggleShowVideo}
+            sx={{
+              alignItems: 'center',
+              bg: showVideo ? 'background' : 'primaryHover',
+              borderRadius: 6,
+              color: showVideo ? 'muted' : 'primary',
+              cursor: 'pointer',
+              display: 'flex',
+              p: 2,
+              '&:hover': {
+                bg: 'primaryHover',
+                color: 'primary',
+              },
+            }}
+          >
+            <VideoOff size={20} />
+          </Box>
+          <Box mx={1} />
+          <Link
+            href={`https://youtube.com/watch?v=${currentRecord.song.youtubeId}`}
+            target="_blank"
+            sx={{
+              alignItems: 'center',
+              bg: 'background',
+              borderRadius: 6,
+              color: 'muted',
+              display: 'flex',
+              p: 2,
+              '&:hover': {
+                bg: 'primaryHover',
+                color: 'primary',
+              },
+            }}
+          >
+            <Youtube size={20} />
           </Link>
-          <Box mx={2} />
-        </Flex>
-        <Flex>
-          <Approval />
         </Flex>
       </Flex>
 
-      <PlayerPrimitive
-        playedAt={currentRecord.playedAt}
-        youtubeId={currentRecord.song.youtubeId}
-        playerIdentifier={PLAYERS.main}
-      />
+      <Rnd
+        default={{ x: 0, y: 0, width: 400, height: 225 }}
+        lockAspectRatio={true}
+        style={{
+          visibility: showVideo ? 'inherit' : 'hidden',
+        }}
+      >
+        <Box className="handle">Drag from here</Box>
+        <PlayerPrimitive
+          playedAt={currentRecord.playedAt}
+          youtubeId={currentRecord.song.youtubeId}
+          playerIdentifier={PLAYERS.main}
+          pip={true}
+        />
+      </Rnd>
     </>
   )
 }

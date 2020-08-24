@@ -6,9 +6,10 @@ type Props = {
   closeModal: (ev?: React.MouseEvent) => void
   showModal: boolean
   title?: string
+  scroll?: boolean
 }
 
-export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title }) => {
+export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title, scroll }) => {
   const preventBubble = (ev: React.MouseEvent): void => ev.stopPropagation()
 
   const escapeKeyPress = useCallback(
@@ -48,8 +49,9 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
         sx={{
           bg: 'accent',
           borderRadius: 6,
-          m: 'auto',
+          mx: [3, 'auto'],
           p: 3,
+          maxHeight: '600px',
           width: '600px',
         }}
       >
@@ -70,7 +72,14 @@ export const Modal: React.FC<Props> = ({ children, closeModal, showModal, title 
           </Flex>
         )}
 
-        {children}
+        <Box
+          sx={{
+            overflowY: scroll ? 'scroll' : 'auto',
+            maxHeight: scroll ? '500px' : 'auto',
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Box>
   )

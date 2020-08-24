@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex } from 'rebass'
-import { Volume as MutedVolume, Volume1, Volume2 } from 'react-feather'
+import { VolumeX as MutedVolume, Volume1, Volume2 } from 'react-feather'
 import { Slider } from '@rebass/forms'
 
 import { useVolumeContext, PLAYERS } from './VolumeContextProvider'
@@ -19,10 +19,12 @@ const Volume: React.FC = () => {
     <Flex sx={{ cursor: 'pointer', position: 'relative', '&:hover > *': { visibility: 'visible' } }}>
       <Box
         sx={{
-          bg: 'background',
+          bg: 'black',
+          borderRadius: 6,
+          boxShadow: 'md',
           position: 'absolute',
-          left: '-180%',
-          bottom: '180%',
+          left: '-90%',
+          bottom: '70px',
           p: 2,
           width: '100px',
           transform: 'rotate(270deg)',
@@ -31,8 +33,24 @@ const Volume: React.FC = () => {
       >
         <Slider onChange={changeVolume} value={volume} width="100%" />
       </Box>
-      <Box onClick={toggleMute} sx={{ zIndex: 100 }}>
-        <VolumeIcon />
+
+      <Box
+        onClick={toggleMute}
+        sx={{
+          alignItems: 'center',
+          bg: volume === 0 ? 'primaryHover' : 'background',
+          borderRadius: 6,
+          color: volume === 0 ? 'primary' : 'muted',
+          display: 'flex',
+          p: 2,
+          zIndex: 100,
+          '&:hover': {
+            bg: 'primaryHover',
+            color: 'primary',
+          },
+        }}
+      >
+        <VolumeIcon size={20} />
       </Box>
     </Flex>
   )

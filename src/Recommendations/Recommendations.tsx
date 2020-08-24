@@ -136,11 +136,9 @@ const RecommendedSong: React.FC<RecommendedSongProps> = ({ recommendedSong }) =>
       </Tr>
       <Modal showModal={showModal} closeModal={closeModal} title="Preview Song">
         <PlayerPrimitive
-          playedAt=""
           youtubeId={recommendedSong.song.youtubeId}
           controls={true}
           playerIdentifier={PLAYERS.preview}
-          inline={true}
         />
         <Button onClick={closeModal}>close</Button>
       </Modal>

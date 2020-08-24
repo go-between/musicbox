@@ -26,6 +26,7 @@ export type User = {
   name: string
   activeRoom: {
     id: string
+    name: string
   }
   activeTeam: {
     id: string
@@ -48,6 +49,7 @@ const USER_QUERY = gql`
       name
       activeRoom {
         id
+        name
       }
       activeTeam {
         id

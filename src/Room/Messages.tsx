@@ -46,7 +46,7 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup; pinnedMessages: Messa
             left: 0,
             position: 'absolute',
             top: '50%',
-            width: '25%',
+            width: '10%',
           },
           '&:after': {
             bg: 'accent',
@@ -55,15 +55,15 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup; pinnedMessages: Messa
             right: 0,
             position: 'absolute',
             top: '50%',
-            width: '25%',
+            width: '10%',
           },
         }}
       >
         <Box
           sx={{
-            bg: 'backgroundTint',
+            bg: 'background',
             border: '1px solid',
-            borderColor: 'accent',
+            borderColor: 'background',
             borderRadius: 6,
             boxShadow: 'md',
             color: 'gray500',
@@ -77,7 +77,7 @@ const MessageGroup: React.FC<{ messageGroup: MessageGroup; pinnedMessages: Messa
             textTransform: 'uppercase',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            width: '50%',
+            width: '80%',
           }}
         >
           {songName || 'No Song Playing'}
@@ -115,8 +115,8 @@ const Messages: React.FC = () => {
     <Box
       ref={chat}
       sx={{
+        bg: 'transparent',
         overflowY: 'scroll',
-        py: 4,
       }}
     >
       {messageLines}

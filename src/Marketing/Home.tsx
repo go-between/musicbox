@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Button, Flex, Heading, Image, Text } from 'rebass'
-import { Input } from '@rebass/forms'
+import { Box, Flex, Heading, Image, Text } from 'rebass'
+// import { Input } from '@rebass/forms'
 import { Command, Grid, Inbox, Music } from 'react-feather'
 
 import { Container, Header, Footer } from 'components'
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 
             {/* <Text as='p' sx={{ fontSize: [2,3,4], color: 'gray600', mb: 3 }}>Want to get early access? Just leave your email below, and we'll add you to the beta list. </Text> */}
 
-            <Flex alignItems="center" width="100%" justifyContent="space-between">
+            {/* <Flex alignItems="center" width="100%" justifyContent="space-between">
               <Box sx={{ flex: 1 }}>
                 <Input
                   sx={{
@@ -73,7 +73,7 @@ const Home: React.FC = () => {
               >
                 Get Early Access
               </Button>
-            </Flex>
+            </Flex> */}
           </Box>
 
           <Box width={['75%', '40%', '50%']} mx={['auto']} my={[4, 4, 0]}>

@@ -1,22 +1,17 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Inbox, Search, Send, Settings } from 'react-feather'
+import { Inbox, Send } from 'react-feather'
 
-import { Logo } from 'components'
-import LogoDarkMode from 'images/musicbox-logo.svg'
+import { AppHeader } from 'components'
 import Player from 'Player'
-import JumpMenu, { useJumpNavigationContext } from 'JumpMenu'
+import JumpMenu from 'JumpMenu'
 import Keyboard from 'Room/Keyboard'
 
 import Teams from './Teams'
 
 const NavHeading: React.FC = ({ children }) => (
-  <Flex
-    sx={{
-      px: 3,
-    }}
-  >
+  <Flex>
     <Text
       sx={{
         color: 'gray500',
@@ -32,15 +27,20 @@ const NavHeading: React.FC = ({ children }) => (
 )
 
 const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ children, navigate }) => (
-  <Box width="100%" mb={2} px={3}>
+  <Box width="100%" mb={2}>
     <Link
       sx={{
         alignItems: 'center',
         display: 'inline-flex',
         fontSize: 2,
-        mb: 3,
+        px: 2,
+        py: 1,
         textDecoration: 'none',
         width: '100%',
+        '&:hover': {
+          bg: 'primaryHover',
+          borderRadius: 6,
+        },
       }}
       color="text"
       onClick={navigate}
@@ -52,7 +52,6 @@ const NavLink: React.FC<{ navigate: (ev: React.MouseEvent) => void }> = ({ child
 )
 
 export const SideNav: React.FC = ({ children }) => {
-  const { show } = useJumpNavigationContext()
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
     ev.preventDefault()
@@ -68,21 +67,23 @@ export const SideNav: React.FC = ({ children }) => {
         height: '100vh',
         mx: 'auto',
         position: 'relative',
+        maxWidth: '1440px',
       }}
     >
+      <AppHeader />
+
       <Flex
         sx={{
-          flexDirection: 'row',
+          flexDirection: ['column', 'row'],
           height: '100%',
           overflow: 'hidden',
+          py: 4,
+          px: 3,
         }}
       >
         <Box
-          as="aside"
+          as="nav"
           sx={{
-            bg: 'background',
-            borderRight: '1px solid',
-            borderColor: 'accent',
             display: ['none', 'flex'],
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -92,45 +93,23 @@ export const SideNav: React.FC = ({ children }) => {
         >
           <Flex justifyContent="space-between" flexDirection="column" height="100%">
             <Box>
-              <Box px={3} py={4}>
-                <Logo imageSrc={LogoDarkMode} />
+              <Box pb={4}>
+                <NavHeading>Music</NavHeading>
+                <NavLink navigate={navigate('/library')}>
+                  <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
+                  Library
+                </NavLink>
+
+                <NavLink navigate={navigate('/recommendations')}>
+                  <Box as={Send} size={[16, 20]} color="muted" mr={2} />
+                  Recommendations
+                </NavLink>
               </Box>
 
-              <Flex
-                onClick={show}
-                width="100%"
-                mb={3}
-                px={3}
-                color="text"
-                alignItems="center"
-                sx={{ cursor: 'pointer' }}
-              >
-                <Box as={Search} size={[16, 20]} color="muted" mr={2} />
-                Open Jump Menu (j)
-              </Flex>
-
-              <NavHeading>Music</NavHeading>
-              <NavLink navigate={navigate('/library')}>
-                <Box as={Inbox} size={[16, 20]} color="muted" mr={2} />
-                Library
-              </NavLink>
-
-              <NavLink navigate={navigate('/recommendations')}>
-                <Box as={Send} size={[16, 20]} color="muted" mr={2} />
-                Recommendations
-              </NavLink>
-
-              <Box my={4} />
-
-              <NavHeading>Teams</NavHeading>
-              <Teams />
-
-              <Box my={4} />
-              <NavHeading>Settings</NavHeading>
-              <NavLink navigate={navigate('/user-settings')}>
-                <Box as={Settings} size={[16, 20]} color="muted" mr={2} />
-                User Settings
-              </NavLink>
+              <Box pb={4}>
+                <NavHeading>Teams</NavHeading>
+                <Teams />
+              </Box>
             </Box>
           </Flex>
         </Box>
@@ -138,7 +117,9 @@ export const SideNav: React.FC = ({ children }) => {
         <Flex
           as="main"
           sx={{
-            flexDirection: ['column', 'row'],
+            flexDirection: ['column', 'column', 'column', 'row'],
+            pl: [0, 4, 4, 4],
+            pr: 0,
             height: '100%',
             width: ['100%'],
           }}
@@ -147,15 +128,7 @@ export const SideNav: React.FC = ({ children }) => {
         </Flex>
       </Flex>
 
-      <Box
-        sx={{
-          borderTop: '1px solid',
-          borderColor: 'accent',
-        }}
-      >
-        <Player />
-      </Box>
-
+      <Player />
       <Keyboard />
       <JumpMenu />
     </Flex>

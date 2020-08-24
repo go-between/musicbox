@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Flex } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 
 import { usePlaylistRecordsContext, PlaylistRecord } from 'Context'
@@ -16,8 +16,6 @@ const reorder: Reorder = (list, startIndex, endIndex) => {
 }
 const UserPlaylist: React.FC = () => {
   const { deleteRecord, userPlaylistRecords, reorderRecords } = usePlaylistRecordsContext()
-
-  const removeAll = (): void => reorderRecords([])
 
   const records = userPlaylistRecords.map((record, index) => {
     const onDelete = (): void => deleteRecord(record.id)
@@ -40,6 +38,11 @@ const UserPlaylist: React.FC = () => {
     const reorderedRecords = reorder(userPlaylistRecords, result.source.index, result.destination.index)
     reorderRecords(reorderedRecords)
   }
+
+  if (!records) {
+    return <></>
+  }
+
   return (
     <Flex flexDirection="column">
       <DragDropContext onDragEnd={onDragEnd}>
@@ -60,7 +63,6 @@ const UserPlaylist: React.FC = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <Flex justifyContent="flex-end">{records.length > 0 && <Button onClick={removeAll}>Remove All</Button>}</Flex>
     </Flex>
   )
 }

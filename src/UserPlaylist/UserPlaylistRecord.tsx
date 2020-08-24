@@ -16,12 +16,15 @@ const UserPlaylistRecord: React.FC<Props> = ({ record, onDelete }) => {
       as="li"
       key={record.id}
       sx={{
-        borderBottom: '1px solid',
-        borderColor: 'accent',
+        bg: 'accentHover',
+        // border: '1px solid',
+        // borderColor: 'accent',
+        borderRadius: 6,
+        boxShadow: 'base',
         listStyle: 'none',
         mx: 0,
         my: 3,
-        pb: 3,
+        p: 3,
         width: '100%',
       }}
     >

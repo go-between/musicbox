@@ -3,11 +3,12 @@ const colors = {
   background: '#1A202C', // body background color
   backgroundTint: '#1c2330',
   text: '#E2E8F0', // body color
-  muted: '#4A5568', // a gray or subdued color for decorative purposes
+  muted: '#718096', // a gray or subdued color for decorative purposes
   formBorder: '#CBD5E0',
   primary: '#5A67D8', // primary button and link color
   secondary: '#4C51BF', // secondary color - can be used for hover states
-  accentHover: 'rgba(45, 55, 72, .3)',
+  accentHover: 'rgba(45, 55, 72, .25)',
+  primaryHover: 'rgba(90,103,216,0.2)',
   highlight: 'rgba(90, 103, 216, .1)',
   modes: {
     // dark: {
@@ -49,6 +50,8 @@ const colors = {
   offWhite: '#f7f7f7',
   indigo100: '#EBF4FF',
   indigo200: '#C3DAFE',
+  indigo300: '#A3BFFA',
+  indigo400: '#7F9CF5',
   indigo500: '#667EEA',
   indigo600: '#5A67D8',
   indigo700: '#4C51BF',

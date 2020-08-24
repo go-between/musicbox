@@ -46,7 +46,7 @@ const MessageEntry: React.FC = () => {
   }
 
   return (
-    <Box px={4}>
+    <Box p={3}>
       <Textarea
         onChange={onChange}
         ref={textArea}
@@ -58,7 +58,7 @@ const MessageEntry: React.FC = () => {
         sx={{
           bg: 'accent',
           border: '1px solid',
-          borderColor: 'accent',
+          borderColor: 'accentHover',
           borderRadius: 6,
           boxShadow: 'xxl',
           color: 'text',

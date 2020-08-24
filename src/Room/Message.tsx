@@ -58,21 +58,19 @@ const PlayedAt: React.FC<PlayedAtProps> = ({ messageCreated, playedAt, song }) =
 
   return (
     <Box
+      as="span"
       sx={{
         color: 'gray500',
         cursor: 'pointer',
         fontSize: 1,
-        fontWeight: '600',
+        fontWeight: '400',
         position: 'relative',
         '&:hover > *': {
           visibility: 'visible',
         },
       }}
     >
-      @{' '}
-      <Box as="span" sx={{ textDecoration: 'underline' }}>
-        {duration(saidAt)}
-      </Box>
+      @ {duration(saidAt)}
       <Box
         sx={{
           bg: 'black',
@@ -126,28 +124,30 @@ const MessageHeader: React.FC<{ message: MessageType }> = ({ message }) => {
       </Box>
 
       <Flex
-        alignItems="flex-start"
-        justifyContent="space-between"
         sx={{
+          alignItems: 'center',
+          mb: 1,
           position: 'relative',
           overflow: 'visible',
         }}
       >
-        <Text
+        <Box
+          as="span"
           sx={{
-            alignItems: 'center',
-            display: 'flex',
+            color: 'text',
+            display: 'inline',
             fontSize: 2,
-            mb: 1,
-            overflow: 'visible',
-            width: '100%',
+            fontWeight: '600',
+            verticalAlign: 'middle',
           }}
         >
-          <Box sx={{ color: 'text', fontWeight: '800' }}>{message.user.name}</Box>
+          {message.user.name}
+          <Box as="span" sx={{ color: 'gray500', fontSize: 1, fontWeight: '400', px: 2 }}>
+            {createdAt.format('h:mm a')}
+          </Box>
 
-          <Box sx={{ color: 'gray500', fontSize: 1, fontWeight: '600', px: 2 }}>{createdAt.format('ddd h:mm a')}</Box>
           <PlayedAt messageCreated={createdAt} playedAt={playedAt} song={message.song} />
-        </Text>
+        </Box>
       </Flex>
     </>
   )
@@ -180,7 +180,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
         sx={{
           bg: message.pinned ? 'highlight' : 'inherit',
           position: 'relative',
-          px: 4,
+          px: [2, 3],
           py: 3,
           '&:hover': {
             bg: message.pinned ? 'highlight' : 'accentHover',
