@@ -117,6 +117,7 @@ const Messages: React.FC = () => {
       sx={{
         bg: 'transparent',
         overflowY: 'scroll',
+        height: '100%',
       }}
     >
       {messageLines}
