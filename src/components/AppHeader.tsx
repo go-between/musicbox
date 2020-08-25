@@ -4,11 +4,13 @@ import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
 import Gravatar from 'react-gravatar'
 
+import { useUserContext } from 'Context'
 import { Logo } from 'components'
 import LogoDarkMode from 'images/musicbox-mark-purple.svg'
 import { useJumpNavigationContext } from 'JumpMenu'
 
 export const AppHeader: React.FC = () => {
+  const user = useUserContext()
   const { show } = useJumpNavigationContext()
   const history = useHistory()
   const navigate = (to: string) => (ev: React.MouseEvent) => {
@@ -60,7 +62,7 @@ export const AppHeader: React.FC = () => {
         </Flex>
 
         <Flex as={Link} onClick={navigate('/user-settings')}>
-          <Gravatar email="daniel.e.lavin@gmail.com" size={36} style={{ borderRadius: '100%' }} />
+          <Gravatar email={user.email} size={36} style={{ borderRadius: '100%' }} alt={user.email} />
         </Flex>
       </Flex>
     </>
