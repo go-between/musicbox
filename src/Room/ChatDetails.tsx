@@ -27,7 +27,7 @@ const ChatDetails: React.FC<ChatDetailsProps> = ({ setTab, tab }) => {
           borderBottom: '1px solid',
           borderColor: 'accent',
           justifyContent: 'space-between',
-          py: 4,
+          py: 3,
           px: 2,
           width: '100%',
         }}
