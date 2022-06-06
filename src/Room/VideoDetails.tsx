@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { Box, Flex, Text } from 'rebass'
 import Gravatar from 'react-gravatar'
-import { Clock, List, Radio, X } from 'react-feather'
+import { Clock, List, Radio, Shuffle, X } from 'react-feather'
 
 import { Modal } from 'components'
 import { useCurrentRecordContext, usePlaylistRecordsContext } from 'Context'
 import RoomPlaylist from 'RoomPlaylist'
 import RoomHistory from 'RoomHistory'
 import UserPlaylist from 'UserPlaylist'
+import { shuffle } from 'lib/array'
 
 type Tabs = 'userPlaylist' | 'roomPlaylist' | 'roomHistory'
 
@@ -40,8 +41,35 @@ export const VideoDetails: React.FC = () => {
 
   const Component = components[tab]
 
-  const removeAllSongs = (): void => reorderRecords([])
+  const shuffleAllSongs = (): void => reorderRecords(shuffle(userPlaylistRecords))
+  const shuffleAllSongsButton = (
+    <Box
+      as="button"
+      onClick={shuffleAllSongs}
+      sx={{
+        alignItems: 'center',
+        bg: 'background',
+        border: 'none',
+        borderRadius: 6,
+        color: 'muted',
+        cursor: 'pointer',
+        display: 'flex',
+        fontSize: 2,
+        mr: 2,
+        px: 2,
+        py: 2,
+        '&:hover': {
+          bg: 'primaryHover',
+          color: 'primary',
+        },
+      }}
+    >
+      <Box as={Shuffle} size={16} sx={{ alignItems: 'center', display: 'flex', mr: 2 }} />
+      Shuffle All
+    </Box>
+  )
 
+  const removeAllSongs = (): void => reorderRecords([])
   const removeAllSongsButton = (
     <Box
       as="button"
@@ -273,7 +301,14 @@ export const VideoDetails: React.FC = () => {
             </Text>
           </Flex>
 
-          {userPlaylistRecords.length > 0 ? removeAllSongsButton : <></>}
+          {userPlaylistRecords.length > 0 ? (
+            <Flex>
+              {shuffleAllSongsButton}
+              {removeAllSongsButton}
+            </Flex>
+          ) : (
+            <></>
+          )}
         </Flex>
 
         <Box
