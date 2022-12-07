@@ -34,7 +34,7 @@
     "@babel/preset-react": "7.7.4",
     "@babel/preset-typescript": "7.7.7",
     "@babel/runtime": "^7.7.7",
-    "@graphql-codegen/cli": "^1.14.0",
+    "@graphql-codegen/cli": "^1.21.8",
     "@graphql-codegen/fragment-matcher": "^1.14.0",
     "@graphql-codegen/typescript": "^1.14.0",
     "@types/dotenv-webpack": "^1.7.0",
