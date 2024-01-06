@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Link, Text } from 'rebass'
 import { useHistory } from 'react-router-dom'
-import { Inbox, Send } from 'react-feather'
+import { Inbox, Send, BarChart } from 'react-feather'
 
 import { AppHeader } from 'components'
 import Player from 'Player'
@@ -104,6 +104,11 @@ export const SideNav: React.FC = ({ children }) => {
                   <Box as={Send} size={[16, 20]} color="muted" mr={2} />
                   Recommendations
                 </NavLink>
+
+                <NavLink navigate={navigate('/unwound')}>
+                  <Box as={BarChart} size={[16, 20]} color="muted" mr={2} />
+                  Unwound
+                </NavLink>
               </Box>
 
               <Box pb={4}>
@@ -122,6 +127,7 @@ export const SideNav: React.FC = ({ children }) => {
             pr: 0,
             height: '100%',
             width: ['100%'],
+            overflow: 'scroll'
           }}
         >
           {children}

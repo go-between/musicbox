@@ -87,6 +87,7 @@
     "react-router-dom": "^5.1.2",
     "react-toast-notifications": "^2.4.0",
     "rebass": "^4.0.7",
+    "recharts": "^2.10.3",
     "styled-system": "^5.1.4",
     "use-debounce": "^3.3.0",
     "webpack-merge": "^4.2.2"
