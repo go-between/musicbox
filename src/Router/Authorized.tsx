@@ -23,6 +23,7 @@ import Room from 'Room'
 import Rooms from 'Rooms'
 import SideNav from 'SideNav'
 import Signup from 'Signup'
+import Unwound from 'Unwound'
 import UserSettings from 'UserSettings'
 import { API_HOST } from 'lib/constants'
 
@@ -91,6 +92,12 @@ const InnerRoutes: React.FC = () => (
     <Route path="/room/:id">
       <SideNav>
         <Room />
+      </SideNav>
+    </Route>
+
+    <Route path="/unwound">
+      <SideNav>
+        <Unwound />
       </SideNav>
     </Route>
 
